@@ -1,0 +1,26 @@
+To customize the open source version for your project, edit the following files:
+
+    config/environment_custom.rb
+    config/database.yml
+    config/gmaps_api_key.yml
+    config/newrelic.yml
+    config/twitter_config.yml (if you want Twitter support)
+    config/facebook*.yml (if you want to experiment with Facebook; currently not supported)
+
+To customize the UI for your project, fill in the files in the following directories:
+
+    app/views/custom/
+    public/stylesheets/sass/
+    public/images/
+
+UI elements that pertain to your brand need not be contributed back to the project
+
+==================
+
+To set up the database, give your bbyidx user permission to use the "load data" command:
+
+    grant file on *.* to bbyidx;
+
+Then run the seed script to initialize the DB:
+
+    rake db:seed
