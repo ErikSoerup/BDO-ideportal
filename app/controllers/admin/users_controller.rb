@@ -12,13 +12,13 @@ module Admin
       
       before :update do
         # User disallows auto population of some properties from forms, so we must handle them manually
-        @user.admin = params[:user][:admin]
+        @user.admin = params[:user][:admin] == '1'
         @user.moderator = params[:user][:moderator]
         @user.life_cycle_steps = LifeCycleStep.find(params[:user][:life_cycle_step_ids] || [])
         
         editor_roles = params[:user][:editor] || {}
         EDITABLE_CLASSES.each do |edit_class|
-          if editor_roles[edit_class.name]
+          if @user.admin? && editor_roles[edit_class.name] == '1'
             @user.has_role 'editor', edit_class
           else
             @user.has_no_role 'editor', edit_class

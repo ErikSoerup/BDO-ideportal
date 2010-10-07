@@ -50,7 +50,7 @@ class Admin::UsersControllerTest < Test::Unit::TestCase
       post :update, :id => @sally.id, :user => {
         :name => 'Sally New', :email => 'newsally@example.com',
         :password => 'newpass', :password_confirmation => 'newpass',
-        :admin => true, :moderator => true }
+        :admin => '1', :moderator => '1' }
     end
     assert_redirected_to edit_admin_user_path(@sally)
     @sally.reload
@@ -81,6 +81,42 @@ class Admin::UsersControllerTest < Test::Unit::TestCase
     put :activate, :id => @aaron.id
     @aaron.reload
     assert @aaron.active?
+  end
+  
+  def test_edit_admin_privileges
+    assert !@sally.admin?
+    
+    login_as @admin_user
+    post :update, :id => @sally.id, :user => {
+      :admin => '1', :editor => { :Comment => '1', :LifeCycle => '1'} }
+
+    @sally.reload
+    assert @sally.admin?
+    assert @sally.has_role?('editor', Comment)
+    assert @sally.has_role?('editor', LifeCycle)
+    assert !@sally.has_role?('editor', Idea)
+    
+    post :update, :id => @sally.id, :user => {
+      :admin => '1', :editor => { :Comment => '0', :LifeCycle => '1'} }
+
+    @sally.reload
+    assert !@sally.has_role?('editor', Comment)
+    assert @sally.has_role?('editor', LifeCycle)
+    assert !@sally.has_role?('editor', Idea)
+  end
+  
+  def test_revoke_admin
+    @sally.has_role 'admin'
+    @sally.has_role 'editor', Comment
+    
+    login_as @admin_user
+    post :update, :id => @sally.id,
+      :user => { :admin => '0', :editor => { :LifeCycle => '1' } }
+
+    @sally.reload
+    assert !@sally.admin?
+    assert !@sally.has_role?('editor', Comment)
+    assert !@sally.has_role?('editor', LifeCycle)
   end
   
 private
