@@ -41,7 +41,7 @@
               = link_to 'Disconnect from Facebook', :controller => 'users', :action => 'disconnect'
             - else
               = f.label :none, "Facebook Connection"
-              Do you have a Facebook account? Connect it with BBYIDX to share your suggestions on facebook too.
+              == Do you have a Facebook account? Connect it with #{SHORT_SITE_NAME} to share your suggestions on facebook too.
               <fb:login-button onclick='facebook_button_onclick()'></fb:login-button>
         .form-submit.inline
           = submit_tag 'Update Account', :id => "submit-save-changes", :class => "input-submit"
