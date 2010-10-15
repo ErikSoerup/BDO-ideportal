@@ -6,21 +6,18 @@
   :padding 0
 
 body
-  :background url(../images/bg-noise.gif) left top repeat
+  :background-color #fff
 
   &.home
     #wrap
-      :background url(../images/header-bg-tall.png) left top repeat-x
 
     #content
-      :background url(../images/header-waves.png) center 144px no-repeat
       :min-width 960px
 
     #masthead
-      :background-image url(../images/header-glow-tall.png)
 
 #masthead
-  :background url(../images/header-glow-short.png) center 5px no-repeat
+  :background-color #778
   :height 110px
   :min-width 960px
 
@@ -61,7 +58,6 @@ body
       :visibility hidden
 
   .footer
-    :background url(../images/header-bottom.png) left top repeat-x
     :border-top 2px solid #00274b
 
     > div
@@ -83,13 +79,12 @@ body
 
       &.one
         :margin-left -20px
-        :background-image url(../images/share-blurb-1.gif)
         :height 27px
         :width 405px
 
     .tab
       :margin 0 auto
-      :background url(../images/share-tab.png) center top no-repeat
+      :background-color #444
       :color #9ec8f0
       :display block
       :font-size 11px
@@ -106,30 +101,24 @@ body
         :background-repeat no-repeat
 
         &.dn
-          :background-image url(../images/icn/14-arrow-dn.png)
 
         &.up
-          :background-image url(../images/icn/14-arrow-up.png)
 
       &:hover
         :color #fff
 
         span
           &.dn
-            :background-image url(../images/icn/14-arrow-dn-hover.png)
 
           &.up
-            :background-image url(../images/icn/14-arrow-up-hover.png)
 
       &:active
         :color #425d78
 
         span
           &.dn
-            :background-image url(../images/icn/14-arrow-dn-active.png)
 
           &.up
-            :background-image url(../images/icn/14-arrow-up-active.png)
 
   label strong
     :color #fff
@@ -190,8 +179,8 @@ body
 
 
 #footer
+  :background-color #778
   :padding 24px 0 48px
-  :background #00274b url(../images/footer-bg.png) left top repeat-x
   :clear both
   :color #9ec8f0
   :width 100%
@@ -225,7 +214,6 @@ body
 
 
 #wrap
-  :background url(../images/header-bg-short.png) left top repeat-x
 
 
 .currents-page,
@@ -246,7 +234,6 @@ h2
   &.header
     :margin 24px 0 0
     :padding 6px 0 12px
-    :background url(../images/h2-line.gif) left top repeat-x
     :color #666
     :font-size 13px
     :line-height 18px
@@ -265,31 +252,22 @@ h2
     :background-repeat no-repeat
 
     &.comments
-      :background-image url(../images/icn/24-comment.png)
 
     &.nearby
-      :background-image url(../images/icn/24-pin.png)
 
     &.top-rated
-      :background-image url(../images/icn/24-heart.png)
 
     &.recent
-      :background-image url(../images/icn/24-clock.png)
     
     &.search
-      :background-image url(../images/icn/24-search.png)
     
     &.tag
-      :background-image url(../images/icn/24-tag.png)
 
     &.user
-      :background-image url(../images/icn/24-user.png)
       
       &.admin
-        :background-image url(../images/icn/24-user-admin.png)
 
     &.user-edit
-      :background-image url(../images/icn/24-user-edit.png)
 
 
 img.framed
@@ -304,13 +282,12 @@ img.framed
 
 .alert
   :padding 2px 0 2px 24px
-  :background url(../images/icn/16-exclamation-shield.png) left center no-repeat
+  :background-color #ffc
 
 
 a.admin
   :padding-top 3px
   :padding-left 25px
-  :background url(../images/icn/16-admin.png) left top no-repeat
 
 
 .message
@@ -333,7 +310,6 @@ a.admin
 
 .error
   :background-color #fbe3e4
-  :background-image url(../images/icn/16-sq-ex.png)
   :border-color #fbc2c4
   :color #8a1f11
   
@@ -343,7 +319,6 @@ a.admin
 
 .info
   :background-color #fff6bf
-  :background-image url(../images/icn/16-sq-exclamation.png)
   :border-color #ffd324
   :color #514721  
   a
@@ -354,7 +329,6 @@ a.admin
 
 .success
   :background-color #e6efc2
-  :background-image url(../images/icn/16-sq-checkmark.png)
   :border-color #c6d880
   :color #264409
   
@@ -363,7 +337,6 @@ a.admin
 
 
 .btn.gray
-  :background url(../images/btn-gray-inset.gif) left top no-repeat
   :display block
   :height 25px
   :margin-top 8px
@@ -375,7 +348,6 @@ a.admin
   :text-shadow 0 1px 2px #444
 
   span
-    :background url(../images/btn-gray-inset.gif) left top no-repeat
     :display block
     :height 25px
     :padding-right 15px
@@ -403,9 +375,9 @@ h1#logo
   :position relative
   :left 30px
   :top 32px
+  :background-color #CCC
 
   a
-    :background-image url(../images/bby-ideax-logo.png)
     :height 56px
     :width 193px
     :background-color transparent
@@ -423,6 +395,7 @@ h1#logo
 
 
 .nav
+  :background-color #778
   &.site
     :margin 0 0 0 10px
     :float left
@@ -431,13 +404,11 @@ h1#logo
 
     li
       :padding-left 2px
-      :background url(../images/nav-site-sep.png) left top no-repeat
       :float left
       :height 36px
 
       a
         :padding 0 12px
-        :background url(../images/nav-site.png) left top no-repeat
         :color #fff
         :display block
         :font-weight bold
@@ -447,12 +418,10 @@ h1#logo
         :text-transform uppercase
 
         &:active
-          :background-image url(../images/nav-site-active.png)
           :color #00274b
           :text-shadow 0 1px 2px #3b81c5
 
         &.active
-          :background-image url(../images/nav-site-active.png)
           :text-shadow 0 1px 2px #063058
 
       &.first
@@ -461,33 +430,25 @@ h1#logo
 
         a
           :padding-left 20px
-          :background-image url(../images/nav-site-first.png)
 
           &:active, &.active
-            :background-image url(../images/nav-site-first-active.png)
 
       &.last a
         :padding-right 20px
-        :background-image url(../images/nav-site-last.png)
         :background-position right top
 
         &:active, &.active
-          :background-image url(../images/nav-site-last-active.png)
 
     &.alt
       li.first a
-        :background-image url(../images/nav-site-first-alt.png)
 
         &:active, &.active
-          :background-image url(../images/nav-site-first-alt-active.png)
 
       &.title-ideas
         :padding-left 54px
-        :background url(../images/nav-site-title-ideas.png) left top no-repeat
   
       &.admin
         :padding-left 54px
-        :background url(../images/nav-site-title-admin.png) left top no-repeat
 
   &.user
     :margin 0
@@ -499,13 +460,11 @@ h1#logo
 
     li
       :padding-left 2px
-      :background url(../images/nav-user-sep.png) left top no-repeat
       :float left
       :height 25px
       
       form
         :padding 0 10px
-        :background url(../images/nav-user.png) left top repeat-x
         :color #9ec8f0
         :display block
         :font-size 11px
@@ -515,7 +474,6 @@ h1#logo
       
       a
         :padding 0 10px
-        :background url(../images/nav-user.png) left top repeat-x
         :color #9ec8f0
         :display block
         :font-size 11px
@@ -535,15 +493,12 @@ h1#logo
 
         a, form
           :padding-left 24px
-          :background-image url(../images/nav-user-first.png)
 
       &.last a, &.last form
         :padding-right 24px
-        :background-image url(../images/nav-user-last.png)
         :background-position right top
       
       &.last.search form
-        :background-image url(../images/nav-user-last-search.png) !important
 
       &.first.last a, &.first.last form
         :padding-left 0
@@ -551,7 +506,6 @@ h1#logo
       &.search input
         :margin 3px 0 0
         :padding 4px 0 0 4px
-        :background url(../images/nav-user-search.png) left top no-repeat
         :border none
         :font-size 11px
         :height 14px
@@ -581,7 +535,6 @@ h1#logo
         :float left
     
         a
-          :background-image url(../images/bby-logo-sm.png)
           :height 18px
           :width 26px
           :background-color transparent
@@ -599,7 +552,6 @@ h1#logo
 
 body.home .nav li.first a.home,
 body.admin-home .nav li.first a.admin-home
-  :background-image url(../images/nav-site-first-alt-active.png)
 body.top-rated .nav li a.top-rated,
 body.recent .nav li a.recent,
 body.ideas .nav li a.ideas,
@@ -607,20 +559,16 @@ body.users .nav li a.users,
 body.comments .nav li a.comments,
 body.currents .nav li a.currents,
 body.life-cycles .nav li a.life-cycles
-  :background-image url(../images/nav-site-active.png)
   :text-shadow 0 1px 2px #063058
 body.comments-page .nav li.first a.comments
-  :background-image url(../images/nav-site-first-active.png)
 body.nearby .nav li.last a.nearby,
 body.tags-page .nav li.last a.tags,
 body.client-apps .nav li.last a.client-apps
-  :background-image url(../images/nav-site-last-active.png)
 
 
 #intro
   :margin-left -30px
   :padding 3px 30px 0
-  :background url(../images/intro.png) left top no-repeat
   :height 343px
   :width 940px
   
@@ -672,7 +620,6 @@ body.client-apps .nav li.last a.client-apps
 
       small
         :margin-bottom 8px
-        :background url(../images/intro-or.png) center center no-repeat
         :color #a6abb0
         :display block
         :font-size 14px
@@ -774,7 +721,6 @@ body.client-apps .nav li.last a.client-apps
     :margin-top 10px
     :margin-bottom 0
     :margin-left 30px
-    :background url(../images/intro-form-note.png) left top no-repeat
     :color #425d78
     :font-size 11px
     :height 37px
@@ -799,7 +745,6 @@ body.client-apps .nav li.last a.client-apps
   :margin-right 20px
   :margin-left -4px
   :padding-left 4px
-  :background url(../images/instruction.png) left top no-repeat
   :float left
   :width 220px
   
@@ -826,25 +771,20 @@ body.client-apps .nav li.last a.client-apps
   .figure p 
     :padding-top 12px
     :padding-left 10px
-    :background url(../images/instruction-thumb-shadow.png) right top no-repeat
     :color #000
     :font-size 13px
     :text-align center
     
   &.one h3 
-    :background-image url(../images/instruction-1-share.png)
   
   &.two h3 
-    :background-image url(../images/instruction-2-vote.png)
   
   &.three h3 
-    :background-image url(../images/instruction-3-discuss.png)
   
   &.four 
     :margin-right 0
   
     h3 
-      :background-image url(../images/instruction-4-read.png)
   
   p
     :text-shadow 0 1px 2px #fff
@@ -861,9 +801,9 @@ body.client-apps .nav li.last a.client-apps
 
 .panel
   :margin-left -5px
-  :background url(../images/panel-630.gif) left top repeat-y
   :position relative
   :width 630px
+  :background-color #EEE
 
   .body
     :padding-right 5px
@@ -876,7 +816,6 @@ body.client-apps .nav li.last a.client-apps
     :padding-left 5px
     :width 620px
     :padding-bottom 7px
-    :background url(../images/panel-630-bottom.gif) left bottom no-repeat
     :min-height 15px
 
     p
@@ -891,7 +830,6 @@ body.client-apps .nav li.last a.client-apps
 
   .header
     :padding 21px 25px 0px
-    :background url(../images/panel-630-top.gif) left top no-repeat
     :width 580px
 
     h2
@@ -908,7 +846,6 @@ body.client-apps .nav li.last a.client-apps
         :vertical-align text-bottom
 
   &.full
-    :background-image url(../images/panel-950.gif)
     :width 950px
 
     .body
@@ -917,14 +854,11 @@ body.client-apps .nav li.last a.client-apps
         :padding 0 20px
     .footer
       :width 940px
-      :background-image url(../images/panel-950-bottom.gif)
 
     .header
-      :background-image url(../images/panel-950-top.gif)
       :width 900px
 
   &.summary
-    :background-image url(../images/panel-310.gif)
     :width 310px
 
     .body
@@ -932,11 +866,9 @@ body.client-apps .nav li.last a.client-apps
 
     .footer
       :width 300px
-      :background-image url(../images/panel-310-bottom.gif)
 
     .header
       :padding 15px 18px 12px
-      :background-image url(../images/panel-310-top.gif)
       :width 274px
 
       h3
@@ -955,16 +887,12 @@ h3.icon
   :background-repeat no-repeat
 
   &.nearby
-    :background-image url(../images/icn/16-pin.png)
 
   &.popular
-    :background-image url(../images/icn/16-heart.png)
 
   &.recent
-    :background-image url(../images/icn/16-clock.png)
 
   &.user
-    :background-image url(../images/icn/16-user.png)
 
 
 .icon
@@ -973,19 +901,14 @@ h3.icon
   :background-repeat no-repeat
 
   &.nearby
-    :background-image url(../images/icn/16-pin.png)
 
   &.popular
-    :background-image url(../images/icn/16-heart.png)
 
   &.recent
-    :background-image url(../images/icn/16-clock.png)
 
   &.user
-    :background-image url(../images/icn/16-user.png)
 
   &.twitter
-    :background-image url(../images/icn/16-twitter.png)
   
 
 .pagination
@@ -1057,13 +980,11 @@ h3.icon
   li
     :margin-left 8px
     :padding-left 5px
-    :background url(../images/header-meta-left.png) left top no-repeat
     :float left
     :height 25px
 
     a
       :padding 5px 10px 0 2px
-      :background url(../images/header-meta-right.png) right top no-repeat
       :color #444
       :display block
       :font-size 11px
@@ -1088,7 +1009,6 @@ h3.icon
     :margin-right 16px
     :padding-top 8px
     :padding-left 12px
-    :background url(../images/header-meta-textbox-sm.png) left top no-repeat
     :border none
     :font-size 14px
     :height 18px
@@ -1096,7 +1016,6 @@ h3.icon
     :width 60px
 
     &.long
-      :background url(../images/header-meta-textbox-lg.png) left top no-repeat
       :width 210px
 
   .input-select
@@ -1122,15 +1041,12 @@ h3.icon
 
 .inset
   :padding-top 6px
-  :background url(../images/inset-top.png) center top no-repeat
   :overflow hidden
 
   > div
     :padding-bottom 5px
-    :background url(../images/inset-bottom.png) center bottom no-repeat
 
     > div
-      :background url(../images/inset.gif) center top repeat-y
 
 
 .group
@@ -1167,6 +1083,7 @@ h3.icon
 
 
 .idea
+  :background-color #CCC
   :position relative
 
   .entry-meta
@@ -1180,20 +1097,15 @@ h3.icon
       :background-repeat no-repeat
 
       &.comments
-        :background-image url(../images/icn/16-sq-chat.png)
 
       &.tags
-        :background-image url(../images/icn/16-sq-tag.png)
 				
       &.ideas
         :background-image url(../images/idea-marker.png)
       
       &.users
-        :background-image url(../images/icn/16-user.png)
       &.flag
-        :background-image url(../images/icn/16-sq-flag.png)
       &.sharethis
-        :background-image url(../images/icn/16-addthis.gif)
         
   &.main
     .header
@@ -1207,6 +1119,7 @@ h3.icon
       :font-size 14px
 
     .vote
+      :background #BBB
       :right 25px
       :top 20px
 
@@ -1247,7 +1160,6 @@ h3.icon
   &.teaser
     :margin 0 auto 4px
     :padding-bottom 3px
-    :background url(../images/idea-teaser-bottom.png) left bottom no-repeat
     :width 606px
 
     &:last-child
@@ -1256,7 +1168,6 @@ h3.icon
     > div
       :padding-right 20px
       :padding-left 153px
-      :background url(../images/idea-teaser-top.png) left top no-repeat
       &.the-current
         :padding-left 20px
     .posted
@@ -1273,6 +1184,7 @@ h3.icon
         :border-bottom-width 2px
 
     .vote
+      :background-color #BBB
       :left 9px
       :top 8px
 
@@ -1336,7 +1248,6 @@ h3.icon
   &.mini
     :margin 0 2px
     :padding-bottom 2px
-    :background #b6dbff url(../images/idea-mini-bg.png) left bottom repeat-x
     :height 58px
 
     .title
@@ -1373,7 +1284,6 @@ h3.icon
     .vote-count
       :margin-bottom 1px
       :padding-top 0
-      :background url(../images/idea-vote-mini-bg.png) left top no-repeat
       :font-size 18px
       :height 37px
       :line-height 37px
@@ -1404,7 +1314,6 @@ h3.icon
 
     &.last-child, &.last
       :padding-bottom 2px
-      :background-image url(../images/idea-mini-bg-alt.png)
       :border-bottom 1px solid #92c6f8
       :-moz-border-radius 0 0 4px 4px
       :-webkit-border-bottom-right-radius 4px
@@ -1452,7 +1361,6 @@ h3.icon
   .vote-count
     :margin-bottom 3px
     :padding-top 14px
-    :background url(../images/idea-vote-teaser-bg.png) left top no-repeat
     :color #00274b
     :font-size 50px
     :font-weight bold
@@ -1476,7 +1384,6 @@ h3.icon
 .idea-meta,
 .current-meta
   :padding 18px 0
-  :background #eee url(../images/idea-meta-bottom.png) left bottom repeat-x
   :border-bottom 1px solid #ccc
 
   > div
@@ -1522,7 +1429,6 @@ h3.icon
     :margin-top 10px
     :margin-bottom 0
     :margin-left 20px
-    :background url(../images/intro-form-note.png) left top no-repeat
     :color #425d78
     :font-size 11px
     :height 37px
@@ -1538,13 +1444,11 @@ h3.icon
   :margin 0 auto 4px
   
   :background red
-  :background url(../images/comment-bottom.gif) left bottom no-repeat
   :min-height 47px
   :position relative
   :width 606px
   
   .comment-inner
-    :background url(../images/comment-bg.gif) left bottom repeat-y
     :margin-bottom 30px
 
   &:last-child
@@ -1597,7 +1501,6 @@ h3.icon
 
 .comment-content, .edit-comment-content
   :padding 12px 18px 0 170px
-  :background url(../images/comment-top.png) left top no-repeat
   :width 418px
 
   p:last-child
@@ -1668,7 +1571,6 @@ h3.icon
   a
     :margin-left -20px
     :padding-left 20px
-    :background url(../images/icn/16-enlarge.png) left center no-repeat
     :font-weight bold
 
 
@@ -1703,6 +1605,7 @@ h3.icon
     :visibility hidden
 
 #sidebar
+  :background-color #AAA
   .tag-cloud
     :padding 0
 
