@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
   def show
     @body_class = params[:page].nil? ? 'home' : params[:page]
-    render :action => params[:page]
+    render :action => params[:page] || 'show'
   end
   
   # Experimental wacky fractal tag cloud (currently unused):

@@ -94,9 +94,11 @@ ActiveRecord::Schema.define(:version => 20100120214436) do
     t.integer  "duplicate_of_id"
     t.boolean  "marked_spam",                                                      :default => false
     t.integer  "current_id",                                                       :default => 1
+    t.text     "vectors"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
+  add_index "ideas", ["vectors"], :name => "ideas_fts_vectors_index"
 
   create_table "ideas_admin_tags", :id => false, :force => true do |t|
     t.integer "idea_id"
@@ -174,11 +176,12 @@ ActiveRecord::Schema.define(:version => 20100120214436) do
     t.datetime "updated_at"
   end
 
-  create_table "roles_users", :force => true do |t|
+  create_table "roles_users", :id => false, :force => true do |t|
     t.integer  "user_id"
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "id"
   end
 
   create_table "tags", :force => true do |t|
@@ -213,10 +216,12 @@ ActiveRecord::Schema.define(:version => 20100120214436) do
     t.string   "fb_email_hash"
     t.boolean  "notify_on_comments",                      :default => false,     :null => false
     t.boolean  "notify_on_state",                         :default => false,     :null => false
+    t.text     "vectors"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["state"], :name => "index_users_on_state"
+  add_index "users", ["vectors"], :name => "users_fts_vectors_index"
 
   create_table "votes", :force => true do |t|
     t.integer "idea_id"
@@ -224,6 +229,6 @@ ActiveRecord::Schema.define(:version => 20100120214436) do
     t.boolean "counted", :default => false
   end
 
-  add_index "votes", ["idea_id", "user_id"], :name => "index_votes_on_user_id_and_idea_id", :unique => true
+  add_index "votes", ["user_id", "idea_id"], :name => "index_votes_on_user_id_and_idea_id", :unique => true
 
 end

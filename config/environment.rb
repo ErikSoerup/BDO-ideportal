@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.1.1' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.10' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -17,7 +17,7 @@ LOGIN_REQUIRED_REDIRECTION    = { :controller => '/sessions', :action => 'new' }
 PERMISSION_DENIED_REDIRECTION = { :controller => '/sessions', :action => 'new' }
 STORE_LOCATION_METHOD = :store_location
 
-require 'environment_custom.rb'
+require 'config/environment_custom.rb'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -109,4 +109,4 @@ end
 ENV['XD_RECEIVER_LOCATION'] = "/fb/connect/xd_receiver.htm"
 # ENV['FACEBOOK_AUTHENTICATE_LOCATION'] = "/fb/authenticate"
 
-TWITTER_CONFIG = YAML.load(File.read(Rails.root + '/config/' + 'twitter_config.yml'))[RAILS_ENV]
+TWITTER_CONFIG = YAML.load(File.read(Rails.root.to_s + '/config/' + 'twitter_config.yml'))[RAILS_ENV]
