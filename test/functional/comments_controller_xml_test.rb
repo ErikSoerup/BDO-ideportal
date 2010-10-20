@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'comments_controller'
 require 'nokogiri'
 
-class CommentsControllerXmlTest < Test::Unit::TestCase
+class CommentsControllerXmlTest < ActiveSupport::TestCase
   scenario :basic
   
   def setup

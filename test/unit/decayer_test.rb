@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class DecayerTest < Test::Unit::TestCase
+class DecayerTest < ActiveSupport::TestCase
   scenario :basic
   
   def setup

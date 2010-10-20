@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'tags_controller'
 
-class TagsControllerTest < Test::Unit::TestCase
+class TagsControllerTest < ActiveSupport::TestCase
   scenario :basic
 
   def setup

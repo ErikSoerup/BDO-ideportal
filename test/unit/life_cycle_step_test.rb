@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class LifeCycleStepTest < Test::Unit::TestCase
+class LifeCycleStepTest < ActiveSupport::TestCase
   
   scenario :basic
 

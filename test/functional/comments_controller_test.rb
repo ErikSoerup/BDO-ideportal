@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'comments_controller'
 
-class CommentsControllerTest < Test::Unit::TestCase
+class CommentsControllerTest < ActiveSupport::TestCase
   scenario :basic
 
   def setup

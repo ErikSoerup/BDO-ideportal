@@ -14,6 +14,7 @@ test:
   database: bbyidx_test
   username: bbyidx
   password: bbyidx
+  template: template0  # fixes database encoding errors in newer versions of PostgreSQL
   timeout: 5000
 old:
   adapter: mysql

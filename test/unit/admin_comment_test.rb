@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AdminCommentTest < Test::Unit::TestCase
+class AdminCommentTest < ActiveSupport::TestCase
   scenario :basic
   
   def test_text_required

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class CurrentTest < Test::Unit::TestCase
+class CurrentTest < ActiveSupport::TestCase
   scenario :basic
   
   def test_required_fields

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'votes_controller'
 
-class VotesControllerTest < Test::Unit::TestCase
+class VotesControllerTest < ActiveSupport::TestCase
   scenario :basic
 
   def setup

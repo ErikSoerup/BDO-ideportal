@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class IdeaTest < Test::Unit::TestCase
+class IdeaTest < ActiveSupport::TestCase
   
   scenario :basic
   

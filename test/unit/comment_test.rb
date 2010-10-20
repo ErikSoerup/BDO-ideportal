@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class CommentTest < Test::Unit::TestCase
+class CommentTest < ActiveSupport::TestCase
   
   scenario :basic
   should_have_db_column :ip

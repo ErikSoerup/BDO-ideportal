@@ -17,7 +17,7 @@ LOGIN_REQUIRED_REDIRECTION    = { :controller => '/sessions', :action => 'new' }
 PERMISSION_DENIED_REDIRECTION = { :controller => '/sessions', :action => 'new' }
 STORE_LOCATION_METHOD = :store_location
 
-require 'config/environment_custom.rb'
+require File.dirname(__FILE__) + '/environment_custom.rb'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.

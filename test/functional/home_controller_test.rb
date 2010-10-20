@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'home_controller'
 
-class HomeControllerTest < Test::Unit::TestCase
+class HomeControllerTest < ActiveSupport::TestCase
   def setup
     @controller = HomeController.new
     @request = ActionController::TestRequest.new

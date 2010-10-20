@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class VoteTest < Test::Unit::TestCase
+class VoteTest < ActiveSupport::TestCase
   
   scenario :basic
   

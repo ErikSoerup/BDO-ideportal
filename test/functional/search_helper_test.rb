@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 #require 'ideas_controller'
 include SearchHelper
 
-class SearchHelperTest < Test::Unit::TestCase
+class SearchHelperTest < ActiveSupport::TestCase
   scenario :basic
   
   def test_search_recent

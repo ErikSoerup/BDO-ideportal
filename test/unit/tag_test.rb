@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class TagTest < Test::Unit::TestCase
+class TagTest < ActiveSupport::TestCase
   scenario :basic
   
   def test_name_required
