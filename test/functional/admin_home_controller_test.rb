@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'admin/ideas_controller'
 
-class Admin::HomeControllerTest < ActiveSupport::TestCase
+class Admin::HomeControllerTest < ActionController::TestCase
   scenario :basic
   
   def setup

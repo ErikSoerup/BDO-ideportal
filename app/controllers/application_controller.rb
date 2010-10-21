@@ -68,7 +68,7 @@ protected
   # Initializes the list of associated RSS feeds for a page, and add the default main feed.
   # Controllers may add other feeds by appending them to @feeds.
   def add_ideas_feed
-    @ideas_rss_url = formatted_ideas_url('rss')
+    @ideas_rss_url = ideas_url(:format => 'rss')
     @feeds ||= []
     @feeds << { :href => @ideas_rss_url, :title => "#{LONG_SITE_NAME} New Ideas RSS Feed" }
   end

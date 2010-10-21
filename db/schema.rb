@@ -35,9 +35,11 @@ ActiveRecord::Schema.define(:version => 20100120214436) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "vectors"
   end
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
+  add_index "client_applications", ["vectors"], :name => "client_applications_fts_vectors_index"
 
   create_table "comments", :force => true do |t|
     t.integer  "idea_id"

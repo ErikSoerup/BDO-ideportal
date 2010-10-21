@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'sessions_controller'
 
-class SessionsControllerTest < ActiveSupport::TestCase
+class SessionsControllerTest < ActionController::TestCase
   scenario :basic
 
   def setup

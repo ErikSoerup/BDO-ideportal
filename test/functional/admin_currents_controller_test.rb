@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'admin/currents_controller'
 
-class Admin::CurrentsControllerTest < ActiveSupport::TestCase
+class Admin::CurrentsControllerTest < ActionController::TestCase
   scenario :basic
   
   def setup

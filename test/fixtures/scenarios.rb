@@ -1,4 +1,3 @@
-
 scenario :basic do
   
   # ------ Postal Codes ------

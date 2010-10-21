@@ -8,7 +8,7 @@
         =idea_comments_url(idea)
       -else
         =comments_url
-    %atom:link{ :href => idea ? formatted_idea_comments_url(idea, 'rss') : formatted_comments_url('rss'), :rel => 'self', :type => 'application/rss+xml' }/
+    %atom:link{ :href => idea ? idea_comments_url(idea, :format => 'rss') : comments_url(:format => 'rss'), :rel => 'self', :type => 'application/rss+xml' }/
     %description
       New comments posted to
       -if idea

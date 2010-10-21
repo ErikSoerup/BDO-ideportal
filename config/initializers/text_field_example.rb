@@ -54,15 +54,13 @@ module ActionView
               javascript_tag("
                  form = $('#{anchor_id}').parentNode;
                  submitHandler = form.onsubmit;
-                 form.onsubmit = function() { return false };"),
-              binding)
+                 form.onsubmit = function() { return false };"))
         
             yield(*block_args)
         
             # Add the submit handler we ripped out above.
             concat(
-              javascript_tag("Event.observe(form, 'submit', submitHandler);"),
-              binding)
+              javascript_tag("Event.observe(form, 'submit', submitHandler);"))
           end
         else
           remote_form_for_without_example(*args, &block)

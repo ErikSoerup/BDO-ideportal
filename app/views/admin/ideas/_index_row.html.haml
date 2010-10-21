@@ -9,7 +9,7 @@
   = render :partial => 'admin/ideas/live_checkbox', :locals => { :idea => idea, :attr => :marked_spam }
   %td.no-overflow
     .primary.excerpt= h(idea.title)
-    .secondary.excerpt= h(truncate(idea.description, 140))
+    .secondary.excerpt= h(truncate(idea.description, :length => 140, :separator => ' '))
   %td
     .excerpt= idea.admin_tags.empty? ? "&ndash;" : h(idea.admin_tag_names)
     .secondary.excerpt= h(idea.tag_names)

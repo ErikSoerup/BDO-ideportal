@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'ideas_controller'
 require 'nokogiri'
 
-class IdeasControllerXmlTest < ActiveSupport::TestCase
+class IdeasControllerXmlTest < ActionController::TestCase
   scenario :basic
   
   def setup

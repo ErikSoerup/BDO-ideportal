@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'admin/users_controller'
 
-class Admin::UsersControllerTest < ActiveSupport::TestCase
+class Admin::UsersControllerTest < ActionController::TestCase
   scenario :basic
   
   def setup

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'find'
 
-class HtmlEscapingTest < ActiveSupport::TestCase
+class HtmlEscapingTest < ActionController::TestCase
   scenario :xss_attack
   
   # Scans the output of a set of given requests for unescaped HTML (i.e. missing h() calls).

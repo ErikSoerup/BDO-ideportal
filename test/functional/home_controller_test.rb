@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'home_controller'
 
-class HomeControllerTest < ActiveSupport::TestCase
+class HomeControllerTest < ActionController::TestCase
   def setup
     @controller = HomeController.new
     @request = ActionController::TestRequest.new
@@ -16,6 +16,5 @@ class HomeControllerTest < ActiveSupport::TestCase
     should_assign_to(:body_class)
     should_render_template 'show'
   end
-
   
 end

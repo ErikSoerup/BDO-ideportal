@@ -156,7 +156,7 @@ class IdeasController < ApplicationController
   
   def add_comments_feed
     @feeds << {
-      :href => formatted_idea_comments_url(current_object, 'rss'),
+      :href => idea_comments_url(current_object, :format => 'rss'),
       :title => "#{LONG_SITE_NAME}: Comments on \"#{ERB::Util.h(ERB::Util.h current_object.title)}\"" }
   end
   

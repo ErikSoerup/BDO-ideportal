@@ -15,7 +15,7 @@
           =root_url
         -else
           =ideas_url filtered_params
-      %atom:link{ :href => formatted_ideas_url('rss', filtered_params), :rel => 'self', :type => 'application/rss+xml' }/
+      %atom:link{ :href => ideas_url(filtered_params.merge(:format => 'rss')), :rel => 'self', :type => 'application/rss+xml' }/
       %description
         Ideas posted to
         = LONG_SITE_NAME
@@ -56,4 +56,4 @@
               -# DOUBLE-ESCAPING NECESSARY
               =h h tag.name
           %wfw:commentRss
-            =formatted_idea_comments_url(idea, 'rss')
+            =idea_comments_url(idea, :format => 'rss')

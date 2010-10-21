@@ -6,8 +6,7 @@ gem 'thoughtbot-shoulda'
 require 'shoulda'
 require 'oauth/signature/plaintext'
 
-# Scenarios builder doesn't always reliably work incrementally, so force it every time.
-ENV['REBUILD_FIXTURES'] ||= '1'
+# TODO: trigger scenarios builder every time
 
 # Tsearch and rails tests don't play nicely together: when Rails tries to drop & repopulate
 # the test DB, it messes tsearch up in several ways. Here we patch up the mess it makes, ignoring

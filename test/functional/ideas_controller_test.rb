@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'ideas_controller'
 require 'mocha'
 
-class IdeasControllerTest < ActiveSupport::TestCase
+class IdeasControllerTest < ActionController::TestCase
   scenario :basic
 
   def setup
