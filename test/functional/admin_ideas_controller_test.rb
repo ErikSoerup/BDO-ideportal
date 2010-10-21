@@ -238,8 +238,8 @@ class Admin::IdeasControllerTest < ActionController::TestCase
     
     @walruses_in_stores.reload
     @barbershop_discount.reload
-    assert_equal 110, @walruses_in_stores.rating
-    assert_equal 10, @barbershop_discount.rating
+    assert_equal 110, @walruses_in_stores.rating.to_i
+    assert_equal 10, @barbershop_discount.rating.to_i
     assert_equal_unordered [@sally, @quentin], @walruses_in_stores.voters
     assert_equal_unordered [@sally], @barbershop_discount.voters
   end
@@ -259,8 +259,8 @@ class Admin::IdeasControllerTest < ActionController::TestCase
     
     @walruses_in_stores.reload
     @barbershop_discount.reload
-    assert_equal 105, @walruses_in_stores.rating
-    assert_equal 5, @barbershop_discount.rating
+    assert_equal 105, @walruses_in_stores.rating.to_i
+    assert_equal 5, @barbershop_discount.rating.to_i
     assert_equal_unordered [@sally, @quentin], @walruses_in_stores.voters
     assert_equal_unordered [@sally, @quentin], @barbershop_discount.voters
   end
@@ -282,8 +282,8 @@ class Admin::IdeasControllerTest < ActionController::TestCase
     @duplicate_idea.reload
     assert_nil @duplicate_idea.duplicate_of
     assert_equal [], @walruses_in_stores.duplicates
-    assert_equal 10, @duplicate_idea.rating
-    assert_equal 100, @walruses_in_stores.rating
+    assert_equal 10, @duplicate_idea.rating.to_i
+    assert_equal 100, @walruses_in_stores.rating.to_i
     assert_equal_unordered [@quentin], @walruses_in_stores.voters
     assert_equal_unordered [@sally], @duplicate_idea.voters
   end

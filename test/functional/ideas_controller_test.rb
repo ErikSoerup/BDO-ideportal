@@ -85,7 +85,7 @@ class IdeasControllerTest < ActionController::TestCase
     post :create, :idea => { :title => 'foo', :description => 'bar' }
       
     # Login required...
-    assert_redirected_to :controller => :sessions, :action => :new
+    assert_redirected_to login_path
     assert_equal 'You must log in to create new ideas.', flash[:info]
     
     # ...but orphan idea still created!

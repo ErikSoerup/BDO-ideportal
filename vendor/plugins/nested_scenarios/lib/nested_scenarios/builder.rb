@@ -144,7 +144,7 @@ class NestedScenarios::Builder
     NestedScenarios.record_name_fields.each do |try|
       if name = record_hash[try]
         inferred_name = name.underscore.gsub(/\W/, ' ').squeeze(' ').tr(' ', '_')
-        count = @record_names.select { |name| name == inferred_name }.size
+        count = @record_names.select { |name| name =~ /#{inferred_name}(_\d+)?/ }.size
         return count.zero? ? inferred_name : "#{inferred_name}_#{count}"
       end
     end

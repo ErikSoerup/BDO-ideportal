@@ -54,7 +54,7 @@ class ActiveSupport::TestCase
   def assert_login_required(user, expected_flash_info = nil)
     yield
     assert session[:return_to], 'Action should require login, but does not'
-    assert_redirected_to :controller => :sessions, :action => :new
+    assert_redirected_to login_url
     assert_equal expected_flash_info, flash[:info] if expected_flash_info
     login_as user
     yield
