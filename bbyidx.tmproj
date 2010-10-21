@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>currentDocument</key>
+	<string>public/stylesheets/sass/master.sass</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -19,20 +21,6 @@
 	<integer>257</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/controllers/application.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>31</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>9</integer>
-		</dict>
 		<key>app/controllers/comments_controller.rb</key>
 		<dict>
 			<key>caret</key>
@@ -46,20 +34,6 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>15</integer>
-		</dict>
-		<key>app/controllers/currents_controller.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>7</integer>
-				<key>line</key>
-				<integer>5</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
 		</dict>
 		<key>app/controllers/fb_connect_controller.rb</key>
 		<dict>
@@ -177,24 +151,88 @@
 				<integer>1</integer>
 			</dict>
 		</dict>
+		<key>config/environments/development.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>25</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>config/environments/production.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>config/environments/staging.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>config/environments/test.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>public/stylesheets/sass/master.sass</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>15</integer>
+				<integer>18</integer>
 				<key>line</key>
-				<integer>1148</integer>
+				<integer>1445</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>1143</integer>
+			<integer>1403</integer>
 		</dict>
 	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>public/stylesheets/sass/master.sass</string>
+		<string>config/environments/development.rb</string>
+		<string>config/environments/test.rb</string>
+		<string>config/environments/staging.rb</string>
+		<string>config/environments/production.rb</string>
+	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{265, 0}, {945, 1178}}</string>
+	<string>{{266, 0}, {945, 1178}}</string>
 </dict>
 </plist>
