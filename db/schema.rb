@@ -214,10 +214,12 @@ ActiveRecord::Schema.define(:version => 20101021230149) do
     t.string   "fb_email_hash"
     t.boolean  "notify_on_comments",                      :default => false,     :null => false
     t.boolean  "notify_on_state",                         :default => false,     :null => false
+    t.text     "vectors"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["state"], :name => "index_users_on_state"
+  add_index "users", ["vectors"], :name => "users_fts_vectors_index"
 
   create_table "votes", :force => true do |t|
     t.integer "idea_id"

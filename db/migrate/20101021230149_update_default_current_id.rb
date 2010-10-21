@@ -18,6 +18,7 @@ class UpdateDefaultCurrentId < ActiveRecord::Migration
         Current.transaction do
           Current.connection.execute("update currents set id = #{Current::DEFAULT_CURRENT_ID} where id = #{old_default_current_id}")
           Current.connection.execute("update ideas set current_id = #{Current::DEFAULT_CURRENT_ID} where current_id = #{old_default_current_id}")
+          change_column_default 'ideas', 'current_id', Current::DEFAULT_CURRENT_ID
         end
       end
     end
