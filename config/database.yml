@@ -5,6 +5,7 @@ development:
   database: bbyidx_dev
   username: bbyidx
   password: bbyidx
+  template: template0  # fixes database encoding errors in newer versions of PostgreSQL
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

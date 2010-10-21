@@ -20,12 +20,14 @@ class CurrentTest < ActiveSupport::TestCase
   end
   
   def test_idea_relationship
-    assert_equal 3, @walrus_attack_current.ideas.size
     assert_equal_unordered [@tranquilizer_guns, @give_up_all_hope, @hidden_idea], @walrus_attack_current.ideas
+    assert_equal_unordered [@tranquilizer_guns, @give_up_all_hope],               @walrus_attack_current.ideas.visible
+    
     @barbershop_discount.current = @walrus_attack_current  
-    @barbershop_discount.save
-    assert_equal @walrus_attack_current, @barbershop_discount.current
-    #assert_equal [@tranquilizer_guns, @give_up_all_hope, @barbershop_discount], @walrus_attack_current.ideas    
+    @barbershop_discount.save!
+    @walrus_attack_current.reload
+    assert_equal_unordered [@tranquilizer_guns, @give_up_all_hope, @barbershop_discount, @hidden_idea], @walrus_attack_current.ideas    
+    assert_equal_unordered [@tranquilizer_guns, @give_up_all_hope, @barbershop_discount],               @walrus_attack_current.ideas.visible   
   end
   
   def test_closed_or_expired

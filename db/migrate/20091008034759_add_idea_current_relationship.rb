@@ -1,6 +1,10 @@
 class AddIdeaCurrentRelationship < ActiveRecord::Migration
   def self.up
-    default_current = Current.create!(:id=>Current::DEFAULT_CURRENT_ID, :title=>"Default Current", :description=>"This is the default current") 
+    default_current = Current.new(
+      :title => 'Default Current',
+      :description => 'Default current')
+    default_current.id = Current::DEFAULT_CURRENT_ID
+    default_current.save!
     add_column :ideas, :current_id, :integer, :default=>Current::DEFAULT_CURRENT_ID
   end
 

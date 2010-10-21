@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100120214436) do
+ActiveRecord::Schema.define(:version => 20101021230149) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -35,11 +35,9 @@ ActiveRecord::Schema.define(:version => 20100120214436) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "vectors"
   end
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
-  add_index "client_applications", ["vectors"], :name => "client_applications_fts_vectors_index"
 
   create_table "comments", :force => true do |t|
     t.integer  "idea_id"
@@ -95,12 +93,10 @@ ActiveRecord::Schema.define(:version => 20100120214436) do
     t.string   "status",              :limit => 20,                                :default => "new", :null => false
     t.integer  "duplicate_of_id"
     t.boolean  "marked_spam",                                                      :default => false
-    t.integer  "current_id",                                                       :default => 1
-    t.text     "vectors"
+    t.integer  "current_id",                                                       :default => -1
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
-  add_index "ideas", ["vectors"], :name => "ideas_fts_vectors_index"
 
   create_table "ideas_admin_tags", :id => false, :force => true do |t|
     t.integer "idea_id"
@@ -218,12 +214,10 @@ ActiveRecord::Schema.define(:version => 20100120214436) do
     t.string   "fb_email_hash"
     t.boolean  "notify_on_comments",                      :default => false,     :null => false
     t.boolean  "notify_on_state",                         :default => false,     :null => false
-    t.text     "vectors"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["state"], :name => "index_users_on_state"
-  add_index "users", ["vectors"], :name => "users_fts_vectors_index"
 
   create_table "votes", :force => true do |t|
     t.integer "idea_id"
