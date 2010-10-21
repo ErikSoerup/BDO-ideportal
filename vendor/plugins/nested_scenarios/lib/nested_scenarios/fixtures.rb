@@ -73,6 +73,10 @@ module ActiveRecord #:nodoc:
         superclass_delegating_accessor :root_table_names
         superclass_delegating_accessor :scenario_table_names
         self.load_root_fixtures = false
+        
+        def all_table_names
+          ((self.root_table_names || []) + (self.scenario_table_names || [])).uniq
+        end
       end
 
       base.extend ClassMethods
@@ -161,7 +165,7 @@ module ActiveRecord #:nodoc:
 
     def setup_fixtures_with_scenario_check
       if (Fixtures.current_test_class != self.class || !self.use_transactional_fixtures)
-        Fixtures.destroy_fixtures (self.root_table_names + self.scenario_table_names).uniq
+        Fixtures.destroy_fixtures self.all_table_names
         Fixtures.reset_cache
       end
       Fixtures.current_test_class = self.class
