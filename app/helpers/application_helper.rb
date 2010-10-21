@@ -15,7 +15,7 @@ module ApplicationHelper
   end
   
   def idea_owner?(idea)
-    logged_in? && current_user.id == @idea.inventor_id
+    logged_in? && current_user.id == idea.inventor_id
   end
   
   def has_voted?(idea)
@@ -26,7 +26,7 @@ module ApplicationHelper
       []
     end
     
-    logged_in? && (idea_owner?(@idea) || @voted_for_idea_ids.include?(@idea.id))
+    logged_in? && (idea_owner?(idea) || @voted_for_idea_ids.include?(idea.id))
   end
   
   def flagged_as_inappropriate?(model)

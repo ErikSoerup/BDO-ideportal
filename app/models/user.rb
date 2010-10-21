@@ -217,6 +217,7 @@ class User < ActiveRecord::Base
     def registered
       self.deleted_at = nil
       reset_activation_code
+      save!
     end
     
     def do_delete

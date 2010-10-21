@@ -85,13 +85,11 @@ scenario :basic do
   
   # ------ Currents ------
   
-  @default_current = Current.create!(
+  @default_current = Current.new(
       :title => 'Placeholder for default current',
       :description => 'This is a stand-in for the default current created by the add_idea_current_relationship migration.')
-  #@default_current.id = Current::DEFAULT_CURRENT_ID
-  #@default_current.save!
-  puts "Setting Current::DEFAULT_CURRENT_ID to match the id of @default_current fixture.  Ignore the complaint."
-  Current::DEFAULT_CURRENT_ID = @default_current.id
+  @default_current.id = Current::DEFAULT_CURRENT_ID
+  @default_current.save!
   
   @walrus_attack_current = @admin_user.currents.create!(
     :title => 'Dealing with walruses',

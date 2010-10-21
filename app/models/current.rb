@@ -14,7 +14,7 @@ class Current < ActiveRecord::Base
   end
   validates_presence_of :title, :description
   
-  DEFAULT_CURRENT_ID = 1
+  DEFAULT_CURRENT_ID = -1
   
   def closed_or_expired?
     if closed? || expired?

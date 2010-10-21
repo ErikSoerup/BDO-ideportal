@@ -49,7 +49,6 @@ Rails::Initializer.run do |config|
   config.gem "calendar_date_select"
   config.gem "rcov"
   config.gem "josevalim-nested_scenarios", :lib => 'nested_scenarios', :source => 'http://gems.github.com'
-
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.

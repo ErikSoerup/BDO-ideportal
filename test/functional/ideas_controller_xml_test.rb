@@ -144,8 +144,8 @@ class IdeasControllerXmlTest < ActionController::TestCase
     assert_equal [], Idea.find(:all) - all_ideas, 'Request should not have created any new ideas'
     
     expected_errors = [
-      ['title', 'Title', "is too long (maximum is 120 characters)"],
-      ['description', 'Description', "can't be blank"]]
+      ['description', 'Description', "can't be blank"],
+      ['title', 'Title', "is too long (maximum is 120 characters)"]]
     
     match_xml_to_array(xml, '/validation-errors/error', expected_errors) do |error_xml, error|
       assert_xml_equal error_xml, './field',              error[0]

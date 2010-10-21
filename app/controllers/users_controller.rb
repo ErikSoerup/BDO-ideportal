@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     cookies.delete :auth_token
     @user = User.new(params[:user])
     if @user.valid?
+      @user.save!
       @user.register!
       self.current_user = @user
       flash[:info] = render_to_string(:partial => 'created')

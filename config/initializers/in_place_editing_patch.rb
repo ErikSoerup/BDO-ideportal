@@ -4,7 +4,7 @@ module InPlaceEditing
     def in_place_edit_for(object, attribute, options = {})
       define_method("set_#{object}_#{attribute}") do
         @item = object.to_s.camelize.constantize.find(params[:id])
-        @item.update_attribute_without_validation_skipping(attribute, params[:value])
+        @item.update_attributes attribute => params[:value]
         render :text => ERB::Util.h(@item.send(attribute).to_s)
       end
     end
