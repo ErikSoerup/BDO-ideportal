@@ -35,10 +35,6 @@ module Twitter
     # Options:
     #   :oauth_callback => String, url that twitter should redirect to
     def request_token(options={})
-puts '----------------->'
-p self
-p self.class
-p @request_token
       @request_token ||= signing_consumer.get_request_token(options)
     end
 
