@@ -175,12 +175,16 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_link_twitter_account_should_send_auth_request
-    login_as @quentin
-    post :update, :user => { :zip_code => '12345' }, :link_twitter => 'Button name'
+    Twitter::OAuth.any_instance.stubs(
+      :request_token => stub(:authorize_url => 'http://twitter/auth/url', :token => 'foo', :secret => 'bar'))
+    
+    assert_login_required @quentin do
+      post :update, :user => { :zip_code => '12345' }, :link_twitter => 'Button name'
+    end
     
     @quentin.reload
     assert_equal '12345', @quentin.zip_code
-    assert_redirected_to "http://api.twitter.com/oauth/authenticate?oauth_token=#{@controller.twitter_oauth.request_token.token}"
+    assert_redirected_to 'http://twitter/auth/url'
   end
   
   def test_link_twitter_account_bypassed_if_form_errors

@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class CommentTest < ActiveSupport::TestCase
   
   scenario :basic
+  
   should_have_db_column :ip
   should_have_db_column :user_agent
   should_validate_presence_of :ip
@@ -36,7 +37,6 @@ class CommentTest < ActiveSupport::TestCase
     end
   end
   
-  
   context "a comment on an idea from a user with notifications on" do
     setup do
       @walruses_in_stores.inventor.update_attribute(:notify_on_comments, true)
@@ -51,6 +51,9 @@ class CommentTest < ActiveSupport::TestCase
   end
   
   
+  def setup
+    Comment.any_instance.expects(:spam?).at_most_once.returns(false)
+  end
 
   def test_required_fields
     test_comment_field_error(:author, nil)
