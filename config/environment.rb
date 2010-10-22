@@ -72,7 +72,7 @@ Rails::Initializer.run do |config|
   if !SESSION_SECRET && SHORT_SITE_NAME == 'BBYIDX'
     # Allow development against BBYIDX code base, but require custom session ID if user
     # is doing a custom deployment of the project.
-    SESSION_SECRET = 'bbyidx-demo-0000000000000000000000000000000000000000' + Date.new.to_s
+    SESSION_SECRET = "bbyidx-demo-#{rand()}-#{rand()}-#{rand()}-#{rand()}-#{rand()}"
   end
   config.action_controller.session = {
     :key    => SESSION_KEY,
