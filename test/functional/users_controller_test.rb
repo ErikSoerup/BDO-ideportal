@@ -190,7 +190,38 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_authorize_twitter
+    session['rtoken'] = 'tw_rtoken'
+    session['rsecret'] = 'tw_rsecret'
     
+    Twitter::OAuth.any_instance.expects(:authorize_from_request).once.with('tw_rtoken', 'tw_rsecret', 'tw_verify')
+    Twitter::OAuth.any_instance.expects(:access_token).at_least_once.returns(stub(:token => 'tw_token', :secret => 'tw_secret'))
+    Twitter::Base.any_instance.expects(:verify_credentials).once.returns(stub(:screen_name => 'quentweet'))
+
+    assert_login_required @quentin do
+      get :authorize_twitter, :oauth_verifier => 'tw_verify'
+    end
+    
+    assert_redirected_to edit_user_path
+    @quentin.reload
+    assert @quentin.linked_to_twitter?
+    assert_equal 'quentweet', @quentin.twitter_handle
+    assert_equal 'tw_token',  @quentin.twitter_token
+    assert_equal 'tw_secret', @quentin.twitter_secret
+  end
+  
+  def test_authorize_twitter_denied
+    Twitter::OAuth.any_instance.expects(:authorize_from_request).never
+    
+    assert_login_required @tweeter do
+      get :authorize_twitter, :oauth_verifier => 'tw_verify', :denied => '1'
+    end
+    
+    assert_redirected_to edit_user_path
+    @tweeter.reload
+    assert !@tweeter.linked_to_twitter?
+    assert_nil @tweeter.twitter_handle
+    assert_nil @tweeter.twitter_token
+    assert_nil @tweeter.twitter_secret
   end
   
   def test_unlink_twitter_account

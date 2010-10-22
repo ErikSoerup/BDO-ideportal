@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include AuthenticatedSystem
   
-  before_filter :login_required, :only => [:edit, :update]
+  before_filter :login_required, :only => [:edit, :update, :authorize_twitter]
   before_filter :populate_user, :except => [:show]
 
   def new
@@ -75,10 +75,7 @@ class UsersController < ApplicationController
   def update
     # TODO: Should we require confirmation process if email changes?
     @user.update_attributes(params[:user])
-    if params[:unlink_twitter]
-      @user.twitter_token = @user.twitter_secret = @user.twitter_handle = nil
-      @user.tweet_ideas = false
-    end
+    unlink_twitter if params[:unlink_twitter]
 
     if @user.save
       flash.now[:info] = "Your changes have been saved."
@@ -99,29 +96,30 @@ class UsersController < ApplicationController
   end
   
   def authorize_twitter
-      #TODO: add handling for errors form authorization
+    #TODO: add handling for errors form authorization
+    
+    if params[:denied].blank?
+      twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
       
-      if params[:denied].blank?
-        twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
+      session['rtoken']  = nil
+      session['rsecret'] = nil
       
-        session['rtoken']  = nil
-        session['rsecret'] = nil
+      @user.twitter_token = twitter_oauth.access_token.token
+      @user.twitter_secret = twitter_oauth.access_token.secret
       
-        @user.twitter_token = twitter_oauth.access_token.token
-        @user.twitter_secret = twitter_oauth.access_token.secret
+      twitter = Twitter::Base.new(twitter_oauth)
+      @user.twitter_handle = twitter.verify_credentials.screen_name
       
-        twitter = Twitter::Base.new(twitter_oauth)
-        @user.twitter_handle = twitter.verify_credentials.screen_name
-      
-        if @user.save
-          flash.now[:info] = "Your IdeaX account is now linked to twitter."
-        end
-      else
-        @user.tweet_ideas = false
-        @user.save
-        flash.now[:info] = "Your account was not linked to twitter."
+      if @user.save
+        flash.now[:info] = "Your IdeaX account is now linked to Twitter."
       end
-      redirect_to edit_user_path
+    else
+      unlink_twitter
+      @user.save
+      flash.now[:info] = "Your account was <b>not</b> linked to Twitter."
+    end
+    
+    redirect_to edit_user_path
   end
   
   def disconnect
@@ -151,6 +149,11 @@ protected
       end
     end
     logged_in?
+  end
+  
+  def unlink_twitter
+    @user.twitter_token = @user.twitter_secret = @user.twitter_handle = nil
+    @user.tweet_ideas = false
   end
 
 end
