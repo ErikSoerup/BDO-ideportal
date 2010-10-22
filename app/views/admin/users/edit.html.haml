@@ -25,7 +25,7 @@
             = f.password_field :password_confirmation, :class => "input-text"
           .form-group.inline
             = f.label :twitter_handle, "Twitter Username"
-            = f.text_field :twitter_handle, :class => "input-text"
+            =h @user.twitter_handle
           .form-group.inline.checkbox
             = f.check_box :tweet_ideas, :class => "input-checkbox"
             = f.label :tweet_ideas, "Tweet ideas"

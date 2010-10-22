@@ -79,7 +79,7 @@ class UsersController < ApplicationController
       flash.now[:info] = "Your changes have been saved."
       @user.password = @user.password_confirmation = nil
       
-      if (! @user.twitter_handle.blank?) && @user.tweet_ideas?
+      if @user.twitter_handle.blank? && @user.tweet_ideas?
         twitter_oauth.set_callback_url(authorize_twitter_url)
 
         session['rtoken']  = twitter_oauth.request_token.token
@@ -87,6 +87,9 @@ class UsersController < ApplicationController
 
         redirect_to twitter_oauth.request_token.authorize_url
         return
+      elsif !@user.tweet_ideas?
+        @user.twitter_token = @user.twitter_secret = @user.twitter_handle = nil
+        @user.save!
       end
     end
     
@@ -102,21 +105,21 @@ class UsersController < ApplicationController
         session['rtoken']  = nil
         session['rsecret'] = nil
 
-        # twitter = Twitter::Base.new(twitter_oauth)
-        # twitter.update("Testing from rails")
-
         @user.twitter_token = twitter_oauth.access_token.token
         @user.twitter_secret = twitter_oauth.access_token.secret
-      
+
+        twitter = Twitter::Base.new(twitter_oauth)
+        @user.twitter_handle = twitter.verify_credentials.screen_name
+
         if @user.save
-          flash.now[:info] = "Your account has been linked to twitter."
+          flash.now[:info] = "Your IdeaX account is now linked to twitter."
         end
       else
         @user.tweet_ideas = false
         @user.save
         flash.now[:info] = "Your account was not linked to twitter."
       end
-      render :action => 'edit'
+      redirect_to edit_user_path
   end
   
   def disconnect

@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :name, :email, :password, :password_confirmation, :zip_code, :terms_of_service, :twitter_handle, :tweet_ideas, :notify_on_comments, :notify_on_state
+  attr_accessible :name, :email, :password, :password_confirmation, :zip_code, :terms_of_service, :tweet_ideas, :notify_on_comments, :notify_on_state
   
   unless !User.table_exists? 
     acts_as_tsearch :fields => %w(name email zip_code )
