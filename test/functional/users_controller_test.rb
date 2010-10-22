@@ -211,6 +211,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'quentweet', @quentin.twitter_handle
     assert_equal 'tw_token',  @quentin.twitter_token
     assert_equal 'tw_secret', @quentin.twitter_secret
+    assert @quentin.tweet_ideas
   end
   
   def test_authorize_twitter_denied

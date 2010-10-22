@@ -109,6 +109,7 @@ class UsersController < ApplicationController
       
       twitter = Twitter::Base.new(twitter_oauth)
       @user.twitter_handle = twitter.verify_credentials.screen_name
+      @user.tweet_ideas = true
       
       if @user.save
         flash.now[:info] = "Your IdeaX account is now linked to Twitter."
