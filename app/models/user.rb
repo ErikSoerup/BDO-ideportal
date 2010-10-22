@@ -198,6 +198,10 @@ class User < ActiveRecord::Base
     return h
   end
   
+  def linked_to_twitter?
+    !twitter_token.blank? && !twitter_secret.blank?
+  end
+  
   def is_facebook_user?
     return ! (fb_uid.blank?  )
   end

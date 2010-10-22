@@ -24,16 +24,27 @@
         .form-group.inline.checkbox
           = f.check_box :notify_on_comments, :class => "input-checkbox"
           = f.label :notify_on_comments, "Notify me when someone comments on my idea"
+        
+        -# ------- STYLE NEEDED ------
         - if TWITTER_ENABLED
-          - unless @user.twitter_handle.blank?
-            .form-group.inline
-              = f.label :twitter_handle, "Twitter account:"
-              =h @user.twitter_handle
-              %p.note== Your twitter username will be displayed on your #{SHORT_SITE_NAME} public profile
           .form-group.inline.checkbox
-            = f.check_box :tweet_ideas, :class => "input-checkbox"
-            = f.label :tweet_ideas, "Tweet my ideas"
-            %p.note Check this box to automatically tweet your ideas.
+            - if @user.linked_to_twitter?
+              %p
+                Linked to Twitter account:
+                %b=h @user.twitter_handle
+                %br/
+                = submit_tag 'Unlink Twitter account', :name => 'unlink_twitter'
+              = f.check_box :tweet_ideas, :class => "input-checkbox"
+              = f.label :tweet_ideas, "Tweet my ideas"
+              %p.note Check this box to automatically Tweet your #{SHORT_SITE_NAME} ideas.
+            - else
+              = submit_tag 'Link to Twitter account', :name => 'link_twitter'
+              %p.note
+                Allows you to Tweet your ideas.
+                %br/
+                == Displays your Twitter name in your #{SHORT_SITE_NAME} public profile.
+        -# ------- /STYLE NEEDED ------
+          
         - if FACEBOOK_ENABLED
           .form-group.inline
             - if @user.is_facebook_user?
@@ -44,6 +55,7 @@
               = f.label :none, "Facebook Connection"
               == Do you have a Facebook account? Connect it with #{SHORT_SITE_NAME} to share your suggestions on facebook too.
               <fb:login-button onclick='facebook_button_onclick()'></fb:login-button>
+        
         .form-submit.inline
           = submit_tag 'Update Account', :id => "submit-save-changes", :class => "input-submit"
     .footer

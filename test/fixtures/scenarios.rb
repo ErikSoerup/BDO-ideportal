@@ -58,6 +58,8 @@ scenario :basic do
     :contribution_points => 3,
     :password_confirmation => "test",
     :terms_of_service => '1')
+  @tweeter.twitter_token = 'foo'
+  @tweeter.twitter_secret = 'bar'
   @tweeter.activate!
   
   @currents_admin = User.create!(

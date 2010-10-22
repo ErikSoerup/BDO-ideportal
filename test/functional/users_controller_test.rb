@@ -174,6 +174,44 @@ class UsersControllerTest < ActionController::TestCase
     assert User.find_by_login('aaron@example.com', 'test') # unmodified
   end
   
+  def test_link_twitter_account_should_send_auth_request
+    login_as @quentin
+    post :update, :user => { :zip_code => '12345' }, :link_twitter => 'Button name'
+    
+    @quentin.reload
+    assert_equal '12345', @quentin.zip_code
+    assert_redirected_to "http://api.twitter.com/oauth/authenticate?oauth_token=#{@controller.twitter_oauth.request_token.token}"
+  end
+  
+  def test_link_twitter_account_bypassed_if_form_errors
+    login_as @quentin
+    post :update, :user => { :password => 'mis', :password_confirmation => 'match' }, :link_twitter => 'Button name'
+    assert_response :success # no redirect
+  end
+  
+  def test_authorize_twitter
+    
+  end
+  
+  def test_unlink_twitter_account
+    login_as @tweeter
+    post :update, :user => { :zip_code => '12345' }, :unlink_twitter => 'Button name'
+    
+    @tweeter.reload
+    assert_equal '12345', @tweeter.zip_code
+    assert !@tweeter.linked_to_twitter?
+    assert !@tweeter.tweet_ideas
+  end
+  
+  def test_unlink_twitter_account_bypassed_if_form_errors
+    login_as @tweeter
+    post :update, :user => { :password => 'mis', :password_confirmation => 'match' }, :unlink_twitter => 'Button name'
+    
+    @tweeter.reload
+    assert @tweeter.linked_to_twitter?
+    assert @tweeter.tweet_ideas
+  end
+  
   protected
     def create_user(options = {})
       post :create, :user =>

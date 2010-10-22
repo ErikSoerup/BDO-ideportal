@@ -5,9 +5,9 @@
         %h2.icon.user.admin=h @user.name
       - else
         %h2.icon.user=h @user.name
-      - unless @user.twitter_handle.blank?
+      - if @user.linked_to_twitter?
         %p.icon.twitter
-          Follow me on twitter
+          Follow me on Twitter:
           = link_to "@#{@user.twitter_handle}", "http://twitter.com/#{@user.twitter_handle}", :target => "_blank"
         %p
           =h @twitter_description

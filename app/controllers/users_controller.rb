@@ -75,21 +75,23 @@ class UsersController < ApplicationController
   def update
     # TODO: Should we require confirmation process if email changes?
     @user.update_attributes(params[:user])
+    if params[:unlink_twitter]
+      @user.twitter_token = @user.twitter_secret = @user.twitter_handle = nil
+      @user.tweet_ideas = false
+    end
+
     if @user.save
       flash.now[:info] = "Your changes have been saved."
       @user.password = @user.password_confirmation = nil
       
-      if @user.twitter_handle.blank? && @user.tweet_ideas?
+      if params[:link_twitter]
         twitter_oauth.set_callback_url(authorize_twitter_url)
-
+      
         session['rtoken']  = twitter_oauth.request_token.token
         session['rsecret'] = twitter_oauth.request_token.secret
-
+      
         redirect_to twitter_oauth.request_token.authorize_url
         return
-      elsif !@user.tweet_ideas?
-        @user.twitter_token = @user.twitter_secret = @user.twitter_handle = nil
-        @user.save!
       end
     end
     
@@ -101,16 +103,16 @@ class UsersController < ApplicationController
       
       if params[:denied].blank?
         twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
-
+      
         session['rtoken']  = nil
         session['rsecret'] = nil
-
+      
         @user.twitter_token = twitter_oauth.access_token.token
         @user.twitter_secret = twitter_oauth.access_token.secret
-
+      
         twitter = Twitter::Base.new(twitter_oauth)
         @user.twitter_handle = twitter.verify_credentials.screen_name
-
+      
         if @user.save
           flash.now[:info] = "Your IdeaX account is now linked to twitter."
         end

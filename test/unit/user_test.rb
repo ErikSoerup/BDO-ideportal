@@ -231,6 +231,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal '55102', @aaron.postal_code.code
     assert_equal nil,     @sally.postal_code
   end
+  
+  def test_linked_to_twitter
+    assert !@quentin.linked_to_twitter?
+    assert @tweeter.linked_to_twitter?
+  end
 
 protected
   
