@@ -125,8 +125,8 @@ class IdeaTest < ActiveSupport::TestCase
   end
   
   def test_validate_current_not_closed_when_updating
-    #mock_current = mock("current", :closed? => true, :valid? => true)
-    @tranquilizer_guns.stubs(:current).returns(@closed_current)
+    @walrus_attack_current.closed = true
+    @walrus_attack_current.save!
     assert_equal false, @tranquilizer_guns.save
     assert_equal "You are trying to add/update an idea in a closed current.  That's not allowed.", @tranquilizer_guns.errors[:base]
   end

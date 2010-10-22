@@ -36,7 +36,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "haml"
-  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem "color"
   config.gem 'facebooker' if FACEBOOK_ENABLED
   config.gem 'twitter' if TWITTER_ENABLED
@@ -48,6 +48,7 @@ Rails::Initializer.run do |config|
   config.gem 'ruby-hmac', :lib => 'hmac'
   config.gem "calendar_date_select"
   config.gem "rcov"
+  config.gem "lazy"
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -92,6 +93,8 @@ Rails::Initializer.run do |config|
   # disable forgery proction so that facebook works (we might be able to disble this only for the facebook controller)
   # config.action_controller.allow_forgery_protection = false
 end
+
+require 'will_paginate'
 
 ##
 #

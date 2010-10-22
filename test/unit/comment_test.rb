@@ -72,8 +72,9 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   def test_validate_current_not_closed_when_adding_comment
+    @walrus_attack_current.closed = true
+    @walrus_attack_current.save!
     my_comment = Comment.new(:idea=>@tranquilizer_guns, :text=>'foo', :author => @sally, :user_agent => 'fubar', :ip=>'127.0.0.1') 
-    @tranquilizer_guns.stubs(:closed?).returns(true)    
     assert_equal false, my_comment.save
     assert_equal "You are trying to comment on an idea within a closed current.  That's not allowed.", my_comment.errors[:base]
   end

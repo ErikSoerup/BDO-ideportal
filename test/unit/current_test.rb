@@ -39,9 +39,8 @@ class CurrentTest < ActiveSupport::TestCase
     assert_equal false, @expired_current.closed?
     assert_equal true, @expired_current.submission_deadline < Date.today
     
-    # closed_or_expired should set closed to true 
-    @expired_current.expects(:closed=).with(true)
     assert_equal true, @expired_current.closed_or_expired?
+    assert_equal true, @expired_current.closed?  # closed_or_expired should set closed = true
   end
   
   def test_populate_idea_counts

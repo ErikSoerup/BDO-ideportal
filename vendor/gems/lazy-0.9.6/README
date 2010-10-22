@@ -1,0 +1,18 @@
+lazy.rb provides lazy evaluation and futures in Ruby.
+
+For lazy evaluation, the facilities are similar to those provided by R5 Scheme.  There are two functions: Kernel.promise (similar to Scheme's delay) which takes a block for later evaluation, and Kernel.demand (similar to Scheme's force), which forces its evaluation (if necessary) and returns its cached result.
+
+Unlike some Scheme implementations, it is safe to pass ordinary values to demand. Promises are also transparent, meaning that in most cases an evaluated promise is not distinguishable from the actual result object it wraps.
+
+Originally, promises were not threadsafe unless you required 'lazy/threadsafe',
+but today they are threadsafe by default.  This does entail some amount of
+synchronization overhead, which in Ruby 1.8 can be reduced by using fastthread.
+(Other Ruby implementations like JRuby and 1.9 should have lower
+synchronization overhead to start with.)
+
+Additionally, the library provides futures, where a computation is run
+optimistically in a background thread.  Futures can be constructed using
+Kernel.future.  Based on promises, they are also transparent.  An attempt to
+demand the result of a future will block until the computation completes.  
+
+lazy.rb is made available under the same license as Ruby.

@@ -1,8 +1,8 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
-require "#{RAILS_ROOT}/vendor/gems/lazy-0.9.5/lazy"
 gem 'thoughtbot-shoulda'
+require 'lazy'
 require 'shoulda'
 require 'oauth/signature/plaintext'
 
@@ -148,7 +148,7 @@ else
     alias_method :find_concrete, :find
   
     def find
-      promise { find_concrete }
+      Lazy::promise { find_concrete }
     end
   end
 end

@@ -12,8 +12,9 @@ class VoteTest < ActiveSupport::TestCase
   end
   
   def test_validate_current_not_closed_when_adding_comment
+    @walrus_attack_current.closed = true
+    @walrus_attack_current.save!
     my_vote = Vote.new(:idea=>@tranquilizer_guns, :user => @sally) 
-    @tranquilizer_guns.stubs(:closed?).returns(true)    
     assert_equal false, my_vote.save
     assert_equal "You are trying to vote on an idea within a closed current.  That's not allowed.", my_vote.errors[:base]
   end
