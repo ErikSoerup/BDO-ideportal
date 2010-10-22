@@ -1,3 +1,3 @@
-Rakismet::KEY=ENV['RAKISMET_KEY']
-Rakismet::URL = 'http://ideax.heroku.com'
-Rakismet::HOST='rest.akismet.com'
+Rakismet::KEY  = ENV['RAKISMET_KEY']
+Rakismet::URL  = RAKISMET_URL
+Rakismet::HOST = 'rest.akismet.com'

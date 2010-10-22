@@ -42,14 +42,15 @@
       -cache('footer') do
         %hr.hide
         = render :partial => "shared/footer"
-      :javascript
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      :javascript
-        try {
-          var pageTracker = _gat._getTracker("UA-6257094-1");
-          pageTracker._trackPageview();
-        } catch(err) {}
+      -if GOOGLE_ANALYTICS_TRACKING_CODE
+        :javascript
+          var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+          document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        :javascript
+          try {
+            var pageTracker = _gat._getTracker("#{GOOGLE_ANALYTICS_TRACKING_CODE}");
+            pageTracker._trackPageview();
+          } catch(err) {}
     - if FACEBOOK_ENABLED
       :javascript 
         window.api_key = '#{Facebooker.api_key}';

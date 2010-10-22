@@ -38,8 +38,8 @@ Rails::Initializer.run do |config|
   config.gem "haml"
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem "color"
-  config.gem 'facebooker' if FACEBOOK_ENABLED
-  config.gem 'twitter' if TWITTER_ENABLED
+  config.gem 'facebooker' if FACEBOOK_ENABLED || ENV['RAILS_ENV'] == 'test'
+  config.gem 'twitter' if TWITTER_ENABLED || ENV['RAILS_ENV'] == 'test'
   config.gem 'oauth'
   config.gem 'oauth-plugin'
   #these 3 gems (mash, httparty, ruby-hmac) are needed for twitter/oauth
@@ -67,10 +67,13 @@ Rails::Initializer.run do |config|
   # Run "rake -D time" for a list of tasks for finding time zone names. Comment line to use default local time.
   config.time_zone = 'UTC'
 
-  # Your secret key for verifying cookie session data integrity.
-  # If you change this key, all old sessions will become invalid!
-  # Make sure the secret is at least 30 characters and all random, 
-  # no regular words or you'll be exposed to dictionary attacks.
+  # SESSION_KEY and SESSION_SECRET are specified in config/environment_custom.rb
+  
+  if !SESSION_SECRET && SHORT_SITE_NAME == 'BBYIDX'
+    # Allow development against BBYIDX code base, but require custom session ID if user
+    # is doing a custom deployment of the project.
+    SESSION_SECRET = 'bbyidx-demo-0000000000000000000000000000000000000000' + Date.new.to_s
+  end
   config.action_controller.session = {
     :key    => SESSION_KEY,
     :secret => SESSION_SECRET
@@ -92,6 +95,14 @@ Rails::Initializer.run do |config|
   
   # disable forgery proction so that facebook works (we might be able to disble this only for the facebook controller)
   # config.action_controller.allow_forgery_protection = false
+end
+
+unless SESSION_SECRET
+  abort "\n" +
+        "    You must specify a value for SESSION_SECRET in config/environment_custom.rb in order to start the server.\n" +
+        "    The value should be a string of at least 30 random characeters.\n" +
+        "    Here is a suggested value, generated at random just for you:\n\n" +
+        "      SESSION_SECRET = '#{ActiveSupport::SecureRandom.base64(60)}'\n\n"
 end
 
 require 'will_paginate'

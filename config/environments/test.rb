@@ -22,3 +22,5 @@ config.action_controller.allow_forgery_protection    = false
 config.action_mailer.delivery_method = :test
 
 config.action_mailer.default_url_options = { :host => "testhost" }
+
+TWITTER_ENABLED = true  # Always test twitter, even if it's not enabled for dev/production
