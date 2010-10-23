@@ -121,7 +121,7 @@ class IdeasControllerTest < ActionController::TestCase
     
     assert_equal 'foo', new_idea.title
     assert_equal @tweeter, new_idea.inventor
-    assert_equal tweet_content, "Idea for YOUR_COMPANY_NAME: foo #{idea_url(new_idea)}"
+    assert_equal tweet_content, "Idea for #{COMPANY_NAME}: foo #{idea_url(new_idea)}"
   end
   
   def test_long_idea_title_truncated_in_tweet
@@ -138,7 +138,7 @@ class IdeasControllerTest < ActionController::TestCase
     new_idea = assigns(:idea)
     assert_redirected_to idea_path(new_idea)
     
-    content_pattern = /^Idea for YOUR_COMPANY_NAME: (\d+)... #{idea_url(new_idea)}$/
+    content_pattern = /^Idea for #{COMPANY_NAME}: (\d+)... #{idea_url(new_idea)}$/
     assert_match content_pattern, tweet_content
     tweet_content =~ content_pattern
     assert_match /^#{$1}/, long_title
