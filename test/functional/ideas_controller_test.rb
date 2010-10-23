@@ -104,12 +104,15 @@ class IdeasControllerTest < ActionController::TestCase
   def test_create_idea_and_tweet
     old_ideas = Idea.find(:all)
 
-    @tweet_idea_expectation.at_most_once.returns('stubbed out')
+    IdeasController.send(:alias_method, :tweet_idea, :tweet_idea_old)
+    Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.returns(true)
+    tweet_content = nil
+    Twitter::Base.any_instance.expects(:update).once.with { |msg| tweet_content = msg }
 
     login_as @tweeter
-    post :create,
-      :idea => { :title => 'foo', :description => 'bar', :tag_names => 'one two, three' },
-      :tags => { -2 => 'five six', 3 => 'seven, three, eight' }  # javascript tags
+    post :create, :idea => { :title => 'foo', :description => 'bar' }
+    
+    # Ensure create succeeded
     assert_redirected_to idea_path(assigns(:idea))
     
     new_ideas = Idea.find(:all) - old_ideas
@@ -118,6 +121,28 @@ class IdeasControllerTest < ActionController::TestCase
     
     assert_equal 'foo', new_idea.title
     assert_equal @tweeter, new_idea.inventor
+    assert_equal tweet_content, "Idea for YOUR_COMPANY_NAME: foo #{idea_url(new_idea)}"
+  end
+  
+  def test_long_idea_title_truncated_in_tweet
+    IdeasController.send(:alias_method, :tweet_idea, :tweet_idea_old)
+    Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.returns(true)
+    tweet_content = nil
+    Twitter::Base.any_instance.expects(:update).once.with { |msg| tweet_content = msg }
+
+    login_as @tweeter
+    long_title = '0123456789' * 12
+    post :create, :idea => { :title => long_title, :description => 'bar' }
+    
+    # Ensure create succeeded
+    new_idea = assigns(:idea)
+    assert_redirected_to idea_path(new_idea)
+    
+    content_pattern = /^Idea for YOUR_COMPANY_NAME: (\d+)... #{idea_url(new_idea)}$/
+    assert_match content_pattern, tweet_content
+    tweet_content =~ content_pattern
+    assert_match /^#{$1}/, long_title
+    assert_equal 140, tweet_content.length
   end
   
   def test_create_idea_and_twitter_error
@@ -137,6 +162,7 @@ class IdeasControllerTest < ActionController::TestCase
       :tags => { -2 => 'five six', 3 => 'seven, three, eight' }  # javascript tags
     assert_redirected_to idea_path(assigns(:idea))
     
+    # Ensure create succeeded despite error!
     new_ideas = Idea.find(:all) - old_ideas
     assert_equal 1, new_ideas.size
     new_idea = new_ideas.first

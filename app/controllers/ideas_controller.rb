@@ -192,14 +192,21 @@ private
       flash[:facebook_publish] = "facebook_publish_stream( 'has an idea for #{SHORT_SITE_NAME}: #{idea.title}', #{attachment_data}, #{link_data});"
   end
   
+  include ActionView::Helpers::TextHelper # for truncate
+  
   def tweet_idea(idea)
     status = Timeout::timeout(3) do
       twitter_oauth.authorize_from_access(idea.inventor.twitter_token, idea.inventor.twitter_secret)
       twitter = Twitter::Base.new(twitter_oauth)
-    
-      twitter_string = "My idea: #{idea_url(idea)} #{idea.title}"
       
-      twitter.update(twitter_string.slice(0,139))
+      prefix = "Idea for #{COMPANY_NAME}: "
+      suffix = ' ' + idea_url(idea)
+      message = (
+        prefix +
+        truncate(idea.title, :length => 140 - prefix.length - suffix.length, :separator => ' ') +
+        suffix)
+      
+      twitter.update message
     end
   end
   
