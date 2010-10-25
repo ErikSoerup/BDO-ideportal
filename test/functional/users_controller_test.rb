@@ -217,16 +217,34 @@ class UsersControllerTest < ActionController::TestCase
   def test_authorize_twitter_denied
     Twitter::OAuth.any_instance.expects(:authorize_from_request).never
     
+    assert_login_required @quentin do
+      get :authorize_twitter, :denied => '1'
+    end
+    
+    assert_redirected_to edit_user_path
+    @quentin.reload
+    assert !@quentin.linked_to_twitter?
+    assert_nil @quentin.twitter_handle
+    assert_nil @quentin.twitter_token
+    assert_nil @quentin.twitter_secret
+  end
+
+  def test_authorize_twitter_denied_preserves_previous_auth
+    Twitter::OAuth.any_instance.expects(:authorize_from_request).never
+    twitter_handle = @tweeter.twitter_handle
+    twitter_token  = @tweeter.twitter_token
+    twitter_secret = @tweeter.twitter_secret
+    
     assert_login_required @tweeter do
-      get :authorize_twitter, :oauth_verifier => 'tw_verify', :denied => '1'
+      get :authorize_twitter, :denied => '1'
     end
     
     assert_redirected_to edit_user_path
     @tweeter.reload
-    assert !@tweeter.linked_to_twitter?
-    assert_nil @tweeter.twitter_handle
-    assert_nil @tweeter.twitter_token
-    assert_nil @tweeter.twitter_secret
+    assert @tweeter.linked_to_twitter?
+    assert_equal twitter_handle, @tweeter.twitter_handle
+    assert_equal twitter_token,  @tweeter.twitter_token
+    assert_equal twitter_secret, @tweeter.twitter_secret
   end
   
   def test_unlink_twitter_account

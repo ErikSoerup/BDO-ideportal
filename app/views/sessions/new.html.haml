@@ -21,6 +21,17 @@
             %label{ :for => "remember-me" } Remember Me?
           .form-submit.inline
             = submit_tag 'Log In', :class => "input-submit", :id => "submit-login", :tabindex => 4
+      
+      -# ------- STYLE NEEDED ------
+      -if TWITTER_ENABLED || FACEBOOK_ENABLED
+        .group
+          Sign in with
+          -if TWITTER_ENABLED
+            = link_to 'Twitter', login_with_method_path('twitter')
+          -if FACEBOOK_ENABLED
+            = link_to 'Facebook', login_with_method_path('facebook')
+      -# ------- /STYLE NEEDED ------
+      
     .footer
   %hr.hide
   #sidebar.aside

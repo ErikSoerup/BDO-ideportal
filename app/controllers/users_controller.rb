@@ -76,18 +76,13 @@ class UsersController < ApplicationController
     # TODO: Should we require confirmation process if email changes?
     @user.update_attributes(params[:user])
     unlink_twitter if params[:unlink_twitter]
-
+    
     if @user.save
       flash.now[:info] = "Your changes have been saved."
       @user.password = @user.password_confirmation = nil
       
       if params[:link_twitter]
-        twitter_oauth.set_callback_url(authorize_twitter_url)
-      
-        session['rtoken']  = twitter_oauth.request_token.token
-        session['rsecret'] = twitter_oauth.request_token.secret
-      
-        redirect_to twitter_oauth.request_token.authorize_url
+        redirect_to twitter_auth_request_url(authorize_twitter_url)
         return
       end
     end
@@ -96,31 +91,18 @@ class UsersController < ApplicationController
   end
   
   def authorize_twitter
-    #TODO: add handling for errors form authorization
-    
-    if params[:denied].blank?
-      # In this case, we do actually want to run authorize_from_request and verify_credentials synchronously,
-      # so that the user doesn't get through the Twitter linking process until it's succeeded.
-      
-      twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
-      
-      session['rtoken']  = nil
-      session['rsecret'] = nil
-      
+    credentials = verify_twitter_authorization
+    if credentials
       @user.twitter_token = twitter_oauth.access_token.token
       @user.twitter_secret = twitter_oauth.access_token.secret
-      
-      twitter = Twitter::Base.new(twitter_oauth)
-      @user.twitter_handle = twitter.verify_credentials.screen_name
+      @user.twitter_handle = credentials.screen_name
       @user.tweet_ideas = true
       
       if @user.save
         flash.now[:info] = "Your IdeaX account is now linked to Twitter."
       end
     else
-      unlink_twitter
-      @user.save
-      flash.now[:info] = "Your account was <b>not</b> linked to Twitter."
+      flash.now[:info] = "Twitter authorization canceled."
     end
     
     redirect_to edit_user_path
