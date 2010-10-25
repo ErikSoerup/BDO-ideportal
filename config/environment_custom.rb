@@ -15,8 +15,9 @@ STAGING_HOST = 'bbyidx.com'
 SESSION_SECRET = nil
 SESSION_KEY = "_#{SHORT_SITE_NAME.downcase}_session"
 
-# Configure Twitter in twitter_config.yml, then set this to true to enable Twitter integration:
-TWITTER_ENABLED = true
+# Configure Twitter in twitter_config.yml, then set "TWITTER_ENABLED = true" to enable Twitter integration.
+# You can also set TWITTER_API_KEY and TWITTER_API_SECRET as environment variables.
+TWITTER_ENABLED = ENV['TWITTER_API_KEY'] || false
 
 # Facebook support is experimental, and currently broken. We invite you to improve it!
 # Settings in facebook.yml and facebooker.yml.
