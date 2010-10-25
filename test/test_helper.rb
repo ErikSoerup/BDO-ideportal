@@ -15,7 +15,7 @@ begin
   ActiveRecord::Base.connection.execute 'CREATE TEXT SEARCH CONFIGURATION public.default ( COPY = pg_catalog.english )'
 rescue ActiveRecord::StatementInvalid=>x
 end
-[Idea, Comment, User].each { |model| model.create_vector } # drops & recreates vector column
+[Idea, Comment, User, ClientApplication].each { |model| model.create_vector } # drops & recreates tsearch2's vector column
 
 
 class ActiveSupport::TestCase

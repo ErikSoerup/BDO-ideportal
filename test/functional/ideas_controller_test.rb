@@ -9,11 +9,13 @@ class IdeasControllerTest < ActionController::TestCase
     @controller = IdeasController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    
-    # save the method for the few test cases in which we do want to call it
-    IdeasController.send(:alias_method, :tweet_idea_old, :tweet_idea)
-    @tweet_idea_expectation = IdeasController.any_instance.expects(:tweet_idea)
-    @tweet_idea_expectation.never
+    @expected_job_count = 0
+  end
+  
+  def teardown
+    job_count = Delayed::Job.count
+    Delayed::Job.delete_all
+    assert_equal @expected_job_count, job_count
   end
 
   def test_index
@@ -101,16 +103,15 @@ class IdeasControllerTest < ActionController::TestCase
     assert_equal 'post', session[:return_to_method]
   end
   
-  def test_create_idea_and_tweet
+  def tweet_idea(title, opts = {})
     old_ideas = Idea.find(:all)
-
-    IdeasController.send(:alias_method, :tweet_idea, :tweet_idea_old)
-    Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.returns(true)
-    tweet_content = nil
-    Twitter::Base.any_instance.expects(:update).once.with { |msg| tweet_content = msg }
+    
+    # Ensure tweet is asynchronous
+    Twitter::OAuth.any_instance.expects(:authorize_from_access).never
+    Twitter::Base.any_instance.expects(:update).never
 
     login_as @tweeter
-    post :create, :idea => { :title => 'foo', :description => 'bar' }
+    post :create, :idea => { :title => title, :description => 'bar' }
     
     # Ensure create succeeded
     assert_redirected_to idea_path(assigns(:idea))
@@ -119,24 +120,33 @@ class IdeasControllerTest < ActionController::TestCase
     assert_equal 1, new_ideas.size
     new_idea = new_ideas.first
     
-    assert_equal 'foo', new_idea.title
+    assert_equal title, new_idea.title
     assert_equal @tweeter, new_idea.inventor
+    
+    # Now send tweet
+    
+    tweet_content = nil
+    if opts[:twitter_exception]
+      Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.raises(Exception, 'twitter unavailable')
+      Twitter::Base.expects(:new).never
+    else
+      Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.returns(true)
+      Twitter::Base.any_instance.expects(:update).once.with { |msg| tweet_content = msg }
+    end
+    
+    Delayed::Worker.new(:quiet => true).work_off
+    
+    [new_idea, tweet_content]
+  end
+  
+  def test_create_idea_and_tweet
+    new_idea, tweet_content = tweet_idea('foo')
     assert_equal tweet_content, "Idea for #{COMPANY_NAME}: foo #{idea_url(new_idea)}"
   end
   
   def test_long_idea_title_truncated_in_tweet
-    IdeasController.send(:alias_method, :tweet_idea, :tweet_idea_old)
-    Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.returns(true)
-    tweet_content = nil
-    Twitter::Base.any_instance.expects(:update).once.with { |msg| tweet_content = msg }
-
-    login_as @tweeter
     long_title = '0123456789' * 12
-    post :create, :idea => { :title => long_title, :description => 'bar' }
-    
-    # Ensure create succeeded
-    new_idea = assigns(:idea)
-    assert_redirected_to idea_path(new_idea)
+    new_idea, tweet_content = tweet_idea(long_title)
     
     content_pattern = /^Idea for #{COMPANY_NAME}: (\d+)... #{idea_url(new_idea)}$/
     assert_match content_pattern, tweet_content
@@ -146,29 +156,10 @@ class IdeasControllerTest < ActionController::TestCase
   end
   
   def test_create_idea_and_twitter_error
-    old_ideas = Idea.find(:all)
+    new_idea = tweet_idea('foo', :twitter_exception => true)
     
-    IdeasController.send(:alias_method, :tweet_idea, :tweet_idea_old)
-
-    #@tweet_idea_expectation.unstub
-    # IdeasController.expects(:twitter_oauth)
-    Twitter::OAuth.any_instance.expects(:authorize_from_access).raises(Exception, 'twitter unavailable')
-    #@tweet_idea_expectation.at_most_once.raises(Exception, 'twitter unavailable')
-    Twitter::Base.expects(:new).never
-    
-    login_as @tweeter
-    post :create,
-      :idea => { :title => 'foo', :description => 'bar', :tag_names => 'one two, three' },
-      :tags => { -2 => 'five six', 3 => 'seven, three, eight' }  # javascript tags
-    assert_redirected_to idea_path(assigns(:idea))
-    
-    # Ensure create succeeded despite error!
-    new_ideas = Idea.find(:all) - old_ideas
-    assert_equal 1, new_ideas.size
-    new_idea = new_ideas.first
-    
-    assert_equal 'foo', new_idea.title
-    assert_equal @tweeter, new_idea.inventor
+    assert_not_nil new_idea
+    @expected_job_count = 1
   end
   
   def test_cannot_set_prohibited_fields

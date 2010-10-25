@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101021230149) do
+ActiveRecord::Schema.define(:version => 20101025152803) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(:version => 20101021230149) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "vectors"
   end
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
@@ -69,6 +68,19 @@ ActiveRecord::Schema.define(:version => 20101021230149) do
   end
 
   add_index "currents", ["vectors"], :name => "currents_fts_vectors_index"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.text     "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "facebook_templates", :force => true do |t|
     t.string "template_name", :null => false

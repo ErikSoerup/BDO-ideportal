@@ -30,6 +30,8 @@ Rails::Initializer.run do |config|
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 #  config.frameworks -=[:action_mailer]
 
+  config.autoload_paths += %W(#{Rails.root}/app/jobs)
+
   # Specify gems that this application depends on. 
   # They can then be installed with "rake gems:install" on new installations.
   # config.gem "bj"

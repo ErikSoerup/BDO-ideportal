@@ -99,6 +99,9 @@ class UsersController < ApplicationController
     #TODO: add handling for errors form authorization
     
     if params[:denied].blank?
+      # In this case, we do actually want to run authorize_from_request and verify_credentials synchronously,
+      # so that the user doesn't get through the Twitter linking process until it's succeeded.
+      
       twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
       
       session['rtoken']  = nil

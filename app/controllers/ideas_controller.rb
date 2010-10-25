@@ -33,12 +33,7 @@ class IdeasController < ApplicationController
         @idea.add_vote!(@idea.inventor)
         
         if TWITTER_ENABLED && @idea.inventor.tweet_ideas?
-          begin
-            tweet_idea(@idea)
-          rescue Exception  => exception
-            puts("Exception raised tweeting idea with id: #{@idea.id}, '#{exception}'")
-            #TODO: error recovery if the tweet fails? For now it just silently fails.
-          end
+          Delayed::Job.enqueue TweetIdeaJob.new(@idea, idea_url(@idea))
         end
         
         if FACEBOOK_ENABLED && @idea.inventor.is_facebook_user?
@@ -161,7 +156,6 @@ class IdeasController < ApplicationController
   end
   
   include ApplicationHelper
-  include TwitterHelper
   helper_method :has_voted?
   helper_method :idea_owner?
   helper_method :flagged_as_inappropriate?
@@ -190,24 +184,6 @@ private
       }.to_json
       
       flash[:facebook_publish] = "facebook_publish_stream( 'has an idea for #{SHORT_SITE_NAME}: #{idea.title}', #{attachment_data}, #{link_data});"
-  end
-  
-  include ActionView::Helpers::TextHelper # for truncate
-  
-  def tweet_idea(idea)
-    status = Timeout::timeout(3) do
-      twitter_oauth.authorize_from_access(idea.inventor.twitter_token, idea.inventor.twitter_secret)
-      twitter = Twitter::Base.new(twitter_oauth)
-      
-      prefix = "Idea for #{COMPANY_NAME}: "
-      suffix = ' ' + idea_url(idea)
-      message = (
-        prefix +
-        truncate(idea.title, :length => 140 - prefix.length - suffix.length, :separator => ' ') +
-        suffix)
-      
-      twitter.update message
-    end
   end
   
 end
