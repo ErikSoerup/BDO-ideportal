@@ -106,6 +106,7 @@ class UsersControllerTest < ActionController::TestCase
       
       # No activation email when created via oauth
       assert user.active?
+      assert !(flash[:info] =~ /#{user.email}/)
       assert_equal 1, @deliveries.size
       assert_email_sent user, /account has been activated/
     end
