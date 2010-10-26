@@ -228,9 +228,6 @@ class UsersControllerTest < ActionController::TestCase
     assert User.find_by_login('aaron@example.com', 'test') # unmodified
   end
   
-  def test_should_create_via_twitter
-  end
-  
   def test_link_twitter_account_should_send_auth_request
     expect_twitter_auth_request
     
