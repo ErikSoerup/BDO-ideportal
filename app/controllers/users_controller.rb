@@ -19,6 +19,7 @@ class UsersController < ApplicationController
     if @user.valid?
       @user.save!
       @user.register!
+      @user.activate! if @user.linked_to_twitter?
       self.current_user = @user
       flash[:info] = render_to_string(:partial => 'created')
       redirect_back_or_default('/')

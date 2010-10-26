@@ -230,7 +230,7 @@ class User < ActiveRecord::Base
     
     def registered
       self.deleted_at = nil
-      reset_activation_code
+      reset_activation_code unless linked_to_twitter?
       save!
     end
     

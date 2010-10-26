@@ -92,16 +92,22 @@ class UsersControllerTest < ActionController::TestCase
     assert_difference 'User.count' do
       create_user(
         :twitter_token => '123456', :twitter_secret => 'abcdef', :twitter_handle => 'joe',
-        :password => nil, :password_confirmation => nil)
+        :email => 'frutso@frutso.com', :password => nil, :password_confirmation => nil)
+      
       assert_response :redirect
       assert flash[:info]
       assert logged_in?
+      
       user = current_user
       assert_equal '123456', user.twitter_token
       assert_equal 'abcdef', user.twitter_secret
       assert_equal 'joe', user.twitter_handle
       assert_nil user.password
-      assert_equal 1, @deliveries.size #TODO: don't do activation email for twitter user
+      
+      # No activation email when created via oauth
+      assert user.active?
+      assert_equal 1, @deliveries.size
+      assert_email_sent user, /account has been activated/
     end
   end
   
