@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :email
   validates_presence_of     :zip_code
   validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
+  validates_presence_of     :password_confirmation,      :if => :password_confirmation_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :name,     :within => 4..100
@@ -202,6 +202,10 @@ class User < ActiveRecord::Base
     !(twitter_token.blank? || twitter_secret.blank? || twitter_handle.blank?)
   end
   
+  def twitter_is_only_auth_method?
+    linked_to_twitter? && crypted_password.blank?
+  end
+  
   def is_facebook_user?
     return ! (fb_uid.blank?  )
   end
@@ -215,8 +219,13 @@ class User < ActiveRecord::Base
     end
       
     def password_required?
-      !linked_to_twitter? &&
-        (crypted_password.blank? || !password.blank? || !password_confirmation.blank?)
+      return true unless password_confirmation.blank?
+      return false if linked_to_twitter?
+      crypted_password.blank? || !password.blank? || !password_confirmation.blank?
+    end
+    
+    def password_confirmation_required?
+      !password.blank?
     end
     
     def registered
