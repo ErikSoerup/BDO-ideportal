@@ -15,8 +15,8 @@ scenario :basic do
     :email => "quentin@example.com",
     :zip_code => '55101',
     :password => "test",
-    :contribution_points => 5,
     :password_confirmation => "test",
+    :contribution_points => 5,
     :terms_of_service => '1')
   @quentin.activate!
   
@@ -44,23 +44,22 @@ scenario :basic do
     :email => "particpator@example.com",
     :zip_code => '55102-2753',
     :password => "test",
-    :contribution_points => 3,
     :password_confirmation => "test",
+    :contribution_points => 3,
     :terms_of_service => '1')
   @participator.activate!
   
-  @tweeter = User.create!(
+  @tweeter = User.new(
     :name => "Tweeter O'Test",
     :email => "tweeter@example.com",
     :zip_code => '57 Q Z 3123',
-    :password => "test",
     :tweet_ideas => true,
     :contribution_points => 3,
-    :password_confirmation => "test",
     :terms_of_service => '1')
   @tweeter.twitter_token = 'foo'
   @tweeter.twitter_secret = 'bar'
   @tweeter.twitter_handle = 'twit'
+  @tweeter.save!
   @tweeter.activate!
   
   @currents_admin = User.create!(
@@ -68,8 +67,8 @@ scenario :basic do
     :email => "currentadmin@example.com",
     :zip_code => '55108-2753',
     :password => "test",
-    :contribution_points => 3,
     :password_confirmation => "test",
+    :contribution_points => 3,
     :terms_of_service => '1')
   @currents_admin.has_role 'admin', Current
   

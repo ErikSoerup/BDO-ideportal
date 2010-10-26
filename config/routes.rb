@@ -7,10 +7,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :currents do |current|
     current.resources :ideas
   end
-  map.resource :user, :member => { :disconnect => :get }
-  map.resource :session do |session|
-    session.create_twitter 'create/twitter', :controller => 'sessions', :action => 'create_twitter'
-  end
+  map.resource :user
+  map.resource :session, :member => { :create_twitter => :get }
   map.resources :comments # for global comment list
   map.resources :tags
   map.resources :profiles

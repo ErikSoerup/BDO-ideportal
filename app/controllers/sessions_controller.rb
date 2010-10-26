@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   end
   
   def new_twitter
-    redirect_to twitter_auth_request_url(session_create_twitter_url)
+    redirect_to twitter_auth_request_url(create_twitter_session_url)
   end
 
   def create
@@ -40,13 +40,12 @@ class SessionsController < ApplicationController
         
         response_for_successful_login
       else
-        # TODO: This should redirect to new account creation
-        flash.now[:info] = "No user found for twitter handle #{credentials.screen_name}."
-
-        @twitter_token = twitter_oauth.access_token.token
-        @twitter_secret = twitter_oauth.access_token.secret
-
-        redirect_to login_path
+        redirect_to new_user_path(
+          :user => {
+            :name => credentials.name,
+            :twitter_handle => credentials.screen_name,
+            :twitter_token  => twitter_oauth.access_token.token,
+            :twitter_secret => twitter_oauth.access_token.secret })
       end
     else
       flash.now[:info] = "Twitter login canceled."

@@ -13,7 +13,27 @@ class UsersControllerTest < ActionController::TestCase
     @response   = ActionController::TestResponse.new
     @deliveries = ActionMailer::Base.deliveries = []
   end
-
+  
+  def test_new_form
+    get :new
+    assert_response :success
+    assert_template 'new'
+  end
+  
+  def test_new_form_for_twitter
+    get :new, :user => {
+      :twitter_token => '123456', :twitter_secret => 'abcdef', :twitter_handle => 'joe', :name => 'Joe' }
+    
+    assert_response :success
+    assert_template 'new_via_twitter'
+    user = assigns(:user)
+    assert user
+    assert_equal '123456', user.twitter_token
+    assert_equal 'abcdef', user.twitter_secret
+    assert_equal 'joe', user.twitter_handle
+    assert_equal 'Joe', user.name
+  end
+  
   def test_should_allow_signup
     assert_difference 'User.count' do
       create_user
@@ -24,12 +44,13 @@ class UsersControllerTest < ActionController::TestCase
       assert_email_sent current_user, /#{activate_path(current_user.activation_code)}/
     end
   end
-
+  
   def test_should_require_password_on_signup
     assert_no_difference 'User.count' do
       create_user(:password => nil)
       assert assigns(:user).errors.on(:password)
       assert_response :success
+      assert_template 'new'
       assert !logged_in?
       assert_equal 0, @deliveries.size
     end
@@ -65,6 +86,36 @@ class UsersControllerTest < ActionController::TestCase
     create_user
     assigns(:user).reload
     assert_not_nil assigns(:user).activation_code
+  end
+
+  def test_sign_up_with_twitter
+    assert_difference 'User.count' do
+      create_user(
+        :twitter_token => '123456', :twitter_secret => 'abcdef', :twitter_handle => 'joe',
+        :password => nil, :password_confirmation => nil)
+      assert_response :redirect
+      assert flash[:info]
+      assert logged_in?
+      user = current_user
+      assert_equal '123456', user.twitter_token
+      assert_equal 'abcdef', user.twitter_secret
+      assert_equal 'joe', user.twitter_handle
+      assert_nil user.password
+      assert_equal 1, @deliveries.size #TODO: don't do activation email for twitter user
+    end
+  end
+  
+  def test_sign_up_with_twitter_errors
+    assert_no_difference 'User.count' do
+      create_user(
+        :twitter_token => '123456', :twitter_secret => 'abcdef', :twitter_handle => 'joe',
+        :password => nil, :password_confirmation => nil, :terms_of_service => nil)
+      assert assigns(:user).errors.on(:terms_of_service)
+      assert_response :success
+      assert_template 'new_via_twitter'
+      assert !logged_in?
+      assert_equal 0, @deliveries.size
+    end
   end
 
   def test_should_send_activation
@@ -177,6 +228,9 @@ class UsersControllerTest < ActionController::TestCase
     assert User.find_by_login('aaron@example.com', 'test') # unmodified
   end
   
+  def test_should_create_via_twitter
+  end
+  
   def test_link_twitter_account_should_send_auth_request
     expect_twitter_auth_request
     
@@ -245,6 +299,10 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_unlink_twitter_account
+    # unlink requires pass
+    @tweeter.password = @tweeter.password_confirmation = 'pass'
+    @tweeter.save!
+    
     login_as @tweeter
     post :update, :user => { :zip_code => '12345' }, :unlink_twitter => 'Button name'
     

@@ -5,11 +5,17 @@ class UsersController < ApplicationController
   before_filter :populate_user, :except => [:show]
 
   def new
+    if params[:user] && params[:user][:twitter_token]
+      new_user_from_params
+      render :action => 'new_via_twitter'
+    else
+      render :action => 'new'
+    end
   end
 
   def create
     cookies.delete :auth_token
-    @user = User.new(params[:user])
+    new_user_from_params
     if @user.valid?
       @user.save!
       @user.register!
@@ -17,7 +23,11 @@ class UsersController < ApplicationController
       flash[:info] = render_to_string(:partial => 'created')
       redirect_back_or_default('/')
     else
-      render :action => 'new'
+      if @user.twitter_token
+        render :action => 'new_via_twitter'
+      else
+        render :action => 'new'
+      end
     end
   end
 
@@ -124,6 +134,13 @@ protected
 
   def populate_user
     @user = current_user
+  end
+  
+  def new_user_from_params
+    @user = User.new(params[:user])
+    @user.twitter_token = params[:user][:twitter_token]
+    @user.twitter_secret = params[:user][:twitter_secret]
+    @user.twitter_handle = params[:user][:twitter_handle]
   end
   
   def log_in_with_activation_code

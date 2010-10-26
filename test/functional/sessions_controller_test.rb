@@ -80,7 +80,7 @@ class SessionsControllerTest < ActionController::TestCase
   def test_initiate_twitter_login
     expect_twitter_auth_request
     get :new_twitter
-    assert_twitter_redirect_with_callback session_create_twitter_url
+    assert_twitter_redirect_with_callback create_twitter_session_url
   end
   
   def test_complete_twitter_login
@@ -109,7 +109,12 @@ class SessionsControllerTest < ActionController::TestCase
     twitter_callback :create_twitter
 
     assert_nil session[:user_id]
-    assert_redirected_to login_path # TODO: will change to twitter account create
+    assert_redirected_to new_user_path(
+      :user => {
+        :twitter_handle => 'dongle',
+        :twitter_token => 'tw_token',
+        :twitter_secret => 'tw_secret',
+        :name => 'Bill' })
   end
 
   protected

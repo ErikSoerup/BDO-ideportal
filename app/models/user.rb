@@ -199,7 +199,7 @@ class User < ActiveRecord::Base
   end
   
   def linked_to_twitter?
-    !twitter_token.blank? && !twitter_secret.blank?
+    !(twitter_token.blank? || twitter_secret.blank? || twitter_handle.blank?)
   end
   
   def is_facebook_user?
@@ -215,7 +215,8 @@ class User < ActiveRecord::Base
     end
       
     def password_required?
-      crypted_password.blank? || !password.blank? || !password_confirmation.blank?
+      !linked_to_twitter? &&
+        (crypted_password.blank? || !password.blank? || !password_confirmation.blank?)
     end
     
     def registered

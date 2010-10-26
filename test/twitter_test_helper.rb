@@ -22,8 +22,8 @@ module TwitterTestHelper
     session['rsecret'] = 'tw_rsecret'
     
     Twitter::OAuth.any_instance.expects(:authorize_from_request).once.with('tw_rtoken', 'tw_rsecret', 'tw_verify')
-    Twitter::OAuth.any_instance.expects(:access_token).at_least_once.returns(stub(:token => 'tw_token', :secret => 'tw_secret'))
-    Twitter::Base.any_instance.expects(:verify_credentials).once.returns(stub(:screen_name => screen_name))
+    Twitter::OAuth.any_instance.expects(:access_token).at_least(0).returns(stub(:token => 'tw_token', :secret => 'tw_secret'))
+    Twitter::Base.any_instance.expects(:verify_credentials).once.returns(stub(:screen_name => screen_name, :name => 'Bill'))
   end
   
   def expect_no_twitter_auth_verification
