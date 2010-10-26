@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.resource :user, :member => { :disconnect => :get }
   map.resource :session do |session|
-    session.oauth_create 'oauth_create', :controller => 'sessions', :action => 'oauth_create'
+    session.create_twitter 'create/twitter', :controller => 'sessions', :action => 'create_twitter'
   end
   map.resources :comments # for global comment list
   map.resources :tags
@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :map
   
   map.login               '/login',                              :controller => 'sessions', :action => 'new'
-  map.login_with_method   '/login/:method',                      :controller => 'sessions', :action => 'new'
+  map.twitter_login       '/login/twitter',                      :controller => 'sessions', :action => 'new_twitter'
   map.logout              '/logout',                             :controller => 'sessions', :action => 'destroy'
   map.signup              '/signup',                             :controller => 'users', :action => 'new'
   map.idea_search         '/ideas/search/*search',               :controller => 'ideas', :action => 'index'

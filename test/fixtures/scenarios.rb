@@ -60,6 +60,7 @@ scenario :basic do
     :terms_of_service => '1')
   @tweeter.twitter_token = 'foo'
   @tweeter.twitter_secret = 'bar'
+  @tweeter.twitter_handle = 'twit'
   @tweeter.activate!
   
   @currents_admin = User.create!(

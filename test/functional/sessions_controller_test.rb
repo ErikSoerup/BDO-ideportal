@@ -1,8 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'twitter_test_helper'
 require 'sessions_controller'
 
 class SessionsControllerTest < ActionController::TestCase
   scenario :basic
+  
+  include TwitterTestHelper
 
   def setup
     @controller = SessionsController.new
@@ -12,7 +15,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   def test_should_login_and_redirect
     post :create, :email => 'quentin@example.com', :password => 'test'
-    assert session[:user_id]
+    assert_equal @quentin.id, session[:user_id]
     assert_response :redirect
   end
 
@@ -72,6 +75,41 @@ class SessionsControllerTest < ActionController::TestCase
     @request.cookies["auth_token"] = auth_token('invalid_auth_token')
     get :new
     assert !@controller.send(:logged_in?)
+  end
+  
+  def test_initiate_twitter_login
+    expect_twitter_auth_request
+    get :new_twitter
+    assert_twitter_redirect_with_callback session_create_twitter_url
+  end
+  
+  def test_complete_twitter_login
+    expect_twitter_auth_verificiation 'twit'
+    
+    twitter_callback :create_twitter
+    
+    assert_equal @tweeter.id, session[:user_id]
+    @tweeter.reload
+    assert_equal 'tw_token',  @tweeter.twitter_token
+    assert_equal 'tw_secret', @tweeter.twitter_secret
+  end
+
+  def test_deny_twitter_login
+    expect_no_twitter_auth_verification
+
+    twitter_callback_denied :create_twitter
+
+    assert_nil session[:user_id]
+    assert_redirected_to login_path
+  end
+  
+  def test_unknown_twitter_login_prompts_new_account
+    expect_twitter_auth_verificiation 'dongle'
+    
+    twitter_callback :create_twitter
+
+    assert_nil session[:user_id]
+    assert_redirected_to login_path # TODO: will change to twitter account create
   end
 
   protected

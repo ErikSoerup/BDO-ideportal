@@ -1,8 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'twitter_test_helper'
 require 'users_controller'
 
 class UsersControllerTest < ActionController::TestCase
   scenario :basic
+  
+  include TwitterTestHelper
 
   def setup
     @controller = UsersController.new
@@ -175,16 +178,15 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_link_twitter_account_should_send_auth_request
-    Twitter::OAuth.any_instance.stubs(
-      :request_token => stub(:authorize_url => 'http://twitter/auth/url', :token => 'foo', :secret => 'bar'))
+    expect_twitter_auth_request
     
     assert_login_required @quentin do
       post :update, :user => { :zip_code => '12345' }, :link_twitter => 'Button name'
     end
     
+    assert_twitter_redirect_with_callback authorize_twitter_url
     @quentin.reload
     assert_equal '12345', @quentin.zip_code
-    assert_redirected_to 'http://twitter/auth/url'
   end
   
   def test_link_twitter_account_bypassed_if_form_errors
@@ -194,15 +196,10 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_authorize_twitter
-    session['rtoken'] = 'tw_rtoken'
-    session['rsecret'] = 'tw_rsecret'
-    
-    Twitter::OAuth.any_instance.expects(:authorize_from_request).once.with('tw_rtoken', 'tw_rsecret', 'tw_verify')
-    Twitter::OAuth.any_instance.expects(:access_token).at_least_once.returns(stub(:token => 'tw_token', :secret => 'tw_secret'))
-    Twitter::Base.any_instance.expects(:verify_credentials).once.returns(stub(:screen_name => 'quentweet'))
+    expect_twitter_auth_verificiation 'quentweet'
 
     assert_login_required @quentin do
-      get :authorize_twitter, :oauth_verifier => 'tw_verify'
+      twitter_callback :authorize_twitter
     end
     
     assert_redirected_to edit_user_path
@@ -215,10 +212,10 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_authorize_twitter_denied
-    Twitter::OAuth.any_instance.expects(:authorize_from_request).never
+    expect_no_twitter_auth_verification
     
     assert_login_required @quentin do
-      get :authorize_twitter, :denied => '1'
+      twitter_callback_denied :authorize_twitter
     end
     
     assert_redirected_to edit_user_path
@@ -230,13 +227,13 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_authorize_twitter_denied_preserves_previous_auth
-    Twitter::OAuth.any_instance.expects(:authorize_from_request).never
+    expect_no_twitter_auth_verification
     twitter_handle = @tweeter.twitter_handle
     twitter_token  = @tweeter.twitter_token
     twitter_secret = @tweeter.twitter_secret
     
     assert_login_required @tweeter do
-      get :authorize_twitter, :denied => '1'
+      twitter_callback_denied :authorize_twitter
     end
     
     assert_redirected_to edit_user_path

@@ -5,12 +5,11 @@ class SessionsController < ApplicationController
   include TwitterHelper
 
   def new
-    case params[:method]
-    when 'twitter'
-      redirect_to twitter_auth_request_url(session_oauth_create_url)
-      return
-    end
     @body_class = 'login'
+  end
+  
+  def new_twitter
+    redirect_to twitter_auth_request_url(session_create_twitter_url)
   end
 
   def create
@@ -21,7 +20,6 @@ class SessionsController < ApplicationController
         current_user.remember_me unless current_user.remember_token?
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      
       response_for_successful_login
     else
       flash.now[:error] = render_to_string :partial => 'login_failed'
@@ -29,13 +27,25 @@ class SessionsController < ApplicationController
     end
   end
   
-  def oauth_create
-    if credentials = verify_twitter_authorization
-      if self.current_user = User.find_by_twitter_token(twitter_oauth.access_token.token)
-        # What if user.twitter_secret differs from twitter_oauth.access_token.secret?
+  def create_twitter
+    credentials = verify_twitter_authorization
+    unless credentials.blank?
+      if user = User.find_by_twitter_handle(credentials.screen_name)
+        self.current_user = user
+        
+        # Credentials can change if user deauthorizes us, then reauthorizes
+        user.twitter_token = twitter_oauth.access_token.token
+        user.twitter_secret = twitter_oauth.access_token.secret
+        user.save!
+        
         response_for_successful_login
       else
+        # TODO: This should redirect to new account creation
         flash.now[:info] = "No user found for twitter handle #{credentials.screen_name}."
+
+        @twitter_token = twitter_oauth.access_token.token
+        @twitter_secret = twitter_oauth.access_token.secret
+
         redirect_to login_path
       end
     else

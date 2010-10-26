@@ -27,9 +27,9 @@
         .group
           Sign in with
           -if TWITTER_ENABLED
-            = link_to 'Twitter', login_with_method_path('twitter')
+            = link_to 'Twitter', twitter_login_path
           -if FACEBOOK_ENABLED
-            = link_to 'Facebook', login_with_method_path('facebook')
+            = link_to 'Facebook', '#'
       -# ------- /STYLE NEEDED ------
       
     .footer
