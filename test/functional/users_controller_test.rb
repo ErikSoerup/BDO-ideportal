@@ -32,6 +32,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'abcdef', user.twitter_secret
     assert_equal 'joe', user.twitter_handle
     assert_equal 'Joe', user.name
+    assert user.tweet_ideas?
   end
   
   def test_should_allow_signup
@@ -103,6 +104,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_equal 'abcdef', user.twitter_secret
       assert_equal 'joe', user.twitter_handle
       assert_nil user.password
+      assert !user.tweet_ideas?
       
       # No activation email when created via oauth
       assert user.active?

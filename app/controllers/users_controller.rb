@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   def new
     if params[:user] && params[:user][:twitter_token]
       new_user_from_params
+      @user.tweet_ideas = @user.linked_to_twitter?
       render :action => 'new_via_twitter'
     else
       render :action => 'new'
