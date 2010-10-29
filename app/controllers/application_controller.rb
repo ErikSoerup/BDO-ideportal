@@ -8,6 +8,9 @@ class ApplicationController < ActionController::Base
   before_filter :add_ideas_feed
 
   include AuthenticatedSystem
+  if FACEBOOK_ENABLED
+    include Facebooker2::Rails::Controller
+  end
   
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store

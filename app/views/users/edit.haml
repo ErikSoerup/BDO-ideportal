@@ -43,21 +43,29 @@
             - else
               = submit_tag 'Link to Twitter account', :name => 'link_twitter'
               %p.note
-                Allows you to Tweet your ideas.
+                Allows you to Tweet your ideas, and log in via Twitter.
                 %br/
                 == Displays your Twitter name in your #{SHORT_SITE_NAME} public profile.
-        -# ------- /STYLE NEEDED ------
           
         - if FACEBOOK_ENABLED
           .form-group.inline
-            - if @user.is_facebook_user?
-              = f.label :none, "Facebook Connection"
-              Your account is linked with a Facebook account
-              = link_to 'Disconnect from Facebook', :controller => 'users', :action => 'disconnect'
+            - if @user.linked_to_facebook?
+              %p
+                Linked to Facebook account:
+                %b=h @user.facebook_handle
+                - if @user.facebook_is_only_auth_method?
+                  %p.note To unlink your Facebook account, first enter a password in the form above.
+                - else
+                  %br/
+                  = submit_tag 'Unlink Facebook account', :name => 'unlink_facebook'
+              = f.check_box :facebook_post_ideas, :class => "input-checkbox"
+              = f.label :facebook_post_ideas, "Tweet my ideas"
+              %p.note Check this box to automatically post your #{SHORT_SITE_NAME} ideas to Facebook
             - else
-              = f.label :none, "Facebook Connection"
-              == Do you have a Facebook account? Connect it with #{SHORT_SITE_NAME} to share your suggestions on facebook too.
-              <fb:login-button onclick='facebook_button_onclick()'></fb:login-button>
+              = submit_tag 'Link to Facebook account', :name => 'link_facebook'
+              %p.note
+                Allows you to public your ideas to your wall, and log in via Facebook.
+        -# ------- /STYLE NEEDED ------
         
         .form-submit.inline
           = submit_tag 'Update Account', :id => "submit-save-changes", :class => "input-submit"

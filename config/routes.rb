@@ -8,7 +8,10 @@ ActionController::Routing::Routes.draw do |map|
     current.resources :ideas
   end
   map.resource :user
-  map.resource :session, :member => { :create_twitter => :get }
+  map.resource :session, :member => {
+    :create_twitter => :get,
+    :create_facebook => :get
+  }
   map.resources :comments # for global comment list
   map.resources :tags
   map.resources :profiles
@@ -25,11 +28,8 @@ ActionController::Routing::Routes.draw do |map|
   map.send_password_reset '/user/password/forgot',               :controller => 'users', :action => 'send_password_reset', :conditions => { :method => :post }
   map.password_reset      '/user/password/new/:activation_code', :controller => 'users', :action => 'new_password'
   map.authorize_twitter   '/user/authorize/twitter',             :controller => 'users', :action => 'authorize_twitter'
+  map.authorize_facebook  '/user/authorize/facebook',            :controller => 'users', :action => 'authorize_facebook'
   map.flag_inappropriate  '/:model/:id/inappropriate',           :controller => 'inappropriate', :action => 'flag'
-
-  # Facebook stuff
-  
-  # map.connect '/fb/:action', :controller => 'fb_connect'
 
   # OAuth stuff
   

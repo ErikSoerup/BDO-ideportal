@@ -25,7 +25,7 @@ class UsersControllerTest < ActionController::TestCase
       :twitter_token => '123456', :twitter_secret => 'abcdef', :twitter_handle => 'joe', :name => 'Joe' }
     
     assert_response :success
-    assert_template 'new_via_twitter'
+    assert_template 'new_via_third_party'
     user = assigns(:user)
     assert user
     assert_equal '123456', user.twitter_token
@@ -121,7 +121,7 @@ class UsersControllerTest < ActionController::TestCase
         :password => nil, :password_confirmation => nil, :terms_of_service => nil)
       assert assigns(:user).errors.on(:terms_of_service)
       assert_response :success
-      assert_template 'new_via_twitter'
+      assert_template 'new_via_third_party'
       assert !logged_in?
       assert_equal 0, @deliveries.size
     end

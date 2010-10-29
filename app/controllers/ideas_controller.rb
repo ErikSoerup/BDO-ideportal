@@ -37,12 +37,7 @@ class IdeasController < ApplicationController
         end
         
         if FACEBOOK_ENABLED && @idea.inventor.is_facebook_user?
-          begin
-            facebook_publish_idea(@idea)
-          rescue Exception  => exception
-            puts("Exception raised facebooking idea with id: #{@idea.id}, '#{exception}'")
-            #TODO: error recovery if the facebook fails?  For now it just silently fails.
-          end
+          facebook_publish_idea @idea
         end
       end
     end
@@ -174,16 +169,16 @@ private
   end
   
   def facebook_publish_idea(idea)
-      link_data = [{
-        :text => "View More at #{SHORT_SITE_NAME}",
-        :href => idea_url(idea)
-      }].to_json
-      attachment_data = {
-        :description => idea.description,
-        :media => [ { :type => "image", :src => "#{root_url}images/logo_blue.jpg", :href => idea_url(idea) } ]
-      }.to_json
-      
-      flash[:facebook_publish] = "facebook_publish_stream( 'has an idea for #{SHORT_SITE_NAME}: #{idea.title}', #{attachment_data}, #{link_data});"
+    link_data = [{
+      :text => "View More at #{SHORT_SITE_NAME}",
+      :href => idea_url(idea)
+    }].to_json
+    attachment_data = {
+      :description => idea.description,
+      :media => [ { :type => "image", :src => "#{root_url}images/logo_blue.jpg", :href => idea_url(idea) } ]
+    }.to_json
+    
+    flash[:facebook_publish] = "facebook_publish_stream( 'has an idea for #{SHORT_SITE_NAME}: #{idea.title}', #{attachment_data}, #{link_data});"
   end
   
 end

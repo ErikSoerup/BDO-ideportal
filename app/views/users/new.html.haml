@@ -39,11 +39,10 @@
       -# ------- STYLE NEEDED ------
       -if TWITTER_ENABLED || FACEBOOK_ENABLED
         .group
-          You can also sign up using your existing account with
           -if TWITTER_ENABLED
-            = link_to 'Twitter', twitter_login_path
+            .login-button= link_to 'Log in with Twitter', twitter_login_path
           -if FACEBOOK_ENABLED
-            = link_to 'Facebook', '#'
+            .login-button= link_to 'Log in with Facebook', '#', :onclick => 'facebook_login(); return false'
       -# ------- /STYLE NEEDED ------
       
     .footer

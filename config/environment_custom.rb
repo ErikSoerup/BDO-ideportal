@@ -20,8 +20,8 @@ SESSION_KEY = "_#{SHORT_SITE_NAME.downcase}_session"
 TWITTER_ENABLED = ENV['TWITTER_API_KEY'] || false
 
 # Facebook support is experimental, and currently broken. We invite you to improve it!
-# Settings in facebook.yml and facebooker.yml.
-FACEBOOK_ENABLED = false
+# Settings in facebooker2.yml.
+FACEBOOK_ENABLED = ENV['FACEBOOK_API_KEY'] || false
 
 # Customize the user contribution points for various activities, if you like.
 CONTRIBUTION_SCORES = {

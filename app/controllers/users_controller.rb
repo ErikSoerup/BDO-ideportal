@@ -5,10 +5,11 @@ class UsersController < ApplicationController
   before_filter :populate_user, :except => [:show]
 
   def new
-    if params[:user] && params[:user][:twitter_token]
+    if params[:user] && params[:user][:twitter_token] || params[:facebook_create]
       new_user_from_params
       @user.tweet_ideas = @user.linked_to_twitter?
-      render :action => 'new_via_twitter'
+      @user.facebook_post_ideas = @user.linked_to_facebook?
+      render :action => 'new_via_third_party'
     else
       render :action => 'new'
     end
@@ -20,13 +21,13 @@ class UsersController < ApplicationController
     if @user.valid?
       @user.save!
       @user.register!
-      @user.activate! if @user.linked_to_twitter?
+      @user.activate! if @user.linked_to_twitter? || @user.linked_to_facebook?
       self.current_user = @user
       flash[:info] = render_to_string(:partial => 'created')
       redirect_back_or_default('/')
     else
-      if @user.twitter_token
-        render :action => 'new_via_twitter'
+      if @user.linked_to_twitter? || @user.linked_to_facebook?
+        render :action => 'new_via_third_party'
       else
         render :action => 'new'
       end
@@ -87,7 +88,8 @@ class UsersController < ApplicationController
   def update
     # TODO: Should we require confirmation process if email changes?
     @user.update_attributes(params[:user])
-    unlink_twitter if params[:unlink_twitter]
+    user.unlink_twitter  if params[:unlink_twitter]
+    user.unlink_facebook if params[:unlink_facebook]
     
     if @user.save
       flash.now[:info] = "Your changes have been saved."
@@ -96,6 +98,9 @@ class UsersController < ApplicationController
       if params[:link_twitter]
         redirect_to twitter_auth_request_url(authorize_twitter_url)
         return
+      end
+      
+      if params[:link_facebook]
       end
     end
     
@@ -120,14 +125,7 @@ class UsersController < ApplicationController
     redirect_to edit_user_path
   end
   
-  def disconnect
-    if current_user.is_facebook_user?
-      current_user.fb_uid = nil
-      if current_user.save
-        flash[:notice] = 'Your account has been disconnected from facebook'
-      end
-    end
-    render :action => 'edit'
+  def authorize_facebook
   end
   
   include TwitterHelper
@@ -143,6 +141,10 @@ protected
     @user.twitter_token = params[:user][:twitter_token]
     @user.twitter_secret = params[:user][:twitter_secret]
     @user.twitter_handle = params[:user][:twitter_handle]
+    if current_facebook_user
+      @user.facebook_uid = current_facebook_user.id
+      @user.facebook_access_token = current_facebook_client.access_token
+    end
   end
   
   def log_in_with_activation_code
@@ -156,9 +158,4 @@ protected
     logged_in?
   end
   
-  def unlink_twitter
-    @user.twitter_token = @user.twitter_secret = @user.twitter_handle = nil
-    @user.tweet_ideas = false
-  end
-
 end

@@ -40,16 +40,21 @@ Rails::Initializer.run do |config|
   config.gem "haml"
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem "color"
-  config.gem 'facebooker' if FACEBOOK_ENABLED || ENV['RAILS_ENV'] == 'test'
-  config.gem 'twitter' if TWITTER_ENABLED || ENV['RAILS_ENV'] == 'test'
+  if TWITTER_ENABLED  || ENV['RAILS_ENV'] == 'test'
+    config.gem 'twitter'
+    config.gem 'mash'
+    config.gem 'httparty'
+    config.gem 'ruby-hmac', :lib => 'hmac'
+  end
+  if FACEBOOK_ENABLED || ENV['RAILS_ENV'] == 'test'
+    config.gem 'facebooker2'
+    config.gem 'mogli'
+    config.gem 'httparty'
+  end
   config.gem 'oauth'
   config.gem 'oauth-plugin'
-  #these 3 gems (mash, httparty, ruby-hmac) are needed for twitter/oauth
-  config.gem 'mash'
-  config.gem 'httparty'
-  config.gem 'ruby-hmac', :lib => 'hmac'
   config.gem "calendar_date_select"
-  config.gem "rcov"
+  config.gem "rcov"  # for tests
   config.gem "lazy"
   
   # Only load the plugins named here, in the order given. By default, all plugins 
@@ -108,20 +113,3 @@ unless SESSION_SECRET
 end
 
 require 'will_paginate'
-
-##
-#
-# facebook settings created using information from:
-# http://blog.evanweaver.com/articles/2007/07/13/developing-a-facebook-app-locally/
-# FACEBOOK_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/facebook.yml")[RAILS_ENV]
-# if (!FACEBOOK_CONFIG.nil?)
-#   # FACEBOOK_CONFIG only configured for some environments
-#   FACEBOOK_CONFIG.merge!(FACEBOOK_CONFIG[ENV['USER']] || {})
-# end
-# 
-
-#  http://passthehash.com/hash/2009/05/how-to-facebook-connect-your-rails-app.html
-ENV['XD_RECEIVER_LOCATION'] = "/fb/connect/xd_receiver.htm"
-# ENV['FACEBOOK_AUTHENTICATE_LOCATION'] = "/fb/authenticate"
-
-TWITTER_CONFIG = YAML.load(File.read(Rails.root.to_s + '/config/' + 'twitter_config.yml'))[RAILS_ENV]
