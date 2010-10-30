@@ -88,19 +88,18 @@ class UsersController < ApplicationController
   def update
     # TODO: Should we require confirmation process if email changes?
     @user.update_attributes(params[:user])
-    user.unlink_twitter  if params[:unlink_twitter]
-    user.unlink_facebook if params[:unlink_facebook]
+    @user.unlink_twitter  if !params[:unlink_twitter].blank?
+    @user.unlink_facebook if !params[:unlink_facebook].blank?
     
-    if @user.save
+    if !params[:link_facebook].blank?
+      authorize_facebook
+    elsif @user.save
       flash.now[:info] = "Your changes have been saved."
       @user.password = @user.password_confirmation = nil
       
-      if params[:link_twitter]
+      if !params[:link_twitter].blank?
         redirect_to twitter_auth_request_url(authorize_twitter_url)
         return
-      end
-      
-      if params[:link_facebook]
       end
     end
     
@@ -126,6 +125,17 @@ class UsersController < ApplicationController
   end
   
   def authorize_facebook
+    if current_facebook_user
+      @user.facebook_uid = current_facebook_user.id
+      @user.facebook_access_token = current_facebook_client.access_token
+      @user.facebook_post_ideas = true
+      
+      if @user.save
+        flash.now[:info] = "Your IdeaX account is now linked to Facebook."
+      end
+    else
+      flash.now[:info] = "Facebook authorization canceled."
+    end
   end
   
   include TwitterHelper

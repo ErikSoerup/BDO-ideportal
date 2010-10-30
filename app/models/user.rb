@@ -209,7 +209,7 @@ class User < ActiveRecord::Base
   end
   
   def facebook_is_only_auth_method?
-    linked_to_facebook && !linked_to_twitter? && crypted_password.blank?
+    linked_to_facebook? && !linked_to_twitter? && crypted_password.blank?
   end
   
   def unlink_facebook

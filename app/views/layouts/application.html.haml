@@ -45,13 +45,18 @@
         -if FACEBOOK_ENABLED
           = fb_connect_async_js
           :javascript
-            facebook_login = function() {
+            facebook_auth = function(success) {
               FB.login(
                 function(response) {
                   if(response.session)
-                    window.location = '#{create_facebook_session_url}'
+                    success()
                 },
                 { perms: 'email,publish_stream' })
+            }
+            facebook_login = function(success) {
+              facebook_auth(function() {
+                window.location = '#{create_facebook_session_url}'
+              })
             }
         -if GOOGLE_ANALYTICS_TRACKING_CODE
           :javascript

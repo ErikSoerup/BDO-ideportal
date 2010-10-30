@@ -4,7 +4,7 @@
       %h2.icon.user-edit Account Settings
     .body.group
       = error_messages_for :user
-      - form_for :user, :url => user_path, :html => { :method => :put } do |f|
+      - form_for :user, :url => user_path, :html => { :method => :put, :id => 'edit_user_form' } do |f|
         .form-group.inline
           = f.label :name, "Screen name<br /><em>required</em>", :class => 'required'
           = f.text_field :name, :class => "input-text"
@@ -26,6 +26,13 @@
           = f.label :notify_on_comments, "Notify me when someone comments on my idea"
         
         -# ------- STYLE NEEDED ------
+        :javascript
+          change_service_link = function(service, link) {
+            var form = $('edit_user_form')
+            form[(link ? 'link_' : 'unlink_') + service].value = 1
+            form.submit()
+          }
+        
         - if TWITTER_ENABLED
           .form-group.inline.checkbox
             - if @user.linked_to_twitter?
@@ -36,35 +43,48 @@
                   %p.note To unlink your Twitter account, first enter a password in the form above.
                 - else
                   %br/
-                  = submit_tag 'Unlink Twitter account', :name => 'unlink_twitter'
+                  = link_to 'Unlink Twitter account', '#', :onclick => 'return change_service_link("twitter", false)'
+                  = hidden_field_tag :unlink_twitter
               = f.check_box :tweet_ideas, :class => "input-checkbox"
               = f.label :tweet_ideas, "Tweet my ideas"
               %p.note Check this box to automatically Tweet your #{SHORT_SITE_NAME} ideas.
             - else
-              = submit_tag 'Link to Twitter account', :name => 'link_twitter'
+              = link_to 'Link to Twitter account', '#', :onclick => 'return change_service_link("twitter", true)'
+              = hidden_field_tag :link_twitter
               %p.note
                 Allows you to Tweet your ideas, and log in via Twitter.
                 %br/
                 == Displays your Twitter name in your #{SHORT_SITE_NAME} public profile.
           
         - if FACEBOOK_ENABLED
-          .form-group.inline
+          .form-group.inline.checkbox
             - if @user.linked_to_facebook?
               %p
                 Linked to Facebook account:
-                %b=h @user.facebook_handle
+                %b FACEBOOK NAME GOES HERE
+                -#h @user.facebook_handle
                 - if @user.facebook_is_only_auth_method?
                   %p.note To unlink your Facebook account, first enter a password in the form above.
                 - else
                   %br/
-                  = submit_tag 'Unlink Facebook account', :name => 'unlink_facebook'
+                  = link_to 'Unlink Facebook account', '#', :onclick => 'return change_service_link("facebook", false)'
+                  = hidden_field_tag :unlink_facebook
               = f.check_box :facebook_post_ideas, :class => "input-checkbox"
-              = f.label :facebook_post_ideas, "Tweet my ideas"
-              %p.note Check this box to automatically post your #{SHORT_SITE_NAME} ideas to Facebook
+              = f.label :facebook_post_ideas, "Share my ideas on Facebook"
+              %p.note Check this box to automatically post your #{SHORT_SITE_NAME} ideas on your wall
             - else
-              = submit_tag 'Link to Facebook account', :name => 'link_facebook'
+              = link_to 'Link to Facebook account', '#', :onclick => 'return facebook_auth_and_link(true)'
+              = hidden_field_tag :link_facebook
               %p.note
                 Allows you to public your ideas to your wall, and log in via Facebook.
+            
+            :javascript
+              facebook_auth_and_link = function() {
+                facebook_auth(function() {
+                  change_service_link('facebook', true)
+                })
+                return false
+              }
         -# ------- /STYLE NEEDED ------
         
         .form-submit.inline

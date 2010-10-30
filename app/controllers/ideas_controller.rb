@@ -32,12 +32,12 @@ class IdeasController < ApplicationController
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)
         
-        if TWITTER_ENABLED && @idea.inventor.tweet_ideas?
+        if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.tweet_ideas?
           Delayed::Job.enqueue TweetIdeaJob.new(@idea, idea_url(@idea))
         end
         
-        if FACEBOOK_ENABLED && @idea.inventor.is_facebook_user?
-          facebook_publish_idea @idea
+        if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.facebook_post_ideas?
+          Delayed::Job.enqueue FacebookPostIdeaJob.new(@idea, idea_url(@idea))
         end
       end
     end
@@ -166,19 +166,6 @@ private
         params[:idea][key] = '' if params[:idea][key] =~ /\xA0$/
       end
     end
-  end
-  
-  def facebook_publish_idea(idea)
-    link_data = [{
-      :text => "View More at #{SHORT_SITE_NAME}",
-      :href => idea_url(idea)
-    }].to_json
-    attachment_data = {
-      :description => idea.description,
-      :media => [ { :type => "image", :src => "#{root_url}images/logo_blue.jpg", :href => idea_url(idea) } ]
-    }.to_json
-    
-    flash[:facebook_publish] = "facebook_publish_stream( 'has an idea for #{SHORT_SITE_NAME}: #{idea.title}', #{attachment_data}, #{link_data});"
   end
   
 end
