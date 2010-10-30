@@ -40,13 +40,13 @@ Rails::Initializer.run do |config|
   config.gem "haml"
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem "color"
-  if TWITTER_ENABLED  || ENV['RAILS_ENV'] == 'test'
+  if TWITTER_ENABLED
     config.gem 'twitter'
     config.gem 'mash'
     config.gem 'httparty'
     config.gem 'ruby-hmac', :lib => 'hmac'
   end
-  if FACEBOOK_ENABLED || ENV['RAILS_ENV'] == 'test'
+  if FACEBOOK_ENABLED
     config.gem 'facebooker2'
     config.gem 'mogli'
     config.gem 'httparty'

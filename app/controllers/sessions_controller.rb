@@ -2,7 +2,7 @@
 class SessionsController < ApplicationController
   
   include AuthenticatedSystem
-  include TwitterHelper if TWITTER_ENABLED
+  include TwitterHelper
 
   def new
     @body_class = 'login'
