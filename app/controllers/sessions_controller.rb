@@ -72,10 +72,12 @@ class SessionsController < ApplicationController
         
         redirect_to new_user_path(
           :user => {
-            :name => full_facebook_user ? full_facebook_user.name : nil,
+            :name  => full_facebook_user ? full_facebook_user.name  : nil,
             :email => full_facebook_user ? full_facebook_user.email : nil },
           :facebook_create => true)
       end
+    else
+      redirect_to login_path
     end
   end
 

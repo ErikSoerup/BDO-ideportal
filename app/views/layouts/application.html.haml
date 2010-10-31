@@ -45,15 +45,15 @@
         -if FACEBOOK_ENABLED
           = fb_connect_async_js
           :javascript
-            facebook_auth = function(success) {
+            facebook_auth = function(success_callback) {
               FB.login(
                 function(response) {
                   if(response.session)
-                    success()
+                    success_callback()
                 },
                 { perms: 'email,publish_stream' })
             }
-            facebook_login = function(success) {
+            facebook_login = function() {
               facebook_auth(function() {
                 window.location = '#{create_facebook_session_url}'
               })

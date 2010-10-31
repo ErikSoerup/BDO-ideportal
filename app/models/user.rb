@@ -237,7 +237,7 @@ class User < ActiveRecord::Base
     
     def registered
       self.deleted_at = nil
-      reset_activation_code unless linked_to_twitter?
+      reset_activation_code unless linked_to_twitter? || linked_to_facebook?
       save!
     end
     

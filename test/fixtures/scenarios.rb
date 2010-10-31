@@ -62,6 +62,17 @@ scenario :basic do
   @tweeter.save!
   @tweeter.activate!
   
+  @facebooker = User.new(
+    :name => "Friendy McSocial",
+    :email => "exhibitionist@example.com",
+    :zip_code => 'JXY 372',
+    :facebook_post_ideas => true,
+    :terms_of_service => '1')
+  @facebooker.facebook_uid = '4207849480'
+  @facebooker.facebook_access_token = 'foobar'
+  @facebooker.save!
+  @facebooker.activate!
+  
   @currents_admin = User.create!(
     :name => "Currents Admin",
     :email => "currentadmin@example.com",
