@@ -15,7 +15,7 @@ STAGING_HOST = 'bbyidx.com'
 SESSION_SECRET = nil
 SESSION_KEY = "_#{SHORT_SITE_NAME.downcase}_session"
 
-# Configure Twitter in twitter_config.yml, then set "TWITTER_ENABLED = true" to enable Twitter integration.
+# Configure Twitter in twitter.yml, then set "TWITTER_ENABLED = true" to enable Twitter integration.
 # You can also set TWITTER_API_KEY and TWITTER_API_SECRET as environment variables.
 TWITTER_ENABLED = ENV['TWITTER_API_KEY'] || ENV['RAILS_ENV'] == 'test'
 
