@@ -31,6 +31,7 @@ class HtmlEscapingTest < ActionController::TestCase
     test_request :get,  "/login"
     test_request :get,  "/logout"
     test_request :get,  "/signup"
+    test_request :get,  "/signup", user_fields.merge(:facebook_create => attack_fields(:facebook_create))
     test_request :post, "/session", :email => @user.email,         :password => "<attack>user.password<attack>"
     test_request :post, "/session", :email => @pending_user.email, :password => "<attack>pending_user.password<attack>"
     test_request :post, "/session", :email => @user.email,         :password => "wrong password"
@@ -96,6 +97,7 @@ class HtmlEscapingTest < ActionController::TestCase
     test_request :get,  "/ideas/#{@idea.id}/comments/#{@comment.id}", :format => 'xml'
     test_request :get,  "/profiles/#{@user.id}",                      :format => 'xml'
     test_request :get,  "/tags",                                      :format => 'xml'
+    test_request :get,  "/comments",                                  :format => 'xml'
     test_request(:post, "/ideas",                                     :format => 'xml') { oauth_login_as @user } # validation errors
     test_request(:post, "/ideas/#{@idea.id}/vote",                    :format => 'xml') { oauth_login_as @user }
     
