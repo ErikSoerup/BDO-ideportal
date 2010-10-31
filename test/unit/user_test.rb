@@ -217,7 +217,7 @@ class UserTest < ActiveSupport::TestCase
   end
   
   def test_top_contributors
-    assert_equal_unordered [@quentin, @sally, @tweeter], User.find_top_contributors
+    assert_equal_unordered [@quentin, @sally, @tweeter, @facebooker], User.find_top_contributors
     assert_equal [@quentin], User.find_top_contributors(:limit => 1)
   end
   

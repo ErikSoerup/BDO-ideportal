@@ -362,8 +362,9 @@ class UsersControllerTest < ActionController::TestCase
     @tweeter.password = @tweeter.password_confirmation = 'pass'
     @tweeter.save!
     
-    login_as @tweeter
-    post :update, :user => { :zip_code => '12345' }, :unlink_twitter => 'Button name'
+    assert_login_required @tweeter do
+      post :update, :user => { :zip_code => '12345' }, :unlink_twitter => 'Button name'
+    end
     
     @tweeter.reload
     assert_equal '12345', @tweeter.zip_code
@@ -372,12 +373,80 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_unlink_twitter_account_bypassed_if_form_errors
+    # unlink requires pass
+    @tweeter.password = @tweeter.password_confirmation = 'pass'
+    @tweeter.save!
+    
     login_as @tweeter
     post :update, :user => { :password => 'mis', :password_confirmation => 'match' }, :unlink_twitter => 'Button name'
     
     @tweeter.reload
     assert @tweeter.linked_to_twitter?
     assert @tweeter.tweet_ideas
+  end
+  
+  def test_authorize_facebook
+    mock_facebook_user '13572468'
+    
+    assert_login_required @quentin do
+      # Whereas as Twitter auth happens entirely server-side, resulting in a callback,
+      # Facebook auth happens in part via client-side JS which sets a cookie and the link_facebook flag.
+      get :update, :link_facebook => '1'
+    end
+    
+    assert_response :success
+    assert_template 'edit'
+    @quentin.reload
+    assert @quentin.linked_to_facebook?
+    assert_equal '13572468', @quentin.facebook_uid
+    assert_equal 'fb_at',    @quentin.facebook_access_token
+    assert @quentin.facebook_post_ideas
+  end
+  
+  def test_authorize_facebook_denied
+    mock_facebook_user nil
+    
+    assert_login_required @quentin do
+      # Whereas as Twitter auth happens entirely server-side, resulting in a callback,
+      # Facebook auth happens in part via client-side JS which sets a cookie and the link_facebook flag.
+      get :update, :link_facebook => '1'
+    end
+    
+    assert_response :success
+    assert_template 'edit'
+    @quentin.reload
+    assert !@quentin.linked_to_facebook?
+    assert_nil @quentin.facebook_uid
+    assert_nil @quentin.facebook_access_token
+    assert !@quentin.facebook_post_ideas
+  end
+  
+  def test_unlink_facebook
+    # unlink requires pass
+    @facebooker.password = @facebooker.password_confirmation = 'pass'
+    @facebooker.save!
+    
+    assert_login_required @facebooker do
+      post :update, :user => { :zip_code => '12345' }, :unlink_facebook => 'Button name'
+    end
+    
+    @facebooker.reload
+    assert_equal '12345', @facebooker.zip_code
+    assert !@facebooker.linked_to_twitter?
+    assert !@facebooker.facebook_post_ideas
+  end
+  
+  def test_unlink_facebook_bypassed_if_form_errors
+    # unlink requires pass
+    @facebooker.password = @facebooker.password_confirmation = 'pass'
+    @facebooker.save!
+    
+    login_as @facebooker
+    post :update, :user => { :password => 'mis', :password_confirmation => 'match' }, :unlink_facebook => 'Button name'
+    
+    @facebooker.reload
+    assert @facebooker.linked_to_facebook?
+    assert @facebooker.facebook_post_ideas
   end
   
   protected
