@@ -17,4 +17,8 @@ class ShareIdeaJob
   
   include ActionView::Helpers::TextHelper # for truncate
   
+  def logger
+    RAILS_DEFAULT_LOGGER
+  end
+  
 end

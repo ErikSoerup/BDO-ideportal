@@ -1,4 +1,5 @@
 require 'digest/sha1'
+
 class User < ActiveRecord::Base
   
   acts_as_authorized_user
@@ -205,7 +206,7 @@ class User < ActiveRecord::Base
   end
   
   def linked_to_facebook?
-    !(facebook_uid.blank? || facebook_access_token.blank?)
+    !(facebook_uid.blank? || facebook_access_token.blank? || facebook_name.blank?)
   end
   
   def facebook_is_only_auth_method?
@@ -213,7 +214,7 @@ class User < ActiveRecord::Base
   end
   
   def unlink_facebook
-    self.facebook_uid = self.facebook_access_token = nil
+    self.facebook_uid = self.facebook_access_token = self.facebook_name = nil
     self.facebook_post_ideas = false
   end
 

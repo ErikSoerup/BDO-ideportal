@@ -1,9 +1,11 @@
-Your
-= SHORT_SITE_NAME
-account is
-= link_to 'configued', edit_user_path
-to share your ideas on Facebook, but you are not logged in.
-%b
-  Please
-  = link_to 'log in to Facebook', '#', :onclick => 'facebook_auth(function() { alert(1) }); return false'
-  to share your ideas!
+%p
+  Your
+  = SHORT_SITE_NAME
+  account is
+  = link_to 'configued', edit_user_path
+  to share your ideas on Facebook, but you are not logged in.
+%p
+  %b
+    Please
+    = link_to 'log in to Facebook', '#', :onclick => 'facebook_auth(function() { alert(1) }); return false'
+    to share your ideas!

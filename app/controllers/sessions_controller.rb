@@ -1,3 +1,5 @@
+require 'ostruct'
+
 # This controller handles login/logout functionality.
 class SessionsController < ApplicationController
   
@@ -72,8 +74,9 @@ class SessionsController < ApplicationController
         
         redirect_to new_user_path(
           :user => {
-            :name  => full_facebook_user ? full_facebook_user.name  : nil,
-            :email => full_facebook_user ? full_facebook_user.email : nil },
+            :name  => full_facebook_user.name,
+            :email => full_facebook_user.email,
+            :facebook_name => full_facebook_user.name },
           :facebook_create => true)
       end
     else

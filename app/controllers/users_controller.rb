@@ -126,6 +126,8 @@ class UsersController < ApplicationController
   
   def authorize_facebook
     if current_facebook_user
+      # The synchronous call to Mogli::User.find also serves to sanity check our access credentials
+      @user.facebook_name = Mogli::User.find("me", current_facebook_client).name
       @user.facebook_uid = current_facebook_user.id
       @user.facebook_access_token = current_facebook_client.access_token
       @user.facebook_post_ideas = true
@@ -152,6 +154,7 @@ protected
     @user.twitter_secret = params[:user][:twitter_secret]
     @user.twitter_handle = params[:user][:twitter_handle]
     if FACEBOOK_ENABLED && current_facebook_user
+      @user.facebook_name = params[:user][:facebook_name]
       @user.facebook_uid = current_facebook_user.id
       @user.facebook_access_token = current_facebook_client.access_token
     end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101029215024) do
+ActiveRecord::Schema.define(:version => 20101101215458) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -223,6 +223,7 @@ ActiveRecord::Schema.define(:version => 20101029215024) do
     t.text     "vectors"
     t.string   "facebook_access_token"
     t.boolean  "facebook_post_ideas"
+    t.string   "facebook_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

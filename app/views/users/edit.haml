@@ -61,8 +61,7 @@
             - if @user.linked_to_facebook?
               %p
                 Linked to Facebook account:
-                %b FACEBOOK NAME GOES HERE
-                -#h @user.facebook_handle
+                %b=h @user.facebook_name
                 - if @user.facebook_is_only_auth_method?
                   %p.note To unlink your Facebook account, first enter a password in the form above.
                 - else
