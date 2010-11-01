@@ -1,9 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'ideas_controller'
+require 'twitter_test_helper'
+require 'facebook_test_helper'
 require 'mocha'
 
 class IdeasControllerTest < ActionController::TestCase
   scenario :basic
+  
+  include TwitterTestHelper
+  include FacebookTestHelper
 
   def setup
     @controller = IdeasController.new
@@ -107,8 +112,7 @@ class IdeasControllerTest < ActionController::TestCase
     old_ideas = Idea.find(:all)
     
     # Ensure tweet is asynchronous
-    Twitter::OAuth.any_instance.expects(:authorize_from_access).never
-    Twitter::Base.any_instance.expects(:update).never
+    expect_no_twitter_auth_verification
 
     login_as @tweeter
     post :create, :idea => { :title => title, :description => 'bar' }
@@ -127,11 +131,9 @@ class IdeasControllerTest < ActionController::TestCase
     
     tweet_content = nil
     if opts[:twitter_exception]
-      Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.raises(Exception, 'twitter unavailable')
-      Twitter::Base.expects(:new).never
+      expect_tweet_and_raise_exception
     else
-      Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.returns(true)
-      Twitter::Base.any_instance.expects(:update).once.with { |msg| tweet_content = msg }
+      expect_tweet { |msg| tweet_content = msg }
     end
     
     Delayed::Worker.new(:quiet => true).work_off
@@ -239,7 +241,6 @@ class IdeasControllerTest < ActionController::TestCase
     assert_no_tag :content => @orphan_idea.title
     assert_no_tag :content => @inactive_user_idea.title
   end
-  
   
   def test_show_indicates_duplicates
     get :show, :id => @walruses_in_stores.id

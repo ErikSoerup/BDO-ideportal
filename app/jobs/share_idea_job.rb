@@ -8,8 +8,10 @@ class ShareIdeaJob
   end
   
   def perform
-    Timeout::timeout(30) do
-      share_idea Idea.find(idea_id)
+    Timeout::timeout(60) do
+      Idea.transaction do
+        share_idea Idea.find(idea_id)
+      end
     end
   end
   

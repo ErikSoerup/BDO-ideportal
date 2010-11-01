@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   
   before_filter :oauth_required, :except => [:index, :show], :if => :xml_request?
   before_filter :add_ideas_feed
+  before_filter :update_facebook_access_token
 
   include AuthenticatedSystem
   include Facebooker2::Rails::Controller if FACEBOOK_ENABLED
@@ -76,6 +77,18 @@ protected
   
   def xml_request?
     request.format == :xml
+  end
+  
+  def update_facebook_access_token
+    if FACEBOOK_ENABLED
+      # Facebook regularly expires its access tokens. We have client-side JS that checks for a new access token,
+      # and places it in a cookie. We then check that cookie here on the server, via current_facebook_*, and
+      # save the new access token if it has changed.
+      if logged_in? && current_facebook_user && current_user.facebook_uid == current_facebook_user.id
+        current_user.facebook_access_token = current_facebook_client.access_token
+        current_user.save! if current_user.facebook_access_token_changed?
+      end
+    end
   end
   
 end

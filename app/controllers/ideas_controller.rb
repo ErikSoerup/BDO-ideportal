@@ -36,8 +36,29 @@ class IdeasController < ApplicationController
           Delayed::Job.enqueue TweetIdeaJob.new(@idea, idea_url(@idea))
         end
         
-        if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.facebook_post_ideas?
-          Delayed::Job.enqueue FacebookPostIdeaJob.new(@idea, idea_url(@idea))
+        if FACEBOOK_ENABLED && @idea.inventor.linked_to_facebook? && @idea.inventor.facebook_post_ideas?
+          
+          # Facebook regularly expires its access tokens. We attach the last one we got the user, but
+          # if they're not currently logged in to Facebook, there's no guarantee it will work. So we delay
+          # our attempt to post to FB unless we were able to get an up-to-date access token on this request.
+          #
+          # Once it fires, the Facebook post may fail. However, Delayed::Job will keep reattempting the
+          # Facebook post over a period of time until it succeeds, so it's OK if the user doesn't log back
+          # in to Facebook immediately.
+          first_post_attempt_at = 2.minutes.from_now
+          
+          if !current_facebook_user
+            flash[:info] = render_to_string(:partial => 'facebook_log_in_to_post_idea')
+          elsif current_facebook_user.id != current_user.facebook_uid
+            flash[:info] = render_to_string(:partial => 'facebook_switch_account_to_post_idea')
+          else
+            # We're logged in as the correct user on Facebook, so update_facebook_access_token in the
+            # app controller has presumably brought our facebook access token up to date, and we
+            # can start trying to post immediately without waiting for a login.
+            first_post_attempt_at = Time.now
+          end
+          
+          Delayed::Job.enqueue FacebookPostIdeaJob.new(@idea, idea_url(@idea)), 0, first_post_attempt_at.getutc
         end
       end
     end

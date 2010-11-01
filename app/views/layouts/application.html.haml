@@ -48,14 +48,14 @@
             facebook_auth = function(success_callback) {
               FB.login(
                 function(response) {
-                  if(response.session)
+                  if(response.session && success_callback)
                     success_callback()
                 },
                 { perms: 'email,publish_stream' })
             }
-            facebook_login = function() {
+            facebook_login = function(callback_url) {
               facebook_auth(function() {
-                window.location = '#{create_facebook_session_url}'
+                window.location = callback_url || '#{create_facebook_session_url}'
               })
             }
         -if GOOGLE_ANALYTICS_TRACKING_CODE

@@ -1,0 +1,13 @@
+%p
+  Your
+  = SHORT_SITE_NAME
+  account is
+  = link_to 'configued', edit_user_path
+  == to share your ideas on Facebook as #{'TODO'}, but you are logged in as a different user.
+%p
+  %b
+    Please
+    = link_to 'log out of Facebook', '#', :onclick => 'FB.logout(); return false'
+    and then
+    = link_to 'log in as ' + 'TODO', '#', :onclick => "facebook_login('#{idea_url(@idea)}'); return false"
+    to share your ideas!
