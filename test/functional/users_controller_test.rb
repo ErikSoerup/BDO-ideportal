@@ -41,7 +41,7 @@ class UsersControllerTest < ActionController::TestCase
     mock_facebook_user '12345678'
     
     get :new, :facebook_create => true, :user => {
-      :name => 'Joe', :email => 'joe@example.com' }
+      :name => 'Joe', :email => 'joe@example.com', :facebook_name => 'Joe FB' }
     
     assert_response :success
     assert_template 'new_via_third_party'
@@ -49,6 +49,7 @@ class UsersControllerTest < ActionController::TestCase
     assert user
     assert_equal '12345678', user.facebook_uid
     assert_equal 'fb_at', user.facebook_access_token
+    assert_equal 'Joe FB', user.facebook_name
     assert_equal 'Joe', user.name
     assert_equal 'joe@example.com', user.email
     assert user.facebook_post_ideas?
@@ -148,7 +149,7 @@ class UsersControllerTest < ActionController::TestCase
       mock_facebook_user '87654321'
       
       create_user(
-        :email => 'frutso@frutso.com', :password => nil, :password_confirmation => nil)
+        :email => 'frutso@frutso.com', :password => nil, :password_confirmation => nil, :facebook_name => 'Joe FB')
       
       assert_response :redirect
       assert flash[:info]
@@ -157,6 +158,7 @@ class UsersControllerTest < ActionController::TestCase
       user = current_user
       assert_equal '87654321', user.facebook_uid
       assert_equal 'fb_at', user.facebook_access_token
+      assert_equal 'Joe FB', user.facebook_name
       assert_nil user.password
       assert user.linked_to_facebook?
       assert !user.facebook_post_ideas?
@@ -170,7 +172,7 @@ class UsersControllerTest < ActionController::TestCase
       mock_facebook_user '87654321'
       
       create_user(
-        :email => 'frutso@frutso.com', :password => nil, :password_confirmation => nil,
+        :email => 'frutso@frutso.com', :password => nil, :password_confirmation => nil, :facebook_name => 'Joe FB',
         :terms_of_service => nil)
       assert assigns(:user).errors.on(:terms_of_service)
       assert_response :success

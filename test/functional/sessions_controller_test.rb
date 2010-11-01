@@ -138,7 +138,8 @@ class SessionsControllerTest < ActionController::TestCase
     assert_redirected_to new_user_path(
       :user => {
         :name => 'Bill',
-        :email => 'dongle@frux.com' },
+        :email => 'dongle@frux.com',
+        :facebook_name => 'Bill' },
       :facebook_create => true)
   end
   
