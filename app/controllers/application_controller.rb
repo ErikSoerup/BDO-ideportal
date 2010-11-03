@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :update_facebook_access_token
 
   include AuthenticatedSystem
+  include TitledIdeaUrlHelper
   include Facebooker2::Rails::Controller if FACEBOOK_ENABLED
   
   # See ActionController::RequestForgeryProtection for details

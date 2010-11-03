@@ -143,14 +143,14 @@ class IdeasControllerTest < ActionController::TestCase
   
   def test_create_idea_and_tweet
     new_idea, tweet_content = tweet_idea('foo')
-    assert_equal tweet_content, "Idea for #{COMPANY_NAME}: foo #{idea_url(new_idea)}"
+    assert_equal tweet_content, "Idea for #{COMPANY_NAME}: foo #{idea_url(new_idea, :title_in_url => false)}"
   end
   
   def test_long_idea_title_truncated_in_tweet
     long_title = '0123456789' * 12
     new_idea, tweet_content = tweet_idea(long_title)
     
-    content_pattern = /^Idea for #{COMPANY_NAME}: (\d+)... #{idea_url(new_idea)}$/
+    content_pattern = /^Idea for #{COMPANY_NAME}: (\d+)... #{idea_url(new_idea, :title_in_url => false)}$/
     assert_match content_pattern, tweet_content
     tweet_content =~ content_pattern
     assert_match /^#{$1}/, long_title

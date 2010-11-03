@@ -33,7 +33,7 @@ class IdeasController < ApplicationController
         @idea.add_vote!(@idea.inventor)
         
         if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.tweet_ideas?
-          Delayed::Job.enqueue TweetIdeaJob.new(@idea, idea_url(@idea))
+          Delayed::Job.enqueue TweetIdeaJob.new(@idea, idea_url(@idea, :title_in_url => false))
         end
         
         if FACEBOOK_ENABLED && @idea.inventor.linked_to_facebook? && @idea.inventor.facebook_post_ideas?

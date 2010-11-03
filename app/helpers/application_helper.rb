@@ -122,7 +122,7 @@ module ApplicationHelper
       'count' => p.size,
       'total-count' => p.total_entries }
   end
-
+  
 private
   
   def flagged_as_inappropriate_session_key(model)

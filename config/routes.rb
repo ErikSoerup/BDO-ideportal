@@ -22,6 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout              '/logout',                             :controller => 'sessions', :action => 'destroy'
   map.signup              '/signup',                             :controller => 'users', :action => 'new'
   map.idea_search         '/ideas/search/*search',               :controller => 'ideas', :action => 'index'
+  map.titled_idea         '/ideas/:id/:title',                   :controller => 'ideas', :action => 'show'
   map.send_activation     '/user/send_activation',               :controller => 'users', :action => 'send_activation'
   map.activate            '/user/activate/:activation_code',     :controller => 'users', :action => 'activate'
   map.forgot_password     '/user/password/forgot',               :controller => 'users', :action => 'forgot_password',     :conditions => { :method => :get }

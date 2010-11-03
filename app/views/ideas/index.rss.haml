@@ -42,7 +42,7 @@
           %comments
             =idea_url(idea) + '#comments'
           %guid
-            =idea_url(idea)
+            =idea_url(idea, :title_in_url => false)
           %description
             -# The user_formatted_text call sanitizes what the user entered, then adds HTML tags. The outer h escapes those added tags.
             =h user_formatted_text(idea.description)
