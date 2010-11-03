@@ -27,6 +27,10 @@ class IdeasController < ApplicationController
       end
     end
     
+    before :show do
+      @page_title = current_object.title
+    end
+    
     after :create do
       if @idea.valid? && @idea.inventor
         # Users automatically vote for their own ideas:
@@ -135,6 +139,8 @@ class IdeasController < ApplicationController
     unless !logged_in? && fragment_exist?(['idea_search', CGI.escape(params.inspect)])
       current_objects
     end
+    
+    @page_title = @query_title
     
     respond_to do |format|
       format.html
