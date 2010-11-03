@@ -314,6 +314,8 @@ scenario :xss_attack do
   @user.facebook_name = attack('user.facebook_name')
   @user.facebook_uid = attack('user.facebook_uid')
   @user.facebook_access_token = attack('user.facebook_access_token')
+  @user.tweet_ideas = true
+  @user.facebook_post_ideas = true
   @user.save!
   @user.has_role 'admin'
   @user.has_role 'editor', User

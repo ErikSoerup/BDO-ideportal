@@ -1,8 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'facebook_test_helper'
 require 'find'
 
 class HtmlEscapingTest < ActionController::TestCase
   scenario :xss_attack
+  
+  include FacebookTestHelper
   
   # Scans the output of a set of given requests for unescaped HTML (i.e. missing h() calls).
   # This relies on the xss_attack scenario having populated all user-editable text fields of
@@ -42,6 +45,7 @@ class HtmlEscapingTest < ActionController::TestCase
     test_request :get,  "/ideas/search/tag/#{@tag.name}"
     test_request :get,  "/ideas/#{@idea.id}"
     test_request :post, "/ideas/", idea_fields
+    test_request(:post, "/ideas/", idea_fields) { mock_facebook_user 'drazzlebot' }
     test_request :get,  "/comments"
     test_request :get,  "/ideas/#{@idea.id}/comments"
     test_request :get,  "/ideas/#{@idea.id}/comments/new"
