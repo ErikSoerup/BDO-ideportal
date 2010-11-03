@@ -164,6 +164,73 @@ class IdeasControllerTest < ActionController::TestCase
     @expected_job_count = 1
   end
   
+  def facebook_post_idea(title, opts = {})
+    old_ideas = Idea.find(:all)
+    
+    # Ensure Facebook interaction is asynchronous
+    expect_no_facebook_post
+    mock_facebook_user @facebooker.facebook_uid
+
+    login_as @facebooker
+    post :create, :idea => { :title => title, :description => 'bar' }
+    
+    # Ensure create succeeded
+    assert_redirected_to idea_path(assigns(:idea))
+    
+    new_ideas = Idea.find(:all) - old_ideas
+    assert_equal 1, new_ideas.size
+    new_idea = new_ideas.first
+    
+    assert_equal title, new_idea.title
+    assert_equal @facebooker, new_idea.inventor
+    
+    # Now post idea
+    
+    post_content = nil
+    if opts[:facebook_exception]
+      expect_facebook_post_and_raise_exception @facebooker
+    else
+      expect_facebook_post(@facebooker) { |opts| post_content = opts }
+    end
+    
+    # Set :quiet => false if you suspect the job is failing!
+    Delayed::Worker.new(:quiet => true).work_off
+    
+    [new_idea, post_content]
+  end
+  
+  def test_create_idea_and_post_to_facebook
+    new_idea, post_content = facebook_post_idea('foo')
+    expected_content = {
+     :description => "bar",
+     :message => "Idea for #{COMPANY_NAME}: foo",
+     :source => idea_url(new_idea),
+     :name => "Vote it up on #{LONG_SITE_NAME}"
+    }
+    assert_equal expected_content, post_content
+  end
+
+  def test_create_idea_and_facebook_error
+    new_idea, post_content = facebook_post_idea('foo', :facebook_exception => true)
+    
+    assert_not_nil new_idea
+    @expected_job_count = 1
+  end
+
+  def test_facebook_post_not_logged_in_to_facebook
+    expect_no_facebook_post
+
+    login_as @facebooker
+    post :create, :idea => { :title => 'foo', :description => 'bar' }
+    
+    assert 1, Delayed::Job.count
+    job = Delayed::Job.find(:first)
+    assert 0, job.attempts
+    assert job.run_at > 10.seconds.from_now
+    
+    @expected_job_count = 1 # so teardown works
+  end
+  
   def test_cannot_set_prohibited_fields
     login_as @sally
     old_ideas = Idea.find(:all)
