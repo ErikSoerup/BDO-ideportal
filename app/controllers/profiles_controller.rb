@@ -13,5 +13,9 @@ class ProfilesController < ApplicationController
       resource_gone
     end
   end
+  
+  def page_title
+    "User Profile: #{@user.name}" if @user
+  end
     
 end

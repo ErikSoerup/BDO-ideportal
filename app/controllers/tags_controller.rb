@@ -23,4 +23,8 @@ class TagsController < ApplicationController
   end
   helper_method :tag_style
   
+  def page_title
+    "Idea Tags"
+  end
+  
 end

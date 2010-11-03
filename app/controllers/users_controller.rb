@@ -140,6 +140,10 @@ class UsersController < ApplicationController
     end
   end
   
+  def page_title
+    "Account Management"
+  end
+  
   include TwitterHelper
   
 protected

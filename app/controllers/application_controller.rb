@@ -20,6 +20,11 @@ class ApplicationController < ActionController::Base
     super && !xml_request?  # no XSRF protection when using API; OAuth request signing accomplishes the same thing
   end
   
+  def page_title
+    nil
+  end
+  helper_method :page_title
+  
   # See ActionController::Base for details 
   # This filters the contents of submitted sensitive data parameters
   # from the application log (in this case, all fields with names like "password"). 

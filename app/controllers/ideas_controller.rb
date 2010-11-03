@@ -27,10 +27,6 @@ class IdeasController < ApplicationController
       end
     end
     
-    before :show do
-      @page_title = current_object.title
-    end
-    
     after :create do
       if @idea.valid? && @idea.inventor
         # Users automatically vote for their own ideas:
@@ -140,8 +136,6 @@ class IdeasController < ApplicationController
       current_objects
     end
     
-    @page_title = @query_title
-    
     respond_to do |format|
       format.html
       format.rss { render :content_type => 'application/rss+xml'}
@@ -175,6 +169,14 @@ class IdeasController < ApplicationController
     @feeds << {
       :href => idea_comments_url(current_object, :format => 'rss'),
       :title => "#{LONG_SITE_NAME}: Comments on \"#{ERB::Util.h(ERB::Util.h current_object.title)}\"" }
+  end
+  
+  def page_title
+    if @idea && !@idea.title.blank?
+      @idea.title
+    else
+      @query_title
+    end
   end
   
   include ApplicationHelper

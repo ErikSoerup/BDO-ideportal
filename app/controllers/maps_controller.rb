@@ -34,5 +34,9 @@ class MapsController < ApplicationController
     end
   end
   
+  def page_title
+    "Idea Map"
+  end
+  
   include ApplicationHelper
 end
