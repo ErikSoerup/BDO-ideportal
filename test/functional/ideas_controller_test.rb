@@ -208,16 +208,18 @@ class IdeasControllerTest < ActionController::TestCase
      :name => "Vote it up on #{LONG_SITE_NAME}"
     }
     assert_equal expected_content, post_content
+    assert_nil flash[:info]
   end
 
   def test_create_idea_and_facebook_error
     new_idea, post_content = facebook_post_idea('foo', :facebook_exception => true)
     
     assert_not_nil new_idea
+    assert_nil flash[:info]
     @expected_job_count = 1
   end
-
-  def test_facebook_post_not_logged_in_to_facebook
+  
+  def facebook_post_deferred_idea
     expect_no_facebook_post
 
     login_as @facebooker
@@ -229,6 +231,23 @@ class IdeasControllerTest < ActionController::TestCase
     assert job.run_at > 10.seconds.from_now
     
     @expected_job_count = 1 # so teardown works
+  end
+  
+  def test_facebook_post_not_logged_in_to_facebook
+    facebook_post_deferred_idea
+    
+    assert !(flash[:info] =~ /FB.logout/)
+    assert flash[:info] =~ /facebook_login/
+  end
+  
+  def test_facebook_post_logged_in_as_wrong_facebook_user
+    mock_facebook_user @tweeter
+    facebook_post_deferred_idea
+    
+    # This match will have to change if we ever find a single popup-blocker-friendly call that lets
+    # the user log in as a different user on FB:
+    assert flash[:info] =~ /FB.logout/
+    assert flash[:info] =~ /facebook_login/
   end
   
   def test_cannot_set_prohibited_fields
