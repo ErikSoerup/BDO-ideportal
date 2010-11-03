@@ -126,7 +126,7 @@ class SessionsControllerTest < ActionController::TestCase
     
     assert_equal @facebooker.id, session[:user_id]
     @facebooker.reload
-    assert_equal 'fb_at', @facebooker.facebook_access_token
+    assert_equal 'mock_fb_access_token', @facebooker.facebook_access_token
   end
   
   def test_unknown_facebook_login_prompts_new_account

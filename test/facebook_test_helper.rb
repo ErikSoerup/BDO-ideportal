@@ -4,7 +4,7 @@ module FacebookTestHelper
   
   def mock_facebook_user(fb_uid)
     mock_user    = fb_uid ? stub(:id => fb_uid) : nil
-    mock_client  = fb_uid ? stub(:access_token => 'fb_at') : nil
+    mock_client  = fb_uid ? stub(:access_token => 'mock_fb_access_token') : nil
     mock_profile = fb_uid ? stub(:name => 'Bill', :email => 'dongle@frux.com') : nil
     
     @controller.expects(:current_facebook_user).at_least(0).returns(mock_user)

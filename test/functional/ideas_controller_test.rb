@@ -184,6 +184,10 @@ class IdeasControllerTest < ActionController::TestCase
     assert_equal title, new_idea.title
     assert_equal @facebooker, new_idea.inventor
     
+    # We should have picked up the new token in ApplicationController.update_facebook_access_token
+    @facebooker.reload
+    assert_equal 'mock_fb_access_token', @facebooker.facebook_access_token
+    
     # Now post idea
     
     post_content = nil

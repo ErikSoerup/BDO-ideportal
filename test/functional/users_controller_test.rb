@@ -48,7 +48,7 @@ class UsersControllerTest < ActionController::TestCase
     user = assigns(:user)
     assert user
     assert_equal '12345678', user.facebook_uid
-    assert_equal 'fb_at', user.facebook_access_token
+    assert_equal 'mock_fb_access_token', user.facebook_access_token
     assert_equal 'Joe FB', user.facebook_name
     assert_equal 'Joe', user.name
     assert_equal 'joe@example.com', user.email
@@ -157,7 +157,7 @@ class UsersControllerTest < ActionController::TestCase
       
       user = current_user
       assert_equal '87654321', user.facebook_uid
-      assert_equal 'fb_at', user.facebook_access_token
+      assert_equal 'mock_fb_access_token', user.facebook_access_token
       assert_equal 'Joe FB', user.facebook_name
       assert_nil user.password
       assert user.linked_to_facebook?
@@ -401,7 +401,7 @@ class UsersControllerTest < ActionController::TestCase
     @quentin.reload
     assert @quentin.linked_to_facebook?
     assert_equal '13572468', @quentin.facebook_uid
-    assert_equal 'fb_at',    @quentin.facebook_access_token
+    assert_equal 'mock_fb_access_token',    @quentin.facebook_access_token
     assert @quentin.facebook_post_ideas
   end
   
