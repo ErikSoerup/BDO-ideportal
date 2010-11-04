@@ -35,10 +35,15 @@ module SearchHelper
         query_opts[:conditions][0] += ' and ideas.duplicate_of_id is null'
         @query_title = "Recent " + @query_title
         @body_class ||= 'recent'
-      when 'top-rated'
+      when 'hot', 'top-rated'
         query_opts[:order] = 'ideas.rating DESC, ideas.created_at DESC'
         query_opts[:conditions][0] += ' and ideas.duplicate_of_id is null'
-        @query_title = "Top-Rated " + @query_title
+        @query_title = "Hot " + @query_title
+        @body_class ||= 'top-rated'
+      when 'top-voted'
+        query_opts[:order] = 'ideas.vote_count DESC, ideas.created_at DESC'
+        query_opts[:conditions][0] += ' and ideas.duplicate_of_id is null'
+        @query_title = "All-Time Top Voted " + @query_title
         @body_class ||= 'top-rated'
       when 'tag'
         @body_class = "tag"

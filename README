@@ -4,8 +4,8 @@ To get the app running, you will need to edit the following files to customize e
     config/database.yml
     config/gmaps_api_key.yml  (if you want maps support)
     config/newrelic.yml       (if you want performance metrics from NewRelic)
-    config/twitter_config.yml (if you want Twitter support)
-    config/facebook*.yml      (if you want to experiment with Facebook; currently experimental & unsupported)
+    config/twitter.yml        (if you want Twitter integration)
+    config/facebooker.yml     (if you want Facebook integration)
 
 To customize the UI, edit / create files in the following directories:
 

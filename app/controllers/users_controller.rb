@@ -5,10 +5,11 @@ class UsersController < ApplicationController
   before_filter :populate_user, :except => [:show]
 
   def new
-    if params[:user] && params[:user][:twitter_token]
+    if params[:user] && params[:user][:twitter_token] || params[:facebook_create]
       new_user_from_params
       @user.tweet_ideas = @user.linked_to_twitter?
-      render :action => 'new_via_twitter'
+      @user.facebook_post_ideas = @user.linked_to_facebook?
+      render :action => 'new_via_third_party'
     else
       render :action => 'new'
     end
@@ -20,13 +21,13 @@ class UsersController < ApplicationController
     if @user.valid?
       @user.save!
       @user.register!
-      @user.activate! if @user.linked_to_twitter?
+      @user.activate! if @user.linked_to_twitter? || @user.linked_to_facebook?
       self.current_user = @user
       flash[:info] = render_to_string(:partial => 'created')
       redirect_back_or_default('/')
     else
-      if @user.twitter_token
-        render :action => 'new_via_twitter'
+      if @user.linked_to_twitter? || @user.linked_to_facebook?
+        render :action => 'new_via_third_party'
       else
         render :action => 'new'
       end
@@ -87,13 +88,16 @@ class UsersController < ApplicationController
   def update
     # TODO: Should we require confirmation process if email changes?
     @user.update_attributes(params[:user])
-    unlink_twitter if params[:unlink_twitter]
+    @user.unlink_twitter  if !params[:unlink_twitter].blank?
+    @user.unlink_facebook if !params[:unlink_facebook].blank?
     
-    if @user.save
+    if !params[:link_facebook].blank?
+      authorize_facebook
+    elsif @user.save
       flash.now[:info] = "Your changes have been saved."
       @user.password = @user.password_confirmation = nil
       
-      if params[:link_twitter]
+      if !params[:link_twitter].blank?
         redirect_to twitter_auth_request_url(authorize_twitter_url)
         return
       end
@@ -120,14 +124,24 @@ class UsersController < ApplicationController
     redirect_to edit_user_path
   end
   
-  def disconnect
-    if current_user.is_facebook_user?
-      current_user.fb_uid = nil
-      if current_user.save
-        flash[:notice] = 'Your account has been disconnected from facebook'
+  def authorize_facebook
+    if current_facebook_user
+      # The synchronous call to Mogli::User.find also serves to sanity check our access credentials
+      @user.facebook_name = Mogli::User.find("me", current_facebook_client).name
+      @user.facebook_uid = current_facebook_user.id
+      @user.facebook_access_token = current_facebook_client.access_token
+      @user.facebook_post_ideas = true
+      
+      if @user.save
+        flash.now[:info] = "Your IdeaX account is now linked to Facebook."
       end
+    else
+      flash.now[:info] = "Facebook authorization canceled."
     end
-    render :action => 'edit'
+  end
+  
+  def page_title
+    "Account Management"
   end
   
   include TwitterHelper
@@ -143,6 +157,11 @@ protected
     @user.twitter_token = params[:user][:twitter_token]
     @user.twitter_secret = params[:user][:twitter_secret]
     @user.twitter_handle = params[:user][:twitter_handle]
+    if FACEBOOK_ENABLED && current_facebook_user
+      @user.facebook_name = params[:user][:facebook_name]
+      @user.facebook_uid = current_facebook_user.id
+      @user.facebook_access_token = current_facebook_client.access_token
+    end
   end
   
   def log_in_with_activation_code
@@ -156,9 +175,4 @@ protected
     logged_in?
   end
   
-  def unlink_twitter
-    @user.twitter_token = @user.twitter_secret = @user.twitter_handle = nil
-    @user.tweet_ideas = false
-  end
-
 end

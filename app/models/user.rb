@@ -1,4 +1,5 @@
 require 'digest/sha1'
+
 class User < ActiveRecord::Base
   
   acts_as_authorized_user
@@ -66,7 +67,7 @@ class User < ActiveRecord::Base
   
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :name, :email, :password, :password_confirmation, :zip_code, :terms_of_service, :tweet_ideas, :notify_on_comments, :notify_on_state
+  attr_accessible :name, :email, :password, :password_confirmation, :zip_code, :terms_of_service, :tweet_ideas, :facebook_post_ideas, :notify_on_comments, :notify_on_state
   
   unless !User.table_exists? 
     acts_as_tsearch :fields => %w(name email zip_code )
@@ -191,25 +192,36 @@ class User < ActiveRecord::Base
     end
   end
   
-  def fb_email_hash
-    if !(h = read_attribute(:fb_email_hash))
-      h = write_attribute(:fb_email_hash, build_fb_email_hash(email))
-    end
-    return h
-  end
-  
   def linked_to_twitter?
     !(twitter_token.blank? || twitter_secret.blank? || twitter_handle.blank?)
   end
   
   def twitter_is_only_auth_method?
-    linked_to_twitter? && crypted_password.blank?
+    linked_to_twitter? && !linked_to_facebook? && crypted_password.blank?
   end
   
-  def is_facebook_user?
-    return ! (fb_uid.blank?  )
+  def unlink_twitter
+    self.twitter_token = self.twitter_secret = self.twitter_handle = nil
+    self.tweet_ideas = false
   end
   
+  def linked_to_facebook?
+    !(facebook_uid.blank? || facebook_access_token.blank? || facebook_name.blank?)
+  end
+  
+  def facebook_is_only_auth_method?
+    linked_to_facebook? && !linked_to_twitter? && crypted_password.blank?
+  end
+  
+  def unlink_facebook
+    self.facebook_uid = self.facebook_access_token = self.facebook_name = nil
+    self.facebook_post_ideas = false
+  end
+  
+  def count_votes
+    votes.each { |vote| vote.count! }  # Only affects votes not already counted
+  end
+
   protected
     # before filter 
     def encrypt_password
@@ -220,7 +232,7 @@ class User < ActiveRecord::Base
       
     def password_required?
       return true unless password_confirmation.blank?
-      return false if linked_to_twitter?
+      return false if linked_to_twitter? || linked_to_facebook?
       crypted_password.blank? || !password.blank? || !password_confirmation.blank?
     end
     
@@ -230,7 +242,7 @@ class User < ActiveRecord::Base
     
     def registered
       self.deleted_at = nil
-      reset_activation_code unless linked_to_twitter?
+      reset_activation_code unless linked_to_twitter? || linked_to_facebook?
       save!
     end
     
@@ -242,19 +254,9 @@ class User < ActiveRecord::Base
       @activated = true
       self.activated_at = Time.now.utc
       self.deleted_at = self.activation_code = nil
-      count_votes
     end
     
     def assign_postal_code
       self.postal_code ||= PostalCode.find_by_text(zip_code)
-    end
-    
-    def count_votes
-      votes.each { |vote| vote.count! }  # Only affects votes not already counted
-    end
-    
-    def build_fb_email_hash(email)
-      str = email.strip.downcase
-      "#{Zlib.crc32(str)}_#{Digest::MD5.hexdigest(str)}"
     end
 end

@@ -62,6 +62,18 @@ scenario :basic do
   @tweeter.save!
   @tweeter.activate!
   
+  @facebooker = User.new(
+    :name => "Friendy McSocial",
+    :email => "exhibitionist@example.com",
+    :zip_code => 'JXY 372',
+    :facebook_post_ideas => true,
+    :terms_of_service => '1')
+  @facebooker.facebook_uid = '4207849480'
+  @facebooker.facebook_access_token = 'foobar'
+  @facebooker.facebook_name = 'Friendy Q. McSocial'
+  @facebooker.save!
+  @facebooker.activate!
+  
   @currents_admin = User.create!(
     :name => "Currents Admin",
     :email => "currentadmin@example.com",
@@ -296,6 +308,14 @@ scenario :xss_attack do
   @user.reset_activation_code
   @user.notify_on_comments = true
   @user.notify_on_state = true
+  @user.twitter_handle = attack('user.twitter_handle')
+  @user.twitter_secret = attack('user.twitter_secret')
+  @user.twitter_token = attack('user.twitter_token')
+  @user.facebook_name = attack('user.facebook_name')
+  @user.facebook_uid = attack('user.facebook_uid')
+  @user.facebook_access_token = attack('user.facebook_access_token')
+  @user.tweet_ideas = true
+  @user.facebook_post_ideas = true
   @user.save!
   @user.has_role 'admin'
   @user.has_role 'editor', User

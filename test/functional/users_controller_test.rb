@@ -1,11 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'twitter_test_helper'
+require 'facebook_test_helper'
 require 'users_controller'
 
 class UsersControllerTest < ActionController::TestCase
   scenario :basic
   
   include TwitterTestHelper
+  include FacebookTestHelper
 
   def setup
     @controller = UsersController.new
@@ -25,7 +27,7 @@ class UsersControllerTest < ActionController::TestCase
       :twitter_token => '123456', :twitter_secret => 'abcdef', :twitter_handle => 'joe', :name => 'Joe' }
     
     assert_response :success
-    assert_template 'new_via_twitter'
+    assert_template 'new_via_third_party'
     user = assigns(:user)
     assert user
     assert_equal '123456', user.twitter_token
@@ -33,6 +35,24 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'joe', user.twitter_handle
     assert_equal 'Joe', user.name
     assert user.tweet_ideas?
+  end
+  
+  def test_new_form_for_facebook
+    mock_facebook_user '12345678'
+    
+    get :new, :facebook_create => true, :user => {
+      :name => 'Joe', :email => 'joe@example.com', :facebook_name => 'Joe FB' }
+    
+    assert_response :success
+    assert_template 'new_via_third_party'
+    user = assigns(:user)
+    assert user
+    assert_equal '12345678', user.facebook_uid
+    assert_equal 'mock_fb_access_token', user.facebook_access_token
+    assert_equal 'Joe FB', user.facebook_name
+    assert_equal 'Joe', user.name
+    assert_equal 'joe@example.com', user.email
+    assert user.facebook_post_ideas?
   end
   
   def test_should_allow_signup
@@ -104,13 +124,10 @@ class UsersControllerTest < ActionController::TestCase
       assert_equal 'abcdef', user.twitter_secret
       assert_equal 'joe', user.twitter_handle
       assert_nil user.password
+      assert user.linked_to_twitter?
       assert !user.tweet_ideas?
       
-      # No activation email when created via oauth
-      assert user.active?
-      assert !(flash[:info] =~ /#{user.email}/)
-      assert_equal 1, @deliveries.size
-      assert_email_sent user, /account has been activated/
+      assert_account_activated_immediately
     end
   end
   
@@ -121,7 +138,45 @@ class UsersControllerTest < ActionController::TestCase
         :password => nil, :password_confirmation => nil, :terms_of_service => nil)
       assert assigns(:user).errors.on(:terms_of_service)
       assert_response :success
-      assert_template 'new_via_twitter'
+      assert_template 'new_via_third_party'
+      assert !logged_in?
+      assert_equal 0, @deliveries.size
+    end
+  end
+
+  def test_sign_up_with_facebook
+    assert_difference 'User.count' do
+      mock_facebook_user '87654321'
+      
+      create_user(
+        :email => 'frutso@frutso.com', :password => nil, :password_confirmation => nil, :facebook_name => 'Joe FB')
+      
+      assert_response :redirect
+      assert flash[:info]
+      assert logged_in?
+      
+      user = current_user
+      assert_equal '87654321', user.facebook_uid
+      assert_equal 'mock_fb_access_token', user.facebook_access_token
+      assert_equal 'Joe FB', user.facebook_name
+      assert_nil user.password
+      assert user.linked_to_facebook?
+      assert !user.facebook_post_ideas?
+      
+      assert_account_activated_immediately
+    end
+  end
+  
+  def test_sign_up_with_facebook_errors
+    assert_no_difference 'User.count' do
+      mock_facebook_user '87654321'
+      
+      create_user(
+        :email => 'frutso@frutso.com', :password => nil, :password_confirmation => nil, :facebook_name => 'Joe FB',
+        :terms_of_service => nil)
+      assert assigns(:user).errors.on(:terms_of_service)
+      assert_response :success
+      assert_template 'new_via_third_party'
       assert !logged_in?
       assert_equal 0, @deliveries.size
     end
@@ -309,8 +364,9 @@ class UsersControllerTest < ActionController::TestCase
     @tweeter.password = @tweeter.password_confirmation = 'pass'
     @tweeter.save!
     
-    login_as @tweeter
-    post :update, :user => { :zip_code => '12345' }, :unlink_twitter => 'Button name'
+    assert_login_required @tweeter do
+      post :update, :user => { :zip_code => '12345' }, :unlink_twitter => 'Button name'
+    end
     
     @tweeter.reload
     assert_equal '12345', @tweeter.zip_code
@@ -319,12 +375,80 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_unlink_twitter_account_bypassed_if_form_errors
+    # unlink requires pass
+    @tweeter.password = @tweeter.password_confirmation = 'pass'
+    @tweeter.save!
+    
     login_as @tweeter
     post :update, :user => { :password => 'mis', :password_confirmation => 'match' }, :unlink_twitter => 'Button name'
     
     @tweeter.reload
     assert @tweeter.linked_to_twitter?
     assert @tweeter.tweet_ideas
+  end
+  
+  def test_authorize_facebook
+    mock_facebook_user '13572468'
+    
+    assert_login_required @quentin do
+      # Whereas as Twitter auth happens entirely server-side, resulting in a callback,
+      # Facebook auth happens in part via client-side JS which sets a cookie and the link_facebook flag.
+      get :update, :link_facebook => '1'
+    end
+    
+    assert_response :success
+    assert_template 'edit'
+    @quentin.reload
+    assert @quentin.linked_to_facebook?
+    assert_equal '13572468', @quentin.facebook_uid
+    assert_equal 'mock_fb_access_token',    @quentin.facebook_access_token
+    assert @quentin.facebook_post_ideas
+  end
+  
+  def test_authorize_facebook_denied
+    mock_facebook_user nil
+    
+    assert_login_required @quentin do
+      # Whereas as Twitter auth happens entirely server-side, resulting in a callback,
+      # Facebook auth happens in part via client-side JS which sets a cookie and the link_facebook flag.
+      get :update, :link_facebook => '1'
+    end
+    
+    assert_response :success
+    assert_template 'edit'
+    @quentin.reload
+    assert !@quentin.linked_to_facebook?
+    assert_nil @quentin.facebook_uid
+    assert_nil @quentin.facebook_access_token
+    assert !@quentin.facebook_post_ideas
+  end
+  
+  def test_unlink_facebook
+    # unlink requires pass
+    @facebooker.password = @facebooker.password_confirmation = 'pass'
+    @facebooker.save!
+    
+    assert_login_required @facebooker do
+      post :update, :user => { :zip_code => '12345' }, :unlink_facebook => 'Button name'
+    end
+    
+    @facebooker.reload
+    assert_equal '12345', @facebooker.zip_code
+    assert !@facebooker.linked_to_twitter?
+    assert !@facebooker.facebook_post_ideas
+  end
+  
+  def test_unlink_facebook_bypassed_if_form_errors
+    # unlink requires pass
+    @facebooker.password = @facebooker.password_confirmation = 'pass'
+    @facebooker.save!
+    
+    login_as @facebooker
+    post :update, :user => { :password => 'mis', :password_confirmation => 'match' }, :unlink_facebook => 'Button name'
+    
+    @facebooker.reload
+    assert @facebooker.linked_to_facebook?
+    assert @facebooker.facebook_post_ideas
   end
   
   protected
@@ -355,5 +479,13 @@ class UsersControllerTest < ActionController::TestCase
       body_pats.each do |body_pat|
         assert sent.body =~ body_pat, "Expected #{body_pat.inspect} in email body, but didn't find it.\n\nEmail body:\n\n#{sent.body}\n"
       end
+    end
+    
+    def assert_account_activated_immediately
+      user = current_user
+      assert user.active?
+      assert !(flash[:info] =~ /#{user.email}/)
+      assert_equal 1, @deliveries.size
+      assert_email_sent user, /account has been activated/
     end
 end

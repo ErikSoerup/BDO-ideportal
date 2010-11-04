@@ -53,6 +53,7 @@ class CommentsController < ApplicationController
     unless fragment_exist?(['comments', CGI.escape(params.inspect)])
       current_objects
     end
+    
     respond_to do |format|
       format.html
       format.rss { render :content_type => 'application/rss+xml'}
@@ -75,12 +76,15 @@ class CommentsController < ApplicationController
   def idea
     @idea ||= Idea.find(params[:idea_id]) if params[:idea_id]
   end
-  
   helper_method :idea
   
   def owner_required(*return_to_args)
     @comment ||= Comment.find(params[:id])
     @comment.author == current_user || access_denied("You can't update other user's comments", return_to_args)
+  end
+  
+  def page_title
+    "Comments"
   end
     
 end

@@ -11,6 +11,7 @@
           = f.hidden_field :twitter_handle
           = f.hidden_field :twitter_token
           = f.hidden_field :twitter_secret
+          = f.hidden_field :facebook_name
           .form-group.inline
             %label{ :for => "user_name" } Screen name
             = f.text_field :name, :class => "input-text big"
@@ -19,20 +20,26 @@
             %label{ :for => "user_email" } Email Address
             = f.text_field :email, :class => "input-text big"
             %p.note
-              We require an email in case we need to contact you about an idea.
+              We require an email in case we need to contact you about an idea
           .form-group.inline
             %label{ :for => "user_zip_code" } Zip Code
             = f.text_field :zip_code, :class => "input-text big superthin"
             %p.note Puts your ideas on the map
+          -if @user.linked_to_twitter?
+            .form-group.inline.checkbox
+              = f.check_box :tweet_ideas, :class => "input-checkbox"
+              = f.label :tweet_ideas, "Tweet my ideas"
+              %p.note Check this box to automatically Tweet your #{SHORT_SITE_NAME} ideas
+          -if @user.linked_to_facebook?
+            .form-group.inline.checkbox
+              = f.check_box :facebook_post_ideas, :class => "input-checkbox"
+              = f.label :facebook_post_ideas, "Publish ideas to Facebook"
+              %p.note Check this box to automatically post your #{SHORT_SITE_NAME} ideas to Facebook
           .form-group.inline.checkbox
             = f.check_box :terms_of_service, :class => "input-checkbox"
             %label{ :for => "user_terms_of_service" }
               I agree to the
               = link_to 'terms of use', home_path('terms-of-use'), :target => "_blank"
-          .form-group.inline.checkbox
-            = f.check_box :tweet_ideas, :class => "input-checkbox"
-            = f.label :tweet_ideas, "Tweet my ideas"
-            %p.note Check this box to automatically Tweet your #{SHORT_SITE_NAME} ideas.
           .form-submit.inline
             = submit_tag 'Sign Up', :id => "submit-signup", :class => "input-submit"
     .footer

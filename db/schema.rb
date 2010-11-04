@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101025152803) do
+ActiveRecord::Schema.define(:version => 20101104160151) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -82,14 +82,6 @@ ActiveRecord::Schema.define(:version => 20101025152803) do
     t.datetime "updated_at"
   end
 
-  create_table "facebook_templates", :force => true do |t|
-    t.string "template_name", :null => false
-    t.string "content_hash",  :null => false
-    t.string "bundle_id"
-  end
-
-  add_index "facebook_templates", ["template_name"], :name => "index_facebook_templates_on_template_name", :unique => true
-
   create_table "ideas", :force => true do |t|
     t.text     "title"
     t.text     "description"
@@ -107,6 +99,8 @@ ActiveRecord::Schema.define(:version => 20101025152803) do
     t.integer  "duplicate_of_id"
     t.boolean  "marked_spam",                                                      :default => false
     t.integer  "current_id",                                                       :default => -1
+    t.text     "vectors"
+    t.integer  "vote_count"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
@@ -223,11 +217,13 @@ ActiveRecord::Schema.define(:version => 20101025152803) do
     t.boolean  "tweet_ideas"
     t.string   "twitter_token"
     t.string   "twitter_secret"
-    t.string   "fb_uid"
-    t.string   "fb_email_hash"
+    t.string   "facebook_uid"
     t.boolean  "notify_on_comments",                      :default => false,     :null => false
     t.boolean  "notify_on_state",                         :default => false,     :null => false
     t.text     "vectors"
+    t.string   "facebook_access_token"
+    t.boolean  "facebook_post_ideas"
+    t.string   "facebook_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

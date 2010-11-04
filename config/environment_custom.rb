@@ -15,13 +15,13 @@ STAGING_HOST = 'bbyidx.com'
 SESSION_SECRET = nil
 SESSION_KEY = "_#{SHORT_SITE_NAME.downcase}_session"
 
-# Configure Twitter in twitter_config.yml, then set "TWITTER_ENABLED = true" to enable Twitter integration.
+# Configure Twitter in twitter.yml, then set "TWITTER_ENABLED = true" to enable Twitter integration.
 # You can also set TWITTER_API_KEY and TWITTER_API_SECRET as environment variables.
-TWITTER_ENABLED = ENV['TWITTER_API_KEY'] || false
+TWITTER_ENABLED = ENV['TWITTER_API_KEY'] || ENV['RAILS_ENV'] == 'test'
 
-# Facebook support is experimental, and currently broken. We invite you to improve it!
-# Settings in facebook.yml and facebooker.yml.
-FACEBOOK_ENABLED = false
+# Configure Facebook in facebooker.yml, then set "FACEBOOK_ENABLED = true" to enable Twitter integration.
+# You can also set FACEBOOK_APP_ID, FACEBOOK_API_KEY and FACEBOOK_APP_SECRET as environment variables.
+FACEBOOK_ENABLED = ENV['FACEBOOK_API_KEY'] || ENV['RAILS_ENV'] == 'test'
 
 # Customize the user contribution points for various activities, if you like.
 CONTRIBUTION_SCORES = {

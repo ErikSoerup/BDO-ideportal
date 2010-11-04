@@ -32,17 +32,33 @@ class IdeasController < ApplicationController
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)
         
-        if TWITTER_ENABLED && @idea.inventor.tweet_ideas?
-          Delayed::Job.enqueue TweetIdeaJob.new(@idea, idea_url(@idea))
+        if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.tweet_ideas?
+          Delayed::Job.enqueue TweetIdeaJob.new(@idea, idea_url(@idea, :title_in_url => false))
         end
         
-        if FACEBOOK_ENABLED && @idea.inventor.is_facebook_user?
-          begin
-            facebook_publish_idea(@idea)
-          rescue Exception  => exception
-            puts("Exception raised facebooking idea with id: #{@idea.id}, '#{exception}'")
-            #TODO: error recovery if the facebook fails?  For now it just silently fails.
+        if FACEBOOK_ENABLED && @idea.inventor.linked_to_facebook? && @idea.inventor.facebook_post_ideas?
+          
+          # Facebook regularly expires its access tokens. We attach the last one we got the user, but
+          # if they're not currently logged in to Facebook, there's no guarantee it will work. So we delay
+          # our attempt to post to FB unless we were able to get an up-to-date access token on this request.
+          #
+          # Once it fires, the Facebook post may fail. However, Delayed::Job will keep reattempting the
+          # Facebook post over a period of time until it succeeds, so it's OK if the user doesn't log back
+          # in to Facebook immediately.
+          first_post_attempt_at = 2.minutes.from_now
+          
+          if !current_facebook_user
+            flash[:info] = render_to_string(:partial => 'facebook_log_in_to_post_idea')
+          elsif current_facebook_user.id != current_user.facebook_uid
+            flash[:info] = render_to_string(:partial => 'facebook_switch_account_to_post_idea')
+          else
+            # We're logged in as the correct user on Facebook, so update_facebook_access_token in the
+            # app controller has presumably brought our facebook access token up to date, and we
+            # can start trying to post immediately without waiting for a login.
+            first_post_attempt_at = Time.now
           end
+          
+          Delayed::Job.enqueue FacebookPostIdeaJob.new(@idea, idea_url(@idea)), 0, first_post_attempt_at.getutc
         end
       end
     end
@@ -155,6 +171,14 @@ class IdeasController < ApplicationController
       :title => "#{LONG_SITE_NAME}: Comments on \"#{ERB::Util.h(ERB::Util.h current_object.title)}\"" }
   end
   
+  def page_title
+    if @idea && !@idea.title.blank?
+      @idea.title
+    else
+      @query_title
+    end
+  end
+  
   include ApplicationHelper
   helper_method :has_voted?
   helper_method :idea_owner?
@@ -171,19 +195,6 @@ private
         params[:idea][key] = '' if params[:idea][key] =~ /\xA0$/
       end
     end
-  end
-  
-  def facebook_publish_idea(idea)
-      link_data = [{
-        :text => "View More at #{SHORT_SITE_NAME}",
-        :href => idea_url(idea)
-      }].to_json
-      attachment_data = {
-        :description => idea.description,
-        :media => [ { :type => "image", :src => "#{root_url}images/logo_blue.jpg", :href => idea_url(idea) } ]
-      }.to_json
-      
-      flash[:facebook_publish] = "facebook_publish_stream( 'has an idea for #{SHORT_SITE_NAME}: #{idea.title}', #{attachment_data}, #{link_data});"
   end
   
 end

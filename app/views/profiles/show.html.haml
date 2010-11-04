@@ -8,9 +8,7 @@
       - if @user.linked_to_twitter?
         %p.icon.twitter
           Follow me on Twitter:
-          = link_to "@#{@user.twitter_handle}", "http://twitter.com/#{@user.twitter_handle}", :target => "_blank"
-        %p
-          =h @twitter_description
+          = link_to h("@#{@user.twitter_handle}"), "http://twitter.com/#{h @user.twitter_handle}", :target => "_blank"
     .body
       .group.slate
         %h3 Recent Ideas

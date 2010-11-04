@@ -1,0 +1,12 @@
+-# ------- STYLE NEEDED ------
+%p
+  Your
+  = SHORT_SITE_NAME
+  account is
+  = link_to 'configued', edit_user_path
+  to share your ideas on Facebook, but you are not logged in.
+%p
+  %b
+    Please
+    = link_to 'log in to Facebook', '#', :onclick => "facebook_login('#{idea_url(@idea)}'); return false"
+    to share your ideas!

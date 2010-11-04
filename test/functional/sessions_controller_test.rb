@@ -1,11 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'twitter_test_helper'
+require 'facebook_test_helper'
 require 'sessions_controller'
 
 class SessionsControllerTest < ActionController::TestCase
   scenario :basic
   
   include TwitterTestHelper
+  include FacebookTestHelper
 
   def setup
     @controller = SessionsController.new
@@ -115,6 +117,41 @@ class SessionsControllerTest < ActionController::TestCase
         :twitter_token => 'tw_token',
         :twitter_secret => 'tw_secret',
         :name => 'Bill' })
+  end
+
+  def test_complete_facebook_login
+    mock_facebook_user '4207849480'
+    
+    get :create_facebook
+    
+    assert_equal @facebooker.id, session[:user_id]
+    @facebooker.reload
+    assert_equal 'mock_fb_access_token', @facebooker.facebook_access_token
+  end
+  
+  def test_unknown_facebook_login_prompts_new_account
+    mock_facebook_user '12345678'
+    
+    get :create_facebook
+    
+    assert_nil session[:user_id]
+    assert_redirected_to new_user_path(
+      :user => {
+        :name => 'Bill',
+        :email => 'dongle@frux.com',
+        :facebook_name => 'Bill' },
+      :facebook_create => true)
+  end
+  
+  def test_deny_facebook_login
+    # This is an obscure path. The javascript normally won't call create_facebook unless there's an authorized
+    # session, so this happens only in the case when the session is somehow invalid or the javascript misfires.
+    mock_facebook_user nil
+    
+    get :create_facebook
+    
+    assert_nil session[:user_id]
+    assert_redirected_to login_path
   end
 
   protected

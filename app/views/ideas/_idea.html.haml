@@ -17,7 +17,7 @@
       %p= h idea.description_excerpt
     %ul.entry-meta
       %li.comments
-        = link_to "Comments #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments')
+        = link_to "Comments #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments', :title_in_url => false)
       %li.tags
         - idea.tags.each_with_index do |tag, ctr|
           - unless ctr == idea.tags.length - 1

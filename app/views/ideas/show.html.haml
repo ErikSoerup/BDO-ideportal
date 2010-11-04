@@ -1,6 +1,3 @@
-- if FACEBOOK_ENABLED
-  :javascript
-    #{flash[:facebook_publish]}
 %div
   #idea-1.main.panel.section.idea.hentry
     .header
@@ -28,7 +25,7 @@
           - else
             = link_to h(@idea.inventor.name), profile_path(@idea.inventor), :class => "fn url"
         %br
-        - if !@idea.current.nil? && @idea.current.id != 1
+        - if !@idea.current.nil? && @idea.current.id != Current::DEFAULT_CURRENT_ID
           Part of:
           %strong= link_to h(@idea.current.title), current_path(@idea.current)
           %br

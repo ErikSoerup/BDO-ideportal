@@ -1,8 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'facebook_test_helper'
 require 'find'
 
 class HtmlEscapingTest < ActionController::TestCase
   scenario :xss_attack
+  
+  include FacebookTestHelper
   
   # Scans the output of a set of given requests for unescaped HTML (i.e. missing h() calls).
   # This relies on the xss_attack scenario having populated all user-editable text fields of
@@ -31,16 +34,18 @@ class HtmlEscapingTest < ActionController::TestCase
     test_request :get,  "/login"
     test_request :get,  "/logout"
     test_request :get,  "/signup"
+    test_request :get,  "/signup", user_fields.merge(:facebook_create => attack_fields(:facebook_create))
     test_request :post, "/session", :email => @user.email,         :password => "<attack>user.password<attack>"
     test_request :post, "/session", :email => @pending_user.email, :password => "<attack>pending_user.password<attack>"
     test_request :post, "/session", :email => @user.email,         :password => "wrong password"
     test_request :get,  "/ideas"
     test_request :get,  "/ideas/new"
     test_request :get,  "/ideas/search/recent"
-    test_request :get,  "/ideas/search/top-rated"
+    test_request :get,  "/ideas/search/hot"
     test_request :get,  "/ideas/search/tag/#{@tag.name}"
     test_request :get,  "/ideas/#{@idea.id}"
     test_request :post, "/ideas/", idea_fields
+    test_request(:post, "/ideas/", idea_fields) { mock_facebook_user 'drazzlebot' }
     test_request :get,  "/comments"
     test_request :get,  "/ideas/#{@idea.id}/comments"
     test_request :get,  "/ideas/#{@idea.id}/comments/new"
@@ -96,6 +101,7 @@ class HtmlEscapingTest < ActionController::TestCase
     test_request :get,  "/ideas/#{@idea.id}/comments/#{@comment.id}", :format => 'xml'
     test_request :get,  "/profiles/#{@user.id}",                      :format => 'xml'
     test_request :get,  "/tags",                                      :format => 'xml'
+    test_request :get,  "/comments",                                  :format => 'xml'
     test_request(:post, "/ideas",                                     :format => 'xml') { oauth_login_as @user } # validation errors
     test_request(:post, "/ideas/#{@idea.id}/vote",                    :format => 'xml') { oauth_login_as @user }
     

@@ -8,7 +8,10 @@ ActionController::Routing::Routes.draw do |map|
     current.resources :ideas
   end
   map.resource :user
-  map.resource :session, :member => { :create_twitter => :get }
+  map.resource :session, :member => {
+    :create_twitter => :get,
+    :create_facebook => :get
+  }
   map.resources :comments # for global comment list
   map.resources :tags
   map.resources :profiles
@@ -19,6 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout              '/logout',                             :controller => 'sessions', :action => 'destroy'
   map.signup              '/signup',                             :controller => 'users', :action => 'new'
   map.idea_search         '/ideas/search/*search',               :controller => 'ideas', :action => 'index'
+  map.titled_idea         '/ideas/:id/:title',                   :controller => 'ideas', :action => 'show'
   map.send_activation     '/user/send_activation',               :controller => 'users', :action => 'send_activation'
   map.activate            '/user/activate/:activation_code',     :controller => 'users', :action => 'activate'
   map.forgot_password     '/user/password/forgot',               :controller => 'users', :action => 'forgot_password',     :conditions => { :method => :get }
@@ -26,10 +30,6 @@ ActionController::Routing::Routes.draw do |map|
   map.password_reset      '/user/password/new/:activation_code', :controller => 'users', :action => 'new_password'
   map.authorize_twitter   '/user/authorize/twitter',             :controller => 'users', :action => 'authorize_twitter'
   map.flag_inappropriate  '/:model/:id/inappropriate',           :controller => 'inappropriate', :action => 'flag'
-
-  # Facebook stuff
-  
-  # map.connect '/fb/:action', :controller => 'fb_connect'
 
   # OAuth stuff
   

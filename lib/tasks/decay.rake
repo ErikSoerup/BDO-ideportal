@@ -3,8 +3,8 @@ namespace :ideax do
     task :decay => :environment do
       Decayer.run_all(
         :half_life => {
-          :idea_rating => 60.days,
-          :user_contribution_points => 40.days
+          :idea_rating => 20.days,
+          :user_contribution_points => 60.days
         }
       )
     end

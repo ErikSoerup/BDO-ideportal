@@ -18,6 +18,14 @@ class CurrentsController < ApplicationController
     @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
   
+  def page_title
+    if @current
+      @current.title
+    else
+      "Idea Currents"
+    end
+  end
+  
   include ApplicationHelper
   
 end

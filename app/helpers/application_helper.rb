@@ -122,15 +122,7 @@ module ApplicationHelper
       'count' => p.size,
       'total-count' => p.total_entries }
   end
-
-  def facebook_session
-    session[:facebook_session]
-  end
-
-  def facebook_user
-    (session[:facebook_session] && session[:facebook_session].session_key) ? session[:facebook_session].user : nil
-  end
-
+  
 private
   
   def flagged_as_inappropriate_session_key(model)

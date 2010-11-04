@@ -1,9 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'ideas_controller'
+require 'twitter_test_helper'
+require 'facebook_test_helper'
 require 'mocha'
 
 class IdeasControllerTest < ActionController::TestCase
   scenario :basic
+  
+  include TwitterTestHelper
+  include FacebookTestHelper
 
   def setup
     @controller = IdeasController.new
@@ -49,9 +54,20 @@ class IdeasControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  def test_search_top_rated
+  def test_search_hot
     @walruses_in_stores.add_vote!(@quentin)
-    get :index, :search => 'top-rated'
+    @tranquilizer_guns.rating = 100
+    @tranquilizer_guns.save!
+    get :index, :search => 'hot'
+    assert_response :success
+    assert_equal_unordered [@tranquilizer_guns, @walruses_in_stores, @barbershop_discount, @give_up_all_hope], @controller.current_objects
+  end
+  
+  def test_search_top_voted
+    @walruses_in_stores.add_vote!(@quentin)
+    @tranquilizer_guns.rating = 100
+    @tranquilizer_guns.save!
+    get :index, :search => 'top-voted'
     assert_response :success
     assert_equal_unordered [@walruses_in_stores, @barbershop_discount, @tranquilizer_guns, @give_up_all_hope], @controller.current_objects
   end
@@ -107,8 +123,7 @@ class IdeasControllerTest < ActionController::TestCase
     old_ideas = Idea.find(:all)
     
     # Ensure tweet is asynchronous
-    Twitter::OAuth.any_instance.expects(:authorize_from_access).never
-    Twitter::Base.any_instance.expects(:update).never
+    expect_no_twitter_auth_verification
 
     login_as @tweeter
     post :create, :idea => { :title => title, :description => 'bar' }
@@ -127,11 +142,9 @@ class IdeasControllerTest < ActionController::TestCase
     
     tweet_content = nil
     if opts[:twitter_exception]
-      Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.raises(Exception, 'twitter unavailable')
-      Twitter::Base.expects(:new).never
+      expect_tweet_and_raise_exception
     else
-      Twitter::OAuth.any_instance.expects(:authorize_from_access).at_least_once.returns(true)
-      Twitter::Base.any_instance.expects(:update).once.with { |msg| tweet_content = msg }
+      expect_tweet { |msg| tweet_content = msg }
     end
     
     Delayed::Worker.new(:quiet => true).work_off
@@ -141,14 +154,14 @@ class IdeasControllerTest < ActionController::TestCase
   
   def test_create_idea_and_tweet
     new_idea, tweet_content = tweet_idea('foo')
-    assert_equal tweet_content, "Idea for #{COMPANY_NAME}: foo #{idea_url(new_idea)}"
+    assert_equal tweet_content, "Idea for #{COMPANY_NAME}: foo #{idea_url(new_idea, :title_in_url => false)}"
   end
   
   def test_long_idea_title_truncated_in_tweet
     long_title = '0123456789' * 12
     new_idea, tweet_content = tweet_idea(long_title)
     
-    content_pattern = /^Idea for #{COMPANY_NAME}: (\d+)... #{idea_url(new_idea)}$/
+    content_pattern = /^Idea for #{COMPANY_NAME}: (\d+)... #{idea_url(new_idea, :title_in_url => false)}$/
     assert_match content_pattern, tweet_content
     tweet_content =~ content_pattern
     assert_match /^#{$1}/, long_title
@@ -160,6 +173,96 @@ class IdeasControllerTest < ActionController::TestCase
     
     assert_not_nil new_idea
     @expected_job_count = 1
+  end
+  
+  def facebook_post_idea(title, opts = {})
+    old_ideas = Idea.find(:all)
+    
+    # Ensure Facebook interaction is asynchronous
+    expect_no_facebook_post
+    mock_facebook_user @facebooker.facebook_uid
+
+    login_as @facebooker
+    post :create, :idea => { :title => title, :description => 'bar' }
+    
+    # Ensure create succeeded
+    assert_redirected_to idea_path(assigns(:idea))
+    
+    new_ideas = Idea.find(:all) - old_ideas
+    assert_equal 1, new_ideas.size
+    new_idea = new_ideas.first
+    
+    assert_equal title, new_idea.title
+    assert_equal @facebooker, new_idea.inventor
+    
+    # We should have picked up the new token in ApplicationController.update_facebook_access_token
+    @facebooker.reload
+    assert_equal 'mock_fb_access_token', @facebooker.facebook_access_token
+    
+    # Now post idea
+    
+    post_content = nil
+    if opts[:facebook_exception]
+      expect_facebook_post_and_raise_exception @facebooker
+    else
+      expect_facebook_post(@facebooker) { |opts| post_content = opts }
+    end
+    
+    # Set :quiet => false if you suspect the job is failing!
+    Delayed::Worker.new(:quiet => true).work_off
+    
+    [new_idea, post_content]
+  end
+  
+  def test_create_idea_and_post_to_facebook
+    new_idea, post_content = facebook_post_idea('foo')
+    expected_content = {
+     :description => "bar",
+     :message => "Idea for #{COMPANY_NAME}: foo",
+     :source => idea_url(new_idea),
+     :name => "Vote it up on #{LONG_SITE_NAME}"
+    }
+    assert_equal expected_content, post_content
+    assert_nil flash[:info]
+  end
+
+  def test_create_idea_and_facebook_error
+    new_idea, post_content = facebook_post_idea('foo', :facebook_exception => true)
+    
+    assert_not_nil new_idea
+    assert_nil flash[:info]
+    @expected_job_count = 1
+  end
+  
+  def facebook_post_deferred_idea
+    expect_no_facebook_post
+
+    login_as @facebooker
+    post :create, :idea => { :title => 'foo', :description => 'bar' }
+    
+    assert 1, Delayed::Job.count
+    job = Delayed::Job.find(:first)
+    assert 0, job.attempts
+    assert job.run_at > 10.seconds.from_now
+    
+    @expected_job_count = 1 # so teardown works
+  end
+  
+  def test_facebook_post_not_logged_in_to_facebook
+    facebook_post_deferred_idea
+    
+    assert !(flash[:info] =~ /FB.logout/)
+    assert flash[:info] =~ /facebook_login/
+  end
+  
+  def test_facebook_post_logged_in_as_wrong_facebook_user
+    mock_facebook_user @tweeter
+    facebook_post_deferred_idea
+    
+    # This match will have to change if we ever find a single popup-blocker-friendly call that lets
+    # the user log in as a different user on FB:
+    assert flash[:info] =~ /FB.logout/
+    assert flash[:info] =~ /facebook_login/
   end
   
   def test_cannot_set_prohibited_fields
@@ -239,7 +342,6 @@ class IdeasControllerTest < ActionController::TestCase
     assert_no_tag :content => @orphan_idea.title
     assert_no_tag :content => @inactive_user_idea.title
   end
-  
   
   def test_show_indicates_duplicates
     get :show, :id => @walruses_in_stores.id
