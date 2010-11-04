@@ -25,9 +25,8 @@ module Admin
           end
         end
         
-        if params[:invite_to]
-          invited_current = Current.find(params[:invite_to])
-          @user.is_invitee_for invited_current unless invited_current.nil?
+        unless params[:invite_to].blank?
+          @user.is_invitee_for Current.find(params[:invite_to])
         end
       end
     

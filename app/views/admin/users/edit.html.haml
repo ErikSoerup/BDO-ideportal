@@ -30,13 +30,21 @@
             = f.check_box :tweet_ideas, :class => "input-checkbox"
             = f.label :tweet_ideas, "Tweet ideas"
           .form-group.inline
+            = f.label :facebook_name, "Facebook Username"
+            =h @user.facebook_name
+          .form-group.inline.checkbox
+            = f.check_box :facebook_post_ideas, :class => "input-checkbox"
+            = f.label :facebook_post_ideas, "Post ideas on Facebook"
+          .form-group.inline
             = f.label nil, "State"
             #user-state
               = render :partial => 'admin/users/state'
+          -# ------- STYLE NEEDED ------ (Left alignment issue when user owns or is invited to many currents)
           .form-group.inline
             = f.label nil, "Owned Currents"
-            - @user.currents.each do |current|
-              =link_to h(current.title), edit_admin_current_path(current)
+            %ul
+              - @user.currents.each do |current|
+                %li=link_to h(current.title), edit_admin_current_path(current)
           .form-group.inline
             = f.label nil, "Invited Currents"
             #user-currents
@@ -45,7 +53,8 @@
                   %li=link_to h(current.title), edit_admin_current_path(current)
               Invite to 
               %select{:name=>"invite_to", :id=>"invite_to"}
-                = options_for_select Current.all.map{|x|[x.title,x.id]}
+                = options_for_select [[nil,nil]] + Current.all_except_default.map{ |x| [x.title,x.id] }
+          -# ------- /STYLE NEEDED ------
           .form-group.inline.checkbox
             .left-padded
               = f.check_box :admin, check_box_onchange('adminFlagChanged()')
