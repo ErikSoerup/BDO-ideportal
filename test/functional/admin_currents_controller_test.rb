@@ -32,8 +32,9 @@ class Admin::CurrentsControllerTest < ActionController::TestCase
   
   def test_create_current
     old_currents = Current.find(:all)
-    login_as @admin_user
-    post :create, :current => { :title => 'foo', :description => 'bar' }
+    assert_login_required @admin_user do
+      post :create, :current => { :title => 'foo', :description => 'bar' }
+    end
     assert_redirected_to edit_admin_current_path(assigns(:current))
     
     new_currents = Current.find(:all) - old_currents
@@ -43,6 +44,15 @@ class Admin::CurrentsControllerTest < ActionController::TestCase
     assert_equal 'foo', new_current.title
     assert_equal 'bar', new_current.description
     assert_equal @admin_user, new_current.inventor
+  end
+  
+  def test_create_current_fails
+    assert_no_difference 'Current.count' do
+      assert_login_required @admin_user do
+        post :create, :current => { :title => 'foo' }
+      end
+    end
+    assert_response :success
   end
   
   def test_edit

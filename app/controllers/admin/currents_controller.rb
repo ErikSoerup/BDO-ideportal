@@ -32,6 +32,11 @@ module Admin
               :locals => { :redirect_path => edit_admin_current_path(@current), :message => 'Creating current...' }
         end
       end
+
+      response_for :create_fails do |format|
+        format.html { render :action => 'new' }
+        format.js   { render :partial => 'new' }
+      end
       
       response_for :update do |format|
         format.html do
