@@ -28,7 +28,7 @@ class HomeController < ApplicationController
   helper_method :render_idea_cloud
   
   def cloud(ideas, opts = {})
-    top_rated = opts[:search].include?('top-rated')
+    top_rated = opts[:search].include?('hot')
     opts.reverse_merge!(
       :density           => 0.5,
       :favor_largest     => 0.4,

@@ -5,7 +5,7 @@
       -cache('primary_nav') do
         %ul.nav.site.alt.title-ideas
           %li.first= link_to "Share", root_path, :class => "home"
-          %li= link_to 'Popular', idea_search_path(:search => 'top-rated'), :class => 'top-rated'
+          %li= link_to "What's Hot", idea_search_path(:search => 'hot'), :class => 'top-rated'
           %li= link_to 'Recent', idea_search_path(:search => 'recent'), :class => 'recent'
           %li= link_to 'Currents', currents_path, :class => 'currents'
           %li.last= link_to 'Nearby', map_path, :class => 'nearby'

@@ -54,9 +54,20 @@ class IdeasControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  def test_search_top_rated
+  def test_search_hot
     @walruses_in_stores.add_vote!(@quentin)
-    get :index, :search => 'top-rated'
+    @tranquilizer_guns.rating = 100
+    @tranquilizer_guns.save!
+    get :index, :search => 'hot'
+    assert_response :success
+    assert_equal_unordered [@tranquilizer_guns, @walruses_in_stores, @barbershop_discount, @give_up_all_hope], @controller.current_objects
+  end
+  
+  def test_search_top_voted
+    @walruses_in_stores.add_vote!(@quentin)
+    @tranquilizer_guns.rating = 100
+    @tranquilizer_guns.save!
+    get :index, :search => 'top-voted'
     assert_response :success
     assert_equal_unordered [@walruses_in_stores, @barbershop_discount, @tranquilizer_guns, @give_up_all_hope], @controller.current_objects
   end

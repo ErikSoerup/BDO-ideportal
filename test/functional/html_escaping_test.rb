@@ -41,7 +41,7 @@ class HtmlEscapingTest < ActionController::TestCase
     test_request :get,  "/ideas"
     test_request :get,  "/ideas/new"
     test_request :get,  "/ideas/search/recent"
-    test_request :get,  "/ideas/search/top-rated"
+    test_request :get,  "/ideas/search/hot"
     test_request :get,  "/ideas/search/tag/#{@tag.name}"
     test_request :get,  "/ideas/#{@idea.id}"
     test_request :post, "/ideas/", idea_fields

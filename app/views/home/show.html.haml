@@ -65,12 +65,12 @@
       #popular-ideas.panel.summary.hfeed
         .header
           %h3.icon.popular
-            Popular Ideas
+            What's Hot
           %ul.actions
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
             -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
         .body.ideas
-          = render :partial => 'idea', :collection => search_ideas(:search => 'top-rated', :page_size => 5)
+          = render :partial => 'idea', :collection => search_ideas(:search => 'hot', :page_size => 5)
         .footer
           .pagination
             = link_to 'More', idea_search_path(:search => 'top-rated'), :class => 'next_page'
