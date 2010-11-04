@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101101215458) do
+ActiveRecord::Schema.define(:version => 20101104160151) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20101101215458) do
     t.boolean  "marked_spam",                                                      :default => false
     t.integer  "current_id",                                                       :default => -1
     t.text     "vectors"
+    t.integer  "vote_count"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"

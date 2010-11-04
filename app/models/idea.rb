@@ -12,9 +12,12 @@ class Idea < ActiveRecord::Base
     end
   end
   has_many :admin_comments, :order => 'admin_comments.created_at'
-  has_many :votes do
+  has_many :votes, :include => :user do
     def for(user)
       find :first, :conditions => {:user_id => user.id}
+    end
+    def active
+      find :all, :conditions => { 'users.state' => 'active' }
     end
   end
   has_many :voters, :through => :votes, :source => :user, :class_name => 'User'
@@ -63,6 +66,10 @@ class Idea < ActiveRecord::Base
     ideas.each do |idea|
       idea.comment_count = counts_by_id[idea.id]
     end
+  end
+  
+  def update_vote_count
+    self.vote_count = votes.active.count
   end
   
   def tag_names
@@ -164,6 +171,7 @@ class Idea < ActiveRecord::Base
   
   def before_save
     self.tags.uniq!
+    update_vote_count
   end
   
   def after_save

@@ -25,13 +25,18 @@ class IdeaTest < ActiveSupport::TestCase
   end
   
   def test_vote
-    assert_equal 0, @walruses_in_stores.rating
+    @walruses_in_stores.rating = 100
+    @walruses_in_stores.save!
+    assert_equal 0, @walruses_in_stores.vote_count
     @walruses_in_stores.add_vote!(@sally)
-    assert_equal 1, @walruses_in_stores.rating
+    assert_equal 101, @walruses_in_stores.rating
+    assert_equal   1, @walruses_in_stores.vote_count
     @walruses_in_stores.add_vote!(@sally)
-    assert_equal 1, @walruses_in_stores.rating
+    assert_equal 101, @walruses_in_stores.rating
+    assert_equal   1, @walruses_in_stores.vote_count
     @walruses_in_stores.add_vote!(@quentin)
-    assert_equal 2, @walruses_in_stores.rating
+    assert_equal 102, @walruses_in_stores.rating
+    assert_equal   2, @walruses_in_stores.vote_count
     
     @sally.reload
     assert_equal 101, @sally.contribution_points
@@ -44,10 +49,12 @@ class IdeaTest < ActiveSupport::TestCase
     @walruses_in_stores.add_vote!(@aaron)
     @walruses_in_stores.reload
     assert_equal 0, @walruses_in_stores.rating
+    assert_equal 0, @walruses_in_stores.vote_count
     
     @aaron.activate!
     @walruses_in_stores.reload
     assert_equal 1, @walruses_in_stores.rating
+    assert_equal 1, @walruses_in_stores.vote_count
   end
 
   def test_flag_as_inappropriate

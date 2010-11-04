@@ -217,6 +217,10 @@ class User < ActiveRecord::Base
     self.facebook_uid = self.facebook_access_token = self.facebook_name = nil
     self.facebook_post_ideas = false
   end
+  
+  def count_votes
+    votes.each { |vote| vote.count! }  # Only affects votes not already counted
+  end
 
   protected
     # before filter 
@@ -250,14 +254,9 @@ class User < ActiveRecord::Base
       @activated = true
       self.activated_at = Time.now.utc
       self.deleted_at = self.activation_code = nil
-      count_votes
     end
     
     def assign_postal_code
       self.postal_code ||= PostalCode.find_by_text(zip_code)
-    end
-    
-    def count_votes
-      votes.each { |vote| vote.count! }  # Only affects votes not already counted
     end
 end

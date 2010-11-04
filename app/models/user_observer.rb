@@ -5,7 +5,10 @@ class UserObserver < ActiveRecord::Observer
   end
 
   def after_save(user)
-    UserMailer.deliver_activation(user) if user.recently_activated?
+    if user.recently_activated?
+      user.count_votes
+      UserMailer.deliver_activation(user)
+    end
   end
   
 end
