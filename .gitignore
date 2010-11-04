@@ -3,3 +3,4 @@ log
 tmp/*
 test/fixtures/*/*
 *.tmproj
+db/schema.rb

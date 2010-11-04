@@ -104,7 +104,6 @@ ActiveRecord::Schema.define(:version => 20101104160151) do
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
-  add_index "ideas", ["vectors"], :name => "ideas_fts_vectors_index"
 
   create_table "ideas_admin_tags", :id => false, :force => true do |t|
     t.integer "idea_id"
