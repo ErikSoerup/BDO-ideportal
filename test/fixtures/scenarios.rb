@@ -95,6 +95,7 @@ scenario :basic do
   @admin_user.has_role 'admin'
   @admin_user.has_role 'editor', User
   @admin_user.has_role 'editor', Idea
+  @admin_user.has_role 'editor', Current
   @admin_user.has_role 'editor', LifeCycle
   
   # ------ Currents ------

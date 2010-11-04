@@ -10,14 +10,6 @@ module Admin
         @current.inventor = current_user
       end
       
-      before :edit do
-        @ideas = Idea.paginate_by_current_id(
-          @current_object.id, 
-          :page => params[:page], 
-          :conditions => ['hidden = ?', false],
-          :per_page => params[:per_page] || 20)
-      end
-      
       response_for :index do |format|
         format.html { render :action => 'index' }
         format.js   { render :partial => 'index' }
@@ -47,7 +39,20 @@ module Admin
           render :text => 'OK'
         end
       end
+      
+      response_for :update_fails do |format|
+        format.html { render :action => 'edit' }
+      end
     end
+    
+    def current_ideas
+      @current_ideas ||= Idea.paginate_by_current_id(
+        current_object.id, 
+        :page => params[:page], 
+        :conditions => ['hidden = ?', false],
+        :per_page => params[:per_page] || 20)
+    end
+    helper_method :current_ideas
     
     include ResourceAdmin
     

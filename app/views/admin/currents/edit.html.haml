@@ -50,6 +50,5 @@
       .group
         %h2 Ideas in this Current
         =link_to "Add idea to this current", new_idea_path("idea[current_id]"=>current_object.id)
-        =render :partial=>"ideas_list", :object => @ideas
-        -# =render :partial=>"admin/ideas/index", :object => current_object.ideas
+        =render :partial => "ideas_list"
     .footer

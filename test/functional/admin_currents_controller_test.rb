@@ -48,7 +48,7 @@ class Admin::CurrentsControllerTest < ActionController::TestCase
   
   def test_create_current_fails
     assert_no_difference 'Current.count' do
-      assert_login_required @admin_user do
+      assert_admin_required do
         post :create, :current => { :title => 'foo' }
       end
     end
@@ -66,6 +66,28 @@ class Admin::CurrentsControllerTest < ActionController::TestCase
     assert_tag :tag => 'a',
       :attributes => { :href => new_idea_path("idea[current_id]"=>@walrus_attack_current.id) }
     assert_tag :tag => 'input', :attributes => { :name => "current[submission_deadline]" }
+  end
+  
+  def test_update
+    assert_admin_required do
+      post :update, :id => @walrus_attack_current.id, :current => {
+        :title => 'foo', :description => 'bar', :invitation_only => '1' }
+    end
+    assert_redirected_to edit_admin_current_path(@walrus_attack_current)
+    
+    @walrus_attack_current.reload
+    assert_equal 'foo', @walrus_attack_current.title
+    assert_equal 'bar', @walrus_attack_current.description
+    assert_equal true, @walrus_attack_current.invitation_only
+  end
+  
+  def test_update_fails
+    assert_admin_required do
+      post :update, :id => @walrus_attack_current.id, :current => {
+        :title => 'foo', :description => nil, :invitation_only => '1' }
+    end
+    puts @response.body.to_s
+    assert_response :success
   end
   
 end
