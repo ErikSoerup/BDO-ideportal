@@ -82,12 +82,16 @@ class Admin::CurrentsControllerTest < ActionController::TestCase
   end
   
   def test_update_fails
+    old_desc = @walrus_attack_current.description
     assert_admin_required do
       post :update, :id => @walrus_attack_current.id, :current => {
         :title => 'foo', :description => nil, :invitation_only => '1' }
     end
-    puts @response.body.to_s
     assert_response :success
+    
+    @walrus_attack_current.reload
+    assert_equal old_desc, @walrus_attack_current.description
+    assert !@walrus_attack_current.invitation_only
   end
   
 end
