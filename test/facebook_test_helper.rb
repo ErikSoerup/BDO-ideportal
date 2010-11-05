@@ -31,7 +31,7 @@ module FacebookTestHelper
     mock_client = mock()
     mock_post = mock()
     mock_user = mock()
-    mock_user.expects(:feed_create).with(mock_post).raises(Exception, 'facebook unavailable')
+    mock_user.expects(:feed_create).with(mock_post).at_least_once.raises(Exception, 'facebook unavailable')
     
     Mogli::Client.expects(:new).at_least_once.returns(mock_client)
     Mogli::User.expects(:new).at_least_once.with({:id => user.facebook_uid}, mock_client).returns(mock_user)

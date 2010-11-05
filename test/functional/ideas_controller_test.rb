@@ -15,6 +15,7 @@ class IdeasControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @expected_job_count = 0
+    Idea.any_instance.expects(:spam?).at_least(0).returns(false) # need to stub out rakismet since we're running jobs in tests
   end
   
   def teardown
@@ -96,6 +97,7 @@ class IdeasControllerTest < ActionController::TestCase
     assert_equal 'bar', new_idea.description
     assert_equal 'eight, five six, one two, seven, three', new_idea.tag_names
     assert_equal @quentin, new_idea.inventor
+    @expected_job_count = 1 # spam filtering
   end
   
   def test_create_idea_not_logged_in
@@ -117,6 +119,7 @@ class IdeasControllerTest < ActionController::TestCase
     
     assert_equal assign_idea_path(new_idea), session[:return_to]
     assert_equal 'post', session[:return_to_method]
+    @expected_job_count = 1 # spam filtering
   end
   
   def tweet_idea(title, opts = {})
@@ -240,12 +243,13 @@ class IdeasControllerTest < ActionController::TestCase
     login_as @facebooker
     post :create, :idea => { :title => 'foo', :description => 'bar' }
     
-    assert 1, Delayed::Job.count
-    job = Delayed::Job.find(:first)
-    assert 0, job.attempts
+    fb_post_jobs = Delayed::Job.all.select { |job| job.payload_object.kind_of?(FacebookPostIdeaJob)  }
+    assert_equal 1, fb_post_jobs.count
+    job = fb_post_jobs.first
+    assert_equal 0, job.attempts
     assert job.run_at > 10.seconds.from_now
     
-    @expected_job_count = 1 # so teardown works
+    @expected_job_count = 2 # spam + fb post
   end
   
   def test_facebook_post_not_logged_in_to_facebook
@@ -294,6 +298,7 @@ class IdeasControllerTest < ActionController::TestCase
     assert_not_equal new_idea.inappropriate_flags, 10
     assert_not_equal new_idea.hidden, true
     assert_not_equal new_idea.decayed_at, fake_time
+    @expected_job_count = 1 # spam filtering
   end
   
   def test_create_idea_duplicate_tags
@@ -310,6 +315,7 @@ class IdeasControllerTest < ActionController::TestCase
     
     assert_equal 'eight, five six, one two, seven, three', new_idea.tag_names
     assert_equal @quentin, new_idea.inventor
+    @expected_job_count = 1 # spam filtering
   end
   
   def test_assign_idea_owner
