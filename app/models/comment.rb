@@ -11,8 +11,13 @@ class Comment < ActiveRecord::Base
   validate :idea_not_closed
   
   include SpamFiltering
-  def user_for_spam_filtering
+  
+  def spam_filtering_user
     author
+  end
+  
+  def spam_filtering_text
+    text
   end
   
   def idea_not_closed

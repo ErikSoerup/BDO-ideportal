@@ -38,7 +38,6 @@ module Rakismet
           data = args.map { |k,v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
           http.post(akismet.path, data, Rakismet::HEADERS)
         end
-puts "---------------------> akismet response: #{response.inspect}"
         response
       end
       

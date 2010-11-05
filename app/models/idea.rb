@@ -46,8 +46,17 @@ class Idea < ActiveRecord::Base
   include InappropriateFlag
   
   include SpamFiltering
-  def user_for_spam_filtering
+
+  def spam_filtering_user
     inventor
+  end
+  
+  def spam_filtering_text
+    "#{title}\n#{description}"
+  end
+  
+  def after_create
+    send_later :check_spam!
   end
   
   unless !Idea.table_exists?   
