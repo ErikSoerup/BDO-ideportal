@@ -44,14 +44,20 @@ class Idea < ActiveRecord::Base
   end
   
   include InappropriateFlag
+  
+  include SpamFiltering
+  def user_for_spam_filtering
+    inventor
+  end
+  
   unless !Idea.table_exists?   
-  acts_as_tsearch :fields => ['title', 'description',
-    '(select array_agg(tags.name)::TEXT
-        from ideas_tags left outer join tags on ideas_tags.tag_id = tags.id
-       where ideas_tags.idea_id = ideas.id)',
-    '(select array_agg(admin_tags.name)::TEXT
-        from ideas_admin_tags left outer join admin_tags on ideas_admin_tags.admin_tag_id = admin_tags.id
-       where ideas_admin_tags.idea_id = ideas.id)']
+    acts_as_tsearch :fields => ['title', 'description',
+      '(select array_agg(tags.name)::TEXT
+          from ideas_tags left outer join tags on ideas_tags.tag_id = tags.id
+         where ideas_tags.idea_id = ideas.id)',
+      '(select array_agg(admin_tags.name)::TEXT
+          from ideas_admin_tags left outer join admin_tags on ideas_admin_tags.admin_tag_id = admin_tags.id
+         where ideas_admin_tags.idea_id = ideas.id)']
   end
   def self.populate_comment_counts(ideas)
     comment_counts = Comment.find :all,
@@ -191,12 +197,7 @@ class Idea < ActiveRecord::Base
   def closed?
     !current.nil? && self.current.closed_or_expired?
   end
-  
-  def marked_spam=(spam)
-    self[:marked_spam] = spam
-    self[:hidden] = true if spam
-  end
-  
+    
   attr_writer :comment_count
   
   def editing_expired?

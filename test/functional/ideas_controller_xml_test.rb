@@ -68,6 +68,7 @@ class IdeasControllerXmlTest < ActionController::TestCase
       assert_xml_equal idea_xml, './id',                   idea.id
       assert_xml_equal idea_xml, './inappropriate-flags',  idea.inappropriate_flags
       assert_xml_equal idea_xml, './rating',               idea.rating.round.to_i
+      assert_xml_equal idea_xml, './vote-count',           idea.vote_count
       assert_xml_equal idea_xml, './title',                idea.title
       assert_xml_equal idea_xml, './description',          idea.description
       assert_xml_equal idea_xml, './inventor/id',          idea.inventor.id

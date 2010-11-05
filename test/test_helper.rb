@@ -17,15 +17,15 @@ rescue ActiveRecord::StatementInvalid=>x
 end
 [Idea, Comment, User, ClientApplication].each { |model| model.create_vector } # drops & recreates tsearch2's vector column
 
-# Always force scenarios to be rebuilt. It's not too slow, and avoid confusion.
-NestedScenarios::Builder.build_all
-
 # Ensure that tests run offline
 class Net::HTTP
   def initialize(*args)
     raise "Tests should not touch the network. Use Mocha to stub out network access."
   end
 end
+
+# Always force scenarios to be rebuilt. It's not too slow, and avoids confusion.
+NestedScenarios::Builder.build_all
 
 class ActiveSupport::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method

@@ -1,13 +1,4 @@
 class Comment < ActiveRecord::Base
-  has_rakismet  :author => proc{author.name},
-                :author_url=>proc{self.comment_url},
-                :author_email => proc{author.email},
-        
-                :user_ip => :ip,
-                :user_agent => :agent,
-                :content => :text,
-                :permalink=>proc{self.comment_path}
-  
   acts_as_authorizable
   
   belongs_to :idea
@@ -16,17 +7,13 @@ class Comment < ActiveRecord::Base
     'comment'
   end
 
-  def comment_path
-    "/comment/#{self.id}"
-  end
-  def comment_url
-    Rakismet::URL<<comment_path
-  end
-  
   validates_presence_of :idea, :author, :text
-  validates_presence_of :ip, :on => :create
-  validates_presence_of :user_agent, :on => :create
   validate :idea_not_closed
+  
+  include SpamFiltering
+  def user_for_spam_filtering
+    author
+  end
   
   def idea_not_closed
     if !idea.nil? && idea.closed?
@@ -41,16 +28,7 @@ class Comment < ActiveRecord::Base
   
   def after_create
     author.record_contribution! :comment
-  end
-  
-  def before_create
-    self.marked_spam=self.spam? if Rakismet::KEY
-    true
-  end
-  
-  def marked_spam=(spam)
-    self[:marked_spam] = spam
-    self[:hidden] = true if spam
+    send_later :check_spam!
   end
   
   def editing_expired?
@@ -60,5 +38,4 @@ class Comment < ActiveRecord::Base
   def editable_by?(user)
     user == author && !editing_expired?
   end
-  
 end

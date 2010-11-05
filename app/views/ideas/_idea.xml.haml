@@ -6,6 +6,7 @@
   %created-at= idea.created_at
   %inappropriate-flags= idea.inappropriate_flags
   %rating= idea.rating.round.to_i
+  %vote-count= idea.vote_count
   %title=h idea.title
   %description=h user_formatted_text idea.description
   -if current_user

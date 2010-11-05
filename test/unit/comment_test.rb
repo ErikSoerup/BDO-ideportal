@@ -11,14 +11,22 @@ class CommentTest < ActiveSupport::TestCase
   
   context "when check_rakismet returns false" do
     setup do
-      @comment = @walrus_comment_spam.clone
-      @comment.expects(:spam?).returns(true)
-      @comment.marked_spam=false
+      @comment = @walruses_in_stores.comments.create!(
+        :author => @sally,
+        :ip => '127.0.0.1',
+        :user_agent=>'Macosx safari or whatever',
+        :text => "Enlarge your walrus!")
+      Comment.any_instance.expects(:spam?).never
       assert !@comment.marked_spam?
     end
-    should "be marked spam" do
-      Rakismet::KEY='foo'
-      @comment.save
+    should "not be marked spam immediately" do
+      @comment.save!
+      @comment.reload
+      assert !@comment.marked_spam?
+    end
+    should "be marked spam after delayed jobs run" do
+      Comment.any_instance.expects(:spam?).returns(true)
+      Delayed::Worker.new(:quiet => true).work_off
       @comment.reload
       assert @comment.marked_spam?
     end
