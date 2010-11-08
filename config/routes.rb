@@ -22,7 +22,6 @@ ActionController::Routing::Routes.draw do |map|
   map.logout              '/logout',                             :controller => 'sessions', :action => 'destroy'
   map.signup              '/signup',                             :controller => 'users', :action => 'new'
   map.idea_search         '/ideas/search/*search',               :controller => 'ideas', :action => 'index'
-  map.titled_idea         '/ideas/:id/:title',                   :controller => 'ideas', :action => 'show'
   map.send_activation     '/user/send_activation',               :controller => 'users', :action => 'send_activation'
   map.activate            '/user/activate/:activation_code',     :controller => 'users', :action => 'activate'
   map.forgot_password     '/user/password/forgot',               :controller => 'users', :action => 'forgot_password',     :conditions => { :method => :get }
@@ -30,7 +29,13 @@ ActionController::Routing::Routes.draw do |map|
   map.password_reset      '/user/password/new/:activation_code', :controller => 'users', :action => 'new_password'
   map.authorize_twitter   '/user/authorize/twitter',             :controller => 'users', :action => 'authorize_twitter'
   map.flag_inappropriate  '/:model/:id/inappropriate',           :controller => 'inappropriate', :action => 'flag'
+  
+  # Pretty URLS: these must come after more specific routes
 
+  map.idea_pretty         '/ideas/:id/:title',                   :controller => 'ideas',    :action => 'show'
+  map.profile_pretty      '/profiles/:id/:title',                :controller => 'profiles', :action => 'show'
+  map.current_pretty      '/currents/:id/:title',                :controller => 'currents', :action => 'show'
+  
   # OAuth stuff
   
   map.test_request '/oauth/test_request', :controller => 'oauth', :action => 'test_request'
