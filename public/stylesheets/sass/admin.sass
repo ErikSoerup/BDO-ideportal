@@ -2,26 +2,44 @@
   h3
     :margin-top 2em
     
-table
+table.admin-table
   :margin-bottom 0
   :width 100%
 
+  th
+    :padding 8px 18px 8px 8px
+    :padding-top 10px
+    :background #9ec8f0
+    :border-bottom 2px solid #78a5cf
+    :font-weight bold
+    :text-align center
+    :white-space nowrap
 
-th
-  :padding 8px 18px 8px 8px
-  :padding-top 10px
-  :background #9ec8f0
-  :border-bottom 2px solid #78a5cf
-  :font-weight bold
-  :text-align center
-  :white-space nowrap
 
+  td
+    :padding 8px 18px 8px 8px
+    :border-top 1px solid #fff
+    :border-bottom 1px solid #ccc
+    :vertical-align top
 
-td
-  :padding 8px 18px 8px 8px
-  :border-top 1px solid #fff
-  :border-bottom 1px solid #ccc
-  :vertical-align top
+  tr
+    :background #FFF
+    &.unviewed
+      :background #f2f2f2
+      &:hover
+        :background #ffef1b
+        :cursor pointer
+        td
+          :border-top-color #ffef1b
+          :border-bottom-color #decf00
+    &:hover
+      :background #fff895
+      :cursor pointer
+      td
+        :border-top-color #fff895
+        :border-bottom-color #decf00
+    th:hover
+      :cursor default
 
 .excerpt
   :max-width 150px
@@ -31,26 +49,7 @@ caption
   :padding 8px 18px 8px 8px
 
 
-tr
-  :background #FFF
-  &.unviewed
-    :background #f2f2f2
-    &:hover
-      :background #ffef1b
-      :cursor pointer
-      td
-        :border-top-color #ffef1b
-        :border-bottom-color #decf00
-  &:hover
-    :background #fff895
-    :cursor pointer
-    td
-      :border-top-color #fff895
-      :border-bottom-color #decf00
-  th:hover
-    :cursor default
-
-table.no-hover
+table.admin-table.no-hover
   tr:hover
     :background none
     :cursor default
@@ -120,7 +119,7 @@ div
     form
       :margin 0
 
-/ on idea page:
+// on idea page:
 .life-cycle
   :width 50%
   .past-step
@@ -130,7 +129,7 @@ div
   .future-step
     :color #AAA
 
-/ ------- STYLE NEEDED ------
+// ------- STYLE NEEDED ------
 body
   :padding-bottom 100px
   
@@ -194,10 +193,10 @@ body
     :height 1
     :clear both
     :visibility hidden
-/ ------- /STYLE NEEDED ------
+// ------- /STYLE NEEDED ------
 
 
-/ ------- STYLE NEEDED ------
+// ------- STYLE NEEDED ------
 #show-idea-text, #show-current-text
   :background-color #EEF
   :border 2px solid #CCC
@@ -210,10 +209,10 @@ body
   h1
     :margin-bottom 0.5em
     :line-height 1.3em
-/ ------- /STYLE NEEDED ------
+// ------- /STYLE NEEDED ------
 
 
-/ ------- STYLE NEEDED ------
+// ------- STYLE NEEDED ------
 ol#admin-comments
   :margin 0 0 0 160px
   li
@@ -224,4 +223,27 @@ ol#admin-comments
     :margin-bottom 0
   .admin-comment-content
     :margin-left 1em
-/ ------- /STYLE NEEDED ------
+// ------- /STYLE NEEDED ------
+
+.graph-box
+  #graph
+    :width 600px
+    :height 200px
+    :float left
+  #legend
+    :padding 0.2em 0
+    :width 9em
+    :float left
+    :margin-top 100px
+    .time-range
+      :margin-left 1ex
+      :font-weight bold
+    .item
+      .count
+        :font-weight bold
+        :float left
+        :clear left
+        :text-align right
+        :width 4ex
+        :margin-right 1ex
+      .label

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101105203141) do
+ActiveRecord::Schema.define(:version => 20101109221707) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -236,9 +236,11 @@ ActiveRecord::Schema.define(:version => 20101105203141) do
   add_index "users", ["vectors"], :name => "users_fts_vectors_index"
 
   create_table "votes", :force => true do |t|
-    t.integer "idea_id"
-    t.integer "user_id"
-    t.boolean "counted", :default => false
+    t.integer  "idea_id"
+    t.integer  "user_id"
+    t.boolean  "counted",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "votes", ["user_id", "idea_id"], :name => "index_votes_on_user_id_and_idea_id", :unique => true
