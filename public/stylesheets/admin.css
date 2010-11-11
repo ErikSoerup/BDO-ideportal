@@ -197,22 +197,30 @@ ol#admin-comments {
   ol#admin-comments .admin-comment-content {
     margin-left: 1em; }
 
-.graph-box #graph {
-  width: 600px;
-  height: 200px;
-  float: left; }
-.graph-box #legend {
-  padding: 0.2em 0;
-  width: 9em;
-  float: left;
-  margin-top: 100px; }
-  .graph-box #legend .time-range {
-    margin-left: 1ex;
-    font-weight: bold; }
-  .graph-box #legend .item .count {
-    font-weight: bold;
+.graph-box {
+  margin-left: 20px; }
+  .graph-box #graph {
+    width: 800px;
+    height: 120px;
+    float: left; }
+  .graph-box #legend {
+    padding: 0.2em 0;
+    width: 9em;
     float: left;
-    clear: left;
-    text-align: right;
-    width: 4ex;
-    margin-right: 1ex; }
+    margin-top: 20px; }
+    .graph-box #legend .time-range {
+      margin-left: 1ex;
+      font-weight: bold; }
+    .graph-box #legend .item .count {
+      font-weight: bold;
+      float: left;
+      clear: left;
+      text-align: right;
+      width: 4ex;
+      margin-right: 1ex; }
+  .graph-box:after {
+    content: ".";
+    display: block;
+    height: 1;
+    clear: both;
+    visibility: hidden; }

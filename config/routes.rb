@@ -75,7 +75,6 @@ ActionController::Routing::Routes.draw do |map|
       dup.compare_duplicates 'ideas/:id/link_duplicate/:other_id', :action => 'compare_duplicates', :conditions => { :method => :get }
       dup.link_duplicates    'ideas/:id/link_duplicate/:other_id', :action => 'link_duplicates',    :conditions => { :method => :post }
     end
-    admin.graph 'graphs/:model', :controller => 'graphs', :action => 'show'
   end
   
   # Top-level routes

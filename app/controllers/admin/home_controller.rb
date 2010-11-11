@@ -26,5 +26,7 @@ module Admin
       "use the admin interface"
     end
     
+    include GraphHelper
+    
   end
 end

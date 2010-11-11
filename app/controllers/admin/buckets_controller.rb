@@ -1,6 +1,6 @@
 class Admin::BucketsController < ApplicationController
   
-  include BucketHelper
+  include Admin::BucketHelper
   
   def add_idea
     update_bucket :add => idea

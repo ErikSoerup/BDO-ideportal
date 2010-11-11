@@ -226,15 +226,16 @@ ol#admin-comments
 // ------- /STYLE NEEDED ------
 
 .graph-box
+  :margin-left 20px
   #graph
-    :width 600px
-    :height 200px
+    :width 800px
+    :height 120px
     :float left
   #legend
     :padding 0.2em 0
     :width 9em
     :float left
-    :margin-top 100px
+    :margin-top 20px
     .time-range
       :margin-left 1ex
       :font-weight bold
@@ -247,3 +248,9 @@ ol#admin-comments
         :width 4ex
         :margin-right 1ex
       .label
+  &:after
+    :content "."
+    :display block
+    :height 1
+    :clear both
+    :visibility hidden
