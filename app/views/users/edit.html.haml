@@ -30,6 +30,7 @@
           = gravatar_for @user, :size => 64
           Edit your avatar at
           = link_to 'gravatar.com', 'http://gravatar.com'
+        -# ------- /STYLE NEEDED ------
         
         :javascript
           change_service_link = function(service, link) {
@@ -39,6 +40,7 @@
           }
         
         - if TWITTER_ENABLED
+          -# ------- STYLE NEEDED ------
           .form-group.inline.checkbox
             - if @user.linked_to_twitter?
               %p
@@ -60,8 +62,10 @@
                 Allows you to Tweet your ideas, and log in via Twitter.
                 %br/
                 == Displays your Twitter name in your #{SHORT_SITE_NAME} public profile.
+          -# ------- /STYLE NEEDED ------
           
         - if FACEBOOK_ENABLED
+          -# ------- STYLE NEEDED ------
           .form-group.inline.checkbox
             - if @user.linked_to_facebook?
               %p
@@ -81,15 +85,15 @@
               = hidden_field_tag :link_facebook
               %p.note
                 Allows you to public your ideas to your wall, and log in via Facebook.
-            
-            :javascript
-              facebook_auth_and_link = function() {
-                facebook_auth(function() {
-                  change_service_link('facebook', true)
-                })
-                return false
-              }
-        -# ------- /STYLE NEEDED ------
+          -# ------- /STYLE NEEDED ------
+          
+          :javascript
+            facebook_auth_and_link = function() {
+              facebook_auth(function() {
+                change_service_link('facebook', true)
+              })
+              return false
+            }
         
         .form-submit.inline
           = submit_tag 'Update Account', :id => "submit-save-changes", :class => "input-submit"
