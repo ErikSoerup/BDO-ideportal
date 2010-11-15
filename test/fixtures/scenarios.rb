@@ -193,7 +193,8 @@ scenario :basic do
     :title => 'Tusky mammals',
     :description => 'Put them in retail establishments!',
     :duplicate_of => @walruses_in_stores,
-    :current => @default_current))
+    :current => @default_current,
+    :created_at => Time.utc(2008, 1, 3)))
 
   # ------ Comments ------
   
