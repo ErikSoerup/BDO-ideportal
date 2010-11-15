@@ -20,7 +20,7 @@
           .ideas-list.inset
             %div
               %div
-                = render :collection => @user.ideas.recent_visible(10), :partial => 'ideas/idea'
+                = render_recent :recent => 'ideas', :offset => 0, :limit => 5
         -else
           %h4
             =h @user.name
@@ -35,7 +35,7 @@
           .inset.comments
             %div
               %div
-                = render :collection => @user.comments.recent_visible(10), :partial => 'comments/comment', :locals => { :idea_link => true }
+                = render_recent :recent => 'comments', :offset => 0, :limit => 8
         - else
           %h4
             =h @user.name 
@@ -51,13 +51,7 @@
             %div
               %div
                 %ul.voted-for
-                  - @user.votes.recent_visible(10).each do |vote|
-                    %li
-                      = link_to h(truncate(vote.idea.title, :length => 50, :separator => ' ')), idea_path(vote.idea)
-                      %abbr.published.time-relative
-                        Posted
-                        = time_ago_in_words(vote.idea.created_at)
-                        ago
+                  = render_recent :recent => 'votes', :offset => 0, :limit => 12
         - else
           %h4
             =h @user.name
@@ -66,4 +60,3 @@
   %hr.hide
   #sidebar.aside
     = render :partial => "shared/sidebar"
-    

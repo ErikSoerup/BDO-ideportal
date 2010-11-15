@@ -9,33 +9,32 @@ class User < ActiveRecord::Base
   attr_accessor :password
   
   has_many :ideas, :foreign_key => 'inventor_id' do
-    def recent_visible(limit)
+    def recent_visible(opts = {})
       Idea.populate_comment_counts(
-        find(
-          :all,
+        find :all, opts.reverse_merge(
           :conditions => { :hidden => false, 'users.state' => 'active' },
           :include => [:tags, :inventor],
           :order => 'ideas.created_at desc',
-          :limit => limit))
+          :limit => 10))
     end
   end
   has_many :currents, :foreign_key => 'inventor_id' 
   has_many :comments, :foreign_key => 'author_id' do
-    def recent_visible(limit)
-      find :all,
+    def recent_visible(opts = {})
+      find :all, opts.reverse_merge(
         :conditions => { 'comments.hidden' => false, 'ideas.hidden' => false, 'users.state' => 'active' },
         :include => [:idea, :author],
         :order => 'comments.created_at desc',
-        :limit => limit
+        :limit => 10)
     end
   end
   has_many :votes do
-    def recent_visible(limit)
-      find :all,
+    def recent_visible(opts = {})
+      find :all, opts.reverse_merge(
         :include => { :idea => :inventor },
         :conditions => { 'ideas.hidden' => false, 'users.state' => 'active' },
         :order => 'votes.id desc',
-        :limit => limit
+        :limit => 10)
     end
   end
   has_and_belongs_to_many :life_cycle_steps, :join_table => 'life_cycle_steps_admins', :order => 'life_cycle_id, position'

@@ -1,18 +1,40 @@
 class ProfilesController < ApplicationController
   
-  def show
+  before_filter :populate_user
+  
+  def populate_user
     @body_class = 'profile'
     @user = User.find(params[:id])
     
-    if @user.active? || @user == current_user
-      respond_to do |format|
-        format.html
-        format.xml
-      end
-    else
-      resource_gone
+    resource_gone unless @user.active? || @user == current_user
+  end
+  
+  def show
+    respond_to do |format|
+      format.html
+      format.xml
+      format.js { render :text => render_recent(params) }
     end
   end
+  
+  def render_recent(params)
+    model = params[:recent]
+    collection, partial = case model
+      when 'ideas'    then [@user.ideas,    'ideas/idea']
+      when 'comments' then [@user.comments, 'comments/comment']
+      when 'votes'    then [@user.votes,    'vote']
+      else raise 'Invalid value for "recent" param'
+    end
+    
+    render_to_string :partial => 'recent', :locals => {
+      :model => model,
+      :collection => collection,
+      :offset => params[:offset].to_i,
+      :limit  => params[:limit].to_i,
+      :idea_link => true,
+      :partial => partial }
+  end
+  helper_method :render_recent
   
   def page_title
     "User Profile: #{@user.name}" if @user
