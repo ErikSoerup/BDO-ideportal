@@ -205,7 +205,7 @@ class User < ActiveRecord::Base
   end
   
   def linked_to_facebook?
-    !(facebook_uid.blank? || facebook_access_token.blank? || facebook_name.blank?)
+    !(facebook_uid.blank? || facebook_access_token.blank?)
   end
   
   def facebook_is_only_auth_method?

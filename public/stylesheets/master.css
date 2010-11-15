@@ -1375,7 +1375,12 @@ h3.icon {
   position: relative;
   width: 606px; }
   .comment .comment-inner {
-    margin-bottom: 30px; }
+    margin-bottom: 30px;
+    /*------- STYLE NEEDED ------ */
+    /*------- /STYLE NEEDED ------ */ }
+    .comment .comment-inner .avatar {
+      float: left;
+      margin: 6px; }
   .comment:last-child {
     margin-bottom: 0; }
   .comment h4 {
@@ -1519,7 +1524,9 @@ h3.icon {
     margin-bottom: 1px;
     padding: 4px 8px 3px 0;
     background: #eeeeee;
-    border: 1px solid #f9f9f9; }
+    border: 1px solid #f9f9f9;
+    /*------- STYLE NEEDED ------ */
+    /*------- /STYLE NEEDED ------ */ }
     .list-block li strong {
       margin-right: 8px;
       border-right: 1px solid #f9f9f9;
@@ -1535,6 +1542,9 @@ h3.icon {
       color: #888888;
       float: right;
       font-style: normal; }
+    .list-block li .avatar {
+      float: left;
+      margin-right: 3px; }
     .list-block li.alt {
       background: #e4e4e4; }
     .list-block li:first-child {

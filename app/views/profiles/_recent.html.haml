@@ -1,7 +1,9 @@
 - results = collection.recent_visible(:offset => offset, :limit => limit+1)
 - has_more = results.size >= limit+1
 
-= render :collection => (has_more ? results[0...-1] : results), :partial => partial
+= render :partial => partial,
+    :collection => (has_more ? results[0...-1] : results),
+    :locals => { :idea_link => true, :show_avatar => false }
 
 - if has_more
   - results_dom_id = "more_#{model}_#{Time.now.to_f}"

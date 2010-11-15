@@ -9,7 +9,7 @@
         .comments.inset
           %div
             %div
-              = render :collection => current_objects, :partial => 'comment', :locals => { :idea_link => true }
+              = render :collection => current_objects, :partial => 'comment', :locals => { :idea_link => true, :show_avatar => true }
     .footer
       = will_paginate current_objects
   %hr.hide

@@ -31,7 +31,6 @@ class ProfilesController < ApplicationController
       :collection => collection,
       :offset => params[:offset].to_i,
       :limit  => params[:limit].to_i,
-      :idea_link => true,
       :partial => partial }
   end
   helper_method :render_recent

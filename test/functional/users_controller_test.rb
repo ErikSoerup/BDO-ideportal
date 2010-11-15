@@ -244,6 +244,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 0, @deliveries.size
   end
   
+  def test_should_send_password_reset_email_for_user_without_password
+    post :send_password_reset, :email => 'exhibitionist@example.com'
+    assert_response :success
+    assert_template 'password_reset_sent'
+    assert !logged_in?
+    assert_equal 1, @deliveries.size
+    assert_email_sent @facebooker, /#{password_reset_path(@facebooker.activation_code)}/
+  end
+  
   def test_should_allow_new_password
     get :new_password, :activation_code => users(:aaron).activation_code
     
