@@ -384,6 +384,11 @@ scenario :xss_attack do
   @life_cycle = LifeCycle.create!(:name => attack('life_cycle.name'))
   @life_cycle_step = @life_cycle.steps.create!(:name => attack('life_cycle_step.name'), :admins => [@user])
   
+  @idea.add_vote! @user
+  @idea.add_vote! @user2
+  @idea2.add_vote! @user
+  @idea2.add_vote! @user2
+  
   # ------ Currents ------
   
   @current = @user.currents.create!(
