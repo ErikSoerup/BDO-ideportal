@@ -24,8 +24,13 @@
         .form-group.inline.checkbox
           = f.check_box :notify_on_comments, :class => "input-checkbox"
           = f.label :notify_on_comments, "Notify me when someone comments on my idea"
-        
         -# ------- STYLE NEEDED ------
+        .form-group.inline
+          %label Avatar
+          = gravatar_for @user, :size => 64
+          Edit your avatar at
+          = link_to 'gravatar.com', 'http://gravatar.com'
+        
         :javascript
           change_service_link = function(service, link) {
             var form = $('edit_user_form')
