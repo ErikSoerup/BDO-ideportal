@@ -25,7 +25,18 @@ module TwitterHelper
     rtoken, rsecret = session['rtoken'], session['rsecret']
     return nil unless rtoken && rsecret && params[:denied].blank?
     
-    twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
+    2.downto(0) do |attempt|
+      begin
+        puts "----------------------------> Auth attempt #{attempt}..."
+        twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
+        puts "----------------------------> Success!"
+        break
+      rescue OAuth::Unauthorized => e
+        puts "----------------------------> Failure!"
+        raise e if attempt == 0
+        sleep 2
+      end
+    end
     
     session['rtoken']  = nil
     session['rsecret'] = nil

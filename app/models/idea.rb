@@ -84,7 +84,7 @@ class Idea < ActiveRecord::Base
   end
   
   def update_vote_count
-    self.vote_count = votes.active.count
+    self.vote_count = votes.active.size
   end
   
   def tag_names
