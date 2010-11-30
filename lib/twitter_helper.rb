@@ -27,12 +27,11 @@ module TwitterHelper
     
     2.downto(0) do |attempt|
       begin
-        puts "----------------------------> Auth attempt #{attempt}..."
         twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
-        puts "----------------------------> Success!"
         break
       rescue OAuth::Unauthorized => e
-        puts "----------------------------> Failure!"
+        # Twitter sometimes seems to send us the callback before it has propagated the new authorization.
+        # When this happens, we get an authorization error. Waiting a moment and trying again fixes the problem. -PPC
         raise e if attempt == 0
         sleep 2
       end
