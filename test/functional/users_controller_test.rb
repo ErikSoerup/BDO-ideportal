@@ -108,7 +108,7 @@ class UsersControllerTest < ActionController::TestCase
     assigns(:user).reload
     assert_not_nil assigns(:user).activation_code
   end
-
+  
   def test_sign_up_with_twitter
     assert_difference 'User.count' do
       create_user(
@@ -301,6 +301,42 @@ class UsersControllerTest < ActionController::TestCase
     assert User.find_by_login('aaron@example.com', 'test') # unmodified
   end
   
+  def test_should_notify_of_password_change
+    login_as @quentin
+    post :update, :user => { :password => 'newpass', :password_confirmation => 'newpass' }
+    
+    assert_equal 1, @deliveries.size
+    assert_email_sent @quentin, /password/, /contact/
+  end
+  
+  def test_should_notify_of_email_change
+    login_as @quentin
+    old_email = @quentin.email
+    new_email = 'newemail@quentin.com'
+    post :update, :user => { :email => new_email }
+    
+    assert_equal 1, @deliveries.size
+    assert_email_sent old_email, /email/, /#{new_email}/, /contact/
+  end
+  
+  def test_should_double_notify_for_password_and_email_change
+    login_as @quentin
+    old_email = @quentin.email
+    new_email = 'newemail@quentin.com'
+    post :update, :user => { :password => 'newpass', :password_confirmation => 'newpass', :email => new_email }
+    
+    assert_equal 2, @deliveries.size
+    assert_email_sent new_email, /password/, /contact/
+    assert_email_sent old_email, /email/, /#{new_email}/, /contact/
+  end
+  
+  def test_should_not_notify_password_or_email_change_for_inactive_user
+    login_as @aaron
+    post :update, :user => { :password => 'newpass', :password_confirmation => 'newpass', :email => 'newemail@aaron.com' }
+    
+    assert_equal 0, @deliveries.size
+  end
+  
   def test_link_twitter_account_should_send_auth_request
     expect_twitter_auth_request
     
@@ -481,10 +517,16 @@ class UsersControllerTest < ActionController::TestCase
       !current_user.nil?
     end
     
-    def assert_email_sent(user, *body_pats)
+    def assert_email_sent(recipient, *body_pats)
+      recipient_list = if recipient.kind_of?(User)
+        [recipient.email]
+      else
+        recipient.to_a
+      end
+      
       fail "Expected email to have been sent by controller" if @deliveries.empty?
       sent = @deliveries.shift
-      assert_equal [user.email], sent.to
+      assert_equal recipient_list, sent.to
       body_pats.each do |body_pat|
         assert sent.body =~ body_pat, "Expected #{body_pat.inspect} in email body, but didn't find it.\n\nEmail body:\n\n#{sent.body}\n"
       end
