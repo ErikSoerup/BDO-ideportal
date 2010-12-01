@@ -3,13 +3,6 @@
     .header
       %h2.icon.user-edit Account Settings
 
-    :javascript
-      (function($) {
-        document.requireCurrentPassword = function() {
-          $('#current-password').show()
-        }
-      })(jQuery)
-
     .body.group
       = error_messages_for :user
       - form_for :user, :url => user_path, :html => { :method => :put, :id => 'edit_user_form' } do |f|
@@ -18,24 +11,22 @@
           = f.text_field :name, :class => "input-text"
           %p.note== This is your public name on #{SHORT_SITE_NAME}
         .form-group.inline
+          = f.label :email, "Email<br /><em>required</em>", :class => 'required'
+          = f.text_field :email, :class => "input-text"
+          %p.note Used for password recovery and notifications
+        .form-group.inline
           = f.label :zip_code, "Zip Code<br /><em>required</em>", :class => 'required'
           = f.text_field :zip_code, :class => "input-text"
           %p.note Your U.S. zip code (Another country's postal code works too!)
         
         .form-group.inline
           = f.label :password, "New password"
-          = f.password_field :password, :class => "input-text",
-              :onchange => visual_effect(:blind_down, 'current-password', :duration => 0.3) + visual_effect(:highlight, 'current-password', :duration => 0.6)
+          = f.password_field :password, :class => "input-text"
           %p.note Minimum 4 characters.
         .form-group.inline
           = f.label :password_confirmation, "Confirm"
           = f.password_field :password_confirmation, :class => "input-text"
           %p.note Make sure you typed it right.
-        
-        .form-group.inline#current-password(style='display: none')
-          = f.label :password_confirmation, "Current password"
-          = f.password_field :password_confirmation, :class => "input-text"
-          %p.note As a security precaution, please confirm your current password.
         
         .form-group.inline.checkbox
           = f.check_box :notify_on_comments, :class => "input-checkbox"
