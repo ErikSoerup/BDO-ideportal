@@ -4,10 +4,10 @@ class CommentTest < ActiveSupport::TestCase
   
   scenario :basic
   
-  should_have_db_column :ip
-  should_have_db_column :user_agent
-  should_validate_presence_of :ip
-  should_validate_presence_of :user_agent
+  should have_db_column(:ip)
+  should have_db_column(:user_agent)
+  should validate_presence_of(:ip)
+  should validate_presence_of(:user_agent)
   
   context "when check_rakismet returns false" do
     setup do
@@ -51,11 +51,7 @@ class CommentTest < ActiveSupport::TestCase
       @comment = @walruses_in_stores.comments.create!(:text=>"Foo", :ip=>'127.0.0.1', :user_agent=>'foobar', :author => @quentin)
     end
 
-    should "send out e-mail notification" do
-      assert_sent_email do |email|
-        email.subject =~ /Your idea has received a comment/
-      end
-    end
+    should have_sent_email.with_subject(/Your idea has received a comment/)
   end
   
   
