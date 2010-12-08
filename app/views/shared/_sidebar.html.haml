@@ -8,7 +8,7 @@
     %a.btn.gray{ :href => tags_path, :style => "width: 120px" }
       %span See More Tags &rarr;
       
--cache 'top_contributors', :expires_in => 3.minutes, :unless => logged_in? || true do
+-cache 'top_contributors', :expires_in => 3.minutes, :unless => logged_in? do
   .section
     %h2.header Top Contributors
     %p Earn points for sharing, voting, and discussing ideas.
