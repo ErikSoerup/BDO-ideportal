@@ -16,14 +16,14 @@
       /*------- STYLE NEEDED ------*/
       %b Recent
       |
-      %b= link_to 'All time', '#', :onclick => 'show_contributors(true)'
+      %b= link_to 'All time', '#', :onclick => 'show_contributors(true); return false'
       /*------- /STYLE NEEDED ------*/
       = render :partial => 'shared/contributor',
                :collection => User.find_top_contributors(false, :limit => 10),
                :locals => { :points_method => :recent_contribution_points }
     %ul#top-all-time-contributors.list-block
       /*------- STYLE NEEDED ------*/
-      %b= link_to 'Recent', '#', :onclick => 'show_contributors(false)'
+      %b= link_to 'Recent', '#', :onclick => 'show_contributors(false); return false'
       |
       %b All time
       /*------- /STYLE NEEDED ------*/
