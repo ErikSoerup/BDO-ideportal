@@ -15,10 +15,7 @@ class AddRecentContributionPoints < ActiveRecord::Migration
       User.find(:all).each do |user|
         user.recent_contribution_points = user.contribution_points
         user.recalculate_contribution_points
-        if user.name.length < 4
-          user.name += '   '
-        end
-        user.save!
+        user.save(false)
         done_count += 1
         print "\015#{done_count} / #{total_count} (#{done_count * 100 / total_count}%)"
         STDOUT.flush
