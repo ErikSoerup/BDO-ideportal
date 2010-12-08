@@ -16,7 +16,10 @@
     .description (integer) Number of times the idea has been flagged as inappropriate.
   .tag.i1
     .name rating
-    .description (integer) The idea's current score in voting.
+    .description (integer) The idea's current score in voting. Decays over time. Not shown on the IdeaX public site; used for sorting recent top ideas.
+  .tag.i1
+    .name vote-count
+    .description (integer) The idea's all-time vote total.
   .tag.i1
     .name title
     .description (text) Title of the idea.

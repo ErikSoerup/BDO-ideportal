@@ -7,7 +7,7 @@ class DecayerTest < ActiveSupport::TestCase
     @config = {
       :half_life => {
         :idea_rating => 60.days,
-        :user_contribution_points => 40.days
+        :user_recent_contribution_points => 40.days
       }
     }
   end
@@ -27,21 +27,23 @@ class DecayerTest < ActiveSupport::TestCase
   end
   
   def test_user_points_decay
-    @aaron.contribution_points = 100
+    @aaron.recent_contribution_points = 100
+    @aaron.contribution_points = 150
     @aaron.decayed_at = 20.days.ago
     @aaron.save!
     Decayer.run_all(@config)
     @aaron.reload
-    assert_in_delta 70.71, @aaron.contribution_points, 0.5
+    assert_in_delta 70.71, @aaron.recent_contribution_points, 0.5
+    assert_equal 150, @aaron.contribution_points
   end
   
   def test_user_points_do_not_decay_when_recently_updated
-    @aaron.contribution_points = 100
+    @aaron.recent_contribution_points = 100
     @aaron.decayed_at = 20.minutes.ago
     @aaron.save!
     Decayer.run_all(@config)
     @aaron.reload
-    assert_equal 100, @aaron.contribution_points
+    assert_equal 100, @aaron.recent_contribution_points
   end
   
   def test_handle_decayed_at_nil

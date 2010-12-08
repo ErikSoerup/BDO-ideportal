@@ -7,8 +7,8 @@ class Decayer
   
   def self.run_all(config)
     decayers = [
-      Decayer.new(Idea, :rating,              config),
-      Decayer.new(User, :contribution_points, config)]
+      Decayer.new(Idea, :rating,                     config),
+      Decayer.new(User, :recent_contribution_points, config)]
     logger.info "Applying decay to #{decayers.join(', ')}"
     
     MAX_RUNS.times do

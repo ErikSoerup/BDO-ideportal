@@ -186,9 +186,17 @@ class User < ActiveRecord::Base
     raise "Unknown contribution type: #{contrib_type.inspect}" unless score
     transaction do
       lock!
-      self.contribution_points = (contribution_points || 0) + score
+      self.contribution_points        = (contribution_points || 0) + score
+      self.recent_contribution_points = (recent_contribution_points || 0) + score
       save!
     end
+  end
+  
+  def recalculate_contribution_points
+    self.contribution_points = (
+      CONTRIBUTION_SCORES[:idea]    * ideas.recent_visible(:limit => nil).count + 
+      CONTRIBUTION_SCORES[:comment] * comments.recent_visible(:limit => nil).count +
+      CONTRIBUTION_SCORES[:vote]    * votes.count)
   end
   
   def linked_to_twitter?

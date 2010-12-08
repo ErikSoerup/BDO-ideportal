@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116192641) do
+ActiveRecord::Schema.define(:version => 20101208205302) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -203,18 +203,18 @@ ActiveRecord::Schema.define(:version => 20101116192641) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
+    t.string   "crypted_password",           :limit => 40
+    t.string   "salt",                       :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
-    t.string   "activation_code",           :limit => 40
+    t.string   "activation_code",            :limit => 40
     t.datetime "activated_at"
-    t.string   "state",                                   :default => "passive"
+    t.string   "state",                                    :default => "passive"
     t.datetime "deleted_at"
     t.string   "zip_code"
-    t.float    "contribution_points",                     :default => 0.0
+    t.float    "contribution_points",                      :default => 0.0
     t.datetime "decayed_at"
     t.boolean  "moderator"
     t.integer  "postal_code_id"
@@ -223,12 +223,13 @@ ActiveRecord::Schema.define(:version => 20101116192641) do
     t.string   "twitter_token"
     t.string   "twitter_secret"
     t.string   "facebook_uid"
-    t.boolean  "notify_on_comments",                      :default => false,     :null => false
-    t.boolean  "notify_on_state",                         :default => false,     :null => false
+    t.boolean  "notify_on_comments",                       :default => false,     :null => false
+    t.boolean  "notify_on_state",                          :default => false,     :null => false
     t.text     "vectors"
     t.string   "facebook_access_token"
     t.boolean  "facebook_post_ideas"
     t.string   "facebook_name"
+    t.float    "recent_contribution_points"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

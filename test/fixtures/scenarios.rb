@@ -20,7 +20,6 @@ scenario :basic do
     :zip_code => '55101',
     :password => "test",
     :password_confirmation => "test",
-    :contribution_points => 5,
     :terms_of_service => '1')
   @quentin.activate!
   
@@ -39,7 +38,6 @@ scenario :basic do
     :zip_code => '57 Q Z 3123',
     :password => "test",
     :password_confirmation => "test",
-    :contribution_points => 4,
     :terms_of_service => '1')
   @sally.activate!
 
@@ -49,7 +47,6 @@ scenario :basic do
     :zip_code => '55102-2753',
     :password => "test",
     :password_confirmation => "test",
-    :contribution_points => 3,
     :terms_of_service => '1')
   @participator.activate!
   
@@ -58,7 +55,6 @@ scenario :basic do
     :email => "tweeter@example.com",
     :zip_code => '57 Q Z 3123',
     :tweet_ideas => true,
-    :contribution_points => 3,
     :terms_of_service => '1')
   @tweeter.twitter_token = 'foo'
   @tweeter.twitter_secret = 'bar'
@@ -84,7 +80,6 @@ scenario :basic do
     :zip_code => '55108-2753',
     :password => "test",
     :password_confirmation => "test",
-    :contribution_points => 3,
     :terms_of_service => '1')
   @currents_admin.has_role 'admin', Current
   
@@ -282,7 +277,9 @@ scenario :basic do
   # ------ Final prep ------
   
   @sally.contribution_points = 100
+  @sally.recent_contribution_points = 10
   @quentin.contribution_points = 200
+  @quentin.recent_contribution_points = 30
   @sally.save!
   @quentin.save!
   

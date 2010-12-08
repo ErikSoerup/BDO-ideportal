@@ -17,7 +17,7 @@ class AddDenormalizedVoteCount < ActiveRecord::Migration
       print "\015#{done_count} / #{total_count} (#{done_count * 100 / total_count}%)"
       STDOUT.flush
     end
-    puts 'Done.'
+    puts ' Done.'
   end
 
   def self.down

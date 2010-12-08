@@ -40,8 +40,10 @@ class IdeaTest < ActiveSupport::TestCase
     
     @sally.reload
     assert_equal 101, @sally.contribution_points
+    assert_equal 11, @sally.recent_contribution_points
     @quentin.reload
     assert_equal 200, @quentin.contribution_points # quentin does NOT get points for voting for his own idea
+    assert_equal 30, @quentin.recent_contribution_points
     assert_equal_unordered [@sally, @quentin], @walruses_in_stores.voters
   end
   
@@ -86,6 +88,7 @@ class IdeaTest < ActiveSupport::TestCase
     @sally.ideas.create!(:title => 'foo', :description => 'bar', :ip => '10.0.0.0', :user_agent => 'FrutsoBrowse')
     @sally.reload
     assert_equal 110, @sally.contribution_points
+    assert_equal 20, @sally.recent_contribution_points
   end
   
   def test_life_cycle_relationship

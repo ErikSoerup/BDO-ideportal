@@ -4,7 +4,7 @@ namespace :ideax do
       Decayer.run_all(
         :half_life => {
           :idea_rating => 20.days,
-          :user_contribution_points => 60.days
+          :user_recent_contribution_points => 60.days
         }
       )
     end
