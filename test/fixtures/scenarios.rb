@@ -277,11 +277,17 @@ scenario :basic do
   # ------ Final prep ------
   
   @sally.contribution_points = 100
-  @sally.recent_contribution_points = 10
+  @sally.recent_contribution_points = 30
   @quentin.contribution_points = 200
-  @quentin.recent_contribution_points = 30
+  @quentin.recent_contribution_points = 10
+  @facebooker.contribution_points = 4
+  @facebooker.recent_contribution_points = 2
+  @tweeter.contribution_points = 3
+  @tweeter.recent_contribution_points = 5
   @sally.save!
   @quentin.save!
+  @facebooker.save!
+  @tweeter.save!
   
   Delayed::Job.delete_all
   names_from_ivars!

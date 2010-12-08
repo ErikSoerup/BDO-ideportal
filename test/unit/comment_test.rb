@@ -76,7 +76,7 @@ class CommentTest < ActiveSupport::TestCase
     @walruses_in_stores.comments.create!(:text => 'foo', :author => @sally, :ip=>'127.0.0.1', :user_agent=>'foobar')
     @sally.reload
     assert_equal 102, @sally.contribution_points
-    assert_equal 12, @sally.recent_contribution_points
+    assert_equal 32, @sally.recent_contribution_points
   end
 
   def test_validate_current_not_closed_when_adding_comment

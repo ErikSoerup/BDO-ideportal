@@ -113,11 +113,11 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) ? u : nil
   end
   
-  def self.find_top_contributors(opts = {})
+  def self.find_top_contributors(all_time = false, opts = {})
     find :all, opts.reverse_merge(
       :conditions => [
         'state = ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active'],
-      :order => 'contribution_points desc')
+      :order => all_time ? 'contribution_points desc' : 'recent_contribution_points desc')
   end
 
   # Encrypts some data with the salt.

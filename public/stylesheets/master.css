@@ -429,6 +429,8 @@ body {
   width: 240px; }
   .aside .section:first-child h2.header {
     margin-top: 0; }
+  .aside #top-all-time-contributors {
+    display: none; }
 
 h2.header {
   margin: 24px 0 0;
