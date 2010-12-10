@@ -228,6 +228,9 @@ body
 
   .section:first-child h2.header
     :margin-top 0
+  
+  #top-all-time-contributors
+    :display none
 
 
 h2
@@ -985,6 +988,7 @@ h3.icon
 
     a
       :padding 5px 10px 0 2px
+      :background #CCC
       :color #444
       :display block
       :font-size 11px
@@ -1068,7 +1072,14 @@ h3.icon
       :text-transform uppercase
       :color #666
       :font-size 10px
-      
+  
+  /*----- STYLE NEEDED -----*/
+  .more
+    :text-align right
+    :font-weight bold
+    :font-size 120%
+    :margin 1em
+  /*----- /STYLE NEEDED -----*/
 
 .content
   :margin-right 20px
@@ -1450,6 +1461,12 @@ h3.icon
   
   .comment-inner
     :margin-bottom 30px
+    
+    /*------- STYLE NEEDED ------*/
+    .avatar
+      :float left
+      :margin 6px
+    /*------- /STYLE NEEDED ------*/
 
   &:last-child
     :margin-bottom 0
@@ -1641,6 +1658,12 @@ h3.icon
       :color #888
       :float right
       :font-style normal
+    
+    /*------- STYLE NEEDED ------*/
+    .avatar
+      :float left
+      :margin-right 3px
+    /*------- /STYLE NEEDED ------*/
 
     &.alt
       :background #E4E4E4

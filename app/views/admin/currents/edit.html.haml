@@ -33,7 +33,7 @@
             =user_formatted_text @current.description
           #edit-current-text{ :style => 'display: none' }
             .form-group.inline
-              = f.label :title, "Idea"
+              = f.label :title, "Title"
               = f.text_field :title, :id => "current_title", :class => "input-text big"
             .form-group.inline
               = f.label :description, "Description"
@@ -50,6 +50,5 @@
       .group
         %h2 Ideas in this Current
         =link_to "Add idea to this current", new_idea_path("idea[current_id]"=>current_object.id)
-        =render :partial=>"ideas_list", :object => @ideas
-        -# =render :partial=>"admin/ideas/index", :object => current_object.ideas
+        =render :partial => "ideas_list"
     .footer

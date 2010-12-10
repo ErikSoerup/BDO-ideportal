@@ -41,7 +41,7 @@ Rails::Initializer.run do |config|
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem "color"
   if TWITTER_ENABLED
-    config.gem 'twitter'
+    config.gem 'twitter', :version => '0.9.10'
     config.gem 'mash'
     config.gem 'httparty'
     config.gem 'ruby-hmac', :lib => 'hmac'

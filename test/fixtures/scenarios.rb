@@ -1,3 +1,7 @@
+def add_client_info(opts)
+  opts.reverse_merge :ip => '1111:2222:3333:4444:5555:6666:123.123.123.123%1234567890', :user_agent => 'Macosx safari or whatever'
+end
+
 scenario :basic do
   
   # ------ Postal Codes ------
@@ -16,7 +20,6 @@ scenario :basic do
     :zip_code => '55101',
     :password => "test",
     :password_confirmation => "test",
-    :contribution_points => 5,
     :terms_of_service => '1')
   @quentin.activate!
   
@@ -35,7 +38,6 @@ scenario :basic do
     :zip_code => '57 Q Z 3123',
     :password => "test",
     :password_confirmation => "test",
-    :contribution_points => 4,
     :terms_of_service => '1')
   @sally.activate!
 
@@ -45,7 +47,6 @@ scenario :basic do
     :zip_code => '55102-2753',
     :password => "test",
     :password_confirmation => "test",
-    :contribution_points => 3,
     :terms_of_service => '1')
   @participator.activate!
   
@@ -54,7 +55,6 @@ scenario :basic do
     :email => "tweeter@example.com",
     :zip_code => '57 Q Z 3123',
     :tweet_ideas => true,
-    :contribution_points => 3,
     :terms_of_service => '1')
   @tweeter.twitter_token = 'foo'
   @tweeter.twitter_secret = 'bar'
@@ -80,7 +80,6 @@ scenario :basic do
     :zip_code => '55108-2753',
     :password => "test",
     :password_confirmation => "test",
-    :contribution_points => 3,
     :terms_of_service => '1')
   @currents_admin.has_role 'admin', Current
   
@@ -95,6 +94,7 @@ scenario :basic do
   @admin_user.has_role 'admin'
   @admin_user.has_role 'editor', User
   @admin_user.has_role 'editor', Idea
+  @admin_user.has_role 'editor', Current
   @admin_user.has_role 'editor', LifeCycle
   
   # ------ Currents ------
@@ -134,72 +134,75 @@ scenario :basic do
            
   # ------ Ideas ------
   
-  @walruses_in_stores = @quentin.ideas.create!(
+  @walruses_in_stores = @quentin.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Release walruses in stores',
     :description => 'Allow walruses to roam free in Best Buy stores and play the video game demos!',
-    :created_at => Time.utc(2008, 1, 1))
+    :created_at => Time.utc(2008, 1, 1)))
   
-  @barbershop_discount = @sally.ideas.create!(
+  @barbershop_discount = @sally.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Discounts for barbershop quartets',
     :description => 'It is the moral duty of Best Buy to maximize singing by giving any barbershop quartet member a 50% in-store discount.',
-    :created_at => Time.utc(2008, 1, 2))
+    :created_at => Time.utc(2008, 1, 2)))
   
-  @hidden_idea = @sally.ideas.create!(
+  @hidden_idea = @sally.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Rowerbazzle!',
     :description => 'Garflatzin gronglebunkcles!!',
     :created_at => Time.utc(2008, 1, 2),
     :current => @walrus_attack_current,
-    :hidden => true)
+    :hidden => true))
   
-  @spam_idea = @quentin.ideas.create!(
+  @spam_idea = @quentin.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Get much skeezier!',
     :description => 'This pill will maximize your skeeziness! Get much more!',
     :created_at => Time.utc(2008, 1, 2),
-    :marked_spam => true)
+    :marked_spam => true))
   
-  @tranquilizer_guns = @participator.ideas.create!(
+  @tranquilizer_guns = @participator.ideas.create!(add_client_info(
       :title => 'Provide all blueshirts with tranquilizer guns',
       :description => 'Best Buy Militia!',
-      :current => @walrus_attack_current)
+      :current => @walrus_attack_current))
 
-  @give_up_all_hope = @participator.ideas.create!(
+  @give_up_all_hope = @participator.ideas.create!(add_client_info(
     :title => 'Give up all hope',
     :description => 'You will never defeat the walruses.',
-    :current => @walrus_attack_current)
+    :current => @walrus_attack_current))
       
   # Don't assign this to a current!
-  @orphan_idea = Idea.create!(
+  @orphan_idea = Idea.create!(add_client_info(
     :title => 'Sell rocket parts', 
-    :description => 'Submitted without login')
+    :description => 'Submitted without login'))
   
   @aaron.save! 
       
-  @inactive_user_idea = @aaron.ideas.create!(:title => 'Butter both sides of bread', :description => 'Decadent!', :status=>'new', :current => @default_current)
+  @inactive_user_idea = @aaron.ideas.create!(add_client_info(
+    :title => 'Butter both sides of bread',
+    :description => 'Decadent!',
+    :status => 'new',
+    :current => @default_current))
   
-  @duplicate_idea = @sally.ideas.create!(:title => 'Tusky mammals', :description => 'Put them in retail establishments!', :duplicate_of => @walruses_in_stores, :current => @default_current)
+  @duplicate_idea = @sally.ideas.create!(add_client_info(
+    :title => 'Tusky mammals',
+    :description => 'Put them in retail establishments!',
+    :duplicate_of => @walruses_in_stores,
+    :current => @default_current,
+    :created_at => Time.utc(2008, 1, 3)))
 
   # ------ Comments ------
   
-  @walrus_comment1 = @walruses_in_stores.comments.create!(
+  @walrus_comment1 = @walruses_in_stores.comments.create!(add_client_info(
     :author => @aaron,
-    :ip => '127.0.0.1',
-    :user_agent=>'Macosx safari or whatever',
-    :text => "It's so crazy it just might work!")
+    :text => "It's so crazy it just might work!"))
   
-  @walrus_comment2 = @walruses_in_stores.comments.create!(
+  @walrus_comment2 = @walruses_in_stores.comments.create!(add_client_info(
     :author => @sally,
-    :ip => '127.0.0.1',
-    :user_agent=>'Macosx safari or whatever',
-    :text => "Here's to walruses.")
+    :text => "Here's to walruses."))
   
-  @walrus_comment_spam = @walruses_in_stores.comments.create!(
+  @walrus_comment_spam = @walruses_in_stores.comments.create!(add_client_info(
     :author => @sally,
-    :ip => '127.0.0.1',
-    :user_agent=>'Macosx safari or whatever',
     :marked_spam=>true,
     :text =><<-EOS
       <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -220,20 +223,16 @@ scenario :basic do
 
       </BODY></HTML>
     EOS
-  )
+  ))
     
-  @hidden_comment = @walruses_in_stores.comments.create!(
+  @hidden_comment = @walruses_in_stores.comments.create!(add_client_info(
     :author => @sally,
-    :ip => '127.0.0.1',
-    :user_agent=>'Macosx safari or whatever',
     :text => "grabblefratzin' walruses!!",
-    :hidden => true)
+    :hidden => true))
   
-  @comment_on_hidden_idea = @hidden_idea.comments.create!(
+  @comment_on_hidden_idea = @hidden_idea.comments.create!(add_client_info(
     :author => @sally,
-    :ip => '127.0.0.1',
-    :user_agent=>'Macosx safari or whatever',
-    :text => "Wow, somebody should hide this idea! Think of the children!")
+    :text => "Wow, somebody should hide this idea! Think of the children!"))
     
   # ------ Tags ------
   
@@ -278,14 +277,25 @@ scenario :basic do
   # ------ Final prep ------
   
   @sally.contribution_points = 100
+  @sally.recent_contribution_points = 30
   @quentin.contribution_points = 200
+  @quentin.recent_contribution_points = 10
+  @facebooker.contribution_points = 4
+  @facebooker.recent_contribution_points = 2
+  @tweeter.contribution_points = 3
+  @tweeter.recent_contribution_points = 5
   @sally.save!
   @quentin.save!
+  @facebooker.save!
+  @tweeter.save!
   
-  # WARNING: only one scenario can be indexed by Xapian!
-  #ActsAsXapian.rebuild_index([Idea], false)
-  
+  Delayed::Job.delete_all
   names_from_ivars!
+end
+
+
+def attack_client_info(opts)
+  opts.reverse_merge :ip => attack('ip'), :user_agent => attack('user_agent')
 end
 
 scenario :xss_attack do
@@ -351,24 +361,22 @@ scenario :xss_attack do
       :description => 'This is a stand-in for the default current created by the add_idea_current_relationship migration.')
   
   # ------ Ideas ------
-  @idea = @user.ideas.create!(
+  @idea = @user.ideas.create!(attack_client_info(
     :status=>'new',
     :title => attack('idea.title'),
     :description => attack('idea.description'),
-    :inappropriate_flags => 1)
+    :inappropriate_flags => 1))
     
-  @idea2 = @user2.ideas.create!(
+  @idea2 = @user2.ideas.create!(attack_client_info(
     :status=>'new',
     :title => attack('idea2.title'),
     :description => attack('idea2.description'),
-    :inappropriate_flags => 1)
+    :inappropriate_flags => 1))
     
-  @comment = @idea.comments.create!(
+  @comment = @idea.comments.create!(attack_client_info(
     :author => @user,
     :text => attack('comment.text'),
-    :ip=> '127.0.0.1',
-    :user_agent=>'Macosx safari or whatever',
-    :inappropriate_flags => 1)
+    :inappropriate_flags => 1))
     
   @admin_comment = @idea.admin_comments.create!(
     :author => @user,
@@ -379,6 +387,11 @@ scenario :xss_attack do
   
   @life_cycle = LifeCycle.create!(:name => attack('life_cycle.name'))
   @life_cycle_step = @life_cycle.steps.create!(:name => attack('life_cycle_step.name'), :admins => [@user])
+  
+  @idea.add_vote! @user
+  @idea.add_vote! @user2
+  @idea2.add_vote! @user
+  @idea2.add_vote! @user2
   
   # ------ Currents ------
   
@@ -395,5 +408,6 @@ scenario :xss_attack do
     :callback_url => 'http://' + attack('client_application.callback_url'))
   @client_app.save!
   
+  Delayed::Job.delete_all
   names_from_ivars!
 end

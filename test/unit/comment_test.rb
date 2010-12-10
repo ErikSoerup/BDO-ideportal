@@ -4,21 +4,29 @@ class CommentTest < ActiveSupport::TestCase
   
   scenario :basic
   
-  should_have_db_column :ip
-  should_have_db_column :user_agent
-  should_validate_presence_of :ip
-  should_validate_presence_of :user_agent
+  should have_db_column(:ip)
+  should have_db_column(:user_agent)
+  should validate_presence_of(:ip)
+  should validate_presence_of(:user_agent)
   
   context "when check_rakismet returns false" do
     setup do
-      @comment = @walrus_comment_spam.clone
-      @comment.expects(:spam?).returns(true)
-      @comment.marked_spam=false
+      @comment = @walruses_in_stores.comments.create!(
+        :author => @sally,
+        :ip => '127.0.0.1',
+        :user_agent=>'Macosx safari or whatever',
+        :text => "Enlarge your walrus!")
+      Comment.any_instance.expects(:spam?).never
       assert !@comment.marked_spam?
     end
-    should "be marked spam" do
-      Rakismet::KEY='foo'
-      @comment.save
+    should "not be marked spam immediately" do
+      @comment.save!
+      @comment.reload
+      assert !@comment.marked_spam?
+    end
+    should "be marked spam after delayed jobs run" do
+      Comment.any_instance.expects(:spam?).returns(true)
+      Delayed::Worker.new(:quiet => true).work_off
       @comment.reload
       assert @comment.marked_spam?
     end
@@ -43,11 +51,7 @@ class CommentTest < ActiveSupport::TestCase
       @comment = @walruses_in_stores.comments.create!(:text=>"Foo", :ip=>'127.0.0.1', :user_agent=>'foobar', :author => @quentin)
     end
 
-    should "send out e-mail notification" do
-      assert_sent_email do |email|
-        email.subject =~ /Your idea has received a comment/
-      end
-    end
+    should have_sent_email.with_subject(/Your idea has received a comment/)
   end
   
   
@@ -72,6 +76,7 @@ class CommentTest < ActiveSupport::TestCase
     @walruses_in_stores.comments.create!(:text => 'foo', :author => @sally, :ip=>'127.0.0.1', :user_agent=>'foobar')
     @sally.reload
     assert_equal 102, @sally.contribution_points
+    assert_equal 32, @sally.recent_contribution_points
   end
 
   def test_validate_current_not_closed_when_adding_comment

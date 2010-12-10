@@ -2,6 +2,7 @@
   .main.panel.section
     .header
       %h2.icon.user-edit Account Settings
+
     .body.group
       = error_messages_for :user
       - form_for :user, :url => user_path, :html => { :method => :put, :id => 'edit_user_form' } do |f|
@@ -10,9 +11,14 @@
           = f.text_field :name, :class => "input-text"
           %p.note== This is your public name on #{SHORT_SITE_NAME}
         .form-group.inline
+          = f.label :email, "Email<br /><em>required</em>", :class => 'required'
+          = f.text_field :email, :class => "input-text"
+          %p.note Used for password recovery and notifications
+        .form-group.inline
           = f.label :zip_code, "Zip Code<br /><em>required</em>", :class => 'required'
           = f.text_field :zip_code, :class => "input-text"
           %p.note Your U.S. zip code (Another country's postal code works too!)
+        
         .form-group.inline
           = f.label :password, "New password"
           = f.password_field :password, :class => "input-text"
@@ -21,11 +27,18 @@
           = f.label :password_confirmation, "Confirm"
           = f.password_field :password_confirmation, :class => "input-text"
           %p.note Make sure you typed it right.
+        
         .form-group.inline.checkbox
           = f.check_box :notify_on_comments, :class => "input-checkbox"
           = f.label :notify_on_comments, "Notify me when someone comments on my idea"
-        
         -# ------- STYLE NEEDED ------
+        .form-group.inline
+          %label Avatar
+          = gravatar_for @user, :size => 64
+          Edit your avatar at
+          = link_to 'gravatar.com', 'http://gravatar.com'
+        -# ------- /STYLE NEEDED ------
+        
         :javascript
           change_service_link = function(service, link) {
             var form = $('edit_user_form')
@@ -34,6 +47,7 @@
           }
         
         - if TWITTER_ENABLED
+          -# ------- STYLE NEEDED ------
           .form-group.inline.checkbox
             - if @user.linked_to_twitter?
               %p
@@ -55,8 +69,10 @@
                 Allows you to Tweet your ideas, and log in via Twitter.
                 %br/
                 == Displays your Twitter name in your #{SHORT_SITE_NAME} public profile.
+          -# ------- /STYLE NEEDED ------
           
         - if FACEBOOK_ENABLED
+          -# ------- STYLE NEEDED ------
           .form-group.inline.checkbox
             - if @user.linked_to_facebook?
               %p
@@ -76,15 +92,15 @@
               = hidden_field_tag :link_facebook
               %p.note
                 Allows you to public your ideas to your wall, and log in via Facebook.
-            
-            :javascript
-              facebook_auth_and_link = function() {
-                facebook_auth(function() {
-                  change_service_link('facebook', true)
-                })
-                return false
-              }
-        -# ------- /STYLE NEEDED ------
+          -# ------- /STYLE NEEDED ------
+          
+          :javascript
+            facebook_auth_and_link = function() {
+              facebook_auth(function() {
+                change_service_link('facebook', true)
+              })
+              return false
+            }
         
         .form-submit.inline
           = submit_tag 'Update Account', :id => "submit-save-changes", :class => "input-submit"

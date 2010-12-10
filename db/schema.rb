@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101104160151) do
+ActiveRecord::Schema.define(:version => 20101208205302) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -47,13 +47,15 @@ ActiveRecord::Schema.define(:version => 20101104160151) do
     t.datetime "updated_at"
     t.integer  "inappropriate_flags",               :default => 0
     t.boolean  "hidden",                            :default => false
-    t.string   "ip",                  :limit => 16
+    t.string   "ip",                  :limit => 64
     t.string   "user_agent"
     t.boolean  "marked_spam",                       :default => false
+    t.text     "vectors"
   end
 
   add_index "comments", ["author_id"], :name => "index_comments_on_author_id"
   add_index "comments", ["idea_id"], :name => "index_comments_on_idea_id"
+  add_index "comments", ["vectors"], :name => "comments_fts_vectors_index"
 
   create_table "currents", :force => true do |t|
     t.string   "title"
@@ -100,9 +102,12 @@ ActiveRecord::Schema.define(:version => 20101104160151) do
     t.boolean  "marked_spam",                                                      :default => false
     t.integer  "current_id",                                                       :default => -1
     t.integer  "vote_count"
+    t.string   "ip",                  :limit => 64
+    t.string   "user_agent"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
+  add_index "ideas", ["vectors"], :name => "ideas_fts_vectors_index"
 
   create_table "ideas_admin_tags", :id => false, :force => true do |t|
     t.integer "idea_id"
@@ -197,18 +202,18 @@ ActiveRecord::Schema.define(:version => 20101104160151) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
+    t.string   "crypted_password",           :limit => 40
+    t.string   "salt",                       :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
-    t.string   "activation_code",           :limit => 40
+    t.string   "activation_code",            :limit => 40
     t.datetime "activated_at"
-    t.string   "state",                                   :default => "passive"
+    t.string   "state",                                    :default => "passive"
     t.datetime "deleted_at"
     t.string   "zip_code"
-    t.float    "contribution_points",                     :default => 0.0
+    t.float    "contribution_points",                      :default => 0.0
     t.datetime "decayed_at"
     t.boolean  "moderator"
     t.integer  "postal_code_id"
@@ -217,12 +222,13 @@ ActiveRecord::Schema.define(:version => 20101104160151) do
     t.string   "twitter_token"
     t.string   "twitter_secret"
     t.string   "facebook_uid"
-    t.boolean  "notify_on_comments",                      :default => false,     :null => false
-    t.boolean  "notify_on_state",                         :default => false,     :null => false
+    t.boolean  "notify_on_comments",                       :default => false,     :null => false
+    t.boolean  "notify_on_state",                          :default => false,     :null => false
     t.text     "vectors"
     t.string   "facebook_access_token"
     t.boolean  "facebook_post_ideas"
     t.string   "facebook_name"
+    t.float    "recent_contribution_points"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -230,9 +236,11 @@ ActiveRecord::Schema.define(:version => 20101104160151) do
   add_index "users", ["vectors"], :name => "users_fts_vectors_index"
 
   create_table "votes", :force => true do |t|
-    t.integer "idea_id"
-    t.integer "user_id"
-    t.boolean "counted", :default => false
+    t.integer  "idea_id"
+    t.integer  "user_id"
+    t.boolean  "counted",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "votes", ["user_id", "idea_id"], :name => "index_votes_on_user_id_and_idea_id", :unique => true

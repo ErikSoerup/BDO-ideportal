@@ -9,33 +9,32 @@ class User < ActiveRecord::Base
   attr_accessor :password
   
   has_many :ideas, :foreign_key => 'inventor_id' do
-    def recent_visible(limit)
+    def recent_visible(opts = {})
       Idea.populate_comment_counts(
-        find(
-          :all,
+        find :all, opts.reverse_merge(
           :conditions => { :hidden => false, 'users.state' => 'active' },
           :include => [:tags, :inventor],
           :order => 'ideas.created_at desc',
-          :limit => limit))
+          :limit => 10))
     end
   end
   has_many :currents, :foreign_key => 'inventor_id' 
   has_many :comments, :foreign_key => 'author_id' do
-    def recent_visible(limit)
-      find :all,
+    def recent_visible(opts = {})
+      find :all, opts.reverse_merge(
         :conditions => { 'comments.hidden' => false, 'ideas.hidden' => false, 'users.state' => 'active' },
         :include => [:idea, :author],
         :order => 'comments.created_at desc',
-        :limit => limit
+        :limit => 10)
     end
   end
   has_many :votes do
-    def recent_visible(limit)
-      find :all,
+    def recent_visible(opts = {})
+      find :all, opts.reverse_merge(
         :include => { :idea => :inventor },
         :conditions => { 'ideas.hidden' => false, 'users.state' => 'active' },
         :order => 'votes.id desc',
-        :limit => limit
+        :limit => 10)
     end
   end
   has_and_belongs_to_many :life_cycle_steps, :join_table => 'life_cycle_steps_admins', :order => 'life_cycle_id, position'
@@ -114,11 +113,11 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) ? u : nil
   end
   
-  def self.find_top_contributors(opts = {})
+  def self.find_top_contributors(all_time = false, opts = {})
     find :all, opts.reverse_merge(
       :conditions => [
         'state = ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active'],
-      :order => 'contribution_points desc')
+      :order => all_time ? 'contribution_points desc' : 'recent_contribution_points desc')
   end
 
   # Encrypts some data with the salt.
@@ -187,9 +186,17 @@ class User < ActiveRecord::Base
     raise "Unknown contribution type: #{contrib_type.inspect}" unless score
     transaction do
       lock!
-      self.contribution_points = (contribution_points || 0) + score
+      self.contribution_points        = (contribution_points || 0) + score
+      self.recent_contribution_points = (recent_contribution_points || 0) + score
       save!
     end
+  end
+  
+  def recalculate_contribution_points
+    self.contribution_points = (
+      CONTRIBUTION_SCORES[:idea]    * ideas.recent_visible(:limit => nil).count + 
+      CONTRIBUTION_SCORES[:comment] * comments.recent_visible(:limit => nil).count +
+      CONTRIBUTION_SCORES[:vote]    * votes.count)
   end
   
   def linked_to_twitter?
@@ -206,7 +213,7 @@ class User < ActiveRecord::Base
   end
   
   def linked_to_facebook?
-    !(facebook_uid.blank? || facebook_access_token.blank? || facebook_name.blank?)
+    !(facebook_uid.blank? || facebook_access_token.blank?)
   end
   
   def facebook_is_only_auth_method?

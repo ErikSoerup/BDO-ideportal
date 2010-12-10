@@ -40,8 +40,10 @@ class IdeaTest < ActiveSupport::TestCase
     
     @sally.reload
     assert_equal 101, @sally.contribution_points
+    assert_equal 31, @sally.recent_contribution_points
     @quentin.reload
     assert_equal 200, @quentin.contribution_points # quentin does NOT get points for voting for his own idea
+    assert_equal 10, @quentin.recent_contribution_points
     assert_equal_unordered [@sally, @quentin], @walruses_in_stores.voters
   end
   
@@ -83,9 +85,10 @@ class IdeaTest < ActiveSupport::TestCase
   end
   
   def test_score_for_create
-    @sally.ideas.create!(:title => 'foo', :description => 'bar')
+    @sally.ideas.create!(:title => 'foo', :description => 'bar', :ip => '10.0.0.0', :user_agent => 'FrutsoBrowse')
     @sally.reload
     assert_equal 110, @sally.contribution_points
+    assert_equal 40, @sally.recent_contribution_points
   end
   
   def test_life_cycle_relationship
@@ -139,14 +142,17 @@ class IdeaTest < ActiveSupport::TestCase
   end
   
   def test_editing_expired
-    idea = Idea.create(:title=>"My Idea", :description=>"Foo", :current => @default_current)
+    idea = Idea.create!(
+      :title=>"My Idea", :description=>"Foo", :current => @default_current, :ip => '10.0.0.0', :user_agent => 'FrutsoBrowse')
     assert !idea.editing_expired?
     idea.update_attribute(:created_at, 15.minutes.ago)
     assert idea.editing_expired?
   end
   
   def test_editable_by
-    idea = Idea.create(:title=>"My Idea", :description=>"Foo", :current => @default_current, :inventor => @quentin)
+    idea = Idea.create!(
+      :title=>"My Idea", :description=>"Foo", :current => @default_current, :inventor => @quentin,
+      :ip => '10.0.0.0', :user_agent => 'FrutsoBrowse')
     assert idea.editable_by?(@quentin)
     idea.update_attribute(:created_at, 15.minutes.ago)
     assert !idea.editable_by?(idea.inventor)
@@ -155,7 +161,8 @@ class IdeaTest < ActiveSupport::TestCase
   def test_duplicate_tags
     idea = Idea.create!(
       :title=>"My Idea", :description=>"Foo", :current => @default_current,
-      :inventor => @quentin, :tags => [@walrus_tag, @crazy_tag, @walrus_tag, @crazy_tag, @crazy_tag])
+      :inventor => @quentin, :tags => [@walrus_tag, @crazy_tag, @walrus_tag, @crazy_tag, @crazy_tag],
+      :ip => '10.0.0.0', :user_agent => 'FrutsoBrowse')
     idea.reload
     assert_equal 2, idea.tags.count
   end

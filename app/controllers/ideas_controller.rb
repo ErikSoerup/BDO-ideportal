@@ -22,7 +22,10 @@ class IdeasController < ApplicationController
     
     before :create do
       @idea.inventor = current_user
+      @idea.ip = request.remote_ip
+      @idea.user_agent = request.user_agent
       if params[:tags]
+        # User can enter tags as free-form text, or using client-side JS. We need to merge tags from the two sources.
         @idea.tags += params[:tags].values.map{ |tag| Tag.from_string(tag) }.flatten
       end
     end

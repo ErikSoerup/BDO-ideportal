@@ -4,14 +4,17 @@
       %h2 Admin Home
     .body
       .group.admin-home
+        %h3{ :style => "margin-top:0" } Site Activity
+        = render :partial => 'admin/graphs/graph'
         - if current_user.moderator
+          -# ---- STYLE NEEDED ---- (It looks like "This is a quick summary..." applies to the graph instead of the tables below)
           %p This is a quick summary view of a few flagged ideas and comments that need moderation.
-          %h3{ :style => "margin-top:0" } Ideas pending moderation
+          %h3{ :style => "margin-top:0" } Ideas Pending Moderation
           - if @inapp_ideas.empty?
             %p No ideas require moderation.
           - else
             = render :partial => 'ideas', :locals => { :collection => @inapp_ideas, :search => {:pending_moderation => true} }
-          %h3 Comments pending moderation
+          %h3 Comments Pending Moderation
           - if @inapp_comments.empty?
             %p No comments require moderation.
           - else

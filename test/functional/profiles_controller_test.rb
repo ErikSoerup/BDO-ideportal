@@ -81,4 +81,20 @@ class ProfilesControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  def test_more_ideas
+    get :show, :id => @sally.id, :format => 'js', :recent => 'ideas', :limit => 1
+    assert_tag :tag => 'a', :attributes => { :href => idea_path(@duplicate_idea) }
+    assert_no_tag :tag => 'a', :attributes => { :href => idea_path(@barbershop_discount) }
+    
+    get :show, :id => @sally.id, :format => 'js', :recent => 'ideas', :offset => 1, :limit => 10
+    assert_no_tag :tag => 'a', :attributes => { :href => idea_path(@duplicate_idea) }
+    assert_tag :tag => 'a', :attributes => { :href => idea_path(@barbershop_discount) }
+  end
+  
+  def test_more_filters_model_param
+    assert_raises RuntimeError do
+      get :show, :id => @sally.id, :format => 'js', :recent => 'monkeys'
+    end
+  end
+  
 end

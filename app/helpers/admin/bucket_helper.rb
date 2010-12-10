@@ -1,5 +1,4 @@
-# Used by admin interface
-module BucketHelper
+module Admin::BucketHelper
   
   def bucket_contents
     # using map{find} instead of Idea.find(array) to preserve order, despite obvious inneficiency

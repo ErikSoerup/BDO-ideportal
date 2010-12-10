@@ -8,13 +8,13 @@ class HomeControllerTest < ActionController::TestCase
     @response = ActionController::TestResponse.new
   end
   scenario :basic
-  should_route :get, "/", :controller=>'home', :action => 'show'
+  should route(:get, "/").to(:controller=>'home', :action => 'show')
 
   context "get show" do
     setup {get :show}
-    should_respond_with :success
-    should_assign_to(:body_class)
-    should_render_template 'show'
+    should respond_with(:success)
+    should assign_to(:body_class)
+    should render_template 'show'
   end
   
 end

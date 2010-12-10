@@ -10,27 +10,18 @@ module Admin
         @current.inventor = current_user
       end
       
-      before :edit do
-        @ideas = Idea.paginate_by_current_id(
-          @current_object.id, 
-          :page => params[:page], 
-          :conditions => ['hidden = ?', false],
-          :per_page => params[:per_page] || 20)
-      end
-      
       response_for :index do |format|
         format.html { render :action => 'index' }
-        format.js   { render :partial => 'index' }
       end
       
       response_for :create do |format|
         format.html do
           redirect_to edit_admin_current_path(@current)
         end
-        format.js do
-          render :template => 'generalized_redirect', :layout => false,
-              :locals => { :redirect_path => edit_admin_current_path(@current), :message => 'Creating current...' }
-        end
+      end
+
+      response_for :create_fails do |format|
+        format.html { render :action => 'new' }
       end
       
       response_for :update do |format|
@@ -38,11 +29,21 @@ module Admin
           flash[:info] = 'Changes saved.'
           redirect_to edit_admin_current_path(@current)
         end
-        format.js do
-          render :text => 'OK'
-        end
+      end
+      
+      response_for :update_fails do |format|
+        format.html { render :action => 'edit' }
       end
     end
+    
+    def current_ideas
+      @current_ideas ||= Idea.paginate_by_current_id(
+        current_object.id, 
+        :page => params[:page], 
+        :conditions => ['hidden = ?', false],
+        :per_page => params[:per_page] || 20)
+    end
+    helper_method :current_ideas
     
     include ResourceAdmin
     

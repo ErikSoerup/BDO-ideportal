@@ -75,7 +75,10 @@
           %h3== #{@idea.comment_count} Comments
           .comments.inset
             %div
-              %div= render :collection => @idea.comments.visible, :partial => 'comments/comment', :controller => 'comments'
+              %div= render :partial => 'comments/comment', 
+                      :collection => @idea.comments.visible,
+                      :controller => 'comments',
+                      :locals => { :show_avatar => true }
         - form_for :comment, :url => idea_comments_url(@idea), :html => { :onsubmit => 'return validateComment()' } do |f|
           #comment-missing.message.error{:style => 'display: none'}
             Please enter a comment.

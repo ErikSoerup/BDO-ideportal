@@ -16,7 +16,7 @@ class HtmlEscapingTest < ActionController::TestCase
     admin_idea_fields[:idea].merge!(:life_cycle_step_id => @life_cycle_step.id)
     user_fields = attack_fields(:user, :name, :password, :zip_code)
     user_fields[:user].merge!(
-      :email => 'user@example.com',  # email validity checking prevents attack via address
+      :email => 'newemail@example.com',  # email validity checking prevents attack via address
       :password_confirmation => attack('user.password'),
       :life_cycle_step_ids => [],
       :admin => '1',
@@ -196,6 +196,7 @@ private
       end
       raise ActiveRecord::Rollback
     end
+    @user.reload  # because we accessed @user inside the transaction, and it may now be stale
   end
   
   def find_vulnerabilities(text, req_method, req_path, note = '')

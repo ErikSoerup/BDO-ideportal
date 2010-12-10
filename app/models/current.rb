@@ -16,6 +16,12 @@ class Current < ActiveRecord::Base
   
   DEFAULT_CURRENT_ID = -1
   
+  def self.all_except_default
+    self.all.select do |current|
+      current.id != DEFAULT_CURRENT_ID
+    end
+  end
+  
   def closed_or_expired?
     if closed? || expired?
       self.closed = true

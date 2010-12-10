@@ -25,7 +25,17 @@ module TwitterHelper
     rtoken, rsecret = session['rtoken'], session['rsecret']
     return nil unless rtoken && rsecret && params[:denied].blank?
     
-    twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
+    2.downto(0) do |attempt|
+      begin
+        twitter_oauth.authorize_from_request(session['rtoken'], session['rsecret'], params[:oauth_verifier])
+        break
+      rescue OAuth::Unauthorized => e
+        # Twitter sometimes seems to send us the callback before it has propagated the new authorization.
+        # When this happens, we get an authorization error. Waiting a moment and trying again fixes the problem. -PPC
+        raise e if attempt == 0
+        sleep 2
+      end
+    end
     
     session['rtoken']  = nil
     session['rsecret'] = nil

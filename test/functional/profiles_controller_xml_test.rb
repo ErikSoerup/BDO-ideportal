@@ -15,11 +15,12 @@ class ProfilesControllerXmlTest < ActionController::TestCase
     xml = get_xml :show, :id => @sally.id
     assert_response :success
     
-    assert_xml_equal xml, '/profile/id',                   @sally.id
-    assert_xml_equal xml, '/profile/name',                 @sally.name
-    assert_xml_equal xml, '/profile/created-at',           @sally.created_at
-    assert_xml_equal xml, '/profile/contribution-points',  @sally.contribution_points.to_i
-    assert_xml_equal xml, '/profile/admin',                false
+    assert_xml_equal xml, '/profile/id',                          @sally.id
+    assert_xml_equal xml, '/profile/name',                        @sally.name
+    assert_xml_equal xml, '/profile/created-at',                  @sally.created_at
+    assert_xml_equal xml, '/profile/contribution-points',         @sally.contribution_points.to_i
+    assert_xml_equal xml, '/profile/recent-contribution-points',  @sally.recent_contribution_points
+    assert_xml_equal xml, '/profile/admin',                       false
     
     match_xml_to_array(xml, '/profile/ideas/idea', [@duplicate_idea, @barbershop_discount]) do |idea_xml, idea|
       assert_xml_equal idea_xml, './id', idea.id
