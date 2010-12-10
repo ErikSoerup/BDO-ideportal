@@ -99,7 +99,6 @@ ActiveRecord::Schema.define(:version => 20101104160151) do
     t.integer  "duplicate_of_id"
     t.boolean  "marked_spam",                                                      :default => false
     t.integer  "current_id",                                                       :default => -1
-    t.text     "vectors"
     t.integer  "vote_count"
   end
 
