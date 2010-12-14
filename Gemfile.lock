@@ -1,0 +1,86 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    actionmailer (2.3.10)
+      actionpack (= 2.3.10)
+    actionpack (2.3.10)
+      activesupport (= 2.3.10)
+      rack (~> 1.1.0)
+    activerecord (2.3.10)
+      activesupport (= 2.3.10)
+    activeresource (2.3.10)
+      activesupport (= 2.3.10)
+    activesupport (2.3.10)
+    calendar_date_select (1.16.1)
+    color (1.4.1)
+    crack (0.1.8)
+    facebooker2 (0.0.5)
+      mogli (>= 0.0.12)
+      ruby-hmac
+    fastercsv (1.5.3)
+    haml (3.0.22)
+    hashie (0.4.0)
+    highline (1.6.1)
+    httparty (0.6.1)
+      crack (= 0.1.8)
+    json (1.4.6)
+    lazy (0.9.6)
+    mash (0.1.1)
+    mocha (0.9.10)
+      rake
+    mogli (0.0.16)
+      hashie (>= 0.2.0)
+      httparty (>= 0.4.3)
+    multi_json (0.0.5)
+    nokogiri (1.4.3.1)
+    oauth (0.4.3)
+    oauth-plugin (0.3.14)
+      oauth (>= 0.3.5)
+    pg (0.9.0)
+    rack (1.1.0)
+    rails (2.3.10)
+      actionmailer (= 2.3.10)
+      actionpack (= 2.3.10)
+      activerecord (= 2.3.10)
+      activeresource (= 2.3.10)
+      activesupport (= 2.3.10)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    rcov (0.9.9)
+    ruby-hmac (0.4.0)
+    shoulda (2.11.3)
+    thoughtbot-shoulda (2.11.1)
+    twitter (0.9.12)
+      hashie (~> 0.4.0)
+      httparty (~> 0.6.1)
+      multi_json (~> 0.0.4)
+      oauth (~> 0.4.3)
+    will_paginate (2.3.15)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  calendar_date_select (= 1.16.1)
+  color (= 1.4.1)
+  facebooker2
+  fastercsv
+  haml (= 3.0.22)
+  highline
+  httparty
+  json
+  lazy (= 0.9.6)
+  mash
+  mocha
+  mogli
+  nokogiri
+  oauth (= 0.4.3)
+  oauth-plugin (= 0.3.14)
+  pg
+  rails (~> 2.3.10)
+  rcov
+  ruby-hmac
+  shoulda
+  thoughtbot-shoulda
+  twitter (= 0.9.12)
+  will_paginate (~> 2.3.11)

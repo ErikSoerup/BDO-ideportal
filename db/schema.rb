@@ -50,12 +50,10 @@ ActiveRecord::Schema.define(:version => 20101208205302) do
     t.string   "ip",                  :limit => 64
     t.string   "user_agent"
     t.boolean  "marked_spam",                       :default => false
-    t.text     "vectors"
   end
 
   add_index "comments", ["author_id"], :name => "index_comments_on_author_id"
   add_index "comments", ["idea_id"], :name => "index_comments_on_idea_id"
-  add_index "comments", ["vectors"], :name => "comments_fts_vectors_index"
 
   create_table "currents", :force => true do |t|
     t.string   "title"
@@ -107,7 +105,6 @@ ActiveRecord::Schema.define(:version => 20101208205302) do
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
-  add_index "ideas", ["vectors"], :name => "ideas_fts_vectors_index"
 
   create_table "ideas_admin_tags", :id => false, :force => true do |t|
     t.integer "idea_id"

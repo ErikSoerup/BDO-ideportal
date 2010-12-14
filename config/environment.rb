@@ -37,25 +37,25 @@ Rails::Initializer.run do |config|
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem "haml"
-  config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
-  config.gem "color"
-  if TWITTER_ENABLED
-    config.gem 'twitter', :version => '0.9.10'
-    config.gem 'mash'
-    config.gem 'httparty'
-    config.gem 'ruby-hmac', :lib => 'hmac'
-  end
-  if FACEBOOK_ENABLED
-    config.gem 'facebooker2'
-    config.gem 'mogli'
-    config.gem 'httparty'
-  end
-  config.gem 'oauth'
-  config.gem 'oauth-plugin'
-  config.gem "calendar_date_select"
-  config.gem "rcov"  # for tests
-  config.gem "lazy"
+  # config.gem "haml"
+  #   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
+  #   config.gem "color"
+  #   if TWITTER_ENABLED
+  #     config.gem 'twitter', :version => '0.9.10'
+  #     config.gem 'mash'
+  #     config.gem 'httparty'
+  #     config.gem 'ruby-hmac', :lib => 'hmac'
+  #   end
+  #   if FACEBOOK_ENABLED
+  #     config.gem 'facebooker2'
+  #     config.gem 'mogli'
+  #     config.gem 'httparty'
+  #   end
+  #   config.gem 'oauth'
+  #   config.gem 'oauth-plugin'
+  #   config.gem "calendar_date_select"
+  #   config.gem "rcov"  # for tests
+  #   config.gem "lazy"
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
