@@ -22,7 +22,7 @@
       %language
         en-us
       %copyright
-        Copyright 2009, Best Buy Inc.
+        Copyright #{Time.now.year}, #{COMPANY_NAME}.
       -unless current_objects.empty?
         %pubDate
           =rss_date current_objects.first.created_at
