@@ -4,7 +4,7 @@ class CurrentsController < ApplicationController
     actions :show, :index
     
     before :show do
-      @current_ideas = search_ideas(:search => ['current', current_object.id])
+      @current_ideas = search_ideas(params.merge(:search => ['current', current_object.id]))
     end
     
     response_for :show do |format|

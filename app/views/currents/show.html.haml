@@ -32,18 +32,21 @@
             %li.ideas= render :partial => 'idea_count', :locals => { :current_ideas => @current_ideas }
             %li.sharethis= render :partial => 'ideas/sharethis'
       .group.slate
-        -# if @current_ideas.visible.empty?
         - if @current_ideas.empty?
           %h3#add_idea
             There are no ideas in this current.
             = link_to 'Submit an idea!', params[:action] == "show" ? "#add_idea" : current_path(current, :anchor=>"add_idea")
             %a{:name=>"add_idea"}
         - else
+          = will_paginate @current_ideas
+          
           %h3= render :partial => 'idea_count', :locals => { :current_ideas => @current_ideas }
           .ideas-list.inset.current-idea-list
             %div
               %div
                 = render :collection => @current_ideas, :partial => 'ideas/idea', :controller => 'ideas'
+          
+          = will_paginate @current_ideas
       #current.group.slate
         - unless @current_ideas.empty?
           %h3#add_idea
