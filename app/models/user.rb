@@ -264,6 +264,6 @@ class User < ActiveRecord::Base
     end
     
     def assign_postal_code
-      self.postal_code ||= PostalCode.find_by_text(zip_code)
+      self.postal_code &&= PostalCode.find_by_text(zip_code)
     end
 end

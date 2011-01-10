@@ -10,13 +10,15 @@
             = submit_tag "Go", :class => "input-submit"
     .body.inset
       %div
-        #map.map-big= @map.to_html
+        #map.map-big
+        :javascript
+          Event.observe(
+            window, 'load',
+            function() {
+              #{@map}
+            }
+          )
     .footer
-      -#
-        %p
-          Showing ideas from
-          %strong
-            94568
   %hr.hide
   #sidebar.aside
     = render :partial => "shared/sidebar"

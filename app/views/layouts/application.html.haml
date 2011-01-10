@@ -2,7 +2,7 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml" }
   %head{ :profile => "http://gmpg.org/xfn/1" }
     %title== #{LONG_SITE_NAME} | #{h(page_title || "Exchange your ideas, vote, and discuss. Let's make it better.")}
-    -cache 'header', :if => false do
+    -cache 'header' do
       %link{ :href => "/favicon.ico", :rel => "icon", :type => "image/vnd.microsoft.icon" }
       %meta{ :content => 'text/html; charset=UTF-8', "http-equiv" => "Content-Type" }/
       %meta{ :name => 'keywords', :content => "#{COMPANY_NAME}, #{SHORT_SITE_NAME}, #{LONG_SITE_NAME}, Idea Exchange, share, vote, rate"}
@@ -20,14 +20,14 @@
       = javascript_include_tag 'example_text'
       = javascript_include_tag :defaults
       = javascript_include_tag 'jquery.min'
-      = javascript_include_tag  'ga', 'global'
+      = javascript_include_tag 'ga', 'global'
       :javascript
         jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
     -@feeds.each do |feed|
       %link{ :href => feed[:href], :title => feed[:title], :rel => "alternate", :type => "application/rss+xml" }
-    - if @map || @minimap
-      = GMap.header
-      = javascript_include_tag 'ym4r-gm'
+    -if @map || @minimap
+      %script(src='http://maps.google.com/maps/api/js?sensor=false' type='text/javascript')
+      = javascript_include_tag 'map_ideas'
   
   %body{ :class => @body_class }
     #wrap

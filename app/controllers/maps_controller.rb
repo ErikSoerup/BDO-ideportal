@@ -20,6 +20,7 @@ class MapsController < ApplicationController
       @search = OpenStruct.new(:postal_code => postal_code.code)
       idea_ids = search_idea_ids_near(postal_code)
     end
+
     idea_ids ||= []
     ideas = Idea.find(idea_ids, :include => [{:inventor => :postal_code}, :tags])
     
@@ -29,7 +30,7 @@ class MapsController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        render :text => @map.to_html(:no_script_tag => true, :no_load => true, :no_declare => true)
+        render :text => @map
       end
     end
   end

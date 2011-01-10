@@ -21,9 +21,6 @@
     :javascript
       jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
     
-    - if @map || @minimap
-      = GMap.header
-      = javascript_include_tag 'ym4r-gm', :cache => true
   %body.admin{ :class => @body_class }
     -#= request.path_parameters.inspect
     #wrap

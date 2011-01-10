@@ -2,6 +2,7 @@
 module ApplicationHelper
   
   include SearchHelper
+  include ActionView::Helpers::JavaScriptHelper
   
   def logged_in?
     !current_user.nil?
@@ -52,54 +53,37 @@ module ApplicationHelper
   
   # Creates a map object for the given ideas. The map_style can be :full or :mini.
   def map_ideas(ideas, opts = {})
-    map_style = opts[:map_style]
-    case map_style
-      when :full
-        map = GMap.new("map")
-        map.control_init(:large_map => true, :map_type => false)
-        zoom = DEFAULT_MAP_ZOOM
-      when :mini
-        map = GMap.new("minimap")
-        zoom = DEFAULT_MINIMAP_ZOOM
-        map.interface_init(Hash.new(false)) # disable dragging, etc.
-      else
-        raise "Unknown map_style #{map_style}"
-    end
+    js = []
+    js << "var map = ideax.map.newMap('map', #{DEFAULT_MAP_CENTER[0]}, #{DEFAULT_MAP_CENTER[1]}, #{DEFAULT_MAP_ZOOM})"
     
-    map.icon_global_init(
-      GIcon.new(
-        :image =>  '/images/idea-marker.png',
-        :icon_size => GSize.new(14,19),
-        :icon_anchor => GPoint.new(7,16),
-        :shadow => '/images/idea-shadow.png',
-        :shadow_size => GSize.new(30,19)),
-      :idea_icon)
-    
-    marker_locs = []
+    marker_lats, marker_lons = [], []
     ideas.each do |idea|
       zip = idea.inventor && idea.inventor.postal_code
       if zip
-        icon_opts = {:icon => :idea_icon}
-        if map_style == :full
-          icon_opts[:info_window] = render_to_string(
-            :partial => 'maps/idea_popup',
-            :locals => { :idea => idea })
-        else
-          icon_opts[:clickable] = false
-        end
-        loc = [zip.lat + rand * 0.012, zip.lon + rand * 0.03]
-        marker_locs << loc
-        map.overlay_init(GMarker.new(loc, icon_opts))
+        popup_content = render_to_string(
+          :partial => 'maps/idea_popup',
+          :locals => { :idea => idea })
+        
+        lat = zip.lat + rand * 0.012
+        lon = zip.lon + rand * 0.030
+        marker_lats << lat
+        marker_lons << lon
+        
+        js << "ideax.map.addIdea(
+          map, #{lat}, #{lon},
+          '#{escape_javascript(idea.title)}',
+          '#{escape_javascript(popup_content)}')"
       end
     end
     
-    if opts[:autozoom] && !marker_locs.empty?
-      map.center_zoom_on_points_init(*marker_locs)
-    else
-      map.center_zoom_init(DEFAULT_MAP_CENTER, zoom)
+    if opts[:autozoom] && !marker_lats.empty?
+      js << "map.fitBounds(
+        new google.maps.LatLngBounds(
+          new google.maps.LatLng(#{marker_lats.min}, #{marker_lons.min}),
+          new google.maps.LatLng(#{marker_lats.max}, #{marker_lons.max})))"
     end
     
-    map
+    js.join("\n")
   end
   
   # IE doesn't fire onchange for checkboxes until blur. This helper method repeats a JS action
