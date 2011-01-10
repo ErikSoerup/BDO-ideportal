@@ -1,9 +1,9 @@
-puts "Loading proper names..."
+puts "Reading proper names..."
 
 @names = []
-File.open('/usr/share/dict/propernames').each_line { |name| @names << name }
+File.open('/usr/share/dict/propernames').each_line { |name| @names << name if name.length > 4 }
 
-puts "Loading postal codes..."
+puts "Reading postal codes..."
 
 @codes = PostalCode.find :all
 raise 'No postal codes found. Run "rake db:seed" to load seed data.' if @codes.empty?
@@ -21,7 +21,7 @@ puts "Creating users..."
 @users = (1..20).map do |i|
   user = User.create!(
     :name => @names.rand.strip,
-    :email => "#{i}@demo.user",
+    :email => "#{(rand*1000000).to_i}@demo.user",
     :password => "pass#{i}",
     :password_confirmation => "pass#{i}",
     :zip_code => @codes.rand.code,
@@ -40,6 +40,8 @@ def create_idea(factor, title, desc)
     :title => title,
     :description => desc,
     :rating => (factor / (rand ** 2.5 * 100 + 1)).round + 1,
+    :ip => 'localhost',
+    :user_agent => 'demo data loader',
     :tags => tags)
 end
 
