@@ -77,30 +77,34 @@ module SearchHelper
   def search_ideas_near_user(opts = {})
     postal_code = current_user.postal_code if logged_in?
     postal_code ||= PostalCode.find_by_text '55406'
-    Idea.find(search_idea_ids_near(postal_code, opts))
+    Idea.find(search_idea_ids_near_postal_code(postal_code, opts))
   end
   
-  def search_idea_ids_near(postal_code, opts = {})
+  def search_idea_ids_near_postal_code(postal_code, opts = {})
+    unless postal_code.nil?
+      search_idea_ids_near_loc(postal_code.lat, postal_code.lon, opts)
+    else
+      raise "You probably need to load your postal code seed data"
+    end
+  end
+  
+  def search_idea_ids_near_loc(lat, lon, opts = {})
     # This code uses a cheap flat earth distance formula, which is probably fine since it's only
     # used for sorting -- we never display the distance to the user. If we decide we actually care,
     # we can change it to use the more DB-taxing trig ... or even better, use a GIS plugin. -PPC
-    unless postal_code.nil?
-      Idea.find(:all,
-        opts.reverse_merge(
-          :select =>
-          "ideas.id,
-          pow(lat - (#{postal_code.lat}), 2) + pow(lon - (#{postal_code.lon}), 2) as distance",
-        :conditions => [
-          'lat > ? and lat < ? and lon > ? and lon < ? and users.state = ? and ideas.hidden = ? and ideas.marked_spam = ?',
-          postal_code.lat - 4.0, postal_code.lat + 4.0,
-          postal_code.lon - 4.6, postal_code.lon + 4.6,
-          'active', false, false],
-        :joins => {:inventor => :postal_code},
-        :limit => 60,
-        :order => 'distance, ideas.created_at desc'))
-      else
-        raise "You probably need to load your postal code seed data"
-    end
+    Idea.find(:all,
+      opts.reverse_merge(
+        :select =>
+        "ideas.id,
+        pow(lat - (#{lat}), 2) + pow(lon - (#{lon}), 2) as distance",
+      :conditions => [
+        'lat > ? and lat < ? and lon > ? and lon < ? and users.state = ? and ideas.hidden = ? and ideas.marked_spam = ?',
+        lat - 4.0, lat + 4.0,
+        lon - 4.6, lon + 4.6,
+        'active', false, false],
+      :joins => {:inventor => :postal_code},
+      :limit => 60,
+      :order => 'distance, ideas.created_at desc'))
   end
   
   # Searches for an arbitrary model using a full-text tsearch query. Shared by public & admin UI.

@@ -42,12 +42,4 @@
       = will_paginate current_objects
   %hr.hide
   #sidebar.aside
-    -if @minimap
-      .section
-        %h2
-          Idea Map
-        %a{:href => map_ideas_path(current_objects)}
-          #minimap{:style => 'width: 230px; height: 124px'}
-        = @minimap.to_html
-        = link_to 'Enlarge this map', map_ideas_path(current_objects)
     = render :partial => "shared/sidebar"

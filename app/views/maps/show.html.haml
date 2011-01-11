@@ -11,6 +11,11 @@
     .body.inset
       %div
         #map.map-big
+          #map-spinner
+            -#--------- STYLE NEEDED ------------
+            %b Trying to determine location...
+            %br/
+            (You can also enter a zip code in the box above.)
         :javascript
           Event.observe(
             window, 'load',

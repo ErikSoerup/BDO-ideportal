@@ -47,28 +47,49 @@ ideax = {
       new google.maps.Point(7,16)   // anchor
     ),
     
-    // showGeolocatedMap: function() {
-    //   // Adapted from http://code.google.com/apis/maps/documentation/javascript/basics.html#DetectingUserLocation
-    //   var userLocation = null
-    //   if(navigator.geolocation) {
-    //     // W3C Geolocation (Preferred)
-    //     navigator.geolocation.getCurrentPosition(function(position) {
-    //       searchIdeasNear(position.coords.latitude, position.coords.longitude)
-    //     }, function() {
-    //       searchIdeasNearDefault()
-    //     })
-    //   } else if (google.gears) {
-    //     // Google Gears Geolocation
-    //     var geo = google.gears.factory.create('beta.geolocation')
-    //     geo.getCurrentPosition(function(position) {
-    //       searchIdeasNear(position.latitude,position.longitude)
-    //     }, function() {
-    //       searchIdeasNearDefault()
-    //     })
-    //   } else {
-    //     // Browser doesn't support Geolocation
-    //     searchIdeasNearDefault()
-    //   }
-    // }
+    showGeolocatedMap: function() {
+      var searchIdeas = function(params) {
+        new Ajax.Request(
+          '/map',
+          {
+            asynchronous: true,
+            evalScripts: true,
+            method: 'get',
+            parameters: params
+          })
+      }
+      var searchIdeasNear = function(lat, lon) {
+        searchIdeas('search[loc]=' + lat + ',' + lon)
+      }
+      var searchIdeasNearDefault = function () {
+        searchIdeas('default_loc=1')
+      }
+      
+      // Adapted from http://code.google.com/apis/maps/documentation/javascript/basics.html#DetectingUserLocation
+      var userLocation = null
+      if(navigator.geolocation) {
+        // W3C Geolocation (Preferred)
+        navigator.geolocation.getCurrentPosition(function(position) {
+          searchIdeasNear(position.coords.latitude, position.coords.longitude)
+        }, function() {
+          searchIdeasNearDefault()
+        }, {
+          enableHighAccuracy: false,
+          timeout: 30*1000, // 30 sec
+          maximumAge: 30*60*1000 // half an hour
+        })
+      } else if (google.gears) {
+        // Google Gears Geolocation
+        var geo = google.gears.factory.create('beta.geolocation')
+        geo.getCurrentPosition(function(position) {
+          searchIdeasNear(position.latitude, position.longitude)
+        }, function() {
+          searchIdeasNearDefault()
+        })
+      } else {
+        // Browser doesn't support Geolocation
+        searchIdeasNearDefault()
+      }
+    }
   }
 }

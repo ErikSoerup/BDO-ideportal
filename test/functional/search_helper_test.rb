@@ -49,7 +49,7 @@ class SearchHelperTest < ActionController::TestCase
 
   def test_search_idea_ids_near
     postal_code = PostalCode.find_by_text @spam_idea.inventor.zip_code
-    assert_equal [@walruses_in_stores], search_idea_ids_near(postal_code, {})
+    assert_equal [@walruses_in_stores], search_idea_ids_near_postal_code(postal_code, {})
   end
   
   def test_search_xapian_spam_option

@@ -51,40 +51,6 @@ module ApplicationHelper
     map_path(:idea_ids => ideas.map{ |idea| idea.id }.join(' '))
   end
   
-  # Creates a map object for the given ideas. The map_style can be :full or :mini.
-  def map_ideas(ideas, default_center = DEFAULT_MAP_CENTER)
-    js = []
-    js << "var map = ideax.map.newMap('map', #{default_center[0]}, #{default_center[1]}, #{DEFAULT_MAP_ZOOM})"
-    
-    marker_lats, marker_lons = [], []
-    ideas.each do |idea|
-      zip = idea.inventor && idea.inventor.postal_code
-      if zip
-        popup_content = render_to_string(
-          :partial => 'maps/idea_popup',
-          :locals => { :idea => idea })
-        
-        lat = zip.lat + rand * 0.012
-        lon = zip.lon + rand * 0.030
-        marker_lats << lat
-        marker_lons << lon
-        
-        js << "ideax.map.addIdea(
-          map, #{lat}, #{lon},
-          '#{escape_javascript(popup_content)}')"
-      end
-    end
-    
-    if !marker_lats.empty?
-      js << "map.fitBounds(
-        new google.maps.LatLngBounds(
-          new google.maps.LatLng(#{marker_lats.min}, #{marker_lons.min}),
-          new google.maps.LatLng(#{marker_lats.max}, #{marker_lons.max})))"
-    end
-    
-    js.join("\n")
-  end
-  
   # IE doesn't fire onchange for checkboxes until blur. This helper method repeats a JS action
   # for change, click, and keypress actions so that checkboxes respond immediately in any browser.
   def check_box_onchange(action, opts = {:onchange => true})
