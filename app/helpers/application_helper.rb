@@ -52,9 +52,9 @@ module ApplicationHelper
   end
   
   # Creates a map object for the given ideas. The map_style can be :full or :mini.
-  def map_ideas(ideas, opts = {})
+  def map_ideas(ideas, default_center = DEFAULT_MAP_CENTER)
     js = []
-    js << "var map = ideax.map.newMap('map', #{DEFAULT_MAP_CENTER[0]}, #{DEFAULT_MAP_CENTER[1]}, #{DEFAULT_MAP_ZOOM})"
+    js << "var map = ideax.map.newMap('map', #{default_center[0]}, #{default_center[1]}, #{DEFAULT_MAP_ZOOM})"
     
     marker_lats, marker_lons = [], []
     ideas.each do |idea|
@@ -71,12 +71,11 @@ module ApplicationHelper
         
         js << "ideax.map.addIdea(
           map, #{lat}, #{lon},
-          '#{escape_javascript(idea.title)}',
           '#{escape_javascript(popup_content)}')"
       end
     end
     
-    if opts[:autozoom] && !marker_lats.empty?
+    if !marker_lats.empty?
       js << "map.fitBounds(
         new google.maps.LatLngBounds(
           new google.maps.LatLng(#{marker_lats.min}, #{marker_lons.min}),

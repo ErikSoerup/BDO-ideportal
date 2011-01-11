@@ -53,9 +53,9 @@ class MapsControllerTest < ActionController::TestCase
 private
 
   def assert_marker(idea)
-    marker, lat_lon, popup_content = find_marker(idea)
+    lat, lon, popup_content = find_marker(idea)
     assert popup_content, "Expected map marker for #{idea.inspect}, but found none.\nResponse:\n#{@response.body}"
-    lat_lon = lat_lon.split(',').map{ |x| x.strip.to_f }
+    lat_lon = [lat, lon]
     assert_in_delta idea.inventor.postal_code.lat, lat_lon[0], 0.2
     assert_in_delta idea.inventor.postal_code.lon, lat_lon[1], 0.2
     popup_content
@@ -69,8 +69,8 @@ private
   # Find marker for given idea by searching for link in popup content. Return entire marker, lat/lon and popup content.
   def find_marker(idea)
     postal = idea.inventor.postal_code
-    if @response.body =~ /addInfoWindowToMarker\(new +GMarker\(new +GLatLng\((.*?)\).*?\), *("([^"]|\\\")*<a href=\\"#{idea_path(idea)}\\"([^"]|\\\")*?")/
-      [$&, $1, $2]
+    if @response.body =~ /ideax.map.addIdea\(\s*map,\s*([\d\.\-]+),\s*([\d\.\-]+),\s*('([^']|\\\')*<a href=\\"#{idea_path(idea)}\\"([^']|\\\')*')\s*\)/
+      [$1, $2, $3]
     end
   end
 

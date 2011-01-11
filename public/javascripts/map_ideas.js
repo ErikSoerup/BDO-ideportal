@@ -11,15 +11,14 @@ ideax = {
       )
     },
 
-    addIdea: function(map, ideaLat, ideaLon, ideaTitle, popupContent) {
+    addIdea: function(map, ideaLat, ideaLon, popupContent) {
       var ideaLoc = new google.maps.LatLng(ideaLat, ideaLon)
       var marker = new google.maps.Marker({
           position:   ideaLoc,
           map:        map, 
           icon:       ideax.map.markerIcon,
           shadow:     ideax.map.markerShadow,
-          animation:  google.maps.Animation.DROP,
-          title:      ideaTitle
+          animation:  google.maps.Animation.DROP
       })
       
       google.maps.event.addListener(marker, 'click', function() {

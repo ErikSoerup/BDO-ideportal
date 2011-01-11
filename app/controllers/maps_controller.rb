@@ -16,7 +16,7 @@ class MapsController < ApplicationController
       postal_code = current_user.postal_code
     end
     
-    ideas ||= if postal_code
+    if postal_code
       @search = OpenStruct.new(:postal_code => postal_code.code)
       idea_ids = search_idea_ids_near(postal_code)
     end
@@ -25,7 +25,7 @@ class MapsController < ApplicationController
     ideas = Idea.find(idea_ids, :include => [{:inventor => :postal_code}, :tags])
     
     Idea.populate_comment_counts(ideas)
-    @map = map_ideas(ideas, :map_style => :full, :autozoom => true)
+    @map = map_ideas(ideas)
     
     respond_to do |format|
       format.html
