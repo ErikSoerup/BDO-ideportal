@@ -73,14 +73,31 @@ module SearchHelper
     Idea.paginate(query_opts)
   end
   
+  def geo_search_ideas(search, opts = {})
+    if loc = search[:loc]
+      latlon = loc.split(/\s*,\s*/).map { |x| x.to_f }
+      search_idea_ids_near_loc(latlon[0], latlon[1], opts)
+    elsif postal_search = search[:postal_code]
+      if postal_search == 'user'
+        search_idea_ids_near_user(opts)
+      else
+        postal_code = PostalCode.find_by_text(postal_search)
+        @search = OpenStruct.new(:postal_code => postal_code.code)
+        search_idea_ids_near_postal_code(postal_code, opts)
+      end
+    end
+  end
+  
   # Handles geography-based searches
-  def search_ideas_near_user(opts = {})
+  def search_idea_ids_near_user(opts = {})
     postal_code = current_user.postal_code if logged_in?
-    postal_code ||= PostalCode.find_by_text '55406'
-    Idea.find(search_idea_ids_near_postal_code(postal_code, opts))
+    postal_code ||= PostalCode.find_by_text '55425'
+    search_idea_ids_near_postal_code(postal_code, opts)
   end
   
   def search_idea_ids_near_postal_code(postal_code, opts = {})
+    return search_ideas_near_user(opts) if postal_code == 'user'
+    
     unless postal_code.nil?
       search_idea_ids_near_loc(postal_code.lat, postal_code.lon, opts)
     else

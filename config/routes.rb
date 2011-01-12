@@ -80,6 +80,8 @@ ActionController::Routing::Routes.draw do |map|
   # Top-level routes
   
   map.root :controller => 'home', :action => 'show'
+  map.home_nearby_ideas '/home/nearby-ideas', :controller => 'home', :action => 'nearby_ideas'
+  
   map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact|privacy-policy|terms-of-use/
   
   # No default routes declared for security & tidiness. (They make all actions in every controller accessible via GET requests.)

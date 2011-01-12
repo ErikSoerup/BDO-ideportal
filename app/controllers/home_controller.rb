@@ -9,6 +9,11 @@ class HomeController < ApplicationController
     render :action => params[:page] || 'show'
   end
   
+  def nearby_ideas
+    ideas = Idea.find(geo_search_ideas(params[:search], :limit => 5))
+    render :partial => 'idea', :collection => ideas
+  end
+  
   # Experimental wacky fractal tag cloud (currently unused):
   
   def render_idea_cloud(opts)

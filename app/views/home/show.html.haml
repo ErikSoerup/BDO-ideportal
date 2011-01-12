@@ -95,8 +95,8 @@
           %ul.actions
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
             -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "#"
-        .body.ideas
-          = render :partial => 'idea', :collection => search_ideas_near_user(:limit => 5)
+        #nearby-idea-results.body.ideas
+          = render :partial => 'nearby_ideas'
         .footer
           .pagination
             = link_to 'More', map_path, :class => "next_page"

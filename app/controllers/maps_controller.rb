@@ -9,32 +9,16 @@ class MapsController < ApplicationController
       idea_ids = params[:idea_ids].split(/\s+|,/)
       @body_class = nil  # These ideas aren't necessarily nearby
     elsif search = params[:search]
-      loc = search[:loc]
-      if search_postal_code = search[:postal_code]
-        postal_code = PostalCode.find_by_text(search_postal_code)
-      end
-    elsif params[:default_loc]
-      postal_code = logged_in? ? current_user.postal_code : PostalCode.find_by_text('55423')
+      idea_ids = geo_search_ideas(search)
     else
       @map = 'ideax.map.showGeolocatedMap()'
-      return
     end
     
-    if postal_code
-      @search = OpenStruct.new(:postal_code => postal_code.code)
-      idea_ids = search_idea_ids_near_postal_code(postal_code)
+    if idea_ids
+      ideas = Idea.find(idea_ids, :include => [{:inventor => :postal_code}, :tags])
+      Idea.populate_comment_counts(ideas)
+      @map = map_ideas(ideas)
     end
-    
-    if loc
-      loc_components = loc.split(/\s*,\s*/).map { |x| x.to_f }
-      idea_ids = search_idea_ids_near_loc(*loc_components)
-    end
-
-    idea_ids ||= []
-    ideas = Idea.find(idea_ids, :include => [{:inventor => :postal_code}, :tags])
-    
-    Idea.populate_comment_counts(ideas)
-    @map = map_ideas(ideas)
     
     respond_to do |format|
       format.html
