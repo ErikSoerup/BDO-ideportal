@@ -20,9 +20,9 @@
         var graph = $.plot(
           graphElem,
           [
-            timeSeries('Ideas',    '#0064BB', [ #{idea_graph_data} ]),
-            timeSeries('Comments', '#D93740', [ #{comment_graph_data} ]),
             timeSeries('Votes',    '#FFA700', [ #{vote_graph_data} ]),
+            timeSeries('Comments', '#D93740', [ #{comment_graph_data} ]),
+            timeSeries('Ideas',    '#0064BB', [ #{idea_graph_data} ]),
           ],
           {
             xaxis: {
@@ -93,7 +93,7 @@
           }
 
           var info = '<div class="time-range">' + timeRange + '</div>'
-          for(var i = 0; i < dataset.length; ++i) {
+          for(var i = dataset.length - 1; i >= 0; i--) {
             var label = dataset[i].label
             var count = '&nbsp;'
             if(start) {
