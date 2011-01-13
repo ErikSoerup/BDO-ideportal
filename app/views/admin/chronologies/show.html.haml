@@ -1,0 +1,25 @@
+%div
+  .panel.full.section.hfeed
+    .header
+      #legend
+        .item.idea-label
+          .count= @ideas.count
+          .label= @ideas.count == 1 ? 'Idea' : 'Ideas'
+        .item.comment-label
+          .count= @comments.count
+          .label= @comments.count == 1 ? 'Comment' : 'Comments'
+        .item.vote-label
+          .count= @votes.count
+          .label= @votes.count == 1 ? 'Vote' : 'Votes'
+      %h2 Chronology of Activity
+      %h3 #{format_date(@from)} – #{format_date(@to - 1.second)}
+    .body
+      #results
+        %table.admin-table{:cellspacing => 0, :cellpadding => 6, :width => '100%'}
+          %tr
+            %th Time
+            %th Action
+            %th User
+            %th Details
+          = render :partial => 'index_row', :collection => @all_actions
+    .footer

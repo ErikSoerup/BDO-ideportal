@@ -54,6 +54,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :ideas
     admin.resources :currents
     admin.resources :client_applications
+    admin.resource :chronology
     admin.with_options :path_prefix => 'admin/life_cycles', :controller => 'life_cycles' do |life_cycle|
       life_cycle.life_cycles 'edit',                 :action => 'edit'
       life_cycle.connect     'create',               :action => 'create'       # can't use post for these two b/c InPlaceEdtitor...

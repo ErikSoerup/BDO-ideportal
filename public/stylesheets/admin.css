@@ -203,24 +203,46 @@ ol#admin-comments {
     width: 800px;
     height: 120px;
     float: left; }
-  .graph-box #legend {
-    padding: 0.2em 0;
-    width: 9em;
-    float: left;
-    margin-top: 20px; }
-    .graph-box #legend .time-range {
-      margin-left: 1ex;
-      font-weight: bold; }
-    .graph-box #legend .item .count {
-      font-weight: bold;
-      float: left;
-      clear: left;
-      text-align: right;
-      width: 4ex;
-      margin-right: 1ex; }
   .graph-box:after {
     content: ".";
     display: block;
     height: 1;
     clear: both;
     visibility: hidden; }
+  .graph-box #legend {
+    float: left;
+    margin-top: 20px; }
+  .graph-box #chronology-bubble {
+    display: none;
+    width: 114px;
+    height: 43px;
+    background: url("/images/graph-chronology-bubble.png"); }
+    .graph-box #chronology-bubble:hover {
+      background-position: 0px -43px;
+      cursor: pointer; }
+
+.chronology #legend {
+  float: right;
+  font-weight: bold; }
+.chronology .idea-label {
+  color: #0064bb; }
+.chronology .comment-label {
+  color: #d93740; }
+.chronology .vote-label {
+  color: #ffa700; }
+.chronology td.timestamp {
+  white-space: nowrap; }
+
+.graph-box #legend, .chronology #legend {
+  padding: 0.2em 0;
+  width: 9em; }
+  .graph-box #legend .time-range, .chronology #legend .time-range {
+    margin-left: 1ex;
+    font-weight: bold; }
+  .graph-box #legend .item .count, .chronology #legend .item .count {
+    font-weight: bold;
+    float: left;
+    clear: left;
+    text-align: right;
+    width: 4ex;
+    margin-right: 1ex; }

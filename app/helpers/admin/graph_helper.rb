@@ -18,6 +18,9 @@ module Admin
     def graph_data_for(model, extra_conditions = '', start_time = 6.months.ago, end_time = Time.new)
       bucket_size = 'day' # for DB
       bucket_step = 1.day # for filling gaps
+      
+      # Move start_time to the previous day boundary, so that the bucket timestamps are correct
+      start_time = Time.local(start_time.year, start_time.month, start_time.day)
     
       # The following query (probably) works only on PostgreSQL. Patches for other DBs welcome.
       extra_conditions = ' and ' + extra_conditions unless extra_conditions.blank?
@@ -26,7 +29,7 @@ module Admin
         :conditions => ['created_at > ? and created_at < ?' + extra_conditions, start_time, end_time],
         :group => 'date',
         :order => 'date'
-      populated_buckets.map! { |b| StatsBucket.new(Time.parse(b.date).getutc, b.count.to_i) }
+      populated_buckets.map! { |b| StatsBucket.new(Time.parse(b.date), b.count.to_i) }
       
       # The DB only returns buckets with nonzero counts. We want to construct a list of all
       # buckets, zero or otherwise. This is complicated by the fact that, because of DST,
@@ -51,7 +54,7 @@ module Admin
         t = bucket.date + bucket_step
       end
       buckets.delete_at(-1) # last bucket will be bogus
-      buckets.map { |bucket| "[#{bucket.date.getutc.to_f * 1000}, #{bucket.count}]" }.join(",")
+      buckets.map { |bucket| "[#{(bucket.date.getutc.to_f + bucket.date.utc_offset) * 1000}, #{bucket.count}]" }.join(",")
     end
   
     class StatsBucket

@@ -231,11 +231,41 @@ ol#admin-comments
     :width 800px
     :height 120px
     :float left
+  &:after
+    :content "."
+    :display block
+    :height 1
+    :clear both
+    :visibility hidden
+  #legend
+    :float left
+    :margin-top 20px
+  #chronology-bubble
+    :display none
+    :width 114px
+    :height 43px
+    :background url('/images/graph-chronology-bubble.png')
+    &:hover
+      :background-position 0px -43px
+      :cursor pointer
+
+.chronology
+  #legend
+    :float right
+    :font-weight bold
+  .idea-label
+    :color #0064BB
+  .comment-label
+    :color #D93740
+  .vote-label
+    :color #FFA700
+  td.timestamp
+    :white-space nowrap
+
+.graph-box, .chronology
   #legend
     :padding 0.2em 0
     :width 9em
-    :float left
-    :margin-top 20px
     .time-range
       :margin-left 1ex
       :font-weight bold
@@ -248,9 +278,3 @@ ol#admin-comments
         :width 4ex
         :margin-right 1ex
       .label
-  &:after
-    :content "."
-    :display block
-    :height 1
-    :clear both
-    :visibility hidden

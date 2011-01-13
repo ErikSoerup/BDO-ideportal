@@ -1,0 +1,25 @@
+- action = index_row
+%tr.data-row{:onclick => "document.location = '#{edit_path_for(action)}'"}
+  %td.timestamp=h format_date action.created_at
+  %td{:class => action.class.to_s.underscore + '-label'}= action.class
+  
+  -if action.kind_of?(Idea)
+    %td=h action.inventor.name
+    %td
+      %b=h action.title
+        
+  -elsif action.kind_of?(Comment)
+    %td=h action.author.name
+    %td
+      %b
+        Re:
+        =h action.idea.title
+      .detail=h action.text
+      
+  -elsif action.kind_of?(Vote)
+    %td
+      =h action.user.name
+    %td
+      %b
+        Re:
+        =h action.idea.title

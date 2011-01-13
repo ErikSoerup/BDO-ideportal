@@ -1,8 +1,9 @@
--cache 'graph', :expires_in => 5.minutes do
+-cache 'graph', :expires_in => 5.minutes, :if => false do # ----->
   %div
     .graph-box
       #graph
       #legend
+      #chronology-bubble
 
   :javascript
     (function($) {
@@ -15,7 +16,9 @@
           }
         }
     
-        var graphElem = $("#graph"), selectionInfo = $("#legend")
+        var graphElem = $("#graph"),
+            selectionInfo = $("#legend"),
+            chronologyBubble = $('#chronology-bubble')
     
         var graph = $.plot(
           graphElem,
@@ -35,6 +38,7 @@
               backgroundColor: 'white',
               tickColor: '#e0e0e0',
               hoverable: true,
+              clickable: true,
               autoHighlight: false
             },
             legend: {
@@ -66,7 +70,28 @@
             sum += data[i][1]
           return sum
         }
-    
+        
+        var showChronologyBubble = function(start, end) {
+          // Round start & end to data point to ensure that passed timestamps are correct
+          var dataset = graph.getData()
+          var startI = indexForX(dataset[0].data, start),
+              endI   = indexForX(dataset[0].data, end)
+          start = dataset[0].data[startI][0]
+          end   = dataset[0].data[  endI][0]
+          
+          chronologyRange = { from: start, to: end }
+          chronologyBubble.css({
+            'position': 'absolute',
+            'display': 'block'
+          })
+          var center = (start + end) / 2,
+              centerPx = graph.getAxes().xaxis.p2c(center) + graph.getPlotOffset().left + $(graph.getCanvas()).offset().left
+          chronologyBubble.offset({
+            left: centerPx - chronologyBubble.width() / 2,
+            top:  graphElem.offset().top - chronologyBubble.height() + 16
+          })
+        }
+        
         var updateSelectionInfo = function() {
           var start = null, end = null
           var formatter = graph.getAxes().xaxis.tickFormatter
@@ -113,17 +138,32 @@
         var selectionChanged = function(event, ranges) {
           selectedRange = ranges
           updateSelectionInfo()
+          if(selectedRange)
+            showChronologyBubble(selectedRange.xaxis.from, selectedRange.xaxis.to)
         }
-    
+        
         var hoverChanged = function(event, pos, item) {
           hoverPos = pos
           updateSelectionInfo()
+        }
+        
+        var plotClicked = function(event, pos, item) {
+          if(!selectedRange)
+            showChronologyBubble(pos.x, pos.x)
+          updateSelectionInfo()
+        }
+        
+        var showChronology = function() {
+          document.location = '#{admin_chronology_path}?from=' + chronologyRange.from + '&to=' + chronologyRange.to
         }
     
         graphElem.bind("plotselecting",  selectionChanged)
         graphElem.bind("plotselected",   selectionChanged)
         graphElem.bind("plotunselected", selectionChanged)
+        graphElem.bind("plotclick",      plotClicked)
         graphElem.bind("plothover",      hoverChanged)
         graphElem.bind("mouseleave",     hoverChanged)
         updateSelectionInfo()
+
+        chronologyBubble.click(showChronology)
     })(jQuery)
