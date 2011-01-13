@@ -30,26 +30,44 @@ class MapsControllerTest < ActionController::TestCase
     assert_no_marker @walruses_in_stores
   end
   
-  def test_map_by_user_postal_code
-    login_as @quentin
-    get :show
-    assert_marker @walruses_in_stores
-    assert_no_marker @barbershop_discount
-  end
-  
   def test_map_no_params_and_not_logged_in
     get :show
     assert_no_marker @walruses_in_stores
     assert_no_marker @barbershop_discount
   end
   
-  def test_map_no_params_and_user_has_no_postal_code
-    login_as @sally
+  def test_map_by_browser_geolocation
+    login_as @quentin
     get :show
+    assert @response.body =~ /showGeolocatedMap/
+    assert_no_marker @walruses_in_stores  # no markers yet; we await the geoloc callback
+    assert_no_marker @barbershop_discount
+  end
+  
+  def test_map_by_lat_lon
+    get :show, :search => {:loc => '37,-92'}
+    assert_marker @tranquilizer_guns
+    assert_marker @give_up_all_hope
     assert_no_marker @walruses_in_stores
     assert_no_marker @barbershop_discount
   end
   
+  def test_map_by_user_loc
+    login_as @quentin
+    get :show, :search => {:postal_code => 'user'}
+    assert_marker @walruses_in_stores
+    assert_no_marker @barbershop_discount
+  end
+  
+  def test_map_by_user_loc_and_user_has_no_postal_code
+    login_as @sally
+    get :show, :search => {:postal_code => 'user'}
+    assert_marker @tranquilizer_guns
+    assert_marker @give_up_all_hope
+    assert_no_marker @walruses_in_stores
+    assert_no_marker @barbershop_discount
+  end
+    
 private
 
   def assert_marker(idea)

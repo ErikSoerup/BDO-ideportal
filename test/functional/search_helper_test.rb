@@ -1,9 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
-#require 'ideas_controller'
-include SearchHelper
+
+DEFAULT_ZIP_CODE = '55102'
 
 class SearchHelperTest < ActionController::TestCase
   scenario :basic
+  
+  include SearchHelper
   
   def test_search_recent
     assert_equal_unordered [@barbershop_discount, @walruses_in_stores, @tranquilizer_guns, @give_up_all_hope], search_ideas(:search => ['recent'])
@@ -47,18 +49,38 @@ class SearchHelperTest < ActionController::TestCase
   #   assert_equal_unordered [@aaron], search(User, :search_text => 'aaron@example.com') { |x| x }
   # end
 
-  def test_search_idea_ids_near
-    postal_code = PostalCode.find_by_text @spam_idea.inventor.zip_code
-    assert_equal [@walruses_in_stores], search_idea_ids_near_postal_code(postal_code, {})
+  def test_search_near_postal_code
+    postal_code = @quentin.zip_code
+    assert_equal [@walruses_in_stores], Idea.find(geo_search_ideas(:postal_code => postal_code))
   end
   
-  def test_search_xapian_spam_option
+  def test_search_near_bogus_postal_code
+    postal_code = 'foobar'
+    assert_equal [], geo_search_ideas(:postal_code => postal_code)
+  end
+  
+  def test_search_near_user
+    @user = @quentin
+    assert_equal [@walruses_in_stores], Idea.find(geo_search_ideas(:postal_code => 'user'))
+  end
+  
+  def test_search_near_user_not_logged_in
+    @user = nil
+    assert_equal_unordered [@tranquilizer_guns, @give_up_all_hope], Idea.find(geo_search_ideas(:postal_code => 'user'))
+  end
+  
+  def test_search_near_loc
+    assert_equal_unordered [@walruses_in_stores],                   Idea.find(geo_search_ideas(:loc => '33.1, -80.5'))
+    assert_equal_unordered [@tranquilizer_guns, @give_up_all_hope], Idea.find(geo_search_ideas(:loc => '36.0, -91.0'))
+  end
+  
+  def test_search_text_spam_option
     params = {:search => "walrus"}
   
-    xapian_result = search(Idea, params) do |results|
+    text_result = search(Idea, params) do |results|
       results
     end
-    assert_equal [@walruses_in_stores, @give_up_all_hope], xapian_result
+    assert_equal [@walruses_in_stores, @give_up_all_hope], text_result
   end
   
   def test_search_single_scare_quote
@@ -71,6 +93,14 @@ class SearchHelperTest < ActionController::TestCase
     assert_nothing_raised(ActiveRecord::StatementInvalid) {
       search_ideas(:search_text => '""')
     }
+  end
+  
+  def current_user
+    @user
+  end
+  
+  def logged_in?
+    !!@user
   end
   
 end

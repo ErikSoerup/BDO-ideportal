@@ -38,7 +38,7 @@ namespace :db do
         admin_user = User.create!(
           :name => "Administrator",
           :email => admin_email,
-          :zip_code => '55423',
+          :zip_code => DEFAULT_ZIP_CODE,
           :password => admin_password,
           :password_confirmation => admin_password,
           :terms_of_service => '1')
