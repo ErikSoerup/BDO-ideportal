@@ -12,8 +12,8 @@ module Admin
       @all_actions = (@ideas + @comments + @votes).sort_by { |a| p a; a.created_at }
     end
     
-    def format_date(date)
-      date.strftime '%Y/%m/%d %H:%M'
+    def format_date(date, long = true)
+      date.strftime(long ? '%Y/%m/%d %H:%M' :  '%m/%d %H:%M')
     end
     helper_method :format_date
     
