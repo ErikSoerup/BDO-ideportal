@@ -13,7 +13,7 @@ module Admin
     end
     
     def format_date(date, long = true)
-      date.getlocal.strftime(long ? '%Y/%m/%d %H:%M' :  '%m/%d %H:%M')
+      date.getlocal.strftime(long ? '%Y/%m/%d %H:%M' : '%m/%d %H:%M')
     end
     helper_method :format_date
     
