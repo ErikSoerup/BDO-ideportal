@@ -93,6 +93,7 @@ class HtmlEscapingTest < ActionController::TestCase
     test_request :post, "/admin/currents", current_fields
     test_request :get,  "/admin/currents/#{@current.id}/edit"
     test_request :put,  "/admin/currents/#{@current.id}", current_fields
+    test_request :get,  "/admin/chronology", :from => 0, :to => 3000000000000
     
     # API
     test_request :get,  "/ideas",                                     :format => 'xml'
