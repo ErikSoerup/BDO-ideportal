@@ -28,10 +28,13 @@ class IdeaTest < ActiveSupport::TestCase
     @walruses_in_stores.rating = 100
     @walruses_in_stores.save!
     assert_equal 0, @walruses_in_stores.vote_count
-    @walruses_in_stores.add_vote!(@sally)
+    vote = @walruses_in_stores.add_vote!(@sally)
+    assert_equal @walruses_in_stores, vote.idea
+    assert_equal @sally, vote.user
     assert_equal 101, @walruses_in_stores.rating
     assert_equal   1, @walruses_in_stores.vote_count
-    @walruses_in_stores.add_vote!(@sally)
+    vote = @walruses_in_stores.add_vote!(@sally)
+    assert_nil @vote
     assert_equal 101, @walruses_in_stores.rating
     assert_equal   1, @walruses_in_stores.vote_count
     @walruses_in_stores.add_vote!(@quentin)

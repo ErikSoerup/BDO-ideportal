@@ -13,7 +13,7 @@ module Admin
     end
     
     def format_date(date, long = true)
-      date.strftime(long ? '%Y/%m/%d %H:%M' :  '%m/%d %H:%M')
+      date.getlocal.strftime(long ? '%Y/%m/%d %H:%M' :  '%m/%d %H:%M')
     end
     helper_method :format_date
     
@@ -44,7 +44,7 @@ module Admin
     
     def find_in_timeslice(model, extra_conditions = '')
       extra_conditions = ' and ' + extra_conditions unless extra_conditions.blank?
-      model.find :all, :conditions => ['created_at >= ? and created_at < ?' + extra_conditions, @from, @to]
+      model.find :all, :conditions => ['created_at >= ? and created_at < ?' + extra_conditions, @from.getutc, @to.getutc]
     end
     
   end

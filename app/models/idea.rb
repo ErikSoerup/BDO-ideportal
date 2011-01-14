@@ -116,6 +116,7 @@ class Idea < ActiveRecord::Base
         if user.id != inventor_id
           user.record_contribution! :vote
         end
+        vote
       end
     end
   end

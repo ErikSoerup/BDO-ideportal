@@ -138,19 +138,19 @@ scenario :basic do
     :status=>'new',
     :title => 'Release walruses in stores',
     :description => 'Allow walruses to roam free in Best Buy stores and play the video game demos!',
-    :created_at => Time.utc(2008, 1, 1)))
+    :created_at => Time.local(2008, 1, 1, 0, 0)))
   
   @barbershop_discount = @sally.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Discounts for barbershop quartets',
     :description => 'It is the moral duty of Best Buy to maximize singing by giving any barbershop quartet member a 50% in-store discount.',
-    :created_at => Time.utc(2008, 1, 2)))
+    :created_at => Time.local(2008, 1, 1, 23, 59, 59)))
   
   @hidden_idea = @sally.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Rowerbazzle!',
     :description => 'Garflatzin gronglebunkcles!!',
-    :created_at => Time.utc(2008, 1, 2),
+    :created_at => Time.local(2008, 1, 2),
     :current => @walrus_attack_current,
     :hidden => true))
   
@@ -158,7 +158,7 @@ scenario :basic do
     :status=>'new',
     :title => 'Get much skeezier!',
     :description => 'This pill will maximize your skeeziness! Get much more!',
-    :created_at => Time.utc(2008, 1, 2),
+    :created_at => Time.local(2008, 1, 2),
     :marked_spam => true))
   
   @tranquilizer_guns = @participator.ideas.create!(add_client_info(
@@ -189,7 +189,7 @@ scenario :basic do
     :description => 'Put them in retail establishments!',
     :duplicate_of => @walruses_in_stores,
     :current => @default_current,
-    :created_at => Time.utc(2008, 1, 3)))
+    :created_at => Time.local(2008, 1, 3)))
 
   # ------ Comments ------
   
