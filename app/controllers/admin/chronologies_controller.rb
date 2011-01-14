@@ -9,7 +9,7 @@ module Admin
       @ideas    = find_in_timeslice Idea, 'not hidden and inventor_id is not null'
       @comments = find_in_timeslice Comment, 'not hidden'
       @votes    = find_in_timeslice Vote
-      @all_actions = (@ideas + @comments + @votes).sort_by { |a| p a; a.created_at }
+      @all_actions = (@ideas + @comments + @votes).sort_by { |a| a.created_at }
     end
     
     def format_date(date, long = true)
