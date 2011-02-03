@@ -89,13 +89,20 @@ module Admin
     end
     
     def index_query_options
-      cols = Idea.column_names.collect {|c| "ideas.#{c}"}.join(",")
       conditions = search_life_cycle_step ? {:life_cycle_step_id => params[:life_cycle_step]} : {}
       conditions.merge!({:marked_spam => false}) unless params[:marked_spam] == "true"
-      { :select => "#{cols}, count(*) AS comment_count",
-        :conditions => conditions,
-        :joins => 'LEFT JOIN comments ON comments.idea_id = ideas.id',
-        :group => "#{cols}" }
+      { :conditions => conditions }
+      
+      # The following allows sorting by comment count, but will_paginate doesn't know what to
+      # do with the group clause, so it's disabled for now:
+
+      # conditions = search_life_cycle_step ? {:life_cycle_step_id => params[:life_cycle_step]} : {}
+      # conditions.merge!({:marked_spam => false}) unless params[:marked_spam] == "true"
+      # cols = Idea.column_names.collect {|c| "ideas.#{c}"}.join(",")
+      # { :select => "#{cols}, count(*) AS comment_count",
+      #   :conditions => conditions,
+      #   :joins => 'LEFT JOIN comments ON comments.idea_id = ideas.id',
+      #   :group => "#{cols}" }
     end
     
     def filter_search_results(results)

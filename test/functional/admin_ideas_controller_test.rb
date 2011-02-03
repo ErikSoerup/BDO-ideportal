@@ -106,9 +106,11 @@ class Admin::IdeasControllerTest < ActionController::TestCase
     get :index, :sort => 'ideas.title', :order => 'desc'
     assert_tag :content => @barbershop_discount.title, :after => { :content => @walruses_in_stores.title }
     
-    reset @admin_user
-    get :index, :sort => 'comment_count', :order => 'desc'
-    assert_tag :content => @barbershop_discount.title, :after => { :content => @walruses_in_stores.title }
+    # will_paginate can't handle the query that allows comment sorting, so it's disabled for now (see ideas_controller.rb).
+    
+    # reset @admin_user
+    # get :index, :sort => 'comment_count', :order => 'desc'
+    # assert_tag :content => @barbershop_discount.title, :after => { :content => @walruses_in_stores.title }
   end
   
   def test_edit

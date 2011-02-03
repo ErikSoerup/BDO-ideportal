@@ -13,8 +13,10 @@
       \/
       = sort_by 'Description', 'ideas.description'
     %th Admin/Public Tags
-    %th= sort_by 'Votes', 'ideas.rating', 'desc'
-    %th= sort_by 'Comments', 'comment_count', 'desc'
+    %th= sort_by 'Votes', 'ideas.vote_count', 'desc'
+    %th Comments
+    -# Sorting by comment count is disabled becuase will_paginate chokes on it (see ideas_controller.rb)
+    -# %th= sort_by 'Comments', 'comment_count', 'desc'
     %th= sort_by 'Flagged', 'inappropriate_flags', 'desc'
     %th= sort_by 'Status', 'ideas.status', 'desc'
     %th Duplicates

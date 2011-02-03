@@ -71,7 +71,7 @@ ideax = {
           timeout: 15*1000, // 15 sec
           maximumAge: 30*60*1000 // half an hour
         })
-      } else if (google.gears) {
+      } else if (typeof google != 'undefined' && google.gears) {
         // Google Gears Geolocation
         var geo = google.gears.factory.create('beta.geolocation')
         geo.getCurrentPosition(function(position) {
