@@ -10,6 +10,7 @@ LONG_SITE_NAME = "#{COMPANY_NAME} #{SHORT_SITE_NAME}"
 # Set these to the hostnames of the machines where you'll be doing your deploys.
 PRODUCTION_HOST = 'bbyidx.com'
 STAGING_HOST = 'bbyidx.com'
+EMAIL_FROM_ADDRESS = "#{LONG_SITE_NAME} <noreply@#{PRODUCTION_HOST}>"
 
 # Specify a long random string for SESSION_SECRET to secure user sessions
 SESSION_SECRET = nil
@@ -43,6 +44,7 @@ GOOGLE_WEBMASTER_KEY = nil
 # Once you've registered, pass your Akismet API key in the environment variable RAKISMET_KEY.
 # This will enable spam filtering.
 RAKISMET_URL = "http://#{PRODUCTION_HOST}"
+
 SPAM_PURGE_AGE = 30 # days; set to nil to disable spam purging
 
 # This is used for two purposes:
