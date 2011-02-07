@@ -10,4 +10,4 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 CLEAN.include %w(**/*.orig **/*.log **/*.rej)
-task :cron=>[:environment, "ideax:decay"]
+task :cron=>[:environment, "ideax:decay", "ideax:purge_spam"]

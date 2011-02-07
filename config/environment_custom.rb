@@ -43,6 +43,7 @@ GOOGLE_WEBMASTER_KEY = nil
 # Once you've registered, pass your Akismet API key in the environment variable RAKISMET_KEY.
 # This will enable spam filtering.
 RAKISMET_URL = "http://#{PRODUCTION_HOST}"
+SPAM_PURGE_AGE = 30 # days; set to nil to disable spam purging
 
 # This is used for two purposes:
 #  (1) The db:seed rake task uses this as the zip code for the initial admin user (which can be changed).

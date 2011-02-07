@@ -159,6 +159,7 @@ scenario :basic do
     :title => 'Get much skeezier!',
     :description => 'This pill will maximize your skeeziness! Get much more!',
     :created_at => Time.local(2008, 1, 2),
+    :updated_at => Time.local(2008, 1, 12),
     :marked_spam => true))
   
   @tranquilizer_guns = @participator.ideas.create!(add_client_info(
@@ -204,6 +205,8 @@ scenario :basic do
   @walrus_comment_spam = @walruses_in_stores.comments.create!(add_client_info(
     :author => @sally,
     :marked_spam=>true,
+    :created_at => Time.local(2008, 1, 4),
+    :updated_at => Time.local(2008, 1, 14),
     :text =><<-EOS
       <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
       <HTML><HEAD><TITLE></TITLE>

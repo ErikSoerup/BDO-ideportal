@@ -6,13 +6,13 @@ class Idea < ActiveRecord::Base
 
   belongs_to :inventor, :class_name => 'User'
   belongs_to :current
-  has_many :comments, :order => 'comments.created_at' do
+  has_many :comments, :order => 'comments.created_at', :dependent => :destroy do
     def visible
       r = find :all, :include => :author, :conditions => { :hidden => false, 'users.state' => 'active' }
     end
   end
-  has_many :admin_comments, :order => 'admin_comments.created_at'
-  has_many :votes, :include => :user do
+  has_many :admin_comments, :order => 'admin_comments.created_at', :dependent => :destroy
+  has_many :votes, :include => :user, :dependent => :destroy do
     def for(user)
       find :first, :conditions => {:user_id => user.id}
     end
@@ -25,7 +25,7 @@ class Idea < ActiveRecord::Base
   has_and_belongs_to_many :admin_tags, :order => 'name', :join_table => :ideas_admin_tags
   belongs_to :life_cycle_step
   belongs_to :duplicate_of, :class_name => 'Idea'
-  has_many :duplicates, :class_name => 'Idea', :foreign_key => 'duplicate_of_id' do
+  has_many :duplicates, :class_name => 'Idea', :foreign_key => 'duplicate_of_id', :dependent => :nullify do
     def visible
       find :all, :include => :inventor, :conditions => { :hidden => false, 'users.state' => 'active' }
     end

@@ -1,7 +1,5 @@
 require 'ostruct'
 
-DEFAULT_ZIP_CODE = '55102'
-
 class MapsController < ApplicationController
 
   def show

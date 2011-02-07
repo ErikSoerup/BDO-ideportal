@@ -31,10 +31,10 @@ class ProfilesControllerXmlTest < ActionController::TestCase
     end
   end
   
-  def test_show_omits_private info
+  def test_show_omits_private_info
     xml_str = get_xml(:show, :id => @quentin.id).to_s
     %w(email id).each do |property|
-      assert_false xml_str.include?(quentin.send(property.to_sym)), "User XML should not include #{property}"
+      assert !xml_str.include?(@quentin.send(property.to_sym)), "User XML should not include #{property}"
     end
   end
 end
