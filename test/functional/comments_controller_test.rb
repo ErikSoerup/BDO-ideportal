@@ -8,6 +8,8 @@ class CommentsControllerTest < ActionController::TestCase
     @controller = CommentsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @deliveries = ActionMailer::Base.deliveries = []
+    Comment.any_instance.expects(:spam?).at_least(0).returns(false) # need to stub out rakismet since we're running jobs in tests
   end
   
   def test_index
@@ -84,6 +86,24 @@ class CommentsControllerTest < ActionController::TestCase
     end
     
     assert_not_equal  'foobar', @walrus_comment1.reload.text
+  end
+  
+  def test_subscriber_notification
+    @new_comment = @barbershop_discount.comments.create!(
+      :author => @quentin,
+      :text => "I for one welcome our new barbershop overlords.",
+      :ip => '1.2.3.4',
+      :user_agent => 'Firefox or whatever')
+    assert_equal [], @deliveries
+    
+    Delayed::Worker.new(:quiet => true).work_off
+    assert_email_sent @aaron, /ideas\/#{(@barbershop_discount.id)}/, /an idea/
+    assert_email_sent @sally, /ideas\/#{(@barbershop_discount.id)}/, /your idea/
+    # No email for Quentin, because he wrote the comment!
+    assert_equal [], @deliveries
+    
+    @barbershop_discount.reload
+    assert_equal_unordered [@aaron, @quentin], @barbershop_discount.subscribers  # make sure we didn't modify subs
   end
   
 end

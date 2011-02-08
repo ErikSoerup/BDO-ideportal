@@ -1,4 +1,4 @@
-<%= h @comment.author.name %> posted a comment to your idea: <%= h @comment.idea.title %>
+<%= h @comment.author.name %> posted a comment on <%= @owner ? 'your idea' : 'an idea you are watching' %>: <%= h @comment.idea.title %>
 ------------------------------------------------------------------------------
 
 <%= h @comment.text %>

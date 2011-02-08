@@ -36,6 +36,7 @@ scenario :basic do
     :name => "Sally O'Test",
     :email => "sally@example.com",
     :zip_code => '57 Q Z 3123',
+    :notify_on_comments => '1',
     :password => "test",
     :password_confirmation => "test",
     :terms_of_service => '1')

@@ -49,11 +49,11 @@ class CommentTest < ActiveSupport::TestCase
     setup do
       @walruses_in_stores.inventor.update_attribute(:notify_on_comments, true)
       @comment = @walruses_in_stores.comments.create!(:text=>"Foo", :ip=>'127.0.0.1', :user_agent=>'foobar', :author => @quentin)
+      Delayed::Worker.new(:quiet => true).work_off
     end
 
-    should have_sent_email.with_subject(/Your idea has received a comment/)
+    should have_sent_email.with_subject(/Idea has received a comment/)
   end
-  
   
   def setup
     Comment.any_instance.expects(:spam?).at_most_once.returns(false)

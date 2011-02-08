@@ -32,9 +32,10 @@ class UserMailer < ActionMailer::Base
   
   def comment_notification(user, comment)
     set_up_email(user)
-    @subject += 'Your idea has received a comment'
     @body[:comment] = comment
     @body[:url] = idea_url(comment.idea)
+    @owner = (user == comment.idea.inventor)
+    @subject += 'Idea has received a comment: ' + comment.idea.title.gsub(/[<>&]/, '')
   end
   
   def life_cycle_notification(user, life_cycle_step)

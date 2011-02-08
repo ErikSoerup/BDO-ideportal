@@ -82,6 +82,25 @@ class ActiveSupport::TestCase
       fail "Missing: #{missing.inspect}\nUnexpected: #{unexpected.inspect}"
     end
   end
+    
+  def assert_email_sent(recipient, *body_pats)
+    recipient_list = if recipient.kind_of?(User)
+      [recipient.email]
+    else
+      recipient.to_a
+    end
+    
+    @deliveries.each_with_index do |sent, i|
+      if recipient_list == sent.to
+        body_pats.each do |body_pat|
+          assert sent.body =~ body_pat, "Expected #{body_pat.inspect} in email body, but didn't find it.\n\nEmail body:\n\n#{sent.body}\n"
+        end
+        @deliveries.delete_at i
+        return
+      end
+    end
+    fail "Expected a message to be delivered to #{recipient_list}, but none found. Deliveries: #{@deliveries.inspect}"
+  end
   
   def get_xml(action, params = {})
     @request.env['HTTP_ACCEPT'] = 'application/xml'

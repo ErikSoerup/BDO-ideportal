@@ -517,21 +517,6 @@ class UsersControllerTest < ActionController::TestCase
       !current_user.nil?
     end
     
-    def assert_email_sent(recipient, *body_pats)
-      recipient_list = if recipient.kind_of?(User)
-        [recipient.email]
-      else
-        recipient.to_a
-      end
-      
-      fail "Expected email to have been sent by controller" if @deliveries.empty?
-      sent = @deliveries.shift
-      assert_equal recipient_list, sent.to
-      body_pats.each do |body_pat|
-        assert sent.body =~ body_pat, "Expected #{body_pat.inspect} in email body, but didn't find it.\n\nEmail body:\n\n#{sent.body}\n"
-      end
-    end
-    
     def assert_account_activated_immediately
       user = current_user
       assert user.active?
