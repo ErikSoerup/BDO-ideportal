@@ -60,6 +60,11 @@ class CurrentTest < ActiveSupport::TestCase
     assert_equal [@participator], @private_current.has_invitees
   end
   
+  def test_subscriber_relationship
+    assert_equal_unordered [@aaron], @walrus_attack_current.subscribers
+    assert_equal_unordered [@walrus_attack_current], @aaron.subscribed_currents
+  end
+  
 private
 
   def test_current_field_error(field, value)

@@ -45,6 +45,8 @@ class User < ActiveRecord::Base
       find :all, :conditions => { :name => name }
     end
   end
+  has_and_belongs_to_many :subscribed_ideas,    :class_name => 'Idea',    :join_table => 'ideas_subscribers'
+  has_and_belongs_to_many :subscribed_currents, :class_name => 'Current', :join_table => 'currents_subscribers'
   
   # OAuth support
   has_many :client_applications

@@ -109,24 +109,25 @@ scenario :basic do
     :title => 'Dealing with walruses',
     :description => 'Friends, Blueshirts and Customers, I beseech you to recommend ways to deal with walrus attacks.',
     :submission_deadline => Date.today + 1)
+  @walrus_attack_current.subscribers << @aaron
   
-  @orphan_current =   Current.create!(
+  @orphan_current = Current.create!(
       :title => 'Help me Figure out who I am',
       :description => 'I want to solicit ideas, but I dont know who I am.')
       
-  @closed_current =   Current.create!(
+  @closed_current = Current.create!(
       :title => 'Help me Figure out who I am',
       :description => 'I want to solicit ideas, but I dont know who I am.',
       :closed => true)
   
   # Intentionally left closed false while submission_deadline has passed
-  @expired_current =  Current.create!(
+  @expired_current = Current.create!(
       :title => 'Submit your comments by the end of the day yesterday.',
       :description => 'I have to solicit ideas, but I dont ever look at a calendar and dont plan to actually read your ideas.',
       :closed => false,
       :submission_deadline => Date.today - 1)
   
-  @private_current =   Current.create!(
+  @private_current = Current.create!(
       :title => 'Help me Figure out who I am',
       :description => 'I want to solicit ideas, but I dont know who I am.',
       :invitation_only => true) 
@@ -139,12 +140,15 @@ scenario :basic do
     :title => 'Release walruses in stores',
     :description => 'Allow walruses to roam free in Best Buy stores and play the video game demos!',
     :created_at => Time.local(2008, 1, 1, 0, 0)))
+  @walruses_in_stores.subscribers << @aaron
   
   @barbershop_discount = @sally.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Discounts for barbershop quartets',
     :description => 'It is the moral duty of Best Buy to maximize singing by giving any barbershop quartet member a 50% in-store discount.',
     :created_at => Time.local(2008, 1, 1, 23, 59, 59)))
+  @barbershop_discount.subscribers << @quentin
+  @barbershop_discount.subscribers << @aaron
   
   @hidden_idea = @sally.ideas.create!(add_client_info(
     :status=>'new',

@@ -12,6 +12,8 @@ class Current < ActiveRecord::Base
       r = find :all, :conditions => { :hidden => false }
     end
   end
+  has_and_belongs_to_many :subscribers, :join_table => 'currents_subscribers', :class_name => 'User'
+  
   validates_presence_of :title, :description
   
   DEFAULT_CURRENT_ID = -1

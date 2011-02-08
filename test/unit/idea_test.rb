@@ -170,6 +170,11 @@ class IdeaTest < ActiveSupport::TestCase
     assert_equal 2, idea.tags.count
   end
   
+  def test_subscriber_relationship
+    assert_equal_unordered [@quentin, @aaron], @barbershop_discount.subscribers
+    assert_equal_unordered [@barbershop_discount, @walruses_in_stores], @aaron.subscribed_ideas
+  end
+  
 private
 
   def test_idea_field_error(field, value)

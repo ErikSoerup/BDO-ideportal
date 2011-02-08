@@ -30,6 +30,7 @@ class Idea < ActiveRecord::Base
       find :all, :include => :inventor, :conditions => { :hidden => false, 'users.state' => 'active' }
     end
   end
+  has_and_belongs_to_many :subscribers, :join_table => 'ideas_subscribers', :class_name => 'User'
   
   validates_presence_of :title, :description
   validates_associated :current
