@@ -1,11 +1,7 @@
 class IdeaObserver < ActiveRecord::Observer
   
   def after_create(idea)
-    if idea.current
-      idea.current.subscribers.each do |subscriber|
-        Delayed::Job.enqueue IdeaInCurrentNotificationJob.new(subscriber, idea)
-      end
-    end
+    idea.notify_subscribers
   end
   
   def after_save(idea)

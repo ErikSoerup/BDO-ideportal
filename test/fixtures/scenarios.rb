@@ -110,7 +110,7 @@ scenario :basic do
     :title => 'Dealing with walruses',
     :description => 'Friends, Blueshirts and Customers, I beseech you to recommend ways to deal with walrus attacks.',
     :submission_deadline => Date.today + 1)
-  @walrus_attack_current.subscribers << @aaron
+  @walrus_attack_current.subscribers << @sally
   
   @orphan_current = Current.create!(
       :title => 'Help me Figure out who I am',

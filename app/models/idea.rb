@@ -44,8 +44,9 @@ class Idea < ActiveRecord::Base
     errors.add_to_base("You are trying to add/update an idea in a closed current.  That's not allowed.") if closed?
   end
   
-  include InappropriateFlag
+  attr_writer :comment_count
   
+  include InappropriateFlag
   include SpamFiltering
 
   def spam_filtering_user
@@ -209,14 +210,20 @@ class Idea < ActiveRecord::Base
     !current.nil? && self.current.closed_or_expired?
   end
     
-  attr_writer :comment_count
-  
   def editing_expired?
     created_at < 15.minutes.ago
   end
   
   def editable_by?(user)
     user == inventor && !editing_expired?
+  end
+  
+  def notify_subscribers
+    if visible? && current
+      current.subscribers.each do |subscriber|
+        Delayed::Job.enqueue IdeaInCurrentNotificationJob.new(subscriber, self)
+      end
+    end
   end
   
 end

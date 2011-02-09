@@ -71,8 +71,24 @@ class CurrentsControllerTest < ActionController::TestCase
     assert_equal [], @deliveries
     
     Delayed::Worker.new(:quiet => true).work_off
-    assert_email_sent @aaron, /ideas\/#{new_idea.id}/
+    assert_email_sent @sally, /ideas\/#{new_idea.id}/
     assert_equal [], @deliveries
   end
 
+  def test_subscriber_notification_delivered_when_user_activated
+    new_idea = @walrus_attack_current.ideas.create!(
+      :inventor => @aaron,
+      :title => "Hunker down",
+      :description => "...and hope.",
+      :ip => '1.2.3.4',
+      :user_agent => 'Firefox or whatever')
+    Delayed::Worker.new(:quiet => true).work_off
+    assert_equal [], @deliveries
+    
+    @aaron.activate!
+    
+    Delayed::Worker.new(:quiet => true).work_off
+    assert_email_sent @sally, /ideas\/#{new_idea.id}/
+  end
+  
 end

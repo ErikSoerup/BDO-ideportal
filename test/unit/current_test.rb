@@ -61,8 +61,8 @@ class CurrentTest < ActiveSupport::TestCase
   end
   
   def test_subscriber_relationship
-    assert_equal_unordered [@aaron], @walrus_attack_current.subscribers
-    assert_equal_unordered [@walrus_attack_current], @aaron.subscribed_currents
+    assert_equal_unordered [@sally], @walrus_attack_current.subscribers
+    assert_equal_unordered [@walrus_attack_current], @sally.subscribed_currents
   end
   
 private
