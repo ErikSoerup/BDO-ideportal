@@ -365,8 +365,12 @@ scenario :xss_attack do
   
   # ------ Currents ------
   @default_current = Current.create!(
-      :title => 'Placeholder for default current',
-      :description => 'This is a stand-in for the default current created by the add_idea_current_relationship migration.')
+    :title => attack('current.title'),
+    :description => attack('current.description'))
+  @current = @user.currents.create!(
+    :title => attack('current2.title'),
+    :description => attack('current2.description'))
+  @current.subscribers << @user2
   
   # ------ Ideas ------
   @idea = @user.ideas.create!(attack_client_info(
@@ -374,7 +378,9 @@ scenario :xss_attack do
     :title => attack('idea.title'),
     :description => attack('idea.description'),
     :inappropriate_flags => 1))
-    
+  @idea.subscribers << @user2
+  @current.ideas << @idea
+  
   @idea2 = @user2.ideas.create!(attack_client_info(
     :status=>'new',
     :title => attack('idea2.title'),
@@ -400,13 +406,6 @@ scenario :xss_attack do
   @idea.add_vote! @user2
   @idea2.add_vote! @user
   @idea2.add_vote! @user2
-  
-  # ------ Currents ------
-  
-  @current = @user.currents.create!(
-    :title => attack('current.title'),
-    :description => attack('current.description'))
-  @current.ideas << @idea
   
   # ------ Client Apps ------
   

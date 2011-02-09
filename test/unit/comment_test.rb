@@ -44,7 +44,6 @@ class CommentTest < ActiveSupport::TestCase
       assert @comment.respond_to?(:akismet_response)
     end
   end
-  
   context "a comment on an idea from a user with notifications on" do
     setup do
       @walruses_in_stores.inventor.update_attribute(:notify_on_comments, true)
@@ -52,7 +51,7 @@ class CommentTest < ActiveSupport::TestCase
       Delayed::Worker.new(:quiet => true).work_off
     end
 
-    should have_sent_email.with_subject(/Idea has received a comment/)
+    should have_sent_email.with_subject(/New comment on idea "Release walruses in stores"/)
   end
   
   def setup

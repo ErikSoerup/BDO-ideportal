@@ -89,7 +89,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
   
   def test_subscriber_notification
-    @new_comment = @barbershop_discount.comments.create!(
+    new_comment = @barbershop_discount.comments.create!(
       :author => @quentin,
       :text => "I for one welcome our new barbershop overlords.",
       :ip => '1.2.3.4',
@@ -97,8 +97,8 @@ class CommentsControllerTest < ActionController::TestCase
     assert_equal [], @deliveries
     
     Delayed::Worker.new(:quiet => true).work_off
-    assert_email_sent @aaron, /ideas\/#{(@barbershop_discount.id)}/, /an idea/
-    assert_email_sent @sally, /ideas\/#{(@barbershop_discount.id)}/, /your idea/
+    assert_email_sent @aaron, /ideas\/#{@barbershop_discount.id}/, /an idea/
+    assert_email_sent @sally, /ideas\/#{@barbershop_discount.id}/, /your idea/
     # No email for Quentin, because he wrote the comment!
     assert_equal [], @deliveries
     

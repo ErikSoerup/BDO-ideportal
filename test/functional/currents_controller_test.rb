@@ -9,6 +9,8 @@ class CurrentsControllerTest < ActionController::TestCase
     @controller = CurrentsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @deliveries = ActionMailer::Base.deliveries = []
+    Idea.any_instance.expects(:spam?).at_least(0).returns(false) # need to stub out rakismet since we're running jobs in tests
   end
 
   def test_index
@@ -57,6 +59,20 @@ class CurrentsControllerTest < ActionController::TestCase
   def test_show_current_skips_orphans
     get :show, :id => @default_current.id
     assert_no_tag :content => @orphan_idea.title
+  end
+  
+  def test_subscriber_notification
+    new_idea = @walrus_attack_current.ideas.create!(
+      :inventor => @quentin,
+      :title => "Hunker down",
+      :description => "...and hope.",
+      :ip => '1.2.3.4',
+      :user_agent => 'Firefox or whatever')
+    assert_equal [], @deliveries
+    
+    Delayed::Worker.new(:quiet => true).work_off
+    assert_email_sent @aaron, /ideas\/#{new_idea.id}/
+    assert_equal [], @deliveries
   end
 
 end

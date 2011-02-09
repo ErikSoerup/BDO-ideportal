@@ -12,6 +12,7 @@ class HtmlEscapingTest < ActionController::TestCase
   # all model objects with text of the form "<attack>model.field</attack>".
   def test_escaping
     idea_fields = attack_fields(:idea, :title, :description)
+    idea_fields[:idea].merge!(:current_id => @current.id)
     admin_idea_fields = idea_fields.dup
     admin_idea_fields[:idea].merge!(:life_cycle_step_id => @life_cycle_step.id)
     user_fields = attack_fields(:user, :name, :password, :zip_code)
@@ -184,10 +185,12 @@ private
         prep.call if prep
     
         @controller.process(@request, @response)
+        
+        Delayed::Worker.new(:quiet => true).work_off
       rescue => e
         raise TestRequestException.new(method, path, e)
       end
-    
+      
       puts @response.body if opts[:debug]
       find_vulnerabilities @response.body, method, path
       

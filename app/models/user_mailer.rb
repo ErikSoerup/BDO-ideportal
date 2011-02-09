@@ -35,7 +35,14 @@ class UserMailer < ActionMailer::Base
     @body[:comment] = comment
     @body[:url] = idea_url(comment.idea)
     @owner = (user == comment.idea.inventor)
-    @subject += 'Idea has received a comment: ' + comment.idea.title.gsub(/[<>&]/, '')
+    @subject += "New comment on idea \"#{strip_funkies(comment.idea.title)}\""
+  end
+  
+  def idea_in_current_notification(user, idea)
+    set_up_email(user)
+    @body[:idea] = idea
+    @body[:url] = idea_url(idea)
+    @subject += "New idea in current \"#{strip_funkies(idea.current.title)}\""
   end
   
   def life_cycle_notification(user, life_cycle_step)
@@ -52,5 +59,9 @@ class UserMailer < ActionMailer::Base
       @subject     = "[#{SHORT_SITE_NAME.upcase}] "
       @sent_on     = Time.now
       @body[:user] = user
+    end
+    
+    def strip_funkies(s)
+      s.gsub(/[<>&]/, '')
     end
 end
