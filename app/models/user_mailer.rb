@@ -43,6 +43,7 @@ class UserMailer < ActionMailer::Base
     set_up_email(user)
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
+    @body[:unsubscribe_url] = unsubscribe_current_url(idea.current)
     @subject += "New idea in current \"#{strip_funkies(idea.current.title)}\""
   end
   

@@ -1,5 +1,5 @@
 -if logged_in?
-  %li
+  %li.subscription
     -if @idea.inventor == current_user && current_user.notify_on_comments?
       You will receive email notifications for new comments on your idea.
       = link_to 'Account settings', edit_user_path

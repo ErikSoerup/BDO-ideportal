@@ -26,6 +26,33 @@ class CurrentsController < ApplicationController
     end
   end
   
+  def change_subscription(enabled)
+    @current = current_object
+    if enabled
+      @current.subscribers << current_user
+    else
+      @current.subscribers.delete current_user
+    end
+    
+    respond_to do |format|
+      format.html do
+        flash[:info] = 'You are no longer subscribed to notifications of new ideas on this current.' if !enabled
+        redirect_to :action => 'show'
+      end
+      format.js do
+        render :partial => 'subscription'
+      end
+    end
+  end
+  
+  def subscribe
+    change_subscription(true)
+  end
+  
+  def unsubscribe
+    change_subscription(false)
+  end
+  
   include ApplicationHelper
   
 end

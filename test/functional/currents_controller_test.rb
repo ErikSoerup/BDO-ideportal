@@ -89,5 +89,22 @@ class CurrentsControllerTest < ActionController::TestCase
     Delayed::Worker.new(:quiet => true).work_off
     assert_email_sent @sally, /ideas\/#{new_idea.id}/
   end
+  
+  def test_subscribe
+    login_as @quentin
+    put :subscribe, :id => @walrus_attack_current.id
+    assert_redirected_to :action => :show
+    @walrus_attack_current.reload
+    assert_equal_unordered [@sally, @quentin], @walrus_attack_current.subscribers
+  end
+  
+  def test_unsubscribe
+    login_as @sally
+    get :unsubscribe, :id => @walrus_attack_current.id
+    assert_redirected_to :action => :show
+    assert flash[:info] =~ /no longer subscribed/
+    @walrus_attack_current.reload
+    assert_equal [], @walrus_attack_current.subscribers
+  end
 
 end
