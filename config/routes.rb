@@ -1,10 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :ideas, :member => { :assign => :post, :subscribe => :post, :unsubscribe => [:post, :get] } do |idea|
+  map.resources :ideas, :member => { :assign => :post, :subscribe => :post, :unsubscribe => [:post, :get] } do |idea|  # unsubscribe supports GET for direct link from e-mail
     idea.resources :comments # for new/create, idea-specific index
     idea.resource :vote
   end
 
-  map.resources :currents do |current|
+  map.resources :currents, :member => { :subscribe => :post, :unsubscribe => [:post, :get] } do |current|
     current.resources :ideas
   end
   map.resource :user

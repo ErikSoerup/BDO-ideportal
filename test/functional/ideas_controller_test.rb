@@ -411,4 +411,33 @@ class IdeasControllerTest < ActionController::TestCase
     # assert_tag :content => /Your idea will not be publicly visible until you confirm your account/i
   end
   
+  def test_subscribe
+    login_as @quentin
+    put :subscribe, :id => @walruses_in_stores.id
+    assert_redirected_to :action => :show
+    @walruses_in_stores.reload
+    assert_equal_unordered [@aaron, @quentin], @walruses_in_stores.subscribers
+  end
+  
+  def test_unsubscribe
+    login_as @aaron
+    get :unsubscribe, :id => @barbershop_discount.id
+    assert_redirected_to :action => :show
+    assert flash[:info] =~ /no longer subscribed/
+    @walruses_in_stores.reload
+    assert_equal_unordered [@quentin], @barbershop_discount.subscribers
+  end
+  
+  def test_unsubscribe_user_with_comment_notification
+    login_as @sally
+    get :unsubscribe, :id => @barbershop_discount.id
+    
+    assert_redirected_to :controller => :users, :action => :edit
+    assert flash[:info] =~ /uncheck/
+    assert !(flash[:info] =~ /no longer subscribed/)
+    
+    @walruses_in_stores.reload
+    assert_equal_unordered [@quentin, @aaron], @barbershop_discount.subscribers
+  end
+  
 end
