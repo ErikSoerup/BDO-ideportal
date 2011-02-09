@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :ideas, :member => { :assign => :post } do |idea|
+  map.resources :ideas, :member => { :assign => :post, :subscribe => :post, :unsubscribe => [:post, :get] } do |idea|
     idea.resources :comments # for new/create, idea-specific index
     idea.resource :vote
   end

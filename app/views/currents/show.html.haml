@@ -8,10 +8,7 @@
         by
         %span.vcard.author
           - if !@current.inventor.nil?
-            - if @current.inventor.admin?
-              = link_to h(@current.inventor.name), profile_path(@current.inventor), :class => "fn url admin"
-            - else
-              = link_to h(@current.inventor.name), profile_path(@current.inventor), :class => "fn url"        
+            = link_to h(@current.inventor.name), profile_path(@current.inventor), :class => @current.inventor.admin? ? 'fn url admin' : 'fn url'
         - unless @current.submission_deadline.nil?
           %br
           Submission Deadline:

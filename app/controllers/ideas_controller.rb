@@ -4,7 +4,7 @@ class IdeasController < ApplicationController
 
   # Authentication
   before_filter :login_required, :except => [:index, :show, :create]      # create not included here b/c it will redirect to login page AFTER saving
-  before_filter :oauthenticate, :unless => :logged_in?                    # If no other login was applied, use oauth if present
+  before_filter :oauthenticate, :unless => :logged_in?                    # If no other login was applied, use oauth if present (even for index/show/create)
   
   # Authorization
   before_filter :check_visibility, :only => [:show]
@@ -144,6 +144,43 @@ class IdeasController < ApplicationController
       format.rss { render :content_type => 'application/rss+xml'}
       format.xml
     end
+  end
+  
+  def change_subscription(enabled)
+    @idea = current_object
+    if enabled
+      @idea.subscribers << current_user
+    else
+      @idea.subscribers.delete current_user
+    end
+    
+    respond_to do |format|
+      format.html do
+        if !enabled
+          if current_user == @idea.inventor && current_user.notify_on_comments?
+            flash[:info] = 'To stop receiving email notifications when people comment on ideas you invented, uncheck the notification box below.'
+            redirect_to edit_user_path
+          else
+            flash[:info] = 'You are no longer subscribed to notifications of new comments on this idea.'
+            redirect_to :action => 'show'
+          end
+        else
+          redirect_to :action => 'show'
+        end
+      end
+      
+      format.js do
+        render :partial => 'subscription'
+      end
+    end
+  end
+  
+  def subscribe
+    change_subscription(true)
+  end
+  
+  def unsubscribe
+    change_subscription(false)
   end
   
   def current_objects

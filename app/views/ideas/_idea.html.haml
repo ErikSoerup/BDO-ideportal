@@ -7,10 +7,7 @@
         ago
       by
       %span.vcard.author
-        - if idea.inventor.admin?
-          = link_to h(idea.inventor.name), profile_path(idea.inventor), :class => 'fn url admin'
-        - else
-          = link_to h(idea.inventor.name), profile_path(idea.inventor), :class => 'fn url'
+        = link_to h(idea.inventor.name), profile_path(idea.inventor), :class => idea.inventor.admin? ? 'fn url admin' : 'fn url'
     %h3.entry-title= link_to h(idea.title), idea_path(idea)
     %span{:id => "vote_#{idea.id}"}= render :partial => 'votes/vote', :locals => { :idea => idea, :dom_id => "vote_#{idea.id}" }
     .entry-content

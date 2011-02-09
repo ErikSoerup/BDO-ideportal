@@ -1,9 +1,5 @@
 class IdeaObserver < ActiveRecord::Observer
   
-  def after_create(idea)
-    idea.notify_subscribers
-  end
-  
   def after_save(idea)
     if idea.life_cycle_step_id_changed? && idea.life_cycle_step
       idea.life_cycle_step.admins.each do |admin|

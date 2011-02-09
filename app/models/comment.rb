@@ -33,7 +33,11 @@ class Comment < ActiveRecord::Base
   
   def after_create
     author.record_contribution! :comment
-    send_later :check_spam!
+    send_later :check_spam!  # also notifies subscribers
+  end
+  
+  def after_save
+    notify_subscribers!
   end
   
   def editing_expired?
@@ -43,4 +47,22 @@ class Comment < ActiveRecord::Base
   def editable_by?(user)
     user == author && !editing_expired?
   end
+  
+  def notify_subscribers!
+    if !notifications_sent? && spam_checked? && idea.visible? && author.active?
+      subscribers = idea.subscribers.dup
+      inventor = idea.inventor
+      subscribers << inventor if inventor && inventor.notify_on_comments?
+      subscribers.delete author
+      subscribers.uniq!
+    
+      subscribers.each do |subscriber|
+        Delayed::Job.enqueue CommentNotificationJob.new(subscriber, self)
+      end
+      
+      self.notifications_sent = true
+      self.save!
+    end
+  end
+  
 end

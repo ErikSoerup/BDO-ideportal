@@ -1,4 +1,4 @@
-class IdeaInCurrentNotificationJob
+class IdeaNotificationJob
   
   attr_accessor :user_id, :idea_id
   

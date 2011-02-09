@@ -9,10 +9,7 @@
         .avatar
           = gravatar_for comment.author, :size => 24
       /*------- /STYLE NEEDED ------*/
-      - if comment.author.admin?
-        = link_to h(comment.author.name), profile_path(comment.author), :class => "fn url admin"
-      - else
-        = link_to h(comment.author.name), profile_path(comment.author), :class => "fn url"
+      = link_to h(comment.author.name), profile_path(comment.author), :class => comment.author.admin? ? 'fn url admin' : 'fn url'
     .comment-content
       %h5.posted
         Posted

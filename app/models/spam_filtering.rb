@@ -19,11 +19,11 @@ module SpamFiltering
   end
   
   def check_spam!
-    if Rakismet::KEY
-      Timeout::timeout(60) do
-        self.marked_spam ||= self.spam?
-        self.save!
-      end
+    Timeout::timeout(60) do
+      self.marked_spam ||= self.spam? if Rakismet::KEY
+      self.spam_checked = true
+      self.save!
     end
   end
+  
 end

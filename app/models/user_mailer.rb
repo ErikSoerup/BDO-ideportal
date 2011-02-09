@@ -34,6 +34,7 @@ class UserMailer < ActionMailer::Base
     set_up_email(user)
     @body[:comment] = comment
     @body[:url] = idea_url(comment.idea)
+    @body[:unsubscribe_url] = unsubscribe_idea_url(comment.idea)
     @owner = (user == comment.idea.inventor)
     @subject += "New comment on idea \"#{strip_funkies(comment.idea.title)}\""
   end

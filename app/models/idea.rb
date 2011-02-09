@@ -196,6 +196,7 @@ class Idea < ActiveRecord::Base
     if inventor && inventor_id_change
       inventor.record_contribution! :idea
     end
+    notify_subscribers!
   end
   
   def visible?
@@ -218,11 +219,13 @@ class Idea < ActiveRecord::Base
     user == inventor && !editing_expired?
   end
   
-  def notify_subscribers
-    if visible? && current
+  def notify_subscribers!
+    if !notifications_sent? && current && visible? && spam_checked?
       current.subscribers.each do |subscriber|
-        Delayed::Job.enqueue IdeaInCurrentNotificationJob.new(subscriber, self)
+        Delayed::Job.enqueue IdeaNotificationJob.new(subscriber, self)
       end
+      self.notifications_sent = true
+      self.save!
     end
   end
   

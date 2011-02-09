@@ -7,9 +7,8 @@ class UserObserver < ActiveRecord::Observer
   def after_save(user)
     if user.recently_activated?
       user.count_votes
-      user.ideas.each do |idea|
-        idea.notify_subscribers
-      end
+      user.ideas.each    { |i| i.notify_subscribers! }
+      user.comments.each { |c| c.notify_subscribers! }
       UserMailer.deliver_activation(user)
     end
     if user.active?

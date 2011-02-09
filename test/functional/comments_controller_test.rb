@@ -89,18 +89,74 @@ class CommentsControllerTest < ActionController::TestCase
   end
   
   def test_subscriber_notification
-    new_comment = @barbershop_discount.comments.create!(
+    new_comment = add_barbershop_comment
+    assert_equal [], @deliveries   # should be delayed job
+    assert_barbershop_subscribers_notified
+    
+    new_comment.notify_subscribers!
+    assert_no_notifications_sent   # shouldn't allow double delivery
+  end
+  
+  def test_no_notification_until_spam_checked
+    Comment.any_instance.expects(:spam?).at_least(0).raises(Exception, 'akismet down')
+    new_comment = add_barbershop_comment
+    assert_no_notifications_sent
+    
+    Comment.any_instance.expects(:spam?).at_least(0).returns(false)
+    assert_barbershop_subscribers_notified
+  end
+  
+  def test_no_notification_until_author_activated
+    @quentin.state = 'pending'
+    @quentin.save!
+    
+    new_comment = add_barbershop_comment
+    assert_no_notifications_sent
+    
+    @quentin.activate!
+    @deliveries.clear  # discard activation email
+    assert_barbershop_subscribers_notified
+  end
+
+  def test_no_notification_for_hidden_idea
+    @barbershop_discount.hidden = true
+    @barbershop_discount.save!
+    
+    new_comment = add_barbershop_comment
+    assert_no_notifications_sent
+  end
+  
+private
+  
+  def add_barbershop_comment
+    @barbershop_discount.comments.create!(
       :author => @quentin,
       :text => "I for one welcome our new barbershop overlords.",
       :ip => '1.2.3.4',
       :user_agent => 'Firefox or whatever')
-    assert_equal [], @deliveries
-    
+  end
+  
+  def force_all_jobs
+    Delayed::Job.find(:all).each do |job|
+      job.run_at = nil
+      job.attempts = 0
+      job.save!
+    end
     Delayed::Worker.new(:quiet => true).work_off
+  end
+  
+  def assert_no_notifications_sent
+    force_all_jobs
+    assert_equal [], @deliveries.map { |d| "#{d.to}: #{d.subject}" }
+  end
+  
+  def assert_barbershop_subscribers_notified
+    force_all_jobs
+    
     assert_email_sent @aaron, /ideas\/#{@barbershop_discount.id}/, /an idea/
     assert_email_sent @sally, /ideas\/#{@barbershop_discount.id}/, /your idea/
     # No email for Quentin, because he wrote the comment!
-    assert_equal [], @deliveries
+    assert_equal [], @deliveries.map { |d| "#{d.to}: #{d.subject}" }
     
     @barbershop_discount.reload
     assert_equal_unordered [@aaron, @quentin], @barbershop_discount.subscribers  # make sure we didn't modify subs

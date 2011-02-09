@@ -19,10 +19,7 @@
                     ago
                     by
                     %span.vcard.author
-                      - if idea.inventor.admin?
-                        = link_to h(idea.inventor.name), profile_path(idea.inventor), :class => 'fn url admin'
-                      - else
-                        = link_to h(idea.inventor.name), profile_path(idea.inventor), :class => 'fn url'
+                      = link_to h(idea.inventor.name), profile_path(idea.inventor), :class => idea.inventor.admin? ? 'fn url admin' : 'fn url'
                 %p=h idea.description
                 -if other_idea.duplicate_ids.empty?
                   %b= link_to 'Make this one the parent', admin_link_duplicates_path(idea, other_idea), :method => :post

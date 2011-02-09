@@ -20,10 +20,7 @@
         %abbr.published.time-relative== #{time_ago_in_words(@idea.created_at)} ago
         by
         %span.vcard.author
-          - if @idea.inventor.admin?
-            = link_to h(@idea.inventor.name), profile_path(@idea.inventor), :class => "fn url admin"
-          - else
-            = link_to h(@idea.inventor.name), profile_path(@idea.inventor), :class => "fn url"
+          = link_to h(@idea.inventor.name), profile_path(@idea.inventor), :class => @idea.inventor.admin? ? 'fn url admin' : 'fn url'
         %br
         - if !@idea.current.nil? && @idea.current.id != Current::DEFAULT_CURRENT_ID
           Part of:
@@ -49,19 +46,17 @@
               = link_to "Comments #{"(#{@idea.comment_count})" if @idea.comment_count > 0}", "#comments"
               |
               = link_to "Post a Comment", "#post-comment"
+            #subscription
+              = render :partial => 'subscription'
             %li.tags
-              - @idea.tags.each_with_index do |tag, ctr|
-                - unless ctr == @idea.tags.length - 1
-                  == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])},
-                -else
-                  == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])}
+              = @idea.tags.map { |tag| link_to h(tag.name), idea_search_path(:search => ['tag', tag.name]) }.join(', ')
             %li.sharethis= render :partial => 'sharethis'
             %li.flag#xxx= render :partial => 'inappropriate/xxx', :locals => { :model => @idea, :dom_id => 'xxx' }
         %div.related-ideas
-          %h3 
-            Related Ideas
-            %p 
-              There are no related ideas.
+          -# %h3 
+          -#   Related Ideas
+          -#   %p 
+          -#     There are no related ideas.
         - unless @idea.duplicates.visible.empty?
           %div.related-ideas
             %h3 Duplicates of this Idea

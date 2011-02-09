@@ -31,8 +31,6 @@ private
     end
   end
 
-  RESERVED_TITLES = %w(new create edit update delete destroy show index).freeze
-  
   def build_pretty_link(model_name, url_type, model, title_method, opts)
     if opts.has_key?(:title_in_url)
       title_in_url = opts[:title_in_url]
@@ -46,7 +44,7 @@ private
     
     model_title = model && model.send(title_method)
     model_title = model_title.downcase.gsub("'", '').gsub(/[^a-z0-9 -]/, ' ').gsub(/ +/, '-').gsub(/^-|-$/, '')[0,60]
-    model_title = '' if model_title.blank? || RESERVED_TITLES.include?(model_title)
+    model_title = '' if model_title =~ /^[A-Za-z]*$/  # don't use single-word pretty links so that we don't interfere with routing
     
     link = self.send("#{model_name}_pretty_#{url_type}".to_sym, model, model_title, opts)
     
