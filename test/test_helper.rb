@@ -25,6 +25,15 @@ class Net::HTTP
   end
 end
 
+# Disable spam checking, which uses the network. Individual tests may override.
+[Idea, Comment].each do |spam_model|
+  spam_model.class_eval do
+    def spam?
+      false
+    end
+  end
+end
+
 # Always force scenarios to be rebuilt. It's not too slow, and avoids confusion.
 NestedScenarios::Builder.build_all
 

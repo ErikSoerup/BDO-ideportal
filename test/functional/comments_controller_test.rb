@@ -9,7 +9,6 @@ class CommentsControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @deliveries = ActionMailer::Base.deliveries = []
-    Comment.any_instance.expects(:spam?).at_least(0).returns(false) # need to stub out rakismet since we're running jobs in tests
   end
   
   def test_index

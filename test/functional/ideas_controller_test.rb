@@ -15,7 +15,6 @@ class IdeasControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @expected_job_count = 0
-    Idea.any_instance.expects(:spam?).at_least(0).returns(false) # need to stub out rakismet since we're running jobs in tests
   end
   
   def teardown

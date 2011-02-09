@@ -10,7 +10,6 @@ class CurrentsControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @deliveries = ActionMailer::Base.deliveries = []
-    Idea.any_instance.expects(:spam?).at_least(0).returns(false) # need to stub out rakismet since we're running jobs in tests
   end
 
   def test_index
@@ -90,5 +89,5 @@ class CurrentsControllerTest < ActionController::TestCase
     Delayed::Worker.new(:quiet => true).work_off
     assert_email_sent @sally, /ideas\/#{new_idea.id}/
   end
-  
+
 end
