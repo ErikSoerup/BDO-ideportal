@@ -3,6 +3,15 @@ class UserObserver < ActiveRecord::Observer
   def after_create(user)
    UserMailer.deliver_signup_notification(user) if user.activation_code
   end
+  
+  def before_save(user)
+    if user.notify_on_comments_changed? && !user.notify_on_comments?
+      # Alas, ActiveRecord association doesn't understand delete_if.
+      user.subscribed_ideas = user.subscribed_ideas.reject do |idea|
+        user == idea.inventor
+      end
+    end
+  end
 
   def after_save(user)
     if user.recently_activated?

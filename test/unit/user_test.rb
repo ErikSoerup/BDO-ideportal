@@ -237,6 +237,23 @@ class UserTest < ActiveSupport::TestCase
     assert !@quentin.linked_to_twitter?
     assert @tweeter.linked_to_twitter?
   end
+  
+  def test_disabling_notify_on_comments_removes_subscriptions
+    @walruses_in_stores.subscribers << @quentin
+    assert_equal_unordered [@walruses_in_stores, @barbershop_discount], @quentin.subscribed_ideas  # sanity check
+    
+    @quentin.notify_on_comments = true
+    @quentin.save!
+    @quentin.notify_on_comments = false
+    @quentin.save!
+    
+    @quentin.reload
+    @walruses_in_stores.reload
+    @barbershop_discount.reload
+    assert_equal_unordered [@barbershop_discount], @quentin.subscribed_ideas
+    assert_equal_unordered [@aaron], @walruses_in_stores.subscribers
+    assert_equal_unordered [@quentin, @aaron], @barbershop_discount.subscribers
+  end
 
 protected
   
