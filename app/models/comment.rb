@@ -48,8 +48,16 @@ class Comment < ActiveRecord::Base
     user == author && !editing_expired?
   end
   
+  def visible?
+    !hidden && author.active?
+  end
+  
+  def should_notify_subscribers?
+    spam_checked? && visible? && idea.visible?
+  end
+  
   def notify_subscribers!
-    if !notifications_sent? && spam_checked? && idea.visible? && author.active?
+    if !notifications_sent? && should_notify_subscribers?
       subscribers = idea.subscribers.dup
       inventor = idea.inventor
       subscribers << inventor if inventor && inventor.notify_on_comments?

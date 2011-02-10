@@ -59,7 +59,7 @@ class SpamPurgerTest < ActiveSupport::TestCase
     ids_after = model_map(expected_deletions.keys)
     
     expected_deletions.each do |model, deletions|
-      assert_equal_unordered ids_before[model] - deletions, ids_after[model]
+      assert_equal_unordered ids_before[model] - deletions, ids_after[model], "Wrong deletions for #{model}"
     end
   end
   

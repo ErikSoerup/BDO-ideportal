@@ -10,7 +10,9 @@ class CommentNotificationJob
   def perform
     user = User.find(user_id)
     comment = Comment.find(comment_id)
-    UserMailer.deliver_comment_notification(user, comment)
+    if comment.should_notify_subscribers?  # check again in case we were marked spam after job was schedule
+      UserMailer.deliver_comment_notification(user, comment)
+    end
   end
   
 end

@@ -164,8 +164,8 @@ scenario :basic do
     :title => 'Get much skeezier!',
     :description => 'This pill will maximize your skeeziness! Get much more!',
     :created_at => Time.local(2008, 1, 2),
-    :updated_at => Time.local(2008, 1, 12),
     :marked_spam => true))
+  Idea.connection.execute "update ideas set updated_at = '2008-1-12' where id = #{@spam_idea.id}"
   
   @tranquilizer_guns = @participator.ideas.create!(add_client_info(
       :title => 'Provide all blueshirts with tranquilizer guns',
@@ -211,7 +211,6 @@ scenario :basic do
     :author => @sally,
     :marked_spam=>true,
     :created_at => Time.local(2008, 1, 4),
-    :updated_at => Time.local(2008, 1, 14),
     :text =><<-EOS
       <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
       <HTML><HEAD><TITLE></TITLE>
@@ -232,6 +231,7 @@ scenario :basic do
       </BODY></HTML>
     EOS
   ))
+  Idea.connection.execute "update comments set updated_at = '2008-1-14' where id = #{@walrus_comment_spam.id}"
     
   @hidden_comment = @walruses_in_stores.comments.create!(add_client_info(
     :author => @sally,

@@ -10,7 +10,9 @@ class IdeaNotificationJob
   def perform
     user = User.find(user_id)
     idea = Idea.find(idea_id)
-    UserMailer.deliver_idea_in_current_notification(user, idea)
+    if idea.should_notify_subscribers?  # check again in case we were marked spam after job was schedule
+      UserMailer.deliver_idea_in_current_notification(user, idea)
+    end
   end
   
 end

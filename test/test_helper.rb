@@ -84,11 +84,11 @@ class ActiveSupport::TestCase
     assert_login_required @admin_user, expected_flash_info, &action  # ...that should fail this time around.
   end
   
-  def assert_equal_unordered(expected, actual)
+  def assert_equal_unordered(expected, actual, message = nil)
     missing = expected - actual
     unexpected = actual - expected
     unless missing.empty? && unexpected.empty?
-      fail "Missing: #{missing.inspect}\nUnexpected: #{unexpected.inspect}"
+      fail "#{message || 'Unordered array comparison failed'}\nMissing: #{missing.inspect}\nUnexpected: #{unexpected.inspect}"
     end
   end
     
@@ -108,7 +108,7 @@ class ActiveSupport::TestCase
         return
       end
     end
-    fail "Expected a message to be delivered to #{recipient_list}, but none found. Deliveries: #{@deliveries.inspect}"
+    fail "Expected a message to be delivered to #{recipient_list}, but none found. Deliveries: #{@deliveries.map { |d| d.to }.inspect}"
   end
   
   def get_xml(action, params = {})

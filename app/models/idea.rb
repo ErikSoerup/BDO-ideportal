@@ -193,8 +193,9 @@ class Idea < ActiveRecord::Base
   end
   
   def after_save
-    if inventor && inventor_id_change
+    if inventor && inventor_id_change && !@contribution_recorded
       inventor.record_contribution! :idea
+      @contribution_recorded = true  # prevents double-recording when callbacks cause a reentrant save
     end
     notify_subscribers!
   end
@@ -219,8 +220,12 @@ class Idea < ActiveRecord::Base
     user == inventor && !editing_expired?
   end
   
+  def should_notify_subscribers?
+    spam_checked? && visible?
+  end
+  
   def notify_subscribers!
-    if !notifications_sent? && current && visible? && spam_checked?
+    if !notifications_sent? && current && should_notify_subscribers?
       current.subscribers.each do |subscriber|
         Delayed::Job.enqueue IdeaNotificationJob.new(subscriber, self)
       end
