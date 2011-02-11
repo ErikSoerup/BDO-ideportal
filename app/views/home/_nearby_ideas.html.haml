@@ -3,10 +3,11 @@
 -# ------------ /STYLE NEEDED --------------
 
 :javascript
-  Event.observe(
-    window, 'load',
+  document.observe(
+    'dom:loaded',
     function() {
       
+    alert('nearby_ideas onload')
       ideax.map.showGeolocatedIdeas(
         function(params) {
           new Ajax.Updater(
