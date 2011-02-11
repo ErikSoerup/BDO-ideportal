@@ -35,11 +35,9 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "vectors"
   end
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
-  add_index "client_applications", ["vectors"], :name => "client_applications_fts_vectors_index"
 
   create_table "comments", :force => true do |t|
     t.integer  "idea_id"
@@ -52,7 +50,6 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.string   "ip",                  :limit => 64
     t.string   "user_agent"
     t.boolean  "marked_spam",                       :default => false
-    t.text     "vectors"
     t.boolean  "spam_checked",                      :default => false, :null => false
     t.boolean  "notifications_sent",                :default => false, :null => false
   end
@@ -66,10 +63,10 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.integer  "inventor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "vectors"
     t.boolean  "closed",              :default => false
     t.boolean  "invitation_only",     :default => false
     t.date     "submission_deadline"
-    t.text     "vectors"
   end
 
   add_index "currents", ["vectors"], :name => "currents_fts_vectors_index"
@@ -109,7 +106,6 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.integer  "duplicate_of_id"
     t.boolean  "marked_spam",                                                      :default => false
     t.integer  "current_id",                                                       :default => -1
-    t.text     "vectors"
     t.integer  "vote_count"
     t.string   "ip",                  :limit => 64
     t.string   "user_agent"
@@ -118,7 +114,6 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
-  add_index "ideas", ["status"], :name => "ideas_status_idx"
 
   create_table "ideas_admin_tags", :id => false, :force => true do |t|
     t.integer "idea_id"
@@ -191,7 +186,6 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.float  "lon"
   end
 
-  add_index "postal_codes", ["code"], :name => "code_idx"
   add_index "postal_codes", ["code"], :name => "index_postal_codes_on_code"
 
   create_table "roles", :force => true do |t|
@@ -238,10 +232,10 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.boolean  "tweet_ideas"
     t.string   "twitter_token"
     t.string   "twitter_secret"
-    t.text     "vectors"
     t.string   "facebook_uid"
     t.boolean  "notify_on_comments",                       :default => false,     :null => false
     t.boolean  "notify_on_state",                          :default => false,     :null => false
+    t.text     "vectors"
     t.string   "facebook_access_token"
     t.boolean  "facebook_post_ideas"
     t.string   "facebook_name"
