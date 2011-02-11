@@ -105,6 +105,17 @@ class CommentsControllerTest < ActionController::TestCase
     assert_barbershop_subscribers_notified
   end
   
+  def test_no_notification_if_spam
+    Comment.any_instance.expects(:spam?).at_least(0).raises(Exception, 'akismet down')
+    new_comment = add_barbershop_comment
+    assert_no_notifications_sent
+    
+    Comment.any_instance.expects(:spam?).at_least(0).returns(true)
+    assert_no_notifications_sent
+    new_comment.reload
+    assert new_comment.marked_spam
+  end
+  
   def test_no_notification_until_author_activated
     @quentin.state = 'pending'
     @quentin.save!
