@@ -10,8 +10,8 @@ function populateExampleText(formField, exampleText, exampleCssClass, realTextCl
 }
 
 function addExampleText(formField, exampleText, exampleCssClass, realTextClass) {
-  Event.observe(
-    window, 'load',
+  document.observe(
+    'dom:loaded',
     function() {
       populateExampleText(formField, exampleText, exampleCssClass, realTextClass)
     }
