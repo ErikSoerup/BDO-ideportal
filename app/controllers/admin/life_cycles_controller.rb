@@ -45,7 +45,7 @@ module Admin
             # Clear content of in-place editor for new cycle name, which now says "Saving...."
             js << "$('life_cycle_new_editor').innerHTML = '';"
             
-            render :text => js
+            render :text => js, :content_type => 'text/javascript'
           end
         end
       end
@@ -76,7 +76,7 @@ module Admin
               js = "alert('#{escape_javascript(new_step.errors.full_messages.to_sentence)}.');"
             end
             js << "$('life_cycle_#{life_cycle.id}_new_editor').innerHTML = '';"  # Clear "Saving..." message
-            render :text => js
+            render :text => js, :content_type => 'text/javascript'
           end
         end
       end
