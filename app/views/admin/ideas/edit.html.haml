@@ -126,30 +126,30 @@
                 
                     var currentFound = false
                     stepList.childElements().each(function(step) {
-                      var checkbox = step.down('input')
-                  
-                      // Figure out which step is the current one, updating the CSS classes as we go
-                  
-                      var enabled, checked
-                      if(currentFound) {
-                        step.className = 'future-step'
-                        enabled = checked = false
-                      } else if(!checkbox || !checkbox.checked) {
-                        // This is it!
-                        currentFound = true
-                        step.className = 'current-step'
-                        enabled = true
-                        checked = false
-                        // Change value of the hidden field that actually updates the idea when the form is submitted
-                        $('idea_life_cycle_step_id').value = step.id.match(/\d+$/)
-                      } else {
-                        step.className = 'past-step'
-                        enabled = checked = true
-                      }
-                  
-                      // Update checkbox
-                  
+                      var checkbox = step.down('input[type=checkbox]')
                       if(checkbox) {
+                  
+                        // Figure out which step is the current one, updating the CSS classes as we go
+                  
+                        var enabled, checked
+                        if(currentFound) {
+                          step.className = 'future-step'
+                          enabled = checked = false
+                        } else if(!checkbox || !checkbox.checked) {
+                          // This is it!
+                          currentFound = true
+                          step.className = 'current-step'
+                          enabled = true
+                          checked = false
+                          // Change value of the hidden field that actually updates the idea when the form is submitted
+                          $('idea_life_cycle_step_id').value = step.id.match(/\d+$/)
+                        } else {
+                          step.className = 'past-step'
+                          enabled = checked = true
+                        }
+                  
+                        // Update checkbox
+                  
                         checkbox.checked = checked
                         if(enabled)
                           checkbox.enable()
