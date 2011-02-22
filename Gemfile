@@ -10,6 +10,7 @@ gem 'twitter', '0.9.12'
 gem 'mash'
 gem 'httparty'
 gem 'ruby-hmac'
+gem 'fastercsv'
 
 gem 'facebooker2'
 gem 'mogli'
