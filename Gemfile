@@ -11,6 +11,7 @@ gem 'mash'
 gem 'httparty'
 gem 'ruby-hmac'
 gem 'fastercsv'
+gem 'highline'
 
 gem 'facebooker2'
 gem 'mogli'
