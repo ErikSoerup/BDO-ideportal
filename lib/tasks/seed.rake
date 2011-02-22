@@ -33,8 +33,8 @@ namespace :db do
         puts "Admin user already exists: #{admin_user.email}"
       else
         puts "Creating admin user..."
-        admin_email    = ask('Admin user email: ')
-        admin_password = ask('Admin user password: ') {|q| q.echo = '*' }
+        admin_email    = "rb@centic.dk" #ask('Admin user email: ')
+        admin_password = "c3nt1c" #ask('Admin user password: ') {|q| q.echo = '*' }
         admin_user = User.create!(
           :name => "Administrator",
           :email => admin_email,
