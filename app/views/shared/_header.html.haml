@@ -1,6 +1,6 @@
 #masthead.header
   %div
-    %h1#logo= link_to LONG_SITE_NAME, root_path
+    %h1#logo= link_to image_tag('logo.png', :alt=>"BDO.dk"), root_path
     #nav-primary
       -cache('primary_nav') do
         %ul.nav.site.alt.title-ideas
@@ -26,5 +26,5 @@
       %li.last.search
         - form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
           %label{ :for => "search_text" }
-            Search: 
+            Search:
           = text_field_tag 'search_text', params[:search_text]
