@@ -3,8 +3,8 @@
 #     COMPANY_NAME = 'Widgets by Quentin'
 #     SHORT_SITE_NAME = 'Ideaomatic'
 
-COMPANY_NAME = 'YOUR_COMPANY_NAME'
-SHORT_SITE_NAME = 'BBYIDX'
+COMPANY_NAME = 'BDO'
+SHORT_SITE_NAME = 'Idea'
 LONG_SITE_NAME = "#{COMPANY_NAME} #{SHORT_SITE_NAME}"
 
 # Set these to the hostnames of the machines where you'll be doing your deploys.
@@ -15,7 +15,7 @@ EMAIL_FROM_ADDRESS = "#{LONG_SITE_NAME} <noreply@#{PRODUCTION_HOST}>"
 # Specify a long random string for SESSION_SECRET to secure user sessions
 SESSION_SECRET = nil
 SESSION_KEY = "_#{SHORT_SITE_NAME.downcase}_session"
-
+SESSION_SECRET = 'bCB18UMQZbR228cLtkLcOw/ks24tbWUBPJ4k9tsVHUK4EeqehD/+Onhl71IlpKMI5Qb1URDymnIMishq'
 # Configure Twitter in twitter.yml, then set "TWITTER_ENABLED = true" to enable Twitter integration.
 # You can also set TWITTER_API_KEY and TWITTER_API_SECRET as environment variables.
 TWITTER_ENABLED = ENV['TWITTER_API_KEY'] || ENV['RAILS_ENV'] == 'test'
