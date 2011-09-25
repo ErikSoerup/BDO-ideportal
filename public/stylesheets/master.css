@@ -1253,14 +1253,14 @@ h3.icon {
   .idea.mini {
     margin: 0 2px;
     padding-bottom: 2px;
-    height: 58px;
+    min-height: 58px;
 	background: #e7dfe3 url(../images/idea-bg.png) repeat-x left bottom; }
     .idea.mini .title {
       display: table-cell;
       font-weight: normal;
-      height: 58px;
+      padding-top: 5px;
       max-width: 238px;
-      padding-left: 58px;
+      padding-left: 75px;
       vertical-align: middle; }
       .idea.mini .title .posted {
         margin: 0;
@@ -1285,18 +1285,19 @@ h3.icon {
       font-size: 18px;
       height: 37px;
       line-height: 37px;
+	  padding-left: 19px;
       width: 40px;
 	  background: url(../images/vote_bg.png) no-repeat center center; }
       .idea.mini .vote-count .points {
         display: none !important; }
     .idea.mini .vote-for-it a,
     .idea.mini .vote-for-it span {
-      margin-left: 2px;
-      background-image: url(../images/idea-vote-mini-button.png);
+      margin-left: 21px;
+      background: url(../images/idea-vote-mini-button.png) no-repeat top right;
       height: 11px;
       width: 36px; }
     .idea.mini .vote-for-it a:hover {
-      background-position: left -11px; }
+      background-position: right -11px; }
     .idea.mini .vote-for-it a:active {
       background-position: left -22px; }
     .idea.mini .vote-for-it span {
