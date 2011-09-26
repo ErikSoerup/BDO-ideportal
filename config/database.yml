@@ -7,12 +7,12 @@ production:
   password: bbyidxc
   template: template0  # fixes database encoding errors in newer versions of PostgreSQL
 
-development:
-  adapter: postgresql
-  database: bbyidxc_prod
-  username: bbyidxc
-  password: bbyidxc
-  template: template0  # fixes database encoding errors in newer versions of PostgreSQL
+#development:
+  #adapter: postgresql
+  #database: bbyidxc_prod
+  #username: bbyidxc
+  #password: bbyidxc
+  #template: template0  # fixes database encoding errors in newer versions of PostgreSQL
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -24,8 +24,10 @@ test:
   password: bbyidx
   template: template0  # fixes database encoding errors in newer versions of PostgreSQL
   timeout: 5000
-old:
+
+development:
   adapter: mysql
   database: bbyidx_dev
   timeout: 5000
   user: root
+  password: toor

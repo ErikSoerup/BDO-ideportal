@@ -13,7 +13,6 @@ STAGING_HOST = 'bdo.heroku.com'
 EMAIL_FROM_ADDRESS = "#{LONG_SITE_NAME} <noreply@#{PRODUCTION_HOST}>"
 
 # Specify a long random string for SESSION_SECRET to secure user sessions
-SESSION_SECRET = nil
 SESSION_KEY = "_#{SHORT_SITE_NAME.downcase}_session"
 SESSION_SECRET = 'bCB18UMQZbR228cLtkLcOw/ks24tbWUBPJ4k9tsVHUK4EeqehD/+Onhl71IlpKMI5Qb1URDymnIMishq'
 # Configure Twitter in twitter.yml, then set "TWITTER_ENABLED = true" to enable Twitter integration.
