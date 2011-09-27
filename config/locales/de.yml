@@ -15,6 +15,22 @@ de:
     tags: Emneord
   notice:
     constructive: Husk vær konstruktiv. Dette er ikke stedet at klage
+
+  share_your_idea: Del dine Ideer
+  it_is_easy: det er virkelig nemt.
+  vote_for_good_ideas: Stem på dine favorit ideer
+  discuss_with_others: Diskuter med andre
+  whats_your_idea: Vi følger og tester løbende ideerne. Se, hvor det bærer hen
+  whats_hot: Hotte ideer
+  nearby_ideas: Ideer fra din afdeling
+  more: mere
+  my_idea_is: Min ide er ..
+  look_around: Se dig omkring
+  get_to_know_us: Lær os at kende
+  great_if: det kunne være Greate hvis
+  tag_names: Kundesegment
+  idea: ide
+
   date:
     formats:
       default: "%d.%m.%Y"
