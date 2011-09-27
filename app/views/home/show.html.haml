@@ -23,41 +23,39 @@
   %hr.hide
   #instructions.section
     %h2.header
-      This is how it works.
+      =t("hour")
       %em
-        Really, it's this easy.
+        =t("it_is_easy")
     .instruction.one
       %h3
         %em=t("share_your_idea")
       .figure
         = image_tag "instruction-1-share-thumb.png", :alt => "Share Your Ideas"
-        %p.legend What's your idea? Big or small. We want to hear it. The future starts here.
+        %p.legend=t("whats_your_idea_text")
     .instruction.two
       %h3
         %em=t("vote_for_good_ideas")
       .figure
         = image_tag "instruction-2-vote-thumb.png", :alt => "Vote for Good Ideas"
-        %p.legend Like an idea? Vote it up. Tell your friends to vote it up. Let's hear it.
+        %p.legend=t("like_an_idea_text")
     .instruction.three
       %h3
         %em=t("discuss_with_others")
       .figure
         = image_tag "instruction-3-discuss-thumb.png", :alt => "Discuss with Others"
-        %p.legend Post your comments and build on an idea. Connect with us directly. Let's make something happen.
+        %p.legend=t("post_your_comments_text")
     .instruction.four
       %h3
-        %em Read
-        our Feedback
+        %em=t("read_our_feedback")
       .figure
         = image_tag "instruction-4-read-thumb.png", :alt => "Read our Feedback"
-        %p.legend= "We're posting in the comments and on #{link_to 'our blog', '#'}. Let's keep the conversation going."
+        %p.legend=t("we_are_posting_text")
   %hr.hide
 
   #ideas.section
     %h2.header
-      Here are some ideas.
-      %em
-        This should get you started.
+      =t("here_are_some_ideas")
+
     .ideas-group
       #popular-ideas.panel.summary.hfeed
         .header
@@ -73,7 +71,7 @@
     .ideas-group
       #recent-ideas.panel.summary.hfeed
         .header
-          %h3.icon.recent= t("recent")
+          %h3.icon.recent= t("recent_ideas")
           %ul.actions
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
             %li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"

@@ -14,11 +14,11 @@
   %div
     %h4=t("get_to_know_us")
     %ul.nav.map
-      %li= link_to "About BBYIDX", home_path('about')
-      %li= link_to "Contact", home_path('contact')
+      %li= link_to t("menu.about_ideax"), home_path('about')
+      %li= link_to t("menu.contact_us"), home_path('contact')
 %ul.nav.supp
   %li= link_to "Terms of Use", home_path('terms-of-use')
-%p.credit
+%p.credit.hide
   Powered by
   = link_to "Best Buy", "http://bestbuy.com", :target => "_blank"
   and

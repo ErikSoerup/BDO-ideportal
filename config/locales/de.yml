@@ -13,17 +13,20 @@ de:
     nearby: Din afdeling
     comments: Kommentarer
     tags: Emneord
+    contact_us: Kontakt os
+    about_ideax: Om innovation i BDO Public
   notice:
     constructive: Husk vær konstruktiv. Dette er ikke stedet at klage
-
   share_your_idea: Del dine Ideer
   it_is_easy: det er virkelig nemt.
   vote_for_good_ideas: Stem på dine favorit ideer
+  read_our_feedback: Få Feedback
   discuss_with_others: Diskuter med andre
   whats_your_idea: Vi følger og tester løbende ideerne. Se, hvor det bærer hen
   whats_hot: Hotte ideer
   nearby_ideas: Ideer fra din afdeling
   more: mere
+  recent_ideas: Seneste ideer
   my_idea_is: Min ide er ..
   look_around: Se dig omkring
   get_to_know_us: Lær os at kende
@@ -32,7 +35,13 @@ de:
   idea: ide
   here_are_some_ideas: HER ER ET PAR IDEER. Hvad synes du om dem?
   get_to_know_us: Lær os at kende
-
+  whats_your_idea_text: Hvad er din idé? Stor eller lille. Vi ønsker at høre det. Fremtiden starter her.
+  like_an_idea_text: Kan du lide en ide? Stem på den. Fortæl den til dine kollegaer.
+  post_your_comments_text: Skriv dine kommentarer og byg videre på en ide
+  we_are_posting_text: Vi følger og tester løbende ideerne. Se, hvor det bærer hen
+  posted: Postet
+  ago: siden
+  here_are_some_idea: HER ER ET PAR IDEER
   date:
     formats:
       default: "%d.%m.%Y"
