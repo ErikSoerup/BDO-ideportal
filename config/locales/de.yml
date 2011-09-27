@@ -39,9 +39,21 @@ de:
   like_an_idea_text: Kan du lide en ide? Stem på den. Fortæl den til dine kollegaer.
   post_your_comments_text: Skriv dine kommentarer og byg videre på en ide
   we_are_posting_text: Vi følger og tester løbende ideerne. Se, hvor det bærer hen
-  posted: Postet
+  posted: Sendt
   ago: siden
+  by: af
+  flag_as_inappropriate: Marker som upassende
   here_are_some_idea: HER ER ET PAR IDEER
+  most_popular: Mest populære
+  no_result_found: Ingen søgeresultater fundet. Prøv en anden søgning?
+  lately: Seneste
+  all_time: Helt fra starten
+  previous: Forrige
+  next: Næste
+  vote: STEM
+  votes: stemmer
+  in_response_to: som svar på
+  top_contributors: Top bidragydere
   date:
     formats:
       default: "%d.%m.%Y"

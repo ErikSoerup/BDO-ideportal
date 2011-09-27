@@ -1,10 +1,10 @@
 .idea.teaser.hentry
   %div
     %h4.posted
-      Posted
+      =t("posted")
       %abbr.published.time-relative
         = time_ago_in_words(idea.created_at)
-        ago
+        =t("ago")
       by
       %span.vcard.author
         = link_to h(idea.inventor.name), profile_path(idea.inventor), :class => idea.inventor.admin? ? 'fn url admin' : 'fn url'

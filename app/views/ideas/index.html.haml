@@ -5,16 +5,16 @@
       %h2.icon{ :class => @body_class }
         -if @body_class == 'top-rated'
           -# ------- STYLE NEEDED ------
-          What's Hot:
+          =t("whats_hot")
           -if params[:search] == ['hot']
-            Lately
+            =t("lately")
           -else
-            = link_to 'Lately', idea_search_path(:search => 'hot')
+            = link_to t("lately"), idea_search_path(:search => 'hot')
           |
           -if params[:search] == ['top-voted']
-            All Time
+            =t("all_time")
           -else
-            = link_to 'All Time', idea_search_path(:search => 'top-voted')
+            = link_to t("all_time"), idea_search_path(:search => 'top-voted')
           -# ------- /STYLE NEEDED ------
         -else
           =h @query_title
@@ -24,12 +24,12 @@
     - if current_objects.empty?
       .body
         %div.idea-meta{ :style => "padding-right: 20px; padding-left: 20px;" }
-          %p No search results found. Try a different search?
+          %p=t("no_result_found")
         %div.group.slate
           - form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
             .form-group.inline
               %label{ :for => "search_text" }
-                Search
+                =t("menu.search")
               = text_field_tag 'search_text', params[:search_text], :class => "input-text"
             .form-submit.inline
               = submit_tag 'Search', :class => "input-submit"
