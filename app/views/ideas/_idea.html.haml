@@ -5,7 +5,7 @@
       %abbr.published.time-relative
         = time_ago_in_words(idea.created_at)
         =t("ago")
-      by
+      =t("by")
       %span.vcard.author
         = link_to h(idea.inventor.name), profile_path(idea.inventor), :class => idea.inventor.admin? ? 'fn url admin' : 'fn url'
     %h3.entry-title= link_to h(idea.title), idea_path(idea)
@@ -14,7 +14,7 @@
       %p= h idea.description_excerpt
     %ul.entry-meta
       %li.comments
-        = link_to "Comments #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments', :title_in_url => false)
+        = link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments', :title_in_url => false)
       %li.tags
         - idea.tags.each_with_index do |tag, ctr|
           - unless ctr == idea.tags.length - 1

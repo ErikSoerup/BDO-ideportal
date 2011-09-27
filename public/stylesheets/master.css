@@ -113,7 +113,7 @@ input, textarea {
 
 .input-text:disabled, .input-textarea:disabled {
   border-color: #e0e0e0; }
-  
+
 .new_submit {
 	background-color: #ffe39c;
 	border: none;
@@ -455,7 +455,7 @@ body {
     margin-top: 0; }
   .aside #top-all-time-contributors {
     display: none; }
-  
+
 h2.header {
     background: url(../images/line.gif) repeat-x scroll left top transparent;
     color: #666666;
@@ -544,7 +544,7 @@ a.admin {
   .btn.gray span {
     display: block;
     height: 25px;
-    padding-right: 15px;
+    /*padding-right: 15px;*/
     background-position: right top; }
   .btn.gray:hover {
     background-position: left -25px;
@@ -565,7 +565,7 @@ h1#logo {
   left: 30px;
   top: 35px;
   }
-  
+
   h1#logo a {
     height: 66px;
     width: 166px;
@@ -576,7 +576,7 @@ h1#logo {
 #nav-primary {
 	float: right;
 	position: relative;
-	left: -340px;
+	left: -290px;
 	top: 138px;
 	background-color: #ffe39c;
 	border-radius: 			10px; /* CSS3 */
@@ -717,18 +717,18 @@ h1#logo {
   width: 300px;
   margin-left: 25px;
   height: 300px; }
-  
+
 #side_right h2 {
   clear: both;
   font: bold 14px Arial;
   text-transform: uppercase;
   color: #786860;
   margin-bottom: 5px; }
-  
+
 #side_right p {
   color: #786860;
   margin-bottom: 10px; }
-  
+
 #side_right a {
   float: right;
   margin-bottom: 15px;
@@ -742,7 +742,7 @@ h1#logo {
 
 #side_right a:hover {
   color: #fff; }
-  
+
 
 body.top-rated .nav li a.top-rated,
 body.recent .nav li a.recent,
@@ -1019,7 +1019,7 @@ body.life-cycles .nav li a.life-cycles {
         font-weight: normal;
         line-height: 24px;
 		color: #71615a;
-		text-transform: uppercase; 
+		text-transform: uppercase;
 		padding-left: 30px; }
     .panel.summary .pagination {
       font-size: 14px; }
