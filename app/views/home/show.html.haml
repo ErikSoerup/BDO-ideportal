@@ -1,23 +1,23 @@
 %div
   #intro.section
-    -#.header
-      -#%h2== Have an idea for #{COMPANY_NAME}?
-      -#%p
-        -#We're constantly looking for new ways to improve our business and are asking you to help us by
-        -#%strong sharing
-        -#your own ideas,
-        -#%strong voting
-        -#for ideas you like, and
-        -#%strong discussing
-        -#them with the rest of the community.
-      -#- if logged_in?
-        -#%h3
-          -#%em Share Ideas Now
-      -#- else
-        -#%h3
-          -#%em Get Started Now
-          -#%small or
-          -#= link_to "Sign Up", signup_url
+    .header
+      %h2== Have an idea for #{COMPANY_NAME}?
+      %p
+        We're constantly looking for new ways to improve our business and are asking you to help us by
+        %strong sharing
+        your own ideas,
+        %strong voting
+        for ideas you like, and
+        %strong discussing
+        them with the rest of the community.
+      - if logged_in?
+        %h3
+          %em Share Ideas Now
+      - else
+        %h3
+          %em Get Started Now
+          %small or
+          = link_to "Sign Up", signup_url
     .body#submit-idea
       = render :partial => 'ideas/new', :locals => { :small => true }
   %hr.hide
@@ -28,22 +28,19 @@
         Really, it's this easy.
     .instruction.one
       %h3
-        %em Share
-        Your Ideas
+        %em=t("share_your_idea")
       .figure
         = image_tag "instruction-1-share-thumb.png", :alt => "Share Your Ideas"
         %p.legend What's your idea? Big or small. We want to hear it. The future starts here.
     .instruction.two
       %h3
-        %em Vote
-        for Good Ideas
+        %em=t("vote_for_good_ideas")
       .figure
         = image_tag "instruction-2-vote-thumb.png", :alt => "Vote for Good Ideas"
         %p.legend Like an idea? Vote it up. Tell your friends to vote it up. Let's hear it.
     .instruction.three
       %h3
-        %em Discuss
-        with Others
+        %em=t("discuss_with_others")
       .figure
         = image_tag "instruction-3-discuss-thumb.png", :alt => "Discuss with Others"
         %p.legend Post your comments and build on an idea. Connect with us directly. Let's make something happen.
@@ -64,8 +61,7 @@
     .ideas-group
       #popular-ideas.panel.summary.hfeed
         .header
-          %h3.icon.popular
-            What's Hot
+          %h3.icon.popular=t("whats_hot")
           %ul.actions
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
             -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
@@ -73,12 +69,11 @@
           = render :partial => 'idea', :collection => search_ideas(:search => 'hot', :page_size => 5)
         .footer
           .pagination
-            = link_to 'More', idea_search_path(:search => 'top-rated'), :class => 'next_page'
+            = link_to t('more'), idea_search_path(:search => 'top-rated'), :class => 'next_page'
     .ideas-group
       #recent-ideas.panel.summary.hfeed
         .header
-          %h3.icon.recent
-            Recent Ideas
+          %h3.icon.recent= t("recent")
           %ul.actions
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
             %li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
@@ -86,12 +81,11 @@
           = render :partial => 'idea', :collection => search_ideas(:search => 'recent', :page_size => 5)
         .footer
           .pagination
-            = link_to 'More', idea_search_path(:search => 'recent'), :class => 'next_page'
+            = link_to t("more"), idea_search_path(:search => 'recent'), :class => 'next_page'
     .ideas-group.last
       #nearby-ideas.panel.summary.hfeed.last
         .header
-          %h3.icon.nearby
-            Nearby Ideas
+          %h3.icon.nearby=t("nearby_ideas")
           %ul.actions
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
             -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "#"
@@ -99,5 +93,5 @@
           = render :partial => 'nearby_ideas'
         .footer
           .pagination
-            = link_to 'More', map_path, :class => "next_page"
+            = link_to t("more"), map_path, :class => "next_page"
 

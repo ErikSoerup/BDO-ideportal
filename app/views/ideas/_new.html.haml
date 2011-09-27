@@ -7,15 +7,13 @@
     =f.hidden_field :current_id, :id => "idea-current-id"
   #idea-title-group.form-group.inline
     = f.label :title, "Idea"
-    = f.text_field :title, :example => 'My idea is...', :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text big"
+    = f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text big"
   #idea-description-group.form-group.inline
     = f.label :description, "Description"
-    = f.text_area :description, :example => "It'd be great if...", :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40"
+    = f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40"
   #idea-tags-group.form-group.inline
     %label{:for => "tags"} Tags
     = render :partial => 'ideas/tag_editor', :locals => { :f => f }
     = submit_tag 'Share My Idea', :class => "input-submit big"
   %p.note>
-    %strong.alert<>
-      Remember
-    , please keep it constructive!
+    =t("notice.constructive")
