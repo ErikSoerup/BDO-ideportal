@@ -1,12 +1,11 @@
 .section
   %h2.header== What is #{SHORT_SITE_NAME}?
   %p
-    ==#{SHORT_SITE_NAME} is a forum to share, vote on, and discuss ideas.
-    - unless logged_in?
-      = link_to "Sign up", signup_url
-      now and join the community.
+    =t('sidebar_text')
+    -#==#{SHORT_SITE_NAME} is a forum to share, vote on, and discuss ideas.
+    -#- unless logged_in?
+      -#= link_to "Sign up", signup_url
+      -#now and join the community.
     %a.btn.gray{ :href => home_path('about'), :style => "width: 100px" }
-      %span Learn More &rarr;
-.error
-  %b Replace text in app/views/custom/* with your own company-specific info.
-      
+      %span=t("learn_more")
+

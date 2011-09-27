@@ -48,12 +48,17 @@ de:
   no_result_found: Ingen søgeresultater fundet. Prøv en anden søgning?
   lately: Seneste
   all_time: Helt fra starten
-  previous: Forrige
-  next: Næste
   vote: STEM
   votes: stemmer
   in_response_to: som svar på
   top_contributors: Top bidragydere
+  you_voted: du har stemt
+  sidebar_text: Ideportalen er et forum, hvor medarbejdere i BDO Public kan dele, stemme på og diskutere ideer. Opret dig nu og bliv en del af idefællesskabet.
+  learn_more: Få mere at vide
+  will_paginate:
+    previous_label: "&#8592; Forrige"
+    next_label: "Næste &#8594;"
+    page_gap: "&hellip;"
   date:
     formats:
       default: "%d.%m.%Y"
