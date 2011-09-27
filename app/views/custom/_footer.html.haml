@@ -1,18 +1,18 @@
 .sitemap
   %div
-    %h4 Ideas
+    %h4=t("idea")
     %ul.nav.map
-      %li= link_to "Share Your Idea", root_url
-      %li= link_to "What's Hot", idea_search_path(:search => 'hot')
-      %li= link_to 'Recent Ideas', idea_search_path(:search => 'recent')
-      %li= link_to 'Nearby Ideas', map_path
+      %li= link_to t("share_your_idea"), root_url
+      %li= link_to t("whats_hot"), idea_search_path(:search => 'hot')
+      %li= link_to t("recent_ideas"), idea_search_path(:search => 'recent')
+      %li= link_to t("nearby_ideas"), map_path
   %div
-    %h4 Look Around
+    %h4= t("look_around")
     %ul.nav.map
-      %li= link_to 'Comments', comments_path
-      %li= link_to 'Tags', tags_path
+      %li= link_to t("menu.comments"), comments_path
+      %li= link_to t("menu.tags"), tags_path
   %div
-    %h4 Get to Know Us
+    %h4=t("get_to_know_us")
     %ul.nav.map
       %li= link_to "About BBYIDX", home_path('about')
       %li= link_to "Contact", home_path('contact')
