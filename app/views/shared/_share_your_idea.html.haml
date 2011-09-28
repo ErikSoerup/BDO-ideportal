@@ -8,18 +8,18 @@
         #idea-title-group.form-group.inline
           %label{ :for => "idea-title" }
             %strong=t("idea")
-            %small Your idea, in short
+            %small=t("idea_in_short")
           = f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"
         #idea-description-group.form-group.inline
           %label{ :for => "idea-description" }
-            %strong Description
-            %small A brief explanation
+            %strong=t("description")
+            %small=t('breif_explaination')
           = f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"
         #idea-tags-group.form-group.inline
           %label{ :for => "idea-tags" }
-            %strong Tags
-            %small Separate with commas
-          = f.text_field :tag_names, :example => t("tags_name"), :class => "input-text"
+            %strong=t('menu.tags')
+            %small=t("seperate_with_coma")
+          = f.text_field :tag_names, :example => t("tag_names"), :class => "input-text"
           = submit_tag 'Share My Idea', :class => "input-submit"
       .aside
         %div

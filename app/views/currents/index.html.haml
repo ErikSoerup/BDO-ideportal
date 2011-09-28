@@ -2,8 +2,8 @@
 %div
   #current.currents-page.panel.section.hfeed
     .header
-      %h2.icon Idea Currents
-      %p A current is a flow of ideas that pertain to a specific topic. Submit ideas to a current and see how your idea matches up with the others in that current.
+      %h2.icon=t("idea_current")
+      %p=t('idea_current_text')
       %ul.actions
       -# = will_paginate current_objects
     - if current_objects.empty?

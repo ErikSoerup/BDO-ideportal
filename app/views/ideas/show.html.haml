@@ -16,9 +16,9 @@
           $('edit-idea-1').hide();
         }
       %h4.posted
-        Posted
+        =t("posted")
         %abbr.published.time-relative== #{time_ago_in_words(@idea.created_at)} ago
-        by
+        =t("by")
         %span.vcard.author
           = link_to h(@idea.inventor.name), profile_path(@idea.inventor), :class => @idea.inventor.admin? ? 'fn url admin' : 'fn url'
         %br
@@ -26,7 +26,7 @@
           Part of:
           %strong= link_to h(@idea.current.title), current_path(@idea.current)
           %br
-        Idea Status:
+        =t("idea_status")
         %strong= @idea.status
       - unless @idea.duplicate_of
         %span{:id => "vote_#{@idea.id}"}= render :partial => 'votes/vote', :locals => { :idea => @idea, :dom_id => "vote_#{@idea.id}" }
@@ -53,9 +53,9 @@
             %li.sharethis= render :partial => 'sharethis'
             %li.flag#xxx= render :partial => 'inappropriate/xxx', :locals => { :model => @idea, :dom_id => 'xxx' }
         %div.related-ideas
-          -# %h3 
+          -# %h3
           -#   Related Ideas
-          -#   %p 
+          -#   %p
           -#     There are no related ideas.
         - unless @idea.duplicates.visible.empty?
           %div.related-ideas
@@ -70,7 +70,7 @@
           %h3== #{@idea.comment_count} Comments
           .comments.inset
             %div
-              %div= render :partial => 'comments/comment', 
+              %div= render :partial => 'comments/comment',
                       :collection => @idea.comments.visible,
                       :controller => 'comments',
                       :locals => { :show_avatar => true }
@@ -118,4 +118,4 @@
       .footer
   #sidebar.aside
     = render :partial => "shared/sidebar"
-    
+

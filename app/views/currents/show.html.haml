@@ -3,9 +3,9 @@
     .header
       %h2.entry-title=h "Current: #{@current.title}"
       %h4.posted
-        Created
+        =t("created")
         %abbr.published.time-relative== #{time_ago_in_words(@current.created_at)} ago
-        by
+        =t("by")
         %span.vcard.author
           - if !@current.inventor.nil?
             = link_to h(@current.inventor.name), profile_path(@current.inventor), :class => @current.inventor.admin? ? 'fn url admin' : 'fn url'
@@ -25,7 +25,7 @@
       .current-meta
         %div
           %h3 About This Current
-          %ul.entry-meta   
+          %ul.entry-meta
             %li.ideas= render :partial => 'idea_count', :locals => { :current_ideas => @current_ideas }
             #subscription
               = render :partial => 'subscription'
@@ -38,13 +38,13 @@
             %a{:name=>"add_idea"}
         - else
           = will_paginate @current_ideas
-          
+
           %h3= render :partial => 'idea_count', :locals => { :current_ideas => @current_ideas }
           .ideas-list.inset.current-idea-list
             %div
               %div
                 = render :collection => @current_ideas, :partial => 'ideas/idea', :controller => 'ideas'
-          
+
           = will_paginate @current_ideas
       #current.group.slate
         - unless @current_ideas.empty?

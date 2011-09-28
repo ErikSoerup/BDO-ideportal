@@ -22,6 +22,9 @@ de:
   vote_for_good_ideas: Stem på dine favorit ideer
   read_our_feedback: Få Feedback
   discuss_with_others: Diskuter med andre
+  password: Adgangskode
+  forgot_it: Har du glemt din adgangskode?
+  remember_me: Husk mig?
   whats_your_idea: Vi følger og tester løbende ideerne. Se, hvor det bærer hen
   whats_hot: Hotte ideer
   nearby_ideas: Ideer fra din afdeling
@@ -48,7 +51,7 @@ de:
   no_result_found: Ingen søgeresultater fundet. Prøv en anden søgning?
   lately: Seneste
   all_time: Helt fra starten
-  vote: STEM
+  vote: stem
   votes: stemmer
   in_response_to: som svar på
   top_contributors: Top bidragydere
@@ -56,6 +59,16 @@ de:
   sidebar_text: Ideportalen er et forum, hvor medarbejdere i BDO Public kan dele, stemme på og diskutere ideer. Opret dig nu og bliv en del af idefællesskabet.
   learn_more: Få mere at vide
   see_more_tags: Se flere emneord
+  idea_status: ideen status
+  idea_current: Fokusområder
+  idea_current_text: Fokusområder er samlinger af ideer med et fælles overordnet tema. Find ud af, hvad du kan bidrage med i dine favoritområder!
+  idea_in_short: din idé i korte
+  description: Beskrivelse
+  breif_explaination: En kort forklaring
+  seperate_with_coma: Separat med kommaer
+  dont_have_account: Har du ikke en konto?
+  email_address: E-mail adresse
+
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Næste &#8594;"
