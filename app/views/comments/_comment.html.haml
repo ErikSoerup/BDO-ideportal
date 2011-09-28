@@ -31,7 +31,8 @@
           .message.error{:id => "comment-#{comment.id}-missing", :style => 'display: none'}
             =t("enter_comment")
           .form-group.inline#post-comment
-            %label{ :for => "comment-#{comment.id}-text" } Your Comment
+            %label{ :for => "comment-#{comment.id}-text" }
+              = t("your_comment")
             = f.text_area :text, :id => "comment-#{comment.id}-text", :class => "input-textarea"
           .form-submit.inline
             = submit_tag "Update Comment", :class => "input-submit"

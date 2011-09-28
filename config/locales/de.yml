@@ -69,6 +69,12 @@ de:
   dont_have_account: Har du ikke en konto?
   email_address: E-mail adresse
   enter_comment: Indtast venligst en kommentar.
+  your_comment: din kommentar
+  confirm: Bekræft
+  zipcode: postnummer
+  current_created: Fokusområde oprettet
+  submit_ideas: Publicer ideer!
+  in_current: i det nuværende
 
   will_paginate:
     previous_label: "&#8592; Forrige"
