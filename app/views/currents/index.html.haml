@@ -9,12 +9,12 @@
     - if current_objects.empty?
       .body
         %div.current-meta{ :style => "padding-right: 20px; padding-left: 20px;" }
-          %p No search results found. Try a different search?
+          %p= t("no_result_found")
         %div.group.slate
           - form_tag currents_path, :method => :get, :id => 'current_search_box' do
             .form-group.inline
               %label{ :for => "search_text" }
-                Search
+                =t("menu.search")
               = text_field_tag 'search_text', params[:search_text], :class => "input-text"
             .form-submit.inline
               = submit_tag 'Search', :class => "input-submit"

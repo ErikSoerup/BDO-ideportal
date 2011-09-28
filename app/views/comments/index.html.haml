@@ -2,7 +2,7 @@
 %div
   .main.panel.section
     .header
-      %h2.icon.comments Comments
+      %h2.icon.comments= t("menu.comments")
       = will_paginate current_objects
     .body
       #comments
@@ -15,4 +15,4 @@
   %hr.hide
   #sidebar.aside
     = render :partial => "shared/sidebar"
-    
+

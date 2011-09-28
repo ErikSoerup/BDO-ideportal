@@ -12,10 +12,11 @@
       = link_to h(comment.author.name), profile_path(comment.author), :class => comment.author.admin? ? 'fn url admin' : 'fn url'
     .comment-content
       %h5.posted
-        Posted
-        %abbr.published.time-relative== #{time_ago_in_words(comment.created_at)} ago
+        =t("posted")
+        %abbr.published.time-relative="#{time_ago_in_words(comment.created_at)}  #{t("ago")}"
+
         - if idea_link
-          in response to
+          =t("in_response_to")
           = link_to h(comment.idea.title), idea_path(comment.idea)
       %p= user_formatted_text comment.text
       %span{:id => "xxx_#{comment.id}"}
@@ -28,7 +29,7 @@
       .edit-comment-content{:style => "display:none"}
         - form_for(comment, :url => comment_url(comment), :html => {:method => :put, :onsubmit => "return validateCommentUpdate(#{comment.id})" }) do |f|
           .message.error{:id => "comment-#{comment.id}-missing", :style => 'display: none'}
-            Please enter a comment.
+            =t("enter_comment")
           .form-group.inline#post-comment
             %label{ :for => "comment-#{comment.id}-text" } Your Comment
             = f.text_area :text, :id => "comment-#{comment.id}-text", :class => "input-textarea"

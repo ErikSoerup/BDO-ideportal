@@ -68,6 +68,7 @@ de:
   seperate_with_coma: Separat med kommaer
   dont_have_account: Har du ikke en konto?
   email_address: E-mail adresse
+  enter_comment: Indtast venligst en kommentar.
 
   will_paginate:
     previous_label: "&#8592; Forrige"

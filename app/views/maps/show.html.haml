@@ -1,7 +1,7 @@
 %div
   #nearby-ideas.main.panel.section.hfeed
     .header
-      %h2.icon.nearby Nearby Ideas
+      %h2.icon.nearby= t("nearby_ideas")
       %ul.actions
         %li.input
           - remote_form_for :search, :url => map_path, :method => :get, :has_example_text => true do |f|
