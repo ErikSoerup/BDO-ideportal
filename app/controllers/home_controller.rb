@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  
+   before_filter :login_required
   def index
     # render the landing page
   end
@@ -8,14 +8,14 @@ class HomeController < ApplicationController
     @body_class = params[:page].nil? ? 'home' : params[:page]
     render :action => params[:page] || 'show'
   end
-  
+
   def nearby_ideas
     ideas = Idea.find(geo_search_ideas(params[:search], :limit => 5))
     render :partial => 'idea', :collection => ideas
   end
-  
+
   # Experimental wacky fractal tag cloud (currently unused):
-  
+
   def render_idea_cloud(opts)
     logger.warn("selecting idea cloud!")
     @cloud_layout = nil
@@ -31,7 +31,7 @@ class HomeController < ApplicationController
     render :partial => 'cloud', :locals => opts.merge(:boxes => @cloud_layout.boxes)
   end
   helper_method :render_idea_cloud
-  
+
   def cloud(ideas, opts = {})
     top_rated = opts[:search].include?('hot')
     opts.reverse_merge!(
@@ -52,7 +52,7 @@ class HomeController < ApplicationController
     end
     Layout::FractalScatter.new(ideas, opts, &idea_sizer)
   end
-  
+
   def cloud_style(boxes)
     idea = boxes.object
     " font-size: #{Math.sqrt(boxes.area / (idea.title.size + 1)) * 0.9}px;
@@ -60,9 +60,9 @@ class HomeController < ApplicationController
       text-align: center;
       /*overflow: hidden;
       text-overflow: ellipsis;*/
-      
+
       color: #{boxes.color};
-      
+
       position: absolute;
       left:   #{boxes.left}px;
       top:    #{boxes.top}px;
@@ -71,8 +71,8 @@ class HomeController < ApplicationController
     ".gsub(/[\r\n]/, '')
   end
   helper_method :cloud_style
-  
+
   include ApplicationHelper
-  
+
 end
 

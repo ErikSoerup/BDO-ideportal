@@ -1,5 +1,7 @@
 class TagsController < ApplicationController
 
+  before_filter :login_required
+
   def index
     @body_class = "tags-page"
   end
