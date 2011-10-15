@@ -3,38 +3,38 @@ def add_client_info(opts)
 end
 
 scenario :basic do
-  
+
   # ------ Postal Codes ------
-  
+
   conn = ActiveRecord::Base.connection
   conn.execute "insert into postal_codes (code, lat, lon) values ('55101', 33.1, -80.5)"
   conn.execute "insert into postal_codes (code, lat, lon) values ('55102', 36.5, -91.7)"
   conn.execute "insert into postal_codes (code, lat, lon) values ('55103', 49.8, -102.3)"
   conn.execute "insert into postal_codes (code, lat, lon) values ('55406', 49.8, -102.3)"
-  
+
   # ------ Users ------
-  
+
   @quentin = User.create!(
     :name => "Quentin X. Test",
-    :email => "quentin@example.com",
+    :email => "quentin@bdo.dk",
     :zip_code => '55101',
     :password => "test",
     :password_confirmation => "test",
     :terms_of_service => '1')
   @quentin.activate!
-  
+
   @aaron = User.new(
     :name => "Aaron Zzyzzygy",
-    :email => "aaron@example.com",
+    :email => "aaron@bdo.dk",
     :zip_code => '55102-2753',
     :password => "test",
     :password_confirmation => "test",
     :terms_of_service => '1')
   @aaron.register!
-  
+
   @sally = User.create!(
     :name => "Sally O'Test",
-    :email => "sally@example.com",
+    :email => "sally@bdo.dk",
     :zip_code => '57 Q Z 3123',
     :notify_on_comments => '1',
     :password => "test",
@@ -44,16 +44,16 @@ scenario :basic do
 
   @participator = User.create!(
     :name => "Participant In Currents",
-    :email => "particpator@example.com",
+    :email => "particpator@bdo.dk",
     :zip_code => '55102-2753',
     :password => "test",
     :password_confirmation => "test",
     :terms_of_service => '1')
   @participator.activate!
-  
+
   @tweeter = User.new(
     :name => "Tweeter O'Test",
-    :email => "tweeter@example.com",
+    :email => "tweeter@bdo.dk",
     :zip_code => '57 Q Z 3123',
     :tweet_ideas => true,
     :terms_of_service => '1')
@@ -62,10 +62,10 @@ scenario :basic do
   @tweeter.twitter_handle = 'twit'
   @tweeter.save!
   @tweeter.activate!
-  
+
   @facebooker = User.new(
     :name => "Friendy McSocial",
-    :email => "exhibitionist@example.com",
+    :email => "exhibitionist@bdo.dk",
     :zip_code => 'JXY 372',
     :facebook_post_ideas => true,
     :terms_of_service => '1')
@@ -74,19 +74,19 @@ scenario :basic do
   @facebooker.facebook_name = 'Friendy Q. McSocial'
   @facebooker.save!
   @facebooker.activate!
-  
+
   @currents_admin = User.create!(
     :name => "Currents Admin",
-    :email => "currentadmin@example.com",
+    :email => "currentadmin@bdo.dk",
     :zip_code => '55108-2753',
     :password => "test",
     :password_confirmation => "test",
     :terms_of_service => '1')
   @currents_admin.has_role 'admin', Current
-  
+
   @admin_user = User.create!(
     :name => "Admin User",
-    :email => "admin@example.com",
+    :email => "admin@bdo.dk",
     :zip_code => '55103',
     :password => "admin",
     :password_confirmation => "admin",
@@ -97,52 +97,52 @@ scenario :basic do
   @admin_user.has_role 'editor', Idea
   @admin_user.has_role 'editor', Current
   @admin_user.has_role 'editor', LifeCycle
-  
+
   # ------ Currents ------
-  
+
   @default_current = Current.new(
       :title => 'Placeholder for default current',
       :description => 'This is a stand-in for the default current created by the add_idea_current_relationship migration.')
   @default_current.id = Current::DEFAULT_CURRENT_ID
   @default_current.save!
-  
+
   @walrus_attack_current = @admin_user.currents.create!(
     :title => 'Dealing with walruses',
     :description => 'Friends, Blueshirts and Customers, I beseech you to recommend ways to deal with walrus attacks.',
     :submission_deadline => Date.today + 1)
   @walrus_attack_current.subscribers << @sally
-  
+
   @orphan_current = Current.create!(
       :title => 'Help me Figure out who I am',
       :description => 'I want to solicit ideas, but I dont know who I am.')
-      
+
   @closed_current = Current.create!(
       :title => 'Help me Figure out who I am',
       :description => 'I want to solicit ideas, but I dont know who I am.',
       :closed => true)
-  
+
   # Intentionally left closed false while submission_deadline has passed
   @expired_current = Current.create!(
       :title => 'Submit your comments by the end of the day yesterday.',
       :description => 'I have to solicit ideas, but I dont ever look at a calendar and dont plan to actually read your ideas.',
       :closed => false,
       :submission_deadline => Date.today - 1)
-  
+
   @private_current = Current.create!(
       :title => 'Help me Figure out who I am',
       :description => 'I want to solicit ideas, but I dont know who I am.',
-      :invitation_only => true) 
+      :invitation_only => true)
   @participator.has_role 'invitee', @private_current
-           
+
   # ------ Ideas ------
-  
+
   @walruses_in_stores = @quentin.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Release walruses in stores',
     :description => 'Allow walruses to roam free in Best Buy stores and play the video game demos!',
     :created_at => Time.local(2008, 1, 1, 0, 0)))
   @walruses_in_stores.subscribers << @aaron
-  
+
   @barbershop_discount = @sally.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Discounts for barbershop quartets',
@@ -150,7 +150,7 @@ scenario :basic do
     :created_at => Time.local(2008, 1, 1, 23, 59, 59)))
   @barbershop_discount.subscribers << @quentin
   @barbershop_discount.subscribers << @aaron
-  
+
   @hidden_idea = @sally.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Rowerbazzle!',
@@ -158,7 +158,7 @@ scenario :basic do
     :created_at => Time.local(2008, 1, 2),
     :current => @walrus_attack_current,
     :hidden => true))
-  
+
   @spam_idea = @quentin.ideas.create!(add_client_info(
     :status=>'new',
     :title => 'Get much skeezier!',
@@ -166,7 +166,7 @@ scenario :basic do
     :created_at => Time.local(2008, 1, 2),
     :marked_spam => true))
   Idea.connection.execute "update ideas set updated_at = '2008-1-12' where id = #{@spam_idea.id}"
-  
+
   @tranquilizer_guns = @participator.ideas.create!(add_client_info(
       :title => 'Provide all blueshirts with tranquilizer guns',
       :description => 'Best Buy Militia!',
@@ -176,20 +176,20 @@ scenario :basic do
     :title => 'Give up all hope',
     :description => 'You will never defeat the walruses.',
     :current => @walrus_attack_current))
-      
+
   # Don't assign this to a current!
   @orphan_idea = Idea.create!(add_client_info(
-    :title => 'Sell rocket parts', 
+    :title => 'Sell rocket parts',
     :description => 'Submitted without login'))
-  
-  @aaron.save! 
-      
+
+  @aaron.save!
+
   @inactive_user_idea = @aaron.ideas.create!(add_client_info(
     :title => 'Butter both sides of bread',
     :description => 'Decadent!',
     :status => 'new',
     :current => @default_current))
-  
+
   @duplicate_idea = @sally.ideas.create!(add_client_info(
     :title => 'Tusky mammals',
     :description => 'Put them in retail establishments!',
@@ -198,15 +198,15 @@ scenario :basic do
     :created_at => Time.local(2008, 1, 3)))
 
   # ------ Comments ------
-  
+
   @walrus_comment1 = @walruses_in_stores.comments.create!(add_client_info(
     :author => @aaron,
     :text => "It's so crazy it just might work!"))
-  
+
   @walrus_comment2 = @walruses_in_stores.comments.create!(add_client_info(
     :author => @sally,
     :text => "Here's to walruses."))
-  
+
   @walrus_comment_spam = @walruses_in_stores.comments.create!(add_client_info(
     :author => @sally,
     :marked_spam=>true,
@@ -232,58 +232,58 @@ scenario :basic do
     EOS
   ))
   Idea.connection.execute "update comments set updated_at = '2008-1-14' where id = #{@walrus_comment_spam.id}"
-    
+
   @hidden_comment = @walruses_in_stores.comments.create!(add_client_info(
     :author => @sally,
     :text => "grabblefratzin' walruses!!",
     :hidden => true))
-  
+
   @comment_on_hidden_idea = @hidden_idea.comments.create!(add_client_info(
     :author => @sally,
     :text => "Wow, somebody should hide this idea! Think of the children!"))
-    
+
   # ------ Tags ------
-  
+
   @walrus_tag = Tag.create!(:name => 'walrussy')
   @crazy_tag = Tag.create!(:name => 'crazy ideas')
   @walruses_in_stores.tags << @walrus_tag
   @walruses_in_stores.tags << @crazy_tag
   @barbershop_discount.tags << @crazy_tag
-  
+
   @hire_this_person_tag = AdminTag.create!(:name => 'hire this person')
   @barbershop_discount.admin_tags << @hire_this_person_tag
-  
+
   @walruses_in_stores.save!
   @barbershop_discount.save!
-  
+
   # ------ Life cycles ------
-  
+
   @good_idea = LifeCycle.create!(:name => 'Good idea')
   @good_idea_review    = @good_idea.steps.create!(:name => 'Legal review')
   @good_idea_implement = @good_idea.steps.create!(:name => 'Implement everywhere')
   @good_idea_dance     = @good_idea.steps.create!(:name => 'Do a happy dance')
   @good_idea_done      = @good_idea.steps.create!(:name => 'Done')
-  
+
   @bad_idea = LifeCycle.create!(:name => 'Bad idea')
   @bad_idea_mock      = @bad_idea.steps.create!(:name => 'Mock customer')
   @bad_idea_done      = @bad_idea.steps.create!(:name => 'Done')
-  
+
   @walruses_in_stores.life_cycle_step = @good_idea_dance
   @walruses_in_stores.save!
-  
+
   @admin_user.life_cycle_steps = [@good_idea_dance, @bad_idea_mock]
   @admin_user.save!
-  
+
   # ------ OAuth ------
-  
+
   @phone_app = @admin_user.client_applications.build(
     :name => 'Phone app',
     :url => 'http://foo',
     :callback_url => 'http://foo/callback')
   @phone_app.save!
-  
+
   # ------ Final prep ------
-  
+
   @sally.contribution_points = 100
   @sally.recent_contribution_points = 30
   @quentin.contribution_points = 200
@@ -296,7 +296,7 @@ scenario :basic do
   @quentin.save!
   @facebooker.save!
   @tweeter.save!
-  
+
   Delayed::Job.delete_all
   names_from_ivars!
 end
@@ -310,13 +310,13 @@ scenario :xss_attack do
   def attack(field)
     "<attack>#{field}<attack>"
   end
-  
+
   conn = ActiveRecord::Base.connection
   conn.execute 'insert into postal_codes (code, lat, lon) values (\'12345\', 40, -100)'
-  
+
   @user = User.create!(
     :name => attack('user.name'),
-    :email => 'user@example.com',
+    :email => 'user@bdo.dk',
     :zip_code => '12345' + attack('user.zip_code'),
     :password => attack('user.password'),
     :password_confirmation => attack('user.password'),
@@ -341,10 +341,10 @@ scenario :xss_attack do
   @user.has_role 'editor', LifeCycle
   @user.has_role 'editor', ClientApplication
   @user.has_role 'editor', Current
-  
+
   @user2 = User.create!(
     :name => attack('user2.name'),
-    :email => 'user2@example.com',
+    :email => 'user2@bdo.dk',
     :zip_code => '12345' + attack('user2.zip_code'),
     :password => attack('user2.password'),
     :password_confirmation => attack('user2.password'),
@@ -352,17 +352,17 @@ scenario :xss_attack do
   @user2.activate!
   @user2.reset_activation_code
   @user2.save!
-  
+
   @pending_user = User.new(
     :name => attack('pending_user.name'),
-    :email => 'pending@example.com',
+    :email => 'pending@bdo.dk',
     :zip_code => attack('pending_user.zip_code'),
     :password => attack('pending_user.password'),
     :terms_of_service=>'1',
     :password_confirmation => attack('pending_user.password'))
   @pending_user.register!
   @pending_user.save!
-  
+
   # ------ Currents ------
   @default_current = Current.create!(
     :title => attack('current.title'),
@@ -371,7 +371,7 @@ scenario :xss_attack do
     :title => attack('current2.title'),
     :description => attack('current2.description'))
   @current.subscribers << @user2
-  
+
   # ------ Ideas ------
   @idea = @user.ideas.create!(attack_client_info(
     :status=>'new',
@@ -380,41 +380,41 @@ scenario :xss_attack do
     :inappropriate_flags => 1))
   @idea.subscribers << @user2
   @current.ideas << @idea
-  
+
   @idea2 = @user2.ideas.create!(attack_client_info(
     :status=>'new',
     :title => attack('idea2.title'),
     :description => attack('idea2.description'),
     :inappropriate_flags => 1))
-    
+
   @comment = @idea.comments.create!(attack_client_info(
     :author => @user,
     :text => attack('comment.text'),
     :inappropriate_flags => 1))
-    
+
   @admin_comment = @idea.admin_comments.create!(
     :author => @user,
     :text => attack('admin_comment.text'))
-    
+
   @tag = @idea.tags.create!(:name => attack('tag.name'))
   @admin_user_tag = @idea.admin_tags.create!(:name => attack('admin_tag.name'))
-  
+
   @life_cycle = LifeCycle.create!(:name => attack('life_cycle.name'))
   @life_cycle_step = @life_cycle.steps.create!(:name => attack('life_cycle_step.name'), :admins => [@user])
-  
+
   @idea.add_vote! @user
   @idea.add_vote! @user2
   @idea2.add_vote! @user
   @idea2.add_vote! @user2
-  
+
   # ------ Client Apps ------
-  
+
   @client_app = @user.client_applications.build(
     :name         => attack('client_application.name'),
     :url          => 'http://' + attack('client_application.url'),
     :callback_url => 'http://' + attack('client_application.callback_url'))
   @client_app.save!
-  
+
   Delayed::Job.delete_all
   names_from_ivars!
 end
