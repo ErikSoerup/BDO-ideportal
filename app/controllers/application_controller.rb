@@ -101,6 +101,6 @@ protected
 
   private #==========
   def set_language
-    I18n.locale = 'de'
+    I18n.locale = 'da'
   end
 end
