@@ -12,6 +12,7 @@ GEM
       activesupport (= 2.3.10)
     activesupport (2.3.10)
     calendar_date_select (1.16.1)
+    cocaine (0.2.0)
     color (1.4.1)
     crack (0.1.8)
     facebooker2 (0.0.5)
@@ -26,6 +27,7 @@ GEM
     json (1.4.6)
     lazy (0.9.6)
     mash (0.1.1)
+    mime-types (1.16)
     mocha (0.9.10)
       rake
     mogli (0.0.16)
@@ -36,6 +38,11 @@ GEM
     oauth (0.4.3)
     oauth-plugin (0.3.14)
       oauth (>= 0.3.5)
+    paperclip (2.4.0)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     pg (0.9.0)
     rack (1.1.0)
     rails (2.3.10)
@@ -55,7 +62,7 @@ GEM
       httparty (~> 0.6.1)
       multi_json (~> 0.0.4)
       oauth (~> 0.4.3)
-    will_paginate (2.3.15)
+    will_paginate (2.3.11)
 
 PLATFORMS
   ruby
@@ -76,6 +83,7 @@ DEPENDENCIES
   nokogiri
   oauth (= 0.4.3)
   oauth-plugin (= 0.3.14)
+  paperclip (= 2.4)
   pg
   rails (~> 2.3.10)
   rcov

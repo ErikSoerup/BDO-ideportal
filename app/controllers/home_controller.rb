@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-   before_filter :login_required
+  before_filter :login_required
   def index
     # render the landing page
   end

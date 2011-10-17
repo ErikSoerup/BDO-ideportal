@@ -16,10 +16,11 @@ class IdeasController < ApplicationController
   before_filter :add_search_feed, :only => :index
   before_filter :add_comments_feed, :only => [:show, :update]
 
-  param_accessible :idea => [:title, :description, :tag_names, :current_id]
+  param_accessible :idea => [:title, :description, :tag_names, :current_id, :attachments, :document]
 
   make_resourceful do
     actions :new, :create, :show, :update
+
 
     before :create do
       @idea.inventor = current_user
@@ -32,6 +33,7 @@ class IdeasController < ApplicationController
     end
 
     after :create do
+
       if @idea.valid? && @idea.inventor
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)

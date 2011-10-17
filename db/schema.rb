@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110209164341) do
+ActiveRecord::Schema.define(:version => 20111015183441) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "attachments", :force => true do |t|
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   create_table "client_applications", :force => true do |t|
@@ -111,9 +118,12 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.string   "user_agent"
     t.boolean  "spam_checked",                                                     :default => false, :null => false
     t.boolean  "notifications_sent",                                               :default => false, :null => false
+    t.text     "vectors"
+    t.integer  "attachment_id"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
+  add_index "ideas", ["vectors"], :name => "ideas_fts_vectors_index"
 
   create_table "ideas_admin_tags", :id => false, :force => true do |t|
     t.integer "idea_id"
@@ -235,11 +245,11 @@ ActiveRecord::Schema.define(:version => 20110209164341) do
     t.string   "facebook_uid"
     t.boolean  "notify_on_comments",                       :default => false,     :null => false
     t.boolean  "notify_on_state",                          :default => false,     :null => false
-    t.text     "vectors"
     t.string   "facebook_access_token"
     t.boolean  "facebook_post_ideas"
     t.string   "facebook_name"
     t.float    "recent_contribution_points"
+    t.text     "vectors"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
