@@ -34,9 +34,7 @@
       .main.panel.section
         .header
           %h2= t('menu.sign_in') + " #{SHORT_SITE_NAME}"
-          %h3<
-            =t("dont_have_account")
-            = link_to t("menu.sign_up"), signup_url
+
         .body
           .group
             - form_tag session_path do
@@ -46,14 +44,17 @@
               .form-group.inline
                 %label{ :for => "password" }
                   =t("password")
-                  %small= link_to t("forgot_it"), forgot_password_path
                 = password_field_tag 'password', nil, :class => "input-text big", :tabindex => 2
               .form-group.inline.checkbox
                 %input#remember-me.input-checkbox{ :name => "remember_me", :type => "checkbox", :value => "1", :tabindex => 3 }
                 %label{ :for => "remember-me" }= t('remember_me')
               .form-submit.inline
                 = submit_tag t("menu.sign_in"), :class => "input-submit", :id => "submit-login", :tabindex => 4
-
+              .form-group.inline.checkbox
+                =t("dont_have_account")
+                = link_to t("menu.sign_up"), signup_url
+                %br
+                = link_to t("forgot_it"), forgot_password_path
           -# ------- STYLE NEEDED ------
           -if TWITTER_ENABLED || FACEBOOK_ENABLED
             .group
