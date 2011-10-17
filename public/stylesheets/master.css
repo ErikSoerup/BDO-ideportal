@@ -4,6 +4,9 @@ body {
   font-size: 12px;
   line-height: 18px; }
 
+body.login {
+  background: #fff url(../images/login_bg.jpg) no-repeat top center; }
+
 h2 {
   margin-bottom: 18px;
   font-size: 28px;
@@ -402,7 +405,6 @@ body {
 #content {
   padding-bottom: 48px;
   position: relative;
-  padding-top: 15px;
   }
   #content > div {
     margin: 0 auto;
@@ -458,7 +460,7 @@ body {
 
 h2.header {
     background: url(../images/line.gif) repeat-x scroll left top transparent;
-    color: #666666;
+    color: #2eafa4;
     font-size: 13px;
     line-height: 18px;
     margin: 24px 0 10px 0;
@@ -467,7 +469,7 @@ h2.header {
     text-transform: uppercase;
 }
   h2.header em {
-    color: #888888;
+    color: #2eafa4;
     font-family: Georgia, serif;
     font-weight: normal;
     text-transform: none; }
@@ -544,7 +546,7 @@ a.admin {
   .btn.gray span {
     display: block;
     height: 25px;
-    /*padding-right: 15px;*/
+    padding-right: 15px;
     background-position: right top; }
   .btn.gray:hover {
     background-position: left -25px;
@@ -576,14 +578,13 @@ h1#logo {
 #nav-primary {
 	float: right;
 	position: relative;
-	left: -290px;
-	top: 138px;
+	left: -110px;
+	top: 130px;
 	background-color: #ffe39c;
 	border-radius: 			10px; /* CSS3 */
 	-moz-border-radius: 	10px; /* Firefox */
 	-webkit-border-radius: 	10px; /* Safari and Chrome */
 	-khtml-border-radius: 	10px; /* Linux Browsers */
-	overflow: hidden;
    }
 
 .nav {
@@ -591,31 +592,33 @@ h1#logo {
   .nav.site {
     margin: 0;
     float: left;
-    height: 45px;
+    height: 30px;
     list-style: none; }
     .nav.site li {
       xpadding-left: 2px;
       float: left;
-      height: 45px; }
+      height: 30px; }
       .nav.site li a {
-        padding: 0 15px;
+        padding: 0 10px;
         color: #786860;
         display: block;
         font-weight: bold;
-        height: 45px;
-        line-height: 45px;
+        height: 30px;
+        line-height: 30px;
         text-transform: uppercase; }
         .nav.site li a:hover {
           color: #fff;
 		  background-color: #ebba3d; }
-        .nav.site li a.active {
-          color: #fff;
-		  background-color: #ebba3d; }
       .nav.site li.first {
         padding-left: 0;
-        background: none; }
+        background: none;
+		 }
         .nav.site li.first a {
           padding-left: 15px;
+		border-radius: 			10px 0 0 10px; /* CSS3 */
+		-moz-border-radius: 	10px 0 0 10px; /* Firefox */
+		-webkit-border-radius: 	10px 0 0 10px; /* Safari and Chrome */
+		-khtml-border-radius: 	10px 0 0 10px; /* Linux Browsers */
 		  }
       .nav.site li.last a {
         padding-right: 15px;
@@ -624,12 +627,24 @@ h1#logo {
       xpadding-left: 54px; }
     .nav.site.alt.admin {
       padding-left: 54px; }
+      .nav.site li.search input {
+        margin: 2px 2px 0 6px;
+        padding: 3px 0 3px 4px;
+        border: none;
+        font-size: 11px;
+		background-color: #fff;
+		border-radius: 			9px; /* CSS3 */
+		-moz-border-radius: 	9px; /* Firefox */
+		-webkit-border-radius: 	9px; /* Safari and Chrome */
+		-khtml-border-radius: 	9px; /* Linux Browsers */
+        height: 20px;
+		width: 111px; }
   .nav.user {
     margin: 0;
-    height: 26px;
+    height: 20px;
     list-style: none;
     position: absolute;
-    right: 250px;
+    right: 0;
 	background-color: #328881;
 	border-radius: 			5px; /* CSS3 */
 	-moz-border-radius: 	5px; /* Firefox */
@@ -639,7 +654,7 @@ h1#logo {
     .nav.user li {
       padding-left: 2px;
       float: left;
-      height: 25px; }
+      height: 20px; }
       .nav.user li form {
         padding: 0 1px;
         color: #ffe39c;
@@ -654,8 +669,8 @@ h1#logo {
         display: block;
         font-size: 11px;
         font-weight: bold;
-        height: 25px;
-        line-height: 25px; }
+        height: 20px;
+        line-height: 20px; }
         .nav.user li a:hover {
           color: white; }
         .nav.user li a:active {
@@ -681,6 +696,7 @@ h1#logo {
 		-khtml-border-radius: 	5px; /* Linux Browsers */
         height: 16px;
 		width: 111px; }
+
   .nav.map {
     margin: 0;
     list-style: none; }
@@ -813,11 +829,11 @@ body.life-cycles .nav li a.life-cycles {
         overflow: hidden;
         text-indent: -9000px; }
   #intro .body {
-    float: left;
+    margin: 0 auto;
 	padding-top: 5px;
     width: 600px; }
   #intro form {
-    margin: 20px auto 0;
+    margin: 10px auto 0 auto;
     width: 530px; }
   #intro .form-group {
     margin: 0;
@@ -905,14 +921,16 @@ body.life-cycles .nav li a.life-cycles {
   margin-right: 20px;
   margin-left: -4px;
   padding-left: 4px;
+  padding-top: 5px;
   float: left;
-  width: 220px; }
+  width: 220px;
+  background-color: #fff; }
   .instruction h3 {
     margin-bottom: 0;
-    padding-left: 44px;
+    padding-left: 15px;
     background-position: left top;
     background-repeat: no-repeat;
-    color: #d1108c;
+    color: #2eafa4;
     font-size: 18px;
     font-weight: normal;
 	text-shadow: 1px 1px 2px #eee;
@@ -926,13 +944,12 @@ body.life-cycles .nav li a.life-cycles {
     padding-left: 3px;
     display: block; }
   .instruction .figure p {
-    padding: 17px 15px 25px 15px;
+    padding: 10px 15px 5px 15px;
     color: #555;
     font-size: 12px;80
     text-align: center;
 	background-color: #fff;
-	width: 180px;
-	margin-left: 10px; }
+	width: 190px; }
   .instruction.four {
     margin-right: 0; }
   .instruction p {
@@ -951,10 +968,13 @@ body.life-cycles .nav li a.life-cycles {
   width: 630px;
   background-color: #eeeeee; }
   .panel .body {
-    padding-right: 5px;
-    padding-left: 5px;
     width: 620px;
-    min-height: 300px; }
+	border-radius: 			15px; /* CSS3 */
+	-moz-border-radius: 	15px; /* Firefox */
+	-webkit-border-radius: 	15px; /* Safari and Chrome */
+	-khtml-border-radius: 	15px; /* Linux Browsers */
+    min-height: 300px;
+	overflow: hidden; }
   .panel .body b {
     padding-left: 15px; }
   .panel .footer {
@@ -1000,14 +1020,9 @@ body.life-cycles .nav li a.life-cycles {
 		-moz-border-radius: 	15px; /* Firefox */
 		-webkit-border-radius: 	15px; /* Safari and Chrome */
 		-khtml-border-radius: 	15px; /* Linux Browsers */
-		box-shadow:			0 0 4px 2px #ddd, 0 0 2px 2px #fefefe inset; /* CSS3 */
-		-moz-box-shadow:	0 0 4px 2px #ddd, 0 0 2px 2px #fefefe inset; /* Firefox */
-		-webkit-box-shadow:	0 0 4px 2px #ddd, 0 0 2px 2px #fefefe inset; /* Safari and Chrome */
-		-khtml-box-shadow:	0 0 4px 2px #ddd, 0 0 2px 2px #fefefe inset; /* Linux Browsers */
-		background: #fff url(../images/pannel_head.jpg) repeat-x;
-		border: 1px solid #d8e2e5;}
+		background-color: #fff;}
     .panel.summary .body {
-      width: 300px; }
+      width: 310px; }
     .panel.summary .footer {
       width: 300px; }
     .panel.summary .header {
@@ -1016,13 +1031,118 @@ body.life-cycles .nav li a.life-cycles {
       .panel.summary .header h3 {
         margin-bottom: 0;
         font-size: 15px;
-        font-weight: normal;
+        font-weight: bold;
         line-height: 24px;
-		color: #71615a;
+		color: #2eafa4;
 		text-transform: uppercase;
 		padding-left: 30px; }
     .panel.summary .pagination {
       font-size: 14px; }
+
+
+body.login .header, body.login .message.info, body.login .footer
+				{
+				display: none;
+				}
+
+body.login .main .header
+				{
+				display: block;
+				}
+
+body.login .panel
+				{
+				margin: 250px 0 0 700px !important;
+				position: relative;
+				width: 325px !important;
+				background-color: #ffe39c !important;
+				border-radius: 			10px; /* CSS3 */
+				-moz-border-radius: 	10px; /* Firefox */
+				-webkit-border-radius: 	10px; /* Safari and Chrome */
+				-khtml-border-radius: 	10px; /* Linux Browsers */
+				}
+
+body.login .panel .header
+				{
+				padding: 15px 20px !important;
+				width: auto !important;
+				}
+
+body.login .panel .header h2
+				{
+				font: bold 18px Arial;
+				color: #786860 !important;
+				margin-bottom: 0 !important;
+				max-width: 300px !important;
+				overflow: hidden;
+	  			}
+
+body.login .panel .body
+				{
+				padding: 5px 20px !important;
+				width: auto !important;
+				min-height: 100px !important;
+				}
+
+body.login .input-text.big
+				{
+				border: none;
+				width: 170px !important;
+				background-color: #fff;
+				padding-top: 3px !important;
+				padding-bottom: 4px !important;
+				}
+
+body.login .form-group.inline label
+				{
+				margin-right: 0 !important;
+				min-height: 18px !important;
+				padding-top: 0 !important;
+				text-align: left !important;
+				width: 95px !important;
+				color: #786860 !important;
+				text-shadow: none;
+				font: bold 12px/30px Arial;
+				}
+
+body.login .form-group.inline.no-title, body.login .form-group.inline.checkbox
+				{
+				padding-left: 95px !important;
+				color: #786860 !important;
+				font-style: italic;
+				}
+
+body.login .form-group
+				{
+				margin-bottom: 7px !important;
+				}
+
+body.login .form-group.inline .input-checkbox
+				{
+				margin-top: 8px !important;
+				}
+
+body.login #submit-login
+				{
+				background: none !important;
+				background-color: #786860 !important;
+				text-indent: 0 !important;
+				border-radius: 			8px; /* CSS3 */
+				-moz-border-radius: 	8px; /* Firefox */
+				-webkit-border-radius: 	8px; /* Safari and Chrome */
+				-khtml-border-radius: 	8px; /* Linux Browsers */
+				font: bold 12px Arial;
+				color: #fff;
+				height: 25px !important;
+				width: 100px !important;
+				padding-bottom: 5px !important;
+				}
+
+body.login .form-submit.inline
+				{
+				padding: 0 0 7px 180px !important;
+				}
+
 
 h3.icon {
   padding-left: 24px;
@@ -1045,7 +1165,8 @@ h3.icon {
   text-transform: uppercase; }
   .pagination a {
     padding: 4px 5px 3px;
-    color: #888888; }
+    color: #2eafa4;
+	font-weight: bold; }
     .pagination a:hover {
       background-color: #eeeeee;
       -moz-border-radius: 4px;
@@ -1145,7 +1266,7 @@ h3.icon {
     padding-bottom: 5px; }
 
 .group {
-  padding: 18px 0;
+  /*padding: 18px 0;*/
   /*----- STYLE NEEDED ----- */
   /*----- /STYLE NEEDED ----- */ }
   .group > h2, .group > h3, .group > h4, .group > h5, .group > p, .group > ol {
@@ -1303,13 +1424,14 @@ h3.icon {
     margin: 0 2px;
     padding-bottom: 2px;
     min-height: 58px;
-	background: #e7dfe3 url(../images/idea-bg.png) repeat-x left bottom; }
+	background-color: #ffe39c;
+	border-bottom: 1px solid #888; }
     .idea.mini .title {
       display: table-cell;
       font-weight: normal;
       padding-top: 5px;
-      max-width: 238px;
-      padding-left: 75px;
+      max-width: 235px;
+      padding-left: 60px;
       vertical-align: middle; }
       .idea.mini .title .posted {
         margin: 0;
@@ -1330,18 +1452,18 @@ h3.icon {
       top: 5px; }
     .idea.mini .vote-count {
       margin-bottom: 1px;
+	  margin-left: 5px;
       padding-top: 0;
       font-size: 18px;
       height: 37px;
-      line-height: 37px;
-	  padding-left: 19px;
+      line-height: 30px;
       width: 40px;
 	  background: url(../images/vote_bg.png) no-repeat center center; }
       .idea.mini .vote-count .points {
         display: none !important; }
     .idea.mini .vote-for-it a,
     .idea.mini .vote-for-it span {
-      margin-left: 21px;
+      margin-left: 5px;
       background: url(../images/idea-vote-mini-button.png) no-repeat top right;
       height: 11px;
       width: 36px; }
@@ -1395,12 +1517,13 @@ h3.icon {
   .vote .vote-count {
     margin-bottom: 3px;
     padding-top: 14px;
-    color: #fff;
+    color: #2eafa4;
     font-size: 50px;
     font-weight: bold;
     height: 87px;
     line-height: 50px;
     text-align: center;
+	text-indent: -2px;
     width: 110px; }
     .vote .vote-count span {
       margin-top: 4px;
