@@ -5,6 +5,5 @@ class Attachment < ActiveRecord::Base
                 :url => "/system/:attachment/:id/:style/:basename.:extension",
                 :path => ":rails_root/public/system/:attachment/:id/:style/:basename.:extension"
 
-  validates_attachment_size :document, :less_than => 5.megabytes
   #validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
 end

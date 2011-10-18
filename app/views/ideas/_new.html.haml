@@ -13,6 +13,7 @@
   #idea-description-group.form-group.inline
     = f.label :description, "Description"
     = f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40"
+    =f.file_field :document
 
   #idea-tags-group.form-group.inline
     %label{:for => "tags"} Tags

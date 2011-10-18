@@ -4,6 +4,8 @@ class Idea < ActiveRecord::Base
 
   acts_as_authorizable
 
+  has_attached_file :document
+
   belongs_to :inventor, :class_name => 'User'
   belongs_to :current
   has_many :comments, :order => 'comments.created_at', :dependent => :destroy do
@@ -12,7 +14,6 @@ class Idea < ActiveRecord::Base
     end
   end
 
-  has_many :attachments, :order =>'attachments.updated_at', :dependent=>:destroy
   has_many :admin_comments, :order => 'admin_comments.created_at', :dependent => :destroy
 
   has_many :votes, :include => :user, :dependent => :destroy do
@@ -36,7 +37,6 @@ class Idea < ActiveRecord::Base
   has_and_belongs_to_many :subscribers, :join_table => 'ideas_subscribers', :class_name => 'User'
 
 
-  accepts_nested_attributes_for :attachments
 
   validates_presence_of :title, :description
   validates_associated :current

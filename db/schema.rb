@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111015183441) do
+ActiveRecord::Schema.define(:version => 20111018202655) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20111015183441) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.integer  "idea_id"
   end
 
   create_table "client_applications", :force => true do |t|
@@ -99,27 +100,30 @@ ActiveRecord::Schema.define(:version => 20111015183441) do
   create_table "ideas", :force => true do |t|
     t.text     "title"
     t.text     "description"
-    t.decimal  "rating",                            :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "rating",                              :precision => 10, :scale => 2, :default => 0.0
     t.integer  "inventor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "flagged"
-    t.boolean  "viewed",                                                           :default => false
-    t.integer  "inappropriate_flags",                                              :default => 0
-    t.boolean  "hidden",                                                           :default => false
+    t.boolean  "viewed",                                                             :default => false
+    t.integer  "inappropriate_flags",                                                :default => 0
+    t.boolean  "hidden",                                                             :default => false
     t.datetime "decayed_at"
     t.integer  "life_cycle_step_id"
-    t.string   "status",              :limit => 20,                                :default => "new", :null => false
+    t.string   "status",                :limit => 20,                                :default => "new", :null => false
     t.integer  "duplicate_of_id"
-    t.boolean  "marked_spam",                                                      :default => false
-    t.integer  "current_id",                                                       :default => -1
+    t.boolean  "marked_spam",                                                        :default => false
+    t.integer  "current_id",                                                         :default => -1
     t.integer  "vote_count"
-    t.string   "ip",                  :limit => 64
+    t.string   "ip",                    :limit => 64
     t.string   "user_agent"
-    t.boolean  "spam_checked",                                                     :default => false, :null => false
-    t.boolean  "notifications_sent",                                               :default => false, :null => false
+    t.boolean  "spam_checked",                                                       :default => false, :null => false
+    t.boolean  "notifications_sent",                                                 :default => false, :null => false
     t.text     "vectors"
-    t.integer  "attachment_id"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
