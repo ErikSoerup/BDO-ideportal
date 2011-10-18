@@ -2,14 +2,14 @@
   .main.panel.section
     .header
       /*------- STYLE NEEDED ------*/
-      = gravatar_for @user, :size => 64
+      = gravatar_for @user, :size => 128
       /*------- /STYLE NEEDED ------*/
       %ul.profile_top
         - if @user.admin?
           %li.icon.user.admin= link_to @user.name, edit_user_path
         - else
           %li.icon.user= link_to @user.name, edit_user_path
-        %li=t("profile.department_name")
+        %li="Afdelings navn: __"
         %li="Email: #{@user.try(:email)}"
         %li="Antal ideer: #{@user.ideas.length}"
         %li="Antal kommentarer: #{@user.ideas.length}"
@@ -37,7 +37,7 @@
             =h @user.name
             hasn't posted any ideas yet.
       .group.slate
-        %h3 Recent Comments
+        %h3 Kommentarer
         - unless @user.comments.length == 0
           %h4
             These are some of the comments that
@@ -52,7 +52,7 @@
             =h @user.name
             hasn't written any comments yet.
       #votes.group.slate
-        %h3 Recent Votes
+        %h3 Stemmer
         - unless @user.votes.length == 0
           %h4
             These are some of the ideas that

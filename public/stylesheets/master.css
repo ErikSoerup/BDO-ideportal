@@ -448,7 +448,7 @@ body {
 .currents-page,
 .main {
   float: left;
-  width: 620px; }
+  width: 630px; }
 
 .aside {
   float: right;
@@ -965,11 +965,12 @@ body.life-cycles .nav li a.life-cycles {
 .panel {
   margin-left: -5px;
   position: relative;
-  width: 630px;
+  width: 660px;
   background-color: #fff; }
   .panel .body {
-    width: 620px;
-	border-radius: 			15px; /* CSS3 */
+    margin: 0 15px;
+    width: 630px;
+	border-radius: 15px; /* CSS3 */
 	-moz-border-radius: 	15px; /* Firefox */
 	-webkit-border-radius: 	15px; /* Safari and Chrome */
 	-khtml-border-radius: 	15px; /* Linux Browsers */
@@ -2019,7 +2020,7 @@ color:#fff;
   margin: 5px 0 3px 0 ;
 }
 .header a{
-  color: #2EAFA4
+  color: #2EAFA4;
 }
 
 /* user profile*/
@@ -2028,7 +2029,19 @@ h2.icon.user{
 .profile_top{
   width:400;
   float:left;
+  color:#2EAFA4;
+  list-style: none
+}
+.profile_top li{
+  padding-left:10px;
+  font-weight:bold;
 }
 .header img.gravatar{
   float:left;
+}
+.idea.teaser{
+  background:#fff
+}
+.inset.comments .comment{
+  background:#fff
 }
