@@ -31,7 +31,7 @@
             .select_sub
               %ul.sub
                 %li= link_to t("menu.about"), home_path('about')
-                -#%li= link_to t("menu.rule"), home_path('rule')
+                %li= link_to t("menu.rule"), home_path('rules')
                 %li= link_to t("menu.contact_us"), home_path("contact")
 
         -if logged_in?
