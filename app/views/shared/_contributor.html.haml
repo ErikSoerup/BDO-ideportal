@@ -6,3 +6,4 @@
   /*------- /STYLE NEEDED ------*/
   = link_to h(contributor.name), profile_path(contributor)
   %em== #{(contributor.send(points_method) || 0).round} points
+  =debug(contributor)

@@ -9,16 +9,17 @@
           %li.icon.user.admin=h @user.name
         - else
           %li.icon.user=h @user.name
-        - if @user.linked_to_twitter?
-          %p.icon.twitter
-            Follow me on Twitter:
-            = link_to h("@#{@user.twitter_handle}"), "http://twitter.com/#{h @user.twitter_handle}", :target => "_blank"
         %li=t("profile.department_name")
         %li="Email: #{@user.try(:email)}"
         %li="Antal ideer: #{@user.ideas.length}"
         %li="Antal kommentarer: #{@user.ideas.length}"
         %li="Antal stemmer : #{@user.votes.length}"
-        %li="Antal point : #{@user.contribution_points || 0} points"
+        %li="Antal point : #{ @user.recent_contribution_points || 0 } points"
+
+      - if @user.linked_to_twitter?
+        %p.icon.twitter
+          Follow me on Twitter:
+          = link_to h("@#{@user.twitter_handle}"), "http://twitter.com/#{h @user.twitter_handle}", :target => "_blank"
     .body
       .group.slate
         %h3 Recent Ideas
