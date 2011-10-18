@@ -7,7 +7,7 @@
 
 da:
   menu:
-    about: Om
+    about: Om ideportalen
     sign_up: Opret
     sign_in: Log på
     search: Søg
@@ -16,12 +16,18 @@ da:
     share: Del!
     hot: Hotte emner
     recent: Seneste
-    currents: Fora
+    currents: Hovedveje
     nearby: Din afdeling
     comments: Kommentarer
-    tags: Emneord
-    contact_us: Kontakt os
+    tags: Emner
+    profile: profil
+    my_profile: Min profil
+    persons: Personer
+    idea_portal: Ideportalen
+    contact_us: Kontakt
+    rule : Spilleregler
     about_ideax: Om innovation i BDO Public
+    category: Kategory
   notice:
     constructive: Husk vær konstruktiv. Dette er ikke stedet at klage
   share_your_idea: Del dine Ideer

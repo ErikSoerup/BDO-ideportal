@@ -3,26 +3,56 @@
     %h1#logo= link_to image_tag('logo.png', :alt=>"BDO.dk"), root_path
     #nav-primary
       -cache('primary_nav') do
-        %ul.nav.site.alt.title-ideas
-          %li.first= link_to t("menu.share"), root_path, :class => "home"
-          %li= link_to t("menu.hot"), idea_search_path(:search => 'hot'), :class => 'top-rated'
-          %li= link_to t("menu.recent"), idea_search_path(:search => 'recent'), :class => 'recent'
-          %li= link_to  t('menu.currents'), currents_path, :class => 'currents'
-          %li= link_to t("menu.nearby"), map_path, :class => 'nearby'
-        %ul.nav.site
-          %li= link_to t("menu.comments"), comments_path, :class => 'comments'
-          %li.last= link_to t("menu.tags"), tags_path, :class => 'tags'
+        %ul.nav.site.alt.title-ideas.select
+          %li.first
+            =link_to t("menu.share"), root_path, :class => "home active"
+
+        %ul.nav.site.alt.title-ideas.select
+          %li
+            = link_to t("menu.recent"), idea_search_path(:search => 'recent'), :class => 'recent'
+            .select_sub
+              %ul.sub
+                %li=link_to t("menu.recent"), idea_search_path(:search => 'recent'), :class => 'recent'
+                %li=link_to t("menu.hot"), idea_search_path(:search => 'hot'), :class => 'top-rated'
+                -# %li= link_to t("menu.nearby"), map_path, :class => 'nearby'
+                %li= link_to t("menu.comments"), comments_path, :class => 'comments'
+
+        %ul.nav.site.alt.title-ideas.select
+          %li
+            = link_to t("menu.category"), "#", :class => 'recent'
+            .select_sub
+              %ul.sub
+                %li.last= link_to t("menu.tags"), tags_path, :class => 'tags'
+                %li= link_to  t('menu.currents'), currents_path, :class => 'currents'
+
+        %ul.nav.site.alt.title-ideas.select
+          %li
+            = link_to t("menu.idea_portal"), "#", :class => 'recent'
+            .select_sub
+              %ul.sub
+                %li= link_to t("menu.about"), home_path('about')
+                -#%li= link_to t("menu.rule"), home_path('rule')
+                %li= link_to t("menu.contact_us"), home_path("contact")
+
+        -if logged_in?
+          %ul.nav.site.alt.title-ideas.select
+            %li
+              = link_to t("menu.profile"), "#", :class => 'recent'
+              .select_sub
+                %ul.sub
+                  %li.first= link_to "#{h current_user.name}" , profile_url(current_user)
+                  %li= link_to t("menu.settings"), edit_user_path
+
+
     %ul.nav.user
-      - if logged_in?
-        %li.first= link_to "#{h current_user.name}" , profile_url(current_user)
-        %li= link_to t("menu.settings"), edit_user_path
-        %li= link_to t("menu.about"), home_path('about')
-        %li= link_to t("menu.sign_out"), logout_path
-      - else
+      - unless logged_in?
         -cache('nouser_nav') do
           %li.first= link_to t("menu.about"), home_path('about')
           %li= link_to t("menu.sign_up"), signup_path
           %li=link_to t("menu.sign_in"), login_path
+      -else
+        %li= link_to t("menu.sign_out"), logout_path
+
       %li.last.search
         - form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
           %label{ :for => "search_text" }
