@@ -38,14 +38,16 @@
     .body
       .entry-content
         %p= user_formatted_text @idea.description
+        -if @idea.document?
+          .attachment=link_to "Download", @idea.document.url
       .idea-meta
         %div
-          %h3 About This Idea
+          %h3= t("about_this_idea")
           %ul.entry-meta
             %li.comments
-              = link_to "Comments #{"(#{@idea.comment_count})" if @idea.comment_count > 0}", "#comments"
+              = link_to "Kommentarer #{"(#{@idea.comment_count})" if @idea.comment_count > 0}", "#comments"
               |
-              = link_to "Post a Comment", "#post-comment"
+              = link_to "Kommentar", "#post-comment"
             #subscription
               = render :partial => 'subscription'
             %li.tags
@@ -65,9 +67,9 @@
                 %li= link_to h(idea.title), idea_path(idea)
       #comments.group.slate
         - if @idea.comments.visible.empty?
-          %h3 No Comments Yet. Write One!
+          %h3= t("no_comments")
         - else
-          %h3== #{@idea.comment_count} Comments
+          %h3== #{@idea.comment_count} Kommentarer
           .comments.inset
             %div
               %div= render :partial => 'comments/comment',
@@ -76,9 +78,9 @@
                       :locals => { :show_avatar => true }
         - form_for :comment, :url => idea_comments_url(@idea), :html => { :onsubmit => 'return validateComment()' } do |f|
           #comment-missing.message.error{:style => 'display: none'}
-            Please enter a comment.
+            =t("enter_comment")
           .form-group.inline#post-comment
-            %label{ :for => "comment-text" } Your Comment
+            %label{ :for => "comment-text" } Din Kommentar
             = f.text_area :text, :id => "comment-text", :class => "input-textarea"
           .form-submit.inline
             - if current_user && !current_user.active?

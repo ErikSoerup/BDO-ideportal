@@ -45,6 +45,7 @@
                   %li= link_to t("menu.departments"), "#"
 
         %ul.nav.site.alt.title-ideas.select
+          %li.search_lable=link_to t("menu.search"), "#",:class=>"search"
           %li.last.search
             -form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
               -#%label{ :for => "search_text" }

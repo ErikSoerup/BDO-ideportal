@@ -6,6 +6,8 @@
 # by Lars Hoeg (larshoeg@gmail.com, http://www.lenio.dk/)
 
 da:
+  no_comments: Ingen kommentarer endnu. Skrive en!
+  about_this_idea: Om denne idé
   profile:
     department_name: Afdelings navn
   rule:
@@ -52,6 +54,7 @@ da:
   read_our_feedback: Få Feedback
   discuss_with_others: Diskuter med andre
   password: Adgangskode
+  enter_a_comment: Indtast venligst en kommentar.
   forgot_it: Har du glemt din adgangskode?
   remember_me: Husk mig?
   whats_your_idea: Vi følger og tester løbende ideerne. Se, hvor det bærer hen

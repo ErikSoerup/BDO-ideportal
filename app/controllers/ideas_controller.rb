@@ -21,7 +21,6 @@ class IdeasController < ApplicationController
   make_resourceful do
     actions :new, :create, :show, :update
 
-
     before :create do
       @idea.inventor = current_user
       @idea.ip = request.remote_ip

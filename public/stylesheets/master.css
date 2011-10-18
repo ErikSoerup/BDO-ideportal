@@ -2045,3 +2045,7 @@ h2.icon.user{
 .inset.comments .comment{
   background:#fff
 }
+.search_lable a:hover{
+    font-weight: bold;
+    text-decoration: none;
+}
