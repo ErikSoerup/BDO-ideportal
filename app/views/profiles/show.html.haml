@@ -6,9 +6,9 @@
       /*------- /STYLE NEEDED ------*/
       %ul.profile_top
         - if @user.admin?
-          %li.icon.user.admin=h @user.name
+          %li.icon.user.admin= link_to @user.name, edit_user_path
         - else
-          %li.icon.user=h @user.name
+          %li.icon.user= link_to @user.name, edit_user_path
         %li=t("profile.department_name")
         %li="Email: #{@user.try(:email)}"
         %li="Antal ideer: #{@user.ideas.length}"
@@ -22,7 +22,7 @@
           = link_to h("@#{@user.twitter_handle}"), "http://twitter.com/#{h @user.twitter_handle}", :target => "_blank"
     .body
       .group.slate
-        %h3 Recent Ideas
+        %h3 Ideer
         - unless @user.ideas.length == 0
           %h4
             These are some of the ideas that

@@ -1272,7 +1272,7 @@ h3.icon {
   .group > h2, .group > h3, .group > h4, .group > h5, .group > p, .group > ol {
     padding-left: 20px; }
   .group.slate {
-    background: #e6ebf0;
+    background: #FFE7AD;
     border-top: 1px solid white;
     border-bottom: 1px solid #ced6dd; }
   .group form label {
