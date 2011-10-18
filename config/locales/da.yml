@@ -6,6 +6,8 @@
 # by Lars Hoeg (larshoeg@gmail.com, http://www.lenio.dk/)
 
 da:
+  profile:
+    department_name: Afdelings navn
   rule:
    heading1: Ingen ideer er dårlige!
    para1: Vi vil altid gerne høre din ide. Fortæl os derfor om den også selv om du ikke har gennemtænkt alle detaljer. Vær ikke bekymret for, om det er lovligt, om det er uden for vores normale kompetencefelt, om det er meget dyrt osv. Vi har også brug for de vilde ideer til at udfordre vanetænkningen!Vi vil altid gerne høre d
@@ -36,6 +38,7 @@ da:
     profile: profil
     my_profile: Min profil
     persons: Personer
+    departments: Afdelinger
     idea_portal: Ideportalen
     contact_us: Kontakt
     rule : Spilleregler

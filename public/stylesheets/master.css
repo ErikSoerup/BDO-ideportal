@@ -2014,7 +2014,21 @@ color:#fff;
         margin: -1px;
 }
 
-.header h3, .header h2{
+.header h3, .header h2, .header h4{
   color:#2EAFA4;
   margin: 5px 0 3px 0 ;
+}
+.header a{
+  color: #2EAFA4
+}
+
+/* user profile*/
+h2.icon.user{
+}
+.profile_top{
+  width:400;
+  float:left;
+}
+.header img.gravatar{
+  float:left;
 }

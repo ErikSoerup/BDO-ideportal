@@ -4,14 +4,21 @@
       /*------- STYLE NEEDED ------*/
       = gravatar_for @user, :size => 64
       /*------- /STYLE NEEDED ------*/
-      - if @user.admin?
-        %h2.icon.user.admin=h @user.name
-      - else
-        %h2.icon.user=h @user.name
-      - if @user.linked_to_twitter?
-        %p.icon.twitter
-          Follow me on Twitter:
-          = link_to h("@#{@user.twitter_handle}"), "http://twitter.com/#{h @user.twitter_handle}", :target => "_blank"
+      %ul.profile_top
+        - if @user.admin?
+          %li.icon.user.admin=h @user.name
+        - else
+          %li.icon.user=h @user.name
+        - if @user.linked_to_twitter?
+          %p.icon.twitter
+            Follow me on Twitter:
+            = link_to h("@#{@user.twitter_handle}"), "http://twitter.com/#{h @user.twitter_handle}", :target => "_blank"
+        %li=t("profile.department_name")
+        %li="Email: #{@user.try(:email)}"
+        %li="Antal ideer: #{@user.ideas.length}"
+        %li="Antal kommentarer: #{@user.ideas.length}"
+        %li="Antal stemmer : #{@user.votes.length}"
+        %li="Antal point : #{@user.contribution_points || 0} points"
     .body
       .group.slate
         %h3 Recent Ideas
@@ -41,7 +48,7 @@
                 = render_recent :recent => 'comments', :offset => 0, :limit => 8
         - else
           %h4
-            =h @user.name 
+            =h @user.name
             hasn't written any comments yet.
       #votes.group.slate
         %h3 Recent Votes
@@ -49,7 +56,7 @@
           %h4
             These are some of the ideas that
             =h @user.name
-            voted for.  
+            voted for.
           .votes.inset
             %div
               %div
@@ -61,5 +68,5 @@
             hasn't voted for any ideas yet.
     .footer
   %hr.hide
-  #sidebar.aside
-    = render :partial => "shared/sidebar"
+  -##sidebar.aside
+    -#= render :partial => "shared/sidebar"
