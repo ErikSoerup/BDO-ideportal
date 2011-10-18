@@ -966,7 +966,7 @@ body.life-cycles .nav li a.life-cycles {
   margin-left: -5px;
   position: relative;
   width: 630px;
-  background-color: #eeeeee; }
+  background-color: #fff; }
   .panel .body {
     width: 620px;
 	border-radius: 			15px; /* CSS3 */
@@ -2014,3 +2014,7 @@ color:#fff;
         margin: -1px;
 }
 
+.header h3, .header h2{
+  color:#2EAFA4;
+  margin: 5px 0 3px 0 ;
+}
