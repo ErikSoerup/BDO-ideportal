@@ -6,6 +6,19 @@
 # by Lars Hoeg (larshoeg@gmail.com, http://www.lenio.dk/)
 
 da:
+  rule:
+   heading1: Ingen ideer er dårlige!
+   para1: Vi vil altid gerne høre din ide. Fortæl os derfor om den også selv om du ikke har gennemtænkt alle detaljer. Vær ikke bekymret for, om det er lovligt, om det er uden for vores normale kompetencefelt, om det er meget dyrt osv. Vi har også brug for de vilde ideer til at udfordre vanetænkningen!Vi vil altid gerne høre d
+   heading2: 180 hjerner er bedre end én
+   para2: Hent værdifuld inspiration fra andre og få inspiration eller input til kvalificering eller realisering af din ide. Andre har måske tænkt noget i samme retning, nogle måske fra en anden vinkel, eller også kan de bruge elementer fra din ide.
+   heading3: Det er sjovere, når resultatet er synligt!
+   para3: Ved at dele din ide med kollegaerne opdager du måske, at andre har samme interesser som dig, at de har en viden, du kan gøre brug af osv. Ideer, der ender med at blive realiseret, får stjernestatus og det bliver synligt, hvem der har bidraget til at udvikle ideen
+   heading4:  Det er helt uforpligtende at bidrage
+   para4: Du bliver ikke stillet til regnskab og du kan sagtens foreslå en ide uden at være forpligtet til at føre den ud i livet.
+   heading5: Der er ingen garantier
+   para5: Du kan ikke regne med, at din ide bliver gennemført, selv om der er stor opbakning til den. Realiseringen af ideen afhænger af flere forhold, herunder hvordan den passer ind i den overordnede strategi for BDO Public.
+   heading6: Vær konstruktiv
+   para6: Ideportalens fokus er at fremme ideer, der understøtter vækststrategien. Det er ikke en brokkasse.
   menu:
     about: Om ideportalen
     sign_up: Opret
