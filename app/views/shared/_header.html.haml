@@ -43,6 +43,12 @@
                   %li.first= link_to "#{h current_user.name}" , profile_url(current_user)
                   %li= link_to t("menu.settings"), edit_user_path
 
+        %ul.nav.site.alt.title-ideas.select
+          %li.last.search
+            -form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
+              -#%label{ :for => "search_text" }
+                =t("menu.search")
+              = text_field_tag 'search_text', params[:search_text]
 
     %ul.nav.user
       - unless logged_in?
@@ -53,8 +59,5 @@
       -else
         %li= link_to t("menu.sign_out"), logout_path
 
-      %li.last.search
-        - form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
-          %label{ :for => "search_text" }
-            =t("menu.search")
-          = text_field_tag 'search_text', params[:search_text]
+
+
