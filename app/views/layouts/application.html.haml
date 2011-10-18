@@ -84,6 +84,8 @@
 
       jQuery("#idea_form").submit(function(e){
         var new_values = jQuery(".tagify-container input:first").val();
-        myTextArea.tagify("add",new_values);
-        return false;
-      })
+        jQuery.each(new_values.split(","),function(i,data){
+          myTextArea.tagify("add",data);
+        });
+        myTextArea.tagify("serialize");
+      });
