@@ -22,11 +22,3 @@
   %p.note>
     =t("notice.constructive")
 
-:javascript
-  jQuery(function(){
-    jQuery("#idea_form").submit(function(e){
-      var new_values = jQuery(".tagify-container input:first").val();
-      myTextArea.tagify("add",new_values);
-      return false;
-    })
-  });
