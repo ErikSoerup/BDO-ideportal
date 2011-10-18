@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tags
   map.resources :profiles
   map.resource :map
-  
+
   map.login               '/login',                              :controller => 'sessions', :action => 'new'
   map.twitter_login       '/login/twitter',                      :controller => 'sessions', :action => 'new_twitter'
   map.logout              '/logout',                             :controller => 'sessions', :action => 'destroy'
@@ -29,15 +29,15 @@ ActionController::Routing::Routes.draw do |map|
   map.password_reset      '/user/password/new/:activation_code', :controller => 'users', :action => 'new_password'
   map.authorize_twitter   '/user/authorize/twitter',             :controller => 'users', :action => 'authorize_twitter'
   map.flag_inappropriate  '/:model/:id/inappropriate',           :controller => 'inappropriate', :action => 'flag'
-  
+
   # Pretty URLS: these must come after more specific routes
 
   map.idea_pretty         '/ideas/:id/:title',                   :controller => 'ideas',    :action => 'show'
   map.profile_pretty      '/profiles/:id/:title',                :controller => 'profiles', :action => 'show'
   map.current_pretty      '/currents/:id/:title',                :controller => 'currents', :action => 'show'
-  
+
   # OAuth stuff
-  
+
   map.test_request '/oauth/test_request', :controller => 'oauth', :action => 'test_request'
   map.access_token '/oauth/access_token', :controller => 'oauth', :action => 'access_token'
   map.request_token '/oauth/request_token', :controller => 'oauth', :action => 'request_token'
@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.oauth '/oauth', :controller => 'oauth', :action => 'index'
 
   # Admin interface
-  
+
   map.namespace :admin do |admin|
     admin.root :controller => 'home', :action => 'show'
     admin.resources :users, :member => { :suspend => :put, :unsuspend => :put, :activate => :put}
@@ -77,13 +77,13 @@ ActionController::Routing::Routes.draw do |map|
       dup.link_duplicates    'ideas/:id/link_duplicate/:other_id', :action => 'link_duplicates',    :conditions => { :method => :post }
     end
   end
-  
+
   # Top-level routes
-  
+
   map.root :controller => 'home', :action => 'show'
   map.home_nearby_ideas '/home/nearby-ideas', :controller => 'home', :action => 'nearby_ideas'
-  
-  map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact|privacy-policy|terms-of-use/
-  
+
+  map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact|rules|privacy-policy|terms-of-use/
+
   # No default routes declared for security & tidiness. (They make all actions in every controller accessible via GET requests.)
 end
