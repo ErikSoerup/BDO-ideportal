@@ -11,6 +11,11 @@ GEM
     activeresource (2.3.10)
       activesupport (= 2.3.10)
     activesupport (2.3.10)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
+    builder (3.0.0)
     calendar_date_select (1.16.1)
     cocaine (0.2.0)
     color (1.4.1)
@@ -63,11 +68,13 @@ GEM
       multi_json (~> 0.0.4)
       oauth (~> 0.4.3)
     will_paginate (2.3.11)
+    xml-simple (1.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-s3
   calendar_date_select (= 1.16.1)
   color (= 1.4.1)
   facebooker2

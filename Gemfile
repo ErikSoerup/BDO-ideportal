@@ -21,6 +21,7 @@ gem "calendar_date_select", '1.16.1'
 gem "rcov"
 gem "lazy", '0.9.6'
 gem 'pg'
+gem 'aws-s3'
 
 group :test do
  gem 'shoulda'

@@ -4,7 +4,10 @@ class Idea < ActiveRecord::Base
 
   acts_as_authorizable
 
-  has_attached_file :document
+  has_attached_file :document,:storage => :s3,
+      :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+      :path => ":attachment/:id/:style.:extension",
+      :bucket => "bdo"
 
   belongs_to :inventor, :class_name => 'User'
   belongs_to :current
