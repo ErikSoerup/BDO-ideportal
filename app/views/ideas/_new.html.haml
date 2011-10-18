@@ -27,7 +27,6 @@
     jQuery("#idea_form").submit(function(e){
       var new_values = jQuery(".tagify-container input:first").val();
       myTextArea.tagify("add",new_values);
-      e.preventDefault();
-      e.stopPropagation();
+      return false;
     })
   });
