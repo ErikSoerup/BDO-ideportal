@@ -13,7 +13,7 @@
     %h5.posted
       =t("posted")
       %abbr.published.time-relative
-        = time_ago_in_words(idea.created_at)
+        = time_ago_in_words(contributor.created_at)
         =t("ago")
       =t("by")
       %span.vcard.author
