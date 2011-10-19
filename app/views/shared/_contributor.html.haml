@@ -1,8 +1,24 @@
-%li{ :class => cycle("", "alt") }
-  %strong= contributor_counter + 1
-  /*------- STYLE NEEDED ------*/
-  .avatar
-    = gravatar_for contributor, :size => 18
-  /*------- /STYLE NEEDED ------*/
-  = link_to h(contributor.name), profile_path(contributor)
-  %em== #{(contributor.send(points_method) || 0).round} points
+-#%li{ :class => cycle("", "alt") }
+  -#%strong= contributor_counter + 1
+  -#/*------- STYLE NEEDED ------*/
+  -#.avatar
+    -#= gravatar_for contributor, :size => 18
+  -#/*------- /STYLE NEEDED ------*/
+  -#= link_to h(contributor.name), profile_path(contributor)
+  -#%em== #{(contributor.send(points_method) || 0).round} points
+
+
+.idea.mini.hentry.contributor
+  .title
+    %h5.posted
+      =t("posted")
+      %abbr.published.time-relative
+        = time_ago_in_words(idea.created_at)
+        =t("ago")
+      =t("by")
+      %span.vcard.author
+        = link_to h(contributor.name), profile_path(contributor), :class => 'fn url'
+    %h4.entry-title= link_to h(contributor.name), profile_path(contributor), :rel => 'bookmark'
+    %h4.entry-title== #{(contributor.send(points_method) || 0).round } points
+  %span{:id => "contributor_#{contributor.id}"}
+    = gravatar_for contributor, :size=>32
