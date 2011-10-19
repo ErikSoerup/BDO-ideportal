@@ -13,7 +13,9 @@
   #idea-description-group.form-group.inline
     = f.label :description, "Description"
     = f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40"
-    =f.file_field :document
+    .input_file
+      = text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
+      =f.file_field :document , :size=>80
 
   #idea-tags-group.form-group.inline
     %label{:for => "tags"} Tags
