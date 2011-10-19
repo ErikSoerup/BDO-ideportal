@@ -6,7 +6,7 @@ namespace :db do
   desc "Load seed data into the current environment's database."
   task :seed => [ :environment, :'db:migrate' ] do
     PostalCode.transaction do
-      
+
       # This reassigns IDs; find an alternative!
       # PostalCode.connection.execute("truncate postal_codes")
       if PostalCode.count > 0
@@ -26,15 +26,15 @@ namespace :db do
 
         ActiveRecord::Base.connection.execute(s<<pc.join(","))
       end
-      
+
       admin_role = Role.find(:all, :conditions => {:name => 'admin', :authorizable_type => nil}).first
       admin_user = admin_role.users.first if admin_role
       if admin_user
         puts "Admin user already exists: #{admin_user.email}"
       else
         puts "Creating admin user..."
-        admin_email    = "rb@centic.dk" #ask('Admin user email: ')
-        admin_password = "c3nt1c" #ask('Admin user password: ') {|q| q.echo = '*' }
+        admin_email    = "alina@bdo.dk" #ask('Admin user email: ')
+        admin_password = "123456!!" #ask('Admin user password: ') {|q| q.echo = '*' }
         admin_user = User.create!(
           :name => "Administrator",
           :email => admin_email,
@@ -42,7 +42,7 @@ namespace :db do
           :password => admin_password,
           :password_confirmation => admin_password,
           :terms_of_service => '1')
-        
+
         puts "Granting admin privileges to #{admin_user.email}..."
         admin_user.activate!
         admin_user.has_role 'admin'
@@ -54,7 +54,7 @@ namespace :db do
         admin_user.has_role 'editor', ClientApplication
         admin_user.save!
       end
-      
+
       puts "Seed complete."
     end
   end
