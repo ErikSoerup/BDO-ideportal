@@ -172,12 +172,22 @@ Author: Alicia Liu
     border-radius: 2px;
     font-family: Verdana, sans-serif;
     font-size: 12px;
-    padding: 5px 2px;
-    overflow: auto;
+
+    float: left;
+    width: 315px;
+    background-color: #fff;
+    border: none;
+    font-size: 16px;
+    height: 29px;
+    padding: 1px 8px 0;
+    border-radius:    8px; /* CSS3 */
+    -moz-border-radius:  8px; /* Firefox */
+    -webkit-border-radius:  8px; /* Safari and Chrome */
+    -khtml-border-radius:  8px; /* Linux Browsers */   overflow: auto;
 }
 .tagify-container > span {
     display: inline-block;
-    padding: 3px 5px;
+    padding: 1px 3px;
     margin: 3px 2px;
     border-radius: 2px;
     border: 1px solid #EEE;
