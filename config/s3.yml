@@ -1,7 +1,7 @@
 development:
   access_key_id: AKIAJTN2EZPPE6I2ROZA
   secret_access_key: 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
-  bucket: rajib-bdo
+  bucket: bdo-rajib
 
 test:
   access_key_id: abc
@@ -10,4 +10,4 @@ test:
 production:
   access_key_id: AKIAJTN2EZPPE6I2ROZA
   secret_access_key: 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
-  bucket: rajib-bdo
+  bucket: bdo-rajib
