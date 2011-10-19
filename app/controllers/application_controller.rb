@@ -49,7 +49,7 @@ protected
   end
 
   def redirect_to(*args)
-    flash.keep
+    #flash.keep
     super(*args)
   end
 

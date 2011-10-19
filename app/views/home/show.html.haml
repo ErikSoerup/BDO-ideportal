@@ -45,7 +45,6 @@
       %h3
         %em=t("read_our_feedback")
       .figure
-        = image_tag "instruction-4-read-thumb.png", :alt => "Read our Feedback"
         %p.legend=t("we_are_posting_text")
   %hr.hide
 
@@ -71,7 +70,7 @@
           %h3.icon.recent= t("recent_ideas")
           %ul.actions
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
-            %li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
+            -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
         .body.ideas
           = render :partial => 'idea', :collection => search_ideas(:search => 'recent', :page_size => 5)
         .footer
