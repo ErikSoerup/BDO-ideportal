@@ -4,16 +4,18 @@ module Admin
     make_resourceful do
       actions :index, :new, :create,:edit, :update
 
-      before :new do
-        render :action=>"edit"
-      end
       response_for :index do |format|
         format.html { render :action => 'index' }
         format.js   { render :partial => 'index' }
       end
 
 
-
+      response_for :create do |format|
+        format.html do
+          flash[:info]="Department created"
+          redirect_to admin_departments_path
+        end
+      end
       response_for :update do |format|
         format.html do
           flash[:info] = 'Changes saved.'
@@ -26,15 +28,11 @@ module Admin
     end
 
     include ResourceAdmin
-
   protected
 
+
     def default_sort
-      if search_pending_moderation?
-        ['inappropriate_flags', true]
-      else
-        ['created_at', true]
-      end
+        ['departments.created_at', true]
     end
 
     def set_body_class

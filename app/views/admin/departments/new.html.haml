@@ -6,7 +6,7 @@
     .body
       .group
         = error_messages_for :department
-        - form_for current_object, :url => object_url, :html => { :method => :put } do |f|
+        - form_for current_object, :url => { :action => :create } do |f|
           .form-group.inline
             = f.label :name, "Text"
             = f.text_field :name, :class => "input-text"

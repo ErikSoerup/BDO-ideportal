@@ -4,8 +4,8 @@
 
 %table.admin-table{:cellspacing => 0, :cellpadding => 6, :width => '100%'}
   %tr
-    %th= sort_by 'New', 'department.name'
-    %th= sort_by 'Created at', 'department.created_at'
+    %th= sort_by 'New', 'departments.name'
+    %th= sort_by 'Created at', 'departments.created_at'
   =render :partial => 'index_row', :collection => current_objects
 
 
