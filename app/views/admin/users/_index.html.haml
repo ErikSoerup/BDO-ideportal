@@ -6,6 +6,7 @@
   %tr
     %th= sort_by 'Screen Name', 'name'
     %th= sort_by 'Email', 'email'
+    %th= sort_by 'Departments', 'departments.name'
     %th= sort_by 'Zip', 'zip_code'
     %th= sort_by 'Status', 'state'
     %th= sort_by 'Role', 'admin', 'desc'
@@ -14,6 +15,12 @@
     %tr.data-row{:onclick => "document.location = '#{edit_admin_user_path(user.id)}'"}
       %td= h(user.name)
       %td= h(user.email)
+
+      %td
+        -if user.department_id?
+          =h(user.department.name)
+        -else
+          Not set
       %td
         - if user.zip_code?
           = h(user.zip_code)
@@ -26,5 +33,5 @@
         - else
           &nbsp;
       %td= user.created_at.strftime('%m/%d/%y')
-  
+
 .paginate= will_paginate current_objects

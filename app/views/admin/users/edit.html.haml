@@ -12,6 +12,9 @@
             = f.label :email, "Email"
             = f.text_field :email, :class => "input-text"
           .form-group.inline
+            = f.label :department_id, "Department"
+            = f.collection_select :department_id , Department.all , :id , :name
+          .form-group.inline
             = f.label :name, "Screen name"
             = f.text_field :name, :class => "input-text"
           .form-group.inline
@@ -51,7 +54,7 @@
               %ul
                 - @user.is_invitee_for_what.each do |current|
                   %li=link_to h(current.title), edit_admin_current_path(current)
-              Invite to 
+              Invite to
               %select{:name=>"invite_to", :id=>"invite_to"}
                 = options_for_select [[nil,nil]] + Current.all_except_default.map{ |x| [x.title,x.id] }
           -# ------- /STYLE NEEDED ------
@@ -104,4 +107,4 @@
             - @user.comments.each do |comment|
               %li= link_to h(comment.text), edit_admin_comment_path(comment)
     .footer
-  
+

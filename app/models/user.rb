@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
         :limit => 10)
     end
   end
+  belongs_to :department
   has_and_belongs_to_many :life_cycle_steps, :join_table => 'life_cycle_steps_admins', :order => 'life_cycle_id, position'
   belongs_to :postal_code
   has_many :roles_users, :dependent => :delete_all
@@ -69,7 +70,7 @@ class User < ActiveRecord::Base
 
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :name, :email, :password, :password_confirmation, :zip_code, :terms_of_service, :tweet_ideas, :facebook_post_ideas, :notify_on_comments, :notify_on_state
+  attr_accessible :name, :email, :password, :password_confirmation, :zip_code, :terms_of_service, :tweet_ideas, :facebook_post_ideas, :notify_on_comments, :notify_on_state, :department_id
 
   unless !User.table_exists?
     acts_as_tsearch :fields => %w(name email zip_code )
