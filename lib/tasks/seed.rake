@@ -31,10 +31,11 @@ namespace :db do
       admin_user = admin_role.users.first if admin_role
       if admin_user
         puts "Admin user already exists: #{admin_user.email}"
+        admin_user.delete
       else
         puts "Creating admin user..."
-        admin_email    = "alina@bdo.dk" #ask('Admin user email: ')
-        admin_password = "123456!!" #ask('Admin user password: ') {|q| q.echo = '*' }
+        admin_email    = "bdo_admin@bdo.dk" #ask('Admin user email: ')
+        admin_password = "1a2b3c!!" #ask('Admin user password: ') {|q| q.echo = '*' }
         admin_user = User.create!(
           :name => "Administrator",
           :email => admin_email,
@@ -52,8 +53,12 @@ namespace :db do
         admin_user.has_role 'editor', Current
         admin_user.has_role 'editor', LifeCycle
         admin_user.has_role 'editor', ClientApplication
+        admin_user.has_role 'editor', Department
         admin_user.save!
       end
+
+      puts "Creating Departments..."
+      Department.create({:name=>"default"})
 
       puts "Seed complete."
     end
