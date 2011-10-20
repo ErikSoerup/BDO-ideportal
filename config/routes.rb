@@ -50,6 +50,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.root :controller => 'home', :action => 'show'
     admin.resources :users, :member => { :suspend => :put, :unsuspend => :put, :activate => :put}
     admin.resources :comments
+    admin.resources :departments
     admin.resources :tags
     admin.resources :ideas
     admin.resources :currents

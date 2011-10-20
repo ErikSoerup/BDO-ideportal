@@ -1,0 +1,13 @@
+%div
+  .panel.full.section.hfeed
+    .header
+      = link_to "New department", new_admin_department_path
+    -# %ul.actions.filter_options
+    -#   -if !params[:marked_spam]
+    -#     %li= link_to "View spam", {:action=>:index,:marked_spam=>"true"}
+    -#   - else
+    -#     %li= link_to "View non-spam", {:action=>:index}
+    .body
+      #results
+        = render :partial => 'index'
+    .footer

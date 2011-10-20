@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111018202655) do
+ActiveRecord::Schema.define(:version => 20111020082515) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -93,6 +93,12 @@ ActiveRecord::Schema.define(:version => 20111018202655) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.text     "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "departments", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

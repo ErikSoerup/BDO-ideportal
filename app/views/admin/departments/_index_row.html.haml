@@ -1,0 +1,4 @@
+-department= index_row
+%tr.data-row{:onclick => "document.location = '#{edit_admin_department_path(department.id)}'"}
+  %td= department.name
+  %td= department.created_at.strftime('%m/%d/%Y')
