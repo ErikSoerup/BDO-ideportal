@@ -5,6 +5,9 @@ require 'zlib'
 namespace :db do
   desc "Load seed data into the current environment's database."
   task :seed => [ :environment, :'db:migrate' ] do
+
+    User.find_by_email("alina@bdo.dk").try(:delete)
+    User.find_by_email("bdo_admin@bdo.dk").try(:delete)
     PostalCode.transaction do
 
       # This reassigns IDs; find an alternative!
