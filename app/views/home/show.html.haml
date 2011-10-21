@@ -72,10 +72,11 @@
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
             -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
         .body.ideas
-          = render :partial => 'idea', :collection => search_ideas(:search => 'recent', :page_size => 5)
+          -#= render :partial => 'idea', :collection => search_ideas(:search => 'recent', :page_size => 5)
+          = render :partial => 'idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>5)
         .footer
           .pagination
-            = link_to t("more"), idea_search_path(:search => 'recent'), :class => 'next_page'
+            = link_to t("more"), idea_search_path(:search => 'department' ), :class => 'next_page'
     .ideas-group.last
       #nearby-ideas.panel.summary.hfeed.last
         .header

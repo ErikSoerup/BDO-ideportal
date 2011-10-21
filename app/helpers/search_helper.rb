@@ -2,7 +2,7 @@
 # on both the public and admin sides!
 
 module SearchHelper
-  
+
   # Performs a search for ideas based on a set of URL params, dispatching to the SQL or full-text
   # search as appropriate.
   def search_ideas(params)
@@ -16,7 +16,7 @@ module SearchHelper
       search_ideas_sql params
     end
   end
-  
+
   # Handles SQL-based (i.e. not full-text) idea searches. Takes an array of search parameters
   # (which typically come from a URL path). For example: ["tag", "kumquats", "recent"]
   def search_ideas_sql(params)
@@ -24,9 +24,9 @@ module SearchHelper
       :page => params[:page] || 1,
       :per_page => params[:page_size] || 20,
       :include => [{:inventor => :postal_code}, :tags],
-      :conditions => ['users.state = ? and ideas.hidden = ?', 'active', false] }
+      :conditions => ['users.state = ? and ideas.hidden = ?', 'active', true] }
     @query_title = "Ideas"
-    
+
     search_params = (params[:search] || 'recent').to_a.dup
     while !search_params.empty? do
       case param = search_params.shift
@@ -59,6 +59,16 @@ module SearchHelper
             'ideas.rating DESC, ideas.created_at DESC'
           end
         end
+      when 'department'
+        @body_class="department"
+        department_id = search_params.shift
+        if department_id
+          query_opts[:conditions][0] += ' and users.department_id = ?'
+          query_opts[:conditions] << department_id
+          @query_title = "Departments " + @query_title
+        else
+          raise "Unknown search parameter \"#{param}\""
+        end
       when 'current'
         current_id = search_params.shift
         query_opts[:conditions][0] += ' and ideas.current_id = ?'
@@ -69,10 +79,11 @@ module SearchHelper
         raise "Unknown search parameter \"#{param}\""
       end
     end
-    
+
+
     Idea.paginate(query_opts)
   end
-  
+
   def geo_search_ideas(search, opts = {})
     if search[:loc]
       latlon = search[:loc].split(/\s*,\s*/).map { |x| x.to_f }
@@ -88,26 +99,35 @@ module SearchHelper
       end
     end
   end
-  
+
+  def search_by_departments(department_id)
+    Idea.find(:all,
+              :joins=>:inventor,
+              :conditions=>["users.department_id=?", department_id],
+              :limit=>5,
+              :order=> "ideas.created_at desc"
+          )
+  end
+
 private
-  
+
   # Handles geography-based searches
   def search_idea_ids_near_user(opts = {})
     postal_code = current_user.postal_code if logged_in?
     postal_code ||= PostalCode.find_by_text DEFAULT_ZIP_CODE
     search_idea_ids_near_postal_code(postal_code, opts)
   end
-  
+
   def search_idea_ids_near_postal_code(postal_code, opts = {})
     return search_ideas_near_user(opts) if postal_code == 'user'
-    
+
     if postal_code
       search_idea_ids_near_loc(postal_code.lat, postal_code.lon, opts)
     else
       raise "You probably need to load your postal code seed data"
     end
   end
-  
+
   def search_idea_ids_near_loc(lat, lon, opts = {})
     # This code uses a cheap flat earth distance formula, which is probably fine since it's only
     # used for sorting -- we never display the distance to the user. If we decide we actually care,
@@ -128,17 +148,17 @@ private
   end
 
 public
-  
+
   # Searches for an arbitrary model using a full-text tsearch query. Shared by public & admin UI.
   def search(current_model, params, sort = nil, order = true, &filter)
     page = (params[:page] || 1).to_i
     page_size = (params[:per_page] || 30).to_i
-    
+
     @search = current_model.find_by_tsearch(params[:search_text] || params[:search])
-  
+
     WillPaginate::Collection.create(page, page_size, @search.size) do |pager|
       pager.replace(yield(@search))
     end
   end
-  
+
 end

@@ -8,6 +8,7 @@ namespace :db do
 
     User.find_by_email("alina@bdo.dk").try(:delete)
     User.find_by_email("bdo_admin@bdo.dk").try(:delete)
+    PostalCode.delete_all
     PostalCode.transaction do
 
       # This reassigns IDs; find an alternative!
