@@ -180,7 +180,7 @@ input, textarea {
       text-align: left;
       width: auto; }
   .form-group.inline > .input-text, .form-group.inline > .input-textarea, .form-group.inline > .input-checkbox, .form-group.inline > .fieldWithErrors {
-    float: left; }
+    float: left; border: 1px solid #e9e9e9; }
   .form-group.inline .input-checkbox {
     margin-right: 4px; }
   .form-group .note {
@@ -298,6 +298,7 @@ body {
 #masthead {
   background: url(../images/header_bg.jpg) repeat-x;
   height: 183px;
+  margin-bottom: 7px;
   min-width: 960px; }
   #masthead > div {
 	background: url(../images/header.jpg) no-repeat right top;
@@ -984,23 +985,17 @@ body.life-cycles .nav li a.life-cycles {
   .ideas-group.last {
     margin-right: 0; }
 
-body.recent .panel {
-  width: 955px; }
-body.recent .panel .header {
-    width: 905px; }
-body.recent .panel .body {
-    width: 925px; }
 body.recent .idea.teaser {
-    width: 850px; }
+    width: 900px; }
 
 .panel {
   margin-left: -5px;
   position: relative;
-  width: 660px;
+  width: 955px;
   background-color: #fff; }
   .panel .body {
-    margin: 0 15px;
-    width: 630px;
+    margin: 0 25px;
+    width: 900px;
 	border-radius: 15px; /* CSS3 */
 	-moz-border-radius: 	15px; /* Firefox */
 	-webkit-border-radius: 	15px; /* Safari and Chrome */
@@ -1028,7 +1023,7 @@ body.recent .idea.teaser {
       text-transform: uppercase; }
   .panel .header {
     padding: 21px 25px 0px;
-    width: 580px; }
+    width: 905px; }
     .panel .header h2 {
       max-width: 420px;
       overflow: hidden; }
@@ -1311,7 +1306,8 @@ h3.icon {
   .group > h2, .group > h3, .group > h4, .group > h5, .group > p, .group > ol {
     padding-left: 20px; }
   .group.slate {
-    background: #FFE7AD;
+    background: #e6e3e1;
+	margin: 0 10px;
     border-top: 1px solid white;
     border-bottom: 1px solid #ced6dd; }
   .group form label {
@@ -1597,10 +1593,16 @@ h3.icon {
       text-transform: uppercase; }
   .vote .vote-for-it {
     line-height: 0; }
+	
+#idea_search_box {
+	padding: 10px 0; }
+#idea_search_box .form-group.inline {
+	margin-bottom: 5px; }
 
 .idea-meta,
 .current-meta {
   padding: 18px 0;
+  margin: 0 10px;
   border-bottom: 1px solid #cccccc; }
   .idea-meta > div,
   .current-meta > div {
@@ -1657,6 +1659,7 @@ h3.icon {
 
 .comment {
   margin: 0 auto 4px;
+  border-top: 1px solid #ddd;
   background: #cccccc;
   min-height: 47px;
   position: relative;
@@ -1899,7 +1902,7 @@ h3.icon {
   font-size: 140%; }
 
 #intro h2, #intro h3 em, .instruction h3, .panel .header h2, .panel .header h3, .group > h3 {
-  font-family: Futura, "Futura Std", Arial, sans-serif; font-size: 22px; text-transform: uppercase; }
+  font-family: Futura, "Futura Std", Arial, sans-serif; font-size: 22px; text-transform: uppercase; padding-left: 10px; }
 
 #search-wrap {
   padding-left: 20px; }
