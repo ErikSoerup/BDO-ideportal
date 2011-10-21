@@ -40,7 +40,7 @@ abbr {
   border: none; }
 
 p {
-  margin-bottom: 18px; }
+  margin-bottom: 18px; padding: 0 10px;}
 
 a {
   color: #0f645d;
@@ -421,7 +421,7 @@ body {
     clear: both;
     visibility: hidden; }
 #footer {
-  background-color: #2eafa4;
+  background-color: none;
   padding: 24px 0 48px;
   clear: both;
   color: #7adbd3;
@@ -985,9 +985,6 @@ body.life-cycles .nav li a.life-cycles {
   .ideas-group.last {
     margin-right: 0; }
 
-body.recent .idea.teaser {
-    width: 900px; }
-
 .panel {
   margin-left: -5px;
   position: relative;
@@ -1389,7 +1386,7 @@ h3.icon {
   .idea.teaser {
     margin: 0 auto 4px;
     padding-bottom: 3px;
-    width: 606px; }
+    width: 900px; }
     .idea.teaser:last-child {
       margin-bottom: 0; }
     .idea.teaser > div {
@@ -1772,7 +1769,7 @@ h3.icon {
     font-weight: bold; }
 
 .tag-cloud {
-  padding: 0 20px; }
+  padding: 0 10px; }
   .tag-cloud a {
     margin: 0 8px 8px 0;
     padding: 4px 8px 4px 18px;
@@ -1902,7 +1899,7 @@ h3.icon {
   font-size: 140%; }
 
 #intro h2, #intro h3 em, .instruction h3, .panel .header h2, .panel .header h3, .group > h3 {
-  font-family: Futura, "Futura Std", Arial, sans-serif; font-size: 22px; text-transform: uppercase; padding-left: 10px; }
+  font-family: Futura, "Futura Std", Arial, sans-serif; font-size: 22px; text-transform: uppercase; }
 
 #search-wrap {
   padding-left: 20px; }
@@ -2105,7 +2102,8 @@ color:#fff;
 
 .header h3, .header h2, .header h4{
   color:#2EAFA4;
-  margin: 5px 0 3px 0 ;
+  margin: 5px 0 3px 0;
+  padding: 0 10px;
 }
 .header a{
   color: #2EAFA4;
