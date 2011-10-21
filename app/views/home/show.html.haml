@@ -101,7 +101,7 @@
             -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "#"
         #nearby-idea-results.body.ideas
           = render :partial => 'shared/contributor',
-                   :collection => User.find_top_contributors(false, :limit => 10),
+                   :collection => User.find_top_contributors(true, :limit => 10),
                    :locals => { :points_method => :recent_contribution_points }
         .footer
           .pagination
