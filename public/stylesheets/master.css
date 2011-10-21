@@ -959,6 +959,7 @@ body.life-cycles .nav li a.life-cycles {
     line-height: 40px; }
     .instruction h3 em {
       font-style: normal;
+	  font-size: 16px; text-transform: none;
       font-weight: bold; }
   .instruction .figure img {
     margin: 0 0 3px 10px;
@@ -1249,13 +1250,17 @@ h3.icon {
     float: left;
     height: 25px; }
     .actions li a {
-      padding: 5px 10px 0 2px;
+      padding: 5px 10px 0 5px;
       background: #cccccc;
       color: #444444;
       display: block;
       font-size: 11px;
       height: 20px;
-      text-shadow: 0 1px 1px white; }
+      text-shadow: 0 1px 1px white;
+				border-radius: 			5px; /* CSS3 */
+				-moz-border-radius: 	5px; /* Firefox */
+				-webkit-border-radius: 	5px; /* Safari and Chrome */
+				-khtml-border-radius: 	5px; /* Linux Browsers */ }
       .actions li a img {
         margin-right: 2px;
         vertical-align: top; }
@@ -1399,17 +1404,21 @@ h3.icon {
     .idea.teaser .posted {
       margin-bottom: 8px;
       padding-top: 10px;
-      height: 24px;
-      text-shadow: 0 1px 2px #dbedff; }
+      height: 24px; }
     .idea.teaser .entry-title {
       margin-bottom: 8px;
       line-height: 24px; }
       .idea.teaser .entry-title a {
         border-bottom-width: 2px; }
     .idea.teaser .vote {
-      background-color: #bbbbbb;
+      border: 1px solid #786860;
+	  padding: 2px;
       left: 9px;
-      top: 8px; }
+      top: 10px;
+	border-radius: 			5px; /* CSS3 */
+	-moz-border-radius: 	5px; /* Firefox */
+	-webkit-border-radius: 	5px; /* Safari and Chrome */
+	-khtml-border-radius: 	5px; /* Linux Browsers */ }
     .idea.teaser .vote-for-it a,
     .idea.teaser .vote-for-it span {
       margin-left: 3px;
@@ -1423,8 +1432,7 @@ h3.icon {
     .idea.teaser .vote-for-it span {
       background-position: left -75px; }
     .idea.teaser .entry-content p {
-      font-size: 13px;
-      text-shadow: 0 1px 2px #dbedff; }
+      font-size: 13px; }
     .idea.teaser .entry-meta {
       margin-bottom: 8px;
       padding: 6px 8px 4px;
@@ -1444,7 +1452,7 @@ h3.icon {
       background-image: url(../images/idea-flag.gif);
       height: 21px;
       position: absolute;
-      right: 8px;
+      right: 20px;
       top: 7px;
       width: 20px;
       background-color: transparent;
@@ -1539,7 +1547,7 @@ h3.icon {
       -webkit-border-bottom-right-radius: 4px;
       -webkit-border-bottom-left-radius: 4px; }
   .idea h3.entry-title, .idea h4.entry-title {
-    text-shadow: 0 1px 2px #dbedff; }
+     }
   .idea .vote-for-it a,
   .idea .vote-for-it span {
     background-color: transparent;
@@ -1550,7 +1558,7 @@ h3.icon {
     text-indent: -9000px; }
 
 .entry-title a:hover {
-  border-bottom: 1px solid #1c8af1; }
+  border-bottom: 1px solid #08e7e5; }
 
 .posted {
   clear: left;
@@ -1891,7 +1899,7 @@ h3.icon {
   font-size: 140%; }
 
 #intro h2, #intro h3 em, .instruction h3, .panel .header h2, .panel .header h3, .group > h3 {
-  font-family: Futura, "Futura Std", Arial, sans-serif; }
+  font-family: Futura, "Futura Std", Arial, sans-serif; font-size: 22px; text-transform: uppercase; }
 
 #search-wrap {
   padding-left: 20px; }
