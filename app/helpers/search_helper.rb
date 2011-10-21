@@ -24,7 +24,7 @@ module SearchHelper
       :page => params[:page] || 1,
       :per_page => params[:page_size] || 20,
       :include => [{:inventor => :postal_code}, :tags],
-      :conditions => ['users.state = ? and ideas.hidden = ?', 'active', true] }
+      :conditions => ['users.state = ? and ideas.hidden = ?', 'active', false] }
     @query_title = "Ideas"
 
     search_params = (params[:search] || 'recent').to_a.dup
