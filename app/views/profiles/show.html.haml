@@ -9,12 +9,12 @@
           %li.icon.user.admin= link_to @user.name, edit_user_path
         - else
           %li.icon.user= link_to @user.name, edit_user_path
-        %li="Afdelings navn: __"
-        %li="Email: #{@user.try(:email)}"
-        %li="Antal ideer: #{@user.ideas.length}"
-        %li="Antal kommentarer: #{@user.ideas.length}"
-        %li="Antal stemmer : #{@user.votes.length}"
-        %li="Antal point : #{ @user.recent_contribution_points || 0 } points"
+        %li="Afdelings navn: <span>#{@user.department.try(:name)}</span>"
+        %li="Email:<span> #{@user.email}</span>"
+        %li="Antal ideer: <span>#{@user.ideas.length}</span>"
+        %li="Antal kommentarer: <span>#{@user.ideas.length}</span>"
+        %li="Antal stemmer :<span> #{@user.votes.length}</span>"
+        %li="Antal point : <span>#{ @user.recent_contribution_points || 0 } points</span>"
 
       - if @user.linked_to_twitter?
         %p.icon.twitter

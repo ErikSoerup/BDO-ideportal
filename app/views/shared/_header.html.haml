@@ -2,55 +2,58 @@
   %div
     %h1#logo= link_to image_tag('logo.png', :alt=>"BDO.dk"), root_path
     #nav-primary
-      -cache('primary_nav') do
-        %ul.nav.site.alt.title-ideas.select
-          %li.first
-            =link_to t("menu.share"), root_path, :class => "home active"
+      %ul.nav.site.alt.title-ideas.select
+        %li.first
+          =link_to t("menu.share"), root_path, :class => "home active"
 
+      %ul.nav.site.alt.title-ideas.select
+        %li
+          = link_to t("menu.recent"), idea_search_path(:search => 'recent'), :class => 'recent'
+          .select_sub
+            %ul.sub
+              %li=link_to t("menu.recent"), idea_search_path(:search => 'recent'), :class => 'recent'
+              %li=link_to t("menu.hot"), idea_search_path(:search => 'hot'), :class => 'top-rated'
+              -# %li= link_to t("menu.nearby"), map_path, :class => 'nearby'
+              %li= link_to t("menu.comments"), comments_path, :class => 'comments'
+
+      %ul.nav.site.alt.title-ideas.select
+        %li
+          = link_to t("menu.category"), "#", :class => 'recent'
+          .select_sub
+            %ul.sub
+              %li.last= link_to t("menu.tags"), tags_path, :class => 'tags'
+              %li= link_to  t('menu.currents'), currents_path, :class => 'currents'
+
+      %ul.nav.site.alt.title-ideas.select
+        %li
+          = link_to t("menu.idea_portal"), "#", :class => 'recent'
+          .select_sub
+            %ul.sub
+              %li= link_to t("menu.about"), home_path('about')
+              %li= link_to t("menu.rule"), home_path('rules')
+              %li= link_to t("menu.contact_us"), home_path("contact")
+
+      -if logged_in?
         %ul.nav.site.alt.title-ideas.select
           %li
-            = link_to t("menu.recent"), idea_search_path(:search => 'recent'), :class => 'recent'
+            = link_to t("menu.profile"), "#", :class => 'recent'
             .select_sub
               %ul.sub
-                %li=link_to t("menu.recent"), idea_search_path(:search => 'recent'), :class => 'recent'
-                %li=link_to t("menu.hot"), idea_search_path(:search => 'hot'), :class => 'top-rated'
-                -# %li= link_to t("menu.nearby"), map_path, :class => 'nearby'
-                %li= link_to t("menu.comments"), comments_path, :class => 'comments'
+                -if current_user.admin?
+                  %li= link_to t("menu.my_profile") , admin_root_path
+                -else
+                  %li= link_to t("menu.my_profile") , profile_url(current_user)
 
-        %ul.nav.site.alt.title-ideas.select
-          %li
-            = link_to t("menu.category"), "#", :class => 'recent'
-            .select_sub
-              %ul.sub
-                %li.last= link_to t("menu.tags"), tags_path, :class => 'tags'
-                %li= link_to  t('menu.currents'), currents_path, :class => 'currents'
+                %li= link_to t("menu.settings"), edit_user_path
+                %li= link_to t("menu.departments"), "#"
 
-        %ul.nav.site.alt.title-ideas.select
-          %li
-            = link_to t("menu.idea_portal"), "#", :class => 'recent'
-            .select_sub
-              %ul.sub
-                %li= link_to t("menu.about"), home_path('about')
-                %li= link_to t("menu.rule"), home_path('rules')
-                %li= link_to t("menu.contact_us"), home_path("contact")
-
-        -if logged_in?
-          %ul.nav.site.alt.title-ideas.select
-            %li
-              = link_to t("menu.profile"), "#", :class => 'recent'
-              .select_sub
-                %ul.sub
-                  %li.first= link_to t("menu.my_profile") , profile_url(current_user)
-                  %li= link_to t("menu.settings"), edit_user_path
-                  %li= link_to t("menu.departments"), "#"
-
-        %ul.nav.site.alt.title-ideas.select
-          %li.search_lable=link_to t("menu.search"), "#",:class=>"search"
-          %li.last.search
-            -form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
-              -#%label{ :for => "search_text" }
-                =t("menu.search")
-              = text_field_tag 'search_text', params[:search_text]
+      %ul.nav.site.alt.title-ideas.select
+        %li.search_lable=link_to t("menu.search"), "#",:class=>"search"
+        %li.last.search
+          -form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
+            -#%label{ :for => "search_text" }
+              =t("menu.search")
+            = text_field_tag 'search_text', params[:search_text]
 
     %ul.nav.user
       - unless logged_in?
