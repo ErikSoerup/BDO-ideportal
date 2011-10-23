@@ -26,9 +26,9 @@
             %label{ :for => "user_password_confirmation" }= t("confirm")
             = f.password_field :password_confirmation, :class => "input-text big"
             %p.note Make sure you typed it right.
-          .form-group.inline
-            %label{ :for => "user_zip_code" }= t("zipcode")
-            = f.text_field :zip_code, :class => "input-text big superthin"
+          -#.form-group.inline
+            -#%label{ :for => "user_zip_code" }= t("zipcode")
+            -#= f.text_field :zip_code, :class => "input-text big superthin"
           .form-group.inline.checkbox
             = f.check_box :terms_of_service, :class => "input-checkbox"
             %label{ :for => "user_terms_of_service" }
