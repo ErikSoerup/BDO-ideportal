@@ -52,6 +52,9 @@ class User < ActiveRecord::Base
   # OAuth support
   has_many :client_applications
   has_many :tokens, :class_name => 'OauthToken', :order => 'authorized_at desc', :include => [:client_application]
+  has_many :relationships, :foreign_key => "follower_id",
+                           :dependent => :destroy
+  has_many :following, :through => :relationships, :source => :followed
 
   validates_presence_of     :name
   validates_presence_of     :email
@@ -233,6 +236,13 @@ class User < ActiveRecord::Base
     votes.each { |vote| vote.count! }  # Only affects votes not already counted
   end
 
+  def following?(followed)
+    relationships.find_by_followed_id(followed)
+  end
+
+  def follow!(followed)
+    relationships.create!(:followed_id => followed.id)
+  end
   protected
     # before filter
     def encrypt_password
@@ -270,4 +280,6 @@ class User < ActiveRecord::Base
     def assign_postal_code
       self.postal_code = PostalCode.find_by_text(zip_code)
     end
+
+
 end

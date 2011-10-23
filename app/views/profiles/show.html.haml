@@ -15,6 +15,11 @@
         %li="Antal kommentarer: <span>#{@user.ideas.length}</span>"
         %li="Antal stemmer :<span> #{@user.votes.length}</span>"
         %li="Antal point : <span>#{ @user.recent_contribution_points || 0 } points</span>"
+        %li.following
+          =link_to "Following : <span>#{@user.following.length }</span>", following_path
+        -if current_user && (@user.id != current_user.id) && !current_user.following?(@user)
+          %li.follow_me
+            =link_to "Follow #{@user.name}", follow_path(@user)
 
       - if @user.linked_to_twitter?
         %p.icon.twitter

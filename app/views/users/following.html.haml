@@ -1,0 +1,10 @@
+%div
+  #popular-ideas.main.panel.section.hfeed
+    .header
+      %h2.icon{ :class => @body_class }
+        - for user in @users
+          .user
+            %h3= user.name
+
+      =will_paginate (@users)
+

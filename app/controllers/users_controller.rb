@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   include AuthenticatedSystem
-  
+
   before_filter :login_required, :only => [:edit, :update, :authorize_twitter]
   before_filter :populate_user, :except => [:show]
 
@@ -42,7 +42,22 @@ class UsersController < ApplicationController
       render :action => 'bad_activation_code'
     end
   end
-  
+
+  def follow
+    @following = User.find(params[:id])
+    if @following
+      current_user.follow!(@following)
+      flash[:info] = "You are now following #{@following.name}"
+      redirect_to profile_url(@following)
+    end
+  end
+
+  def following
+    @body_class="following"
+    page = params[:page] || 1
+    @users = current_user.following.paginate :page =>page , :per_page=>10
+  end
+
   def send_activation
     @user = User.find_by_email(params[:email])
     raise "No such user" unless @user
@@ -54,7 +69,7 @@ class UsersController < ApplicationController
 
   def forgot_password
   end
-  
+
   def send_password_reset
     if params[:email].blank?
       @missing = true
@@ -71,7 +86,7 @@ class UsersController < ApplicationController
     end
     render :action => 'forgot_password'
   end
-  
+
   def new_password
     if log_in_with_activation_code
       flash[:info] = "Please choose a new password."
@@ -80,32 +95,32 @@ class UsersController < ApplicationController
       render :action => 'bad_activation_code'
     end
   end
-  
+
   def edit
     render :action => 'edit'
   end
-  
+
   def update
     # TODO: Should we require confirmation process if email changes?
     @user.update_attributes(params[:user])
     @user.unlink_twitter  if !params[:unlink_twitter].blank?
     @user.unlink_facebook if !params[:unlink_facebook].blank?
-    
+
     if !params[:link_facebook].blank?
       authorize_facebook
     elsif @user.save
       flash.now[:info] = "Your changes have been saved."
       @user.password = @user.password_confirmation = nil
-      
+
       if !params[:link_twitter].blank?
         redirect_to twitter_auth_request_url(authorize_twitter_url)
         return
       end
     end
-    
+
     render :action => 'edit'
   end
-  
+
   def authorize_twitter
     credentials = verify_twitter_authorization
     if credentials
@@ -113,17 +128,17 @@ class UsersController < ApplicationController
       @user.twitter_secret = twitter_oauth.access_token.secret
       @user.twitter_handle = credentials.screen_name
       @user.tweet_ideas = true
-      
+
       if @user.save
         flash.now[:info] = "Your IdeaX account is now linked to Twitter."
       end
     else
       flash.now[:info] = "Twitter authorization canceled."
     end
-    
+
     redirect_to edit_user_path
   end
-  
+
   def authorize_facebook
     if current_facebook_user
       # The synchronous call to Mogli::User.find also serves to sanity check our access credentials
@@ -131,7 +146,7 @@ class UsersController < ApplicationController
       @user.facebook_uid = current_facebook_user.id
       @user.facebook_access_token = current_facebook_client.access_token
       @user.facebook_post_ideas = true
-      
+
       if @user.save
         flash.now[:info] = "Your IdeaX account is now linked to Facebook."
       end
@@ -139,19 +154,19 @@ class UsersController < ApplicationController
       flash.now[:info] = "Facebook authorization canceled."
     end
   end
-  
+
   def page_title
     "Account Management"
   end
-  
+
   include TwitterHelper
-  
+
 protected
 
   def populate_user
     @user = current_user
   end
-  
+
   def new_user_from_params
     @user = User.new(params[:user])
     @user.twitter_token = params[:user][:twitter_token]
@@ -163,7 +178,7 @@ protected
       @user.facebook_access_token = current_facebook_client.access_token
     end
   end
-  
+
   def log_in_with_activation_code
     unless params[:activation_code].blank?
       code = params[:activation_code].gsub(/[^\w]/, '')  # Remove any whitespace/garbage the user accidentally copied
@@ -174,5 +189,5 @@ protected
     end
     logged_in?
   end
-  
+
 end
