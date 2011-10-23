@@ -4,7 +4,8 @@
       %h2.icon{ :class => @body_class }
         - for user in @users
           .user
-            %h3= user.name
+            %h3
+              =link_to user.name, profile_path(user)
 
       =will_paginate (@users)
 
