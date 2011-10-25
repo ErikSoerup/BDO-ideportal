@@ -11,6 +11,7 @@
         %li= link_to 'Users', admin_users_path, :class => 'users'
         %li= link_to 'Comments', admin_comments_path, :class => 'comments'
         %li= link_to 'Life Cycles', admin_life_cycles_path, :class => 'life-cycles'
+        %li= link_to 'Departments', admin_departments_path, :class => 'life-cycles'
         %li.last= link_to 'Client Apps', admin_client_applications_path, :class => 'client-apps'
     %ul.nav.user
       - if logged_in?
