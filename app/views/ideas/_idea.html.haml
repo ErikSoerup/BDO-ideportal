@@ -21,5 +21,5 @@
             == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])},
           -else
             == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])}
-    %span{:id => "xxx_#{idea.id}"}
+    %span{:id => "xxx_#{idea.id}", :class=>"hide"}
       = render :partial => 'inappropriate/xxx', :locals => { :model => idea, :dom_id => "xxx_#{idea.id}" }
