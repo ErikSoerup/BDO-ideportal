@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111022222344) do
+ActiveRecord::Schema.define(:version => 20111025225423) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20111022222344) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.boolean  "is_anonymous"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"

@@ -2134,6 +2134,16 @@ h2.icon.user{
   background:#fff
 }
 .search_lable a:hover{
-    font-weight: bold;
+    font-weight:bold;
     text-decoration: none;
+}
+
+label#anonymous_checkbox{
+  display:block;
+  float:right;
+  width:89%;
+  font-weight:bold;
+}
+#idea_is_anonymous{
+  margin-left:36px;
 }
