@@ -86,7 +86,7 @@
             -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
             -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
         .body.ideas
-          = render :partial => 'idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>5)
+          = render :partial => 'idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>9)
         .footer
           .pagination
             = link_to t("more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'next_page'
