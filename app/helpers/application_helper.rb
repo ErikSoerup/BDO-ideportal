@@ -65,14 +65,14 @@ module ApplicationHelper
     time.strftime '%a, %d %b %Y %H:%M:%S %z'
   end
 
-
-  def author_link_of(idea){
+  def author_link_of(idea)
     unless idea.is_anonymous?
       link_to h(idea.inventor.name), profile_path(idea.inventor), :class => idea.inventor.admin? ? 'fn url admin' : 'fn url'
     else
       link_to "Anonymous", "#"
     end
-  }
+  end
+
   def xml_pagination_attrs(p)
     { 'first-index' => (p.current_page-1) * p.per_page,
       'page-size' => p.per_page,
