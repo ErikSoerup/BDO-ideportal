@@ -98,11 +98,12 @@ private
 
   def response_for_successful_login
     redirect_back_or_default do
-      if current_user.active?
+      #if current_user.active?
+        #redirect_to '/'
+      #else
+        #render :action => 'inactive'
+      #end
         redirect_to '/'
-      else
-        render :action => 'inactive'
-      end
     end
   end
 
