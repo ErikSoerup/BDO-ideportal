@@ -6,8 +6,8 @@ namespace :db do
   desc "Load seed data into the current environment's database."
   task :seed => [ :environment, :'db:migrate' ] do
 
-    User.find_by_email("alina@bdo.dk").try(:delete)
-    User.find_by_email("bdo_admin@bdo.dk").try(:delete)
+    Idea.update_all("is_anonymous='false'")
+    #User.find_by_email("bdo_admin@bdo.dk").try(:delete)
     PostalCode.delete_all
     PostalCode.transaction do
 
@@ -35,7 +35,6 @@ namespace :db do
       admin_user = admin_role.users.first if admin_role
       if admin_user
         puts "Admin user already exists: #{admin_user.email}"
-        admin_user.delete
       else
         puts "Creating admin user..."
         admin_email    = "bdo_admin@bdo.dk" #ask('Admin user email: ')
@@ -46,6 +45,7 @@ namespace :db do
           :zip_code => DEFAULT_ZIP_CODE,
           :password => admin_password,
           :password_confirmation => admin_password,
+          :department_id=>1 ,
           :terms_of_service => '1')
 
         puts "Granting admin privileges to #{admin_user.email}..."
