@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
   include TwitterHelper
 
   def new
+    flash.clear
     @body_class = 'login'
     render :new , :layout=>false
   end

@@ -60,7 +60,6 @@ module SearchHelper
           end
         end
       when 'department'
-        @body_class="department"
         department_id = search_params.shift
         if department_id
           query_opts[:conditions][0] += ' and users.department_id = ?'

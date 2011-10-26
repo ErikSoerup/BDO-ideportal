@@ -311,7 +311,7 @@ body {
 
 #share {
   margin-bottom: 36px;
-  display: none; }
+   }
   #share .body {
     padding: 24px 0 22px;
     background: #00274b;
@@ -2136,7 +2136,4 @@ h2.icon.user{
 .search_lable a:hover{
     font-weight: bold;
     text-decoration: none;
-}
-.hide{
-  display:none
 }
