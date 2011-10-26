@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(:version => 20111025225423) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
-    t.boolean  "is_anonymous"
+    t.boolean  "is_anonymous",                                                       :default => false
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
