@@ -66,13 +66,7 @@ module ApplicationHelper
   end
 
   def author_link_of(idea)
-    unless idea.is_anonymous?
-      link_to idea.inventor.name, :controller=>"profiles",
-        :action=>"show",:id=> idea.inventor.id ,
-        :class => idea.inventor.admin? ? 'fn url admin' : 'fn url'
-    else
-      link_to "Anonymous", "#"
-    end
+
   end
 
   def xml_pagination_attrs(p)

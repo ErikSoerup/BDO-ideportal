@@ -7,7 +7,11 @@
         =t("ago")
       =t("by")
       %span.vcard.author
-        = author_link_of(idea)
+        -unless idea.is_anonymous?
+          =link_to idea.inventor.name, profile_path(idea.inventor), :class => idea.inventor.admin? ? 'fn url admin' : 'fn url'
+        -else
+          =link_to "Anonymous", "#"
+
     %h3.entry-title= link_to h(idea.title), idea_path(idea)
     %span{:id => "vote_#{idea.id}"}= render :partial => 'votes/vote', :locals => { :idea => idea, :dom_id => "vote_#{idea.id}" }
     .entry-content
