@@ -20,7 +20,10 @@
         %abbr.published.time-relative== #{time_ago_in_words(@idea.created_at)} ago
         =t("by")
         %span.vcard.author
-          = link_to h(@idea.inventor.name), profile_path(@idea.inventor), :class => @idea.inventor.admin? ? 'fn url admin' : 'fn url'
+          -unless @idea.is_anonymous?
+            =link_to @idea.inventor.name, profile_path(@idea.inventor), :class => @idea.inventor.admin? ? 'fn url admin' : 'fn url'
+          -else
+            =link_to "Anonymous", "#"
         %br
         - if !@idea.current.nil? && @idea.current.id != Current::DEFAULT_CURRENT_ID
           Part of:
