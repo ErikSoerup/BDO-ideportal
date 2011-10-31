@@ -28,8 +28,9 @@ class SessionsController < ApplicationController
       end
       response_for_successful_login
     else
-      #flash.now[:error] = render_to_string :partial => 'login_failed'
-      redirect_to login_path
+      @body_class = 'login'
+      flash.now[:error] = render_to_string :partial => 'login_failed'
+      render :new , :layout=>false
     end
   end
 

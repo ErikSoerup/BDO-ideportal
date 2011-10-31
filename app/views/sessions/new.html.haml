@@ -22,9 +22,12 @@
       .main.panel.section
         .header
           %h2= t('menu.sign_in') + " #{SHORT_SITE_NAME}"
-
         .body
           .group
+            -if flash[:error].present?
+              .error=flash[:error]
+              %br
+
             - form_tag session_path do
               .form-group.inline
                 %label{ :for => "email" }=t('email_address')
