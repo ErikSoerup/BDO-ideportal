@@ -16,7 +16,7 @@ class IdeasController < ApplicationController
   before_filter :add_search_feed, :only => :index
   before_filter :add_comments_feed, :only => [:show, :update]
 
-  param_accessible :idea => [:title, :description, :tag_names, :current_id, :document, :is_anonymous ]
+  param_accessible :idea => [:title, :description, :tag_names, :current_id, :document  ]
 
   make_resourceful do
     actions :new, :create, :show, :update

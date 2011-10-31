@@ -988,11 +988,11 @@ body.life-cycles .nav li a.life-cycles {
 .panel {
   margin-left: -5px;
   position: relative;
-  width: 955px;
+  width: 680px;
   background-color: #fff; }
   .panel .body {
     margin: 0 25px;
-    width: 900px;
+    width: 620px;
 	border-radius: 15px; /* CSS3 */
 	-moz-border-radius: 	15px; /* Firefox */
 	-webkit-border-radius: 	15px; /* Safari and Chrome */
@@ -1020,7 +1020,7 @@ body.life-cycles .nav li a.life-cycles {
       text-transform: uppercase; }
   .panel .header {
     padding: 21px 25px 0px;
-    width: 905px; }
+    width: 650px; }
     .panel .header h2 {
       overflow: hidden; }
       .panel .header h2 span {
