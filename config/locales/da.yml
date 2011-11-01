@@ -63,10 +63,10 @@ da:
   nearby_ideas: Ideer fra din afdeling
   more: mere
   recent_ideas: Seneste ideer
-  my_idea_is: Overskrift
+  my_idea_is: Min ide er ..
   look_around: Se dig omkring
   get_to_know_us: Lær os at kende
-  great_if: Det kunne være smart, hvis..
+  great_if: det kunne være Greate hvis
   tag_names: Kundesegment, forretningsområde, ydelse, proces,..
   idea: ide
   here_are_some_ideas: HER ER ET PAR IDEER. Hvad synes du om dem?
@@ -98,7 +98,6 @@ da:
   idea_current_text: Fokusområder er samlinger af ideer med et fælles overordnet tema. Find ud af, hvad du kan bidrage med i dine favoritområder!
   idea_in_short: din idé i korte
   description: Beskrivelse
-  edit_idea: Ret din ide
   breif_explaination: En kort forklaring
   seperate_with_coma: Separat med kommaer
   dont_have_account: Har du ikke en konto?
