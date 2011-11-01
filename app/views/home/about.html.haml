@@ -1,9 +1,10 @@
 %div
-  .main.panel
-    .header
-      = render :partial => 'custom/about'
-    .footer
+  -cache do
+    .main.panel
+      .header
+        = render :partial => 'custom/about'
+      .footer
   %hr.hide
   #sidebar.aside
-    - render :partial => "shared/sidebar"
+    =render :partial => "shared/sidebar"
 

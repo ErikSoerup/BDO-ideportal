@@ -1,18 +1,21 @@
 %div
   .main.panel
     .header
+      -cache do
+        %h3= t("rule.heading1")
+        %p= t("rule.para1")
+        %h3= t("rule.heading2")
+        %p= t("rule.para2")
+        %h3= t("rule.heading3")
+        %p= t("rule.para3")
+        %h3= t("rule.heading4")
+        %p= t("rule.para4")
+        %h3= t("rule.heading5")
+        %p= t("rule.para5")
+        %h3= t("rule.heading6")
+        %p= t("rule.para6")
+      .footer
 
-      %h3= t("rule.heading1")
-      %p= t("rule.para1")
-      %h3= t("rule.heading2")
-      %p= t("rule.para2")
-      %h3= t("rule.heading3")
-      %p= t("rule.para3")
-      %h3= t("rule.heading4")
-      %p= t("rule.para4")
-      %h3= t("rule.heading5")
-      %p= t("rule.para5")
-      %h3= t("rule.heading6")
-      %p= t("rule.para6")
-    .footer
-
+    %hr.hide
+    #sidebar.aside
+      =render :partial => "shared/sidebar"
