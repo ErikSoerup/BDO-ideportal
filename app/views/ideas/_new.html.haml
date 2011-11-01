@@ -22,6 +22,9 @@
     = render :partial => 'ideas/tag_editor', :locals => { :f => f }
     = submit_tag 'Share My Idea', :class => "input-submit big"
 
+  #idea-anaymous-group
+    = f.check_box :is_anonymous
+    = f.label :is_anonymous , "I want to be anonymous" , :id=>"anonymous_checkbox", :style=>"display:block"
   %p.note>
     =t("notice.constructive")
 
