@@ -3,14 +3,14 @@
     %h1#logo= link_to image_tag('logo.png', :alt=>"BDO.dk"), root_path
     #nav-primary
       %ul.nav.site.alt.title-ideas
-        %li.first=link_to t("menu.share"), root_path, :class => "home active"
+        %li.first=link_to t("menu.hot"), idea_search_path(:search => 'hot'), :class => 'top-rated'
         %li=link_to t("menu.recent"), idea_search_path(:search => 'recent'), :class => 'recent'
         %li.last= link_to  t('menu.currents'), currents_path, :class => 'currents'
 
       %ul.nav.site
         %li.first= link_to t("menu.comments"), comments_path, :class => 'comments'
         %li= link_to t("menu.tags"), tags_path, :class => 'tags'
-        %li.last=link_to t("menu.hot"), idea_search_path(:search => 'hot'), :class => 'top-rated'
+        %li.last= link_to t("menu.advance_search"), "#"
 
 
     %ul.nav.user
@@ -18,7 +18,6 @@
         %li.first= link_to t('menu.my_profile')  , profile_url(current_user)
         %li= link_to t('menu.settings'), edit_user_path
         %li= link_to t("menu.about"), home_path('about')
-        %li= link_to t("menu.rule"), home_path('rules')
         %li= link_to t("menu.contact_us"), home_path("contact")
 
         -if current_user.admin?
