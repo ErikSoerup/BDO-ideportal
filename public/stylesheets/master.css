@@ -228,6 +228,9 @@ input, textarea {
 #submit-save-changes {
   background-image: url(../images/form-submit-save-changes.gif); }
 
+.cancel.button {
+  background-image: url(../images/form-cancel.gif); }
+
 #idea_search_box .input-submit {
   background-image: url(../images/form-submit-search.gif); }
 
@@ -662,7 +665,7 @@ h1#logo {
     height: 26px;
     list-style: none;
     position: absolute;
-    right: 300px;
+    right: 190px;
 	background-color: #328881;
 	border-radius: 			5px; /* CSS3 */
 	-moz-border-radius: 	5px; /* Firefox */
@@ -1512,13 +1515,13 @@ h3.icon {
 
       .idea.mini .title .posted {
         margin: 0;
-        font-size: 9px; }
+        font-size: 11px; }
 	  .idea.mini.contributor .title .posted {
         display: none; }
       .idea.mini .title .entry-title {
         margin: 0;
-        font-size: 10px;
-        line-height: 11px;
+        font-size: 13px;
+        line-height: 14px;
         overflow: hidden; }
       .idea.mini.contributor .title .entry-point {
         float: right;
@@ -1534,7 +1537,7 @@ h3.icon {
       top: 5px; }
     .idea.mini .vote-count {
       margin-bottom: 1px;
-      margin-left: 5px;
+	  margin-left: 5px;
       padding-top: 0;
       font-size: 18px;
       height: 37px;
@@ -1930,11 +1933,14 @@ h3.icon {
 #search-wrap {
   padding-left: 20px; }
 
-.header h3.popular {/* background: url(../images/icon_hot.png) no-repeat left center;*/ }
+.header h3.popular {
+xbackground: url(../images/icon_hot.png) no-repeat left center; }
 
-.header h3.recent { /*background: url(../images/icon_recent.png) no-repeat left center; */}
+.header h3.recent {
+xbackground: url(../images/icon_recent.png) no-repeat left center; }
 
-.header h3.nearby {/* background: url(../images/icon_nearby.png) no-repeat left center; */}
+.header h3.nearby {
+xbackground: url(../images/icon_nearby.png) no-repeat left center; }
 
 .box_icon {
 position: absolute; margin: -1px 0 0 -54px; }
@@ -2167,4 +2173,8 @@ label#anonymous_checkbox{
 }
 #idea_is_anonymous{
   margin-left:36px;
+}
+
+.tagify-container{
+width: 305px;
 }

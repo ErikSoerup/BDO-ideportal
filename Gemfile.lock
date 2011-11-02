@@ -19,6 +19,7 @@ GEM
     calendar_date_select (1.16.1)
     cocaine (0.2.0)
     color (1.4.1)
+    columnize (0.3.4)
     crack (0.1.8)
     facebooker2 (0.0.5)
       mogli (>= 0.0.12)
@@ -31,6 +32,8 @@ GEM
       crack (= 0.1.8)
     json (1.4.6)
     lazy (0.9.6)
+    linecache (0.46)
+      rbx-require-relative (> 0.0.4)
     mash (0.1.1)
     mime-types (1.16)
     mocha (0.9.10)
@@ -58,7 +61,13 @@ GEM
       activesupport (= 2.3.10)
       rake (>= 0.8.3)
     rake (0.8.7)
+    rbx-require-relative (0.0.5)
     rcov (0.9.9)
+    ruby-debug (0.10.4)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.4.0)
+    ruby-debug-base (0.10.4)
+      linecache (>= 0.3)
     ruby-hmac (0.4.0)
     shoulda (2.11.3)
     thoughtbot-shoulda (2.11.1)
@@ -94,6 +103,7 @@ DEPENDENCIES
   pg
   rails (~> 2.3.10)
   rcov
+  ruby-debug
   ruby-hmac
   shoulda
   thoughtbot-shoulda

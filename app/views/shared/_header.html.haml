@@ -23,7 +23,6 @@
 
         -if current_user.admin?
           %li= link_to 'Admin', admin_root_path
-        %li= link_to t('menu.sign_out'), logout_path
       %li.last.search
         - form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
           %label{ :for => "search_text" }
@@ -31,4 +30,5 @@
           = text_field_tag 'search_text', params[:search_text]
 
 
-
+    %ul.nav.user
+      %li{:style=>"float:right"}= link_to t('menu.sign_out'), logout_path
