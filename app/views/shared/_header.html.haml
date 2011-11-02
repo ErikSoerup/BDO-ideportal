@@ -15,7 +15,7 @@
 
     %ul.nav.user
       - if logged_in?
-        %li.first= link_to "#{h current_user.name}" , profile_url(current_user)
+        %li.first= link_to t('menu.my_profile')  , profile_url(current_user)
         %li= link_to t('menu.settings'), edit_user_path
         %li= link_to t("menu.about"), home_path('about')
         %li= link_to t("menu.rule"), home_path('rules')

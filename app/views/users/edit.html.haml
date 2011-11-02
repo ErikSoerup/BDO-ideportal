@@ -1,44 +1,38 @@
 %div
   .main.panel.section
     .header
-      %h2.icon.user-edit Account Settings
+      %h2.icon.user-edit Konto Opsætning
 
     .body.group
       = error_messages_for :user
       - form_for :user, :url => user_path, :html => { :method => :put, :id => 'edit_user_form' } do |f|
         .form-group.inline
-          = f.label :name, "Screen name<br /><em>required</em>", :class => 'required'
+          = f.label :name, "Brugernavn<em>*</em>", :class => 'required'
           = f.text_field :name, :class => "input-text"
-          %p.note== This is your public name on #{SHORT_SITE_NAME}
         .form-group.inline
-          = f.label :name, "Department<br /><em>required</em>", :class => 'required'
+          = f.label :name, t("department") + "<em>*</em>", :class => 'required'
           = f.collection_select :department_id,Department.all,:id,:name, :class => "input-text"
-        .form-group.inline
-          = f.label :email, "Email<br /><em>required</em>", :class => 'required'
-          = f.text_field :email, :class => "input-text"
-          %p.note Used for password recovery and notifications
-        .form-group.inline
-          = f.label :zip_code, "Zip Code<br /><em>required</em>", :class => 'required'
-          = f.text_field :zip_code, :class => "input-text"
-          %p.note Your U.S. zip code (Another country's postal code works too!)
 
         .form-group.inline
-          = f.label :password, "New password"
-          = f.password_field :password, :class => "input-text"
-          %p.note Minimum 4 characters.
+          = f.label :email, "Email<em>*</em>", :class => 'required'
+          = f.text_field :email, :class => "input-text"
+
         .form-group.inline
-          = f.label :password_confirmation, "Confirm"
+          = f.label :password, t("new_password")
+          = f.password_field :password, :class => "input-text"
+
+        .form-group.inline
+          = f.label :password_confirmation, "Bekræft adgangskode"
           = f.password_field :password_confirmation, :class => "input-text"
-          %p.note Make sure you typed it right.
 
         .form-group.inline.checkbox
           = f.check_box :notify_on_comments, :class => "input-checkbox" , :checked=>true
-          = f.label :notify_on_comments, "Notify me when someone comments on my ideas"
+          = f.label :notify_on_comments, "Send en mail til mig, hvis andre skriver kommentarer"
         -# ------- STYLE NEEDED ------
         .form-group.inline
           %label Avatar
           = gravatar_for @user, :size => 64
-          Edit your avatar at
+          gem dit billede på gravatar
           = link_to 'gravatar.com', 'http://gravatar.com'
         -# ------- /STYLE NEEDED ------
 
