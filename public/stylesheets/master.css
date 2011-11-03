@@ -936,7 +936,8 @@ body.life-cycles .nav li a.life-cycles {
 	 }
     .input_file {
 	  float: left;
-      background: url(../images/idea_file_bg.jpg) no-repeat;
+      background: url(../images/idea_file_bg.jpg) no-repeat ;
+          margin-left: 8px;
 	  height: 27px;
 	  padding-top: 3px;
 	 }
@@ -1432,8 +1433,9 @@ h3.icon {
       margin-bottom: 8px;
       line-height: 24px; }
       .idea.teaser .entry-title a {
-        border-bottom-width: 2px; }
+        border-bottom-width: 2px;}
     .idea.teaser .vote {
+      background: url(../images/idea_bulb.png) no-repeat center bottom;
       border: 1px solid #786860;
 	  padding: 2px;
       left: 9px;
@@ -2208,10 +2210,12 @@ label#anonymous_checkbox{
 }
 
 .tagify-container{
-width: 305px !important;
+    margin-left: 8px;
+    width: 305px !important;
 }
 
 .form-group.inline label {
 width: 128px !important;
 margin-right: 0 !important;
 }
+body .ui-autocomplete{width:312px}

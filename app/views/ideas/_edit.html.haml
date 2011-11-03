@@ -8,6 +8,7 @@
   #idea-description-group.form-group.inline
     = f.label :description, t("description")
     = f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "30"
+
   #idea-tags-group.form-group.inline
     %label{:for => "tags"} Emneord
     = render :partial => 'ideas/tag_editor', :locals => { :f => f }

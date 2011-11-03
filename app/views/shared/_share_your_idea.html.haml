@@ -15,6 +15,9 @@
             %strong=t("description")
             %small=t('breif_explaination')
           = f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"
+          .input_file
+            = text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
+            =f.file_field :document , :size=>80
         #idea-tags-group.form-group.inline
           %label{ :for => "idea-tags" }
             %strong=t('menu.tags')
