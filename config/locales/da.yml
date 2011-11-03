@@ -26,7 +26,7 @@ da:
   menu:
     about: Om ideportalen
     sign_up: Opret
-    sign_in: Log på
+    sign_in: Log ind på ideportalen
     search: Søg
     settings: Indstillinger
     sign_out: Log ud
@@ -115,6 +115,9 @@ da:
   in_current: i det nuværende
   opening: SÅDAN VIRKER DET
   phone: tlf nr.
+  forgot_pass: Har du glemt dit kodeord?
+  no_worries: Skriv din mail, og vi sender en kodeord din mail
+
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Næste &#8594;"
