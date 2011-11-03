@@ -144,12 +144,11 @@ input, textarea {
     font-weight: bold;
     line-height: 16px; }
   .form-group.inline label {
-    margin-right: 20px;
     padding-top: 2px;
     float: left;
     min-height: 30px;
     text-align: right;
-    width: 140px; }
+    width: 128px; }
     .form-group.inline label a {
       text-decoration: underline; }
     .form-group.inline label small {
@@ -180,7 +179,7 @@ input, textarea {
       text-align: left;
       width: auto; }
   .form-group.inline > .input-text, .form-group.inline > .input-textarea, .form-group.inline > .input-checkbox, .form-group.inline > .fieldWithErrors {
-    float: left; border: 1px solid #e9e9e9; }
+    float: left; border: 1px solid #e9e9e9; margin-left: 10px; }
   .form-group.inline .input-checkbox {
     margin-right: 4px; }
   .form-group .note {
@@ -211,7 +210,8 @@ input, textarea {
   background-image: url(../images/form-submit-share-it.gif); }
 
 #comments .input-submit {
-  background-image: url(../images/form-submit-post-comment.gif); }
+  background-image: url(../images/form-submit-post-comment.gif);
+  margin: 0 0 18px -23px; }
 
 #ideas .input-submit {
   background-image: url(../images/form-submit-share-it.gif); }
@@ -591,7 +591,7 @@ h1#logo {
 #nav-primary {
 	float: right;
 	position: relative;
-	left: -195px;
+	left: -180px;
 	top: 130px;
 	border-radius: 			10px; /* CSS3 */
 	-moz-border-radius: 	10px; /* Firefox */
@@ -665,7 +665,7 @@ h1#logo {
     height: 26px;
     list-style: none;
     position: absolute;
-    right: 190px;
+    right: 235px;
 	background-color: #328881;
 	border-radius: 			5px; /* CSS3 */
 	-moz-border-radius: 	5px; /* Firefox */
@@ -858,7 +858,7 @@ body.life-cycles .nav li a.life-cycles {
     width: 530px; }
   #intro .form-group {
     margin: 0;
-    padding: 5px 0 5px 30px; }
+    padding: 5px 0 5px 20px; }
   #intro label {
     display: none; }
   #intro .input-text {
@@ -1088,7 +1088,7 @@ body.life-cycles .nav li a.life-cycles {
         line-height: 24px;
 		color: #2eafa4;
 		text-transform: uppercase;
-		padding-left: 30px; }
+		padding-left: 0; }
     .panel.summary .pagination {
       font-size: 14px; }
 
@@ -1144,7 +1144,7 @@ body.login .panel .body
 body.login .input-text.big
 				{
 				border: none;
-				width: 170px !important;
+				width: 160px !important;
 				background: url(../images/login_input.jpg) no-repeat;
 				padding-top: 3px !important;
 				padding-bottom: 4px !important;
@@ -1330,7 +1330,8 @@ h3.icon {
   /*----- STYLE NEEDED ----- */
   /*----- /STYLE NEEDED ----- */ }
   .group > h2, .group > h3, .group > h4, .group > h5, .group > p, .group > ol {
-    padding-left: 20px; }
+    padding-left: 20px;
+	padding-top: 10px; }
   .group.slate {
     background: #e6e3e1;
 	margin: 0 10px;
@@ -1520,7 +1521,7 @@ h3.icon {
         display: none; }
       .idea.mini .title .entry-title {
         margin: 0;
-        font-size: 13px;
+        font-size: 12px;
         line-height: 14px;
         overflow: hidden; }
       .idea.mini.contributor .title .entry-point {
@@ -1751,8 +1752,11 @@ h3.icon {
   width: auto; }
 
 .form-submit a.cancel {
-  margin-left: 20px;
-  padding-top: 10px; }
+	float: left;
+    height: 32px;
+    margin-left: 10px;
+    text-indent: -9999px;
+    width: 150px; }
 
 .voted-for {
   margin: 0 auto;
@@ -1906,6 +1910,7 @@ h3.icon {
   background-position: left top;
   background-repeat: no-repeat;
   overflow: hidden;
+  float: left;
   text-indent: -9000px; }
 
 .form-group:after, .header:after, .entry-meta:after {
@@ -2144,15 +2149,42 @@ h2.icon.user{
 .profile_top{
   width:400;
   float:left;
-  color:#2EAFA4;
-  list-style: none
+  list-style: none;
 }
 .profile_top li{
-  padding-left:10px;
-  font-weight:bold;
+  font-weight:normal;
+  padding: 0;
+  color:#888;
+}
+.profile_top li span{
+  font-weight: bold;
+  color: #2EAFA4;
+}
+.profile_top li.user {
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 3px;
+  text-transform: capitalize;
+}
+.profile_top li.following {
+background: url(../images/following.png) no-repeat left center;
+padding: 3px 0 3px 25px;
+margin-top: 5px;
+}
+.profile_top li.follow_me {
+background: url(../images/follow.png) no-repeat left center;
+padding: 3px 0 3px 25px;
+margin-top: 5px;
 }
 .header img.gravatar{
   float:left;
+  margin: 15px 5px 0 10px;
+  border: 1px solid #eee;
+  padding: 3px 2px;
+box-shadow:			0 0 2px 1px #f1f1f1; /* CSS3 */
+-moz-box-shadow:	0 0 2px 1px #f1f1f1; /* Firefox */
+-webkit-box-shadow:	0 0 2px 1px #f1f1f1; /* Safari and Chrome */
+-khtml-box-shadow:	0 0 2px 1px #f1f1f1; /* Linux Browsers */
 }
 .idea.teaser{
   background:#fff
@@ -2176,5 +2208,10 @@ label#anonymous_checkbox{
 }
 
 .tagify-container{
-width: 305px;
+width: 305px !important;
+}
+
+.form-group.inline label {
+width: 128px !important;
+margin-right: 0 !important;
 }
