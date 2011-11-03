@@ -18,7 +18,6 @@
         %li.first= link_to t('menu.my_profile')  , profile_url(current_user)
         %li= link_to t('menu.settings'), edit_user_path
         %li= link_to t("menu.about"), home_path('about')
-        %li= link_to t("menu.contact_us"), home_path("contact")
 
         -if current_user.admin?
           %li= link_to 'Admin', admin_root_path
@@ -29,5 +28,5 @@
           = text_field_tag 'search_text', params[:search_text]
 
 
-    %ul.nav.user
-      %li{:style=>"float:right"}= link_to t('menu.sign_out'), logout_path
+    %ul.nav.user{:style=>"right:30px"}
+      %li= link_to t('menu.sign_out'), logout_path

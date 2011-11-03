@@ -31,7 +31,7 @@ da:
     settings: Indstillinger
     sign_out: Log ud
     share: Del!
-    hot: Hotte emner
+    hot: Hotte ideer
     recent: Seneste
     currents: Hovedveje
     nearby: Din afdeling
@@ -114,7 +114,7 @@ da:
   submit_ideas: Publicer ideer!
   in_current: i det nuværende
   opening: SÅDAN VIRKER DET
-
+  phone: tlf nr.
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Næste &#8594;"

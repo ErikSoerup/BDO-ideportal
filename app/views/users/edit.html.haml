@@ -25,6 +25,10 @@
           = f.label :password_confirmation, "Bekræft adgangskode"
           = f.password_field :password_confirmation, :class => "input-text"
 
+        .form-group.inline
+          = f.label :phone, t('phone')
+          = f.text_field :phone, :class => "input-text"
+
         .form-group.inline.checkbox
           = f.check_box :notify_on_comments, :class => "input-checkbox" , :checked=>true
           = f.label :notify_on_comments, "Send en mail til mig, hvis andre skriver kommentarer"

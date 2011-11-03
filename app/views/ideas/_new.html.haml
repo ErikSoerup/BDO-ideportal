@@ -5,8 +5,7 @@
 - form_for :idea, :url => ideas_path, :update => 'submit-idea', :has_example_text => true, :html=>{:multipart=>true, :id=>"idea_form"} do |f|
   - if defined?(current) && !current.nil?
     =f.hidden_field :current_id, :id => "idea-current-id", :value=>current.id
-  - else
-    =f.hidden_field :current_id, :id => "idea-current-id"
+
   #idea-title-group.form-group.inline
     = f.label :title, "Idea"
     = f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text big"
@@ -20,6 +19,10 @@
   #idea-tags-group.form-group.inline
     %label{:for => "tags"} Tags
     = render :partial => 'ideas/tag_editor', :locals => { :f => f }
+    -unless defined?(current) && current.id
+      = f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}
+
+  .form-group.inline
     = submit_tag 'Share My Idea', :class => "input-submit big"
 
   %p.note>
