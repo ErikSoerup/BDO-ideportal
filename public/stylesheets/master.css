@@ -916,6 +916,7 @@ body.life-cycles .nav li a.life-cycles {
 	  margin-right: 10px; }
 
     #intro #idea-tags-group select {
+      margin-left:15px;
       float: left;
       width: 215px;
 	  border-radius: 8px 8px 8px 8px;
@@ -2211,7 +2212,7 @@ label#anonymous_checkbox{
 
 .tagify-container{
     margin-left: 8px;
-    width: 305px !important;
+    width: 245px !important;
 }
 
 .form-group.inline label {
