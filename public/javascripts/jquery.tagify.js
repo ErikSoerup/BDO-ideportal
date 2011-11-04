@@ -7,7 +7,7 @@
 			delimiters: [13, 188],          // what user can type to complete a tag in char codes: [enter], [comma]
 			outputDelimiter: ',',           // delimiter for tags in original input field
 			cssClass: 'tagify-container',   // CSS class to style the tagify div and tags, see stylesheet
-			addTagPrompt: 'Emner'        // placeholder text
+			addTagPrompt: 'Emneord'        // placeholder text
 		},
 
 		_create: function() {
