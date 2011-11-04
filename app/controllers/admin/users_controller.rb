@@ -8,7 +8,8 @@ module Admin
     helper_method :is_editor?
 
     make_resourceful do
-      actions :index, :edit, :update, :suspend, :unsuspend
+      actions :index, :edit, :new , :create, :update, :suspend, :unsuspend
+
 
       before :update do
         # User disallows auto population of some properties from forms, so we must handle them manually
@@ -30,6 +31,12 @@ module Admin
         end
       end
 
+
+      before :create do
+        @user.active!
+      end
+
+
       response_for :index do |format|
         format.html { render :action => 'index' }
         format.js   { render :partial => 'index' }
@@ -38,6 +45,11 @@ module Admin
       response_for :update do
         flash[:info] = 'Changes saved.'
         redirect_to edit_admin_user_path(@user)
+      end
+
+      response_for :create do
+        flash[:info]="User create by #{@user.email}"
+        redirect_to :action=>'index'
       end
     end
 

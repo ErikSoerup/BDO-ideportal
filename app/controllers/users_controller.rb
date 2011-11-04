@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include AuthenticatedSystem
 
   before_filter :login_required, :only => [:edit, :update, :authorize_twitter, :following, :follow]
-  before_filter :populate_user, :except => [:show]
+  before_filter :populate_user, :except => [:show, :new]
 
   def new
     if params[:user] && params[:user][:twitter_token] || params[:facebook_create]
