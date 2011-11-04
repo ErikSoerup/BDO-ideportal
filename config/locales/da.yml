@@ -116,7 +116,7 @@ da:
   opening: SÅDAN VIRKER DET
   phone: tlf nr.
   forgot_pass: Har du glemt dit kodeord?
-  no_worries: Skriv din mail, og vi sender en kodeord din mail
+  no_worries: Skriv din mail, og vi sender vi et link, så du kan vælge et nyt kodeord
 
   will_paginate:
     previous_label: "&#8592; Forrige"
