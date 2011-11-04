@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103032136) do
+ActiveRecord::Schema.define(:version => 20111104194015) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -53,17 +53,23 @@ ActiveRecord::Schema.define(:version => 20111103032136) do
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "inappropriate_flags",               :default => 0
-    t.boolean  "hidden",                            :default => false
-    t.string   "ip",                  :limit => 64
+    t.integer  "inappropriate_flags",                 :default => 0
+    t.boolean  "hidden",                              :default => false
+    t.string   "ip",                    :limit => 64
     t.string   "user_agent"
-    t.boolean  "marked_spam",                       :default => false
-    t.boolean  "spam_checked",                      :default => false, :null => false
-    t.boolean  "notifications_sent",                :default => false, :null => false
+    t.boolean  "marked_spam",                         :default => false
+    t.boolean  "spam_checked",                        :default => false, :null => false
+    t.boolean  "notifications_sent",                  :default => false, :null => false
+    t.text     "vectors"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   add_index "comments", ["author_id"], :name => "index_comments_on_author_id"
   add_index "comments", ["idea_id"], :name => "index_comments_on_idea_id"
+  add_index "comments", ["vectors"], :name => "comments_fts_vectors_index"
 
   create_table "currents", :force => true do |t|
     t.string   "title"
@@ -131,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20111103032136) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.boolean  "is_anonymous",                                                       :default => false
+    t.text     "vectors"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
@@ -273,6 +280,7 @@ ActiveRecord::Schema.define(:version => 20111103032136) do
     t.float    "recent_contribution_points"
     t.text     "vectors"
     t.integer  "department_id"
+    t.text     "vectors"
     t.string   "phone"
   end
 

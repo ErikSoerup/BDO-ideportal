@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 
   before_filter :owner_required, :only => :update
 
-  param_accessible :comment => [:text]
+  param_accessible :comment => [:text, :document]
 
   make_resourceful do
     actions :new, :create, :update
