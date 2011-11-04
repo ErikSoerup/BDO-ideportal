@@ -1,4 +1,3 @@
-require 'paperclip'
 class Attachment < ActiveRecord::Base
   belongs_to :idea
   has_attached_file :document,

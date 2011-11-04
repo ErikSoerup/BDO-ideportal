@@ -18,12 +18,6 @@ class CurrentsController < ApplicationController
     @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
 
-  def suggestions
-    @currrent ||= Current.last
-    @current_ideas = search_ideas(params.merge(:search => ['current', Current::DEFAULT_CURRENT_ID]))
-    render :show
-  end
-
 
   def page_title
     if @current
