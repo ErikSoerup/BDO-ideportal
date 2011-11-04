@@ -79,12 +79,13 @@
                       :collection => @idea.comments.visible,
                       :controller => 'comments',
                       :locals => { :show_avatar => true }
-        - form_for :comment, :url => idea_comments_url(@idea), :html => { :onsubmit => 'return validateComment()' } do |f|
+        - form_for :comment, :url => idea_comments_url(@idea), :html => { :multipart => true, :onsubmit => 'return validateComment()' } do |f|
           #comment-missing.message.error{:style => 'display: none'}
             =t("enter_comment")
           .form-group.inline#post-comment
             %label{ :for => "comment-text" } Din Kommentar
             = f.text_area :text, :id => "comment-text", :class => "input-textarea"
+            = f.file_field :document , :size=>80
           .form-submit.inline
             - if current_user && !current_user.active?
               %p.message.info Your comment will not be publicly visible until you confirm your account.
