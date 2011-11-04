@@ -10,8 +10,8 @@ production:
 development:
   adapter: postgresql
   database: bdo_development
-  username: shishir
-  password: shishir
+  username: rajib
+  password: toor
   encoding: unicode
   pool: 5
   #template: template1  # fixes database encoding errors in newer versions of PostgreSQL
@@ -27,3 +27,9 @@ test:
   encoding: unicode
   pool: 5
 
+#development:
+  #adapter: mysql
+  #database: bbyidx_dev
+  #timeout: 5000
+  #user: root
+  #password: toor
