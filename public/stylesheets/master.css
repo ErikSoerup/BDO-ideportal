@@ -320,7 +320,7 @@ body {
     background: #00274b;
     color: #9ec8f0;
     display: none;
-    text-shadow: 0 1px 2px #041e36; }
+    xtext-shadow: 0 1px 2px #041e36; }
     #share .body > div {
       margin: 0 auto;
       padding: 0 10px;
@@ -337,7 +337,7 @@ body {
       clear: both;
       visibility: hidden; }
   #share .footer {
-    border-top: 2px solid #00274b; }
+    border-top: 1px solid #00274b; }
     #share .footer > div {
       margin: 0 auto;
       padding: 0 10px;
@@ -359,8 +359,7 @@ body {
         width: 405px; }
     #share .footer .tab {
       margin: 0 auto;
-      background-color: #444444;
-      color: #9ec8f0;
+      background-color: #EBBA3D;
       display: block;
       font-size: 11px;
       font-weight: bold;
@@ -368,7 +367,12 @@ body {
       line-height: 24px;
       text-align: center;
       text-transform: uppercase;
-      width: 180px; }
+      width: 180px;
+	border-radius: 			0 0 10px 10px; /* CSS3 */
+	-moz-border-radius: 	0 0 10px 10px; /* Firefox */
+	-webkit-border-radius: 	0 0 10px 10px; /* Safari and Chrome */
+	-khtml-border-radius: 	0 0 10px 10px; /* Linux Browsers */
+   }
       #share .footer .tab span {
         padding: 2px 10px 2px 20px;
         background-position: left center;
@@ -405,7 +409,7 @@ body {
   #share .aside p {
     margin-bottom: 0; }
   #share .tab {
-    text-shadow: 0 1px 2px #041e36; }
+    xtext-shadow: 0 1px 2px #041e36; }
 
 #content {
   padding-bottom: 48px;
@@ -453,7 +457,8 @@ body {
 .currents-page,
 .main {
   float: left;
-  width: 630px; }
+  width: 630px;
+  margin-left: 50px; }
 
 .aside {
   float: right;
@@ -463,10 +468,10 @@ body {
     margin-top: 0; }
   .aside #top-all-time-contributors {
     display: none; }
-
+	
 .aside .section {
   margin-bottom: 15px; }
-
+	
 .aside h2.header {
   margin: 0;
   padding: 0 0 10px 0;
@@ -665,7 +670,7 @@ h1#logo {
     height: 26px;
     list-style: none;
     position: absolute;
-    right: 235px;
+    right: 250px;
 	background-color: #328881;
 	border-radius: 			5px; /* CSS3 */
 	-moz-border-radius: 	5px; /* Firefox */
@@ -793,7 +798,7 @@ body.life-cycles .nav li a.life-cycles {
 #intro {
   margin-left: -30px;
   padding: 3px 30px 0;
-  height: 300px;
+  height: 320px;
   width: 940px; }
   #intro #submit-idea #errorExplanation {
     display: none; }
@@ -914,17 +919,17 @@ body.life-cycles .nav li a.life-cycles {
       float: left;
       width: 255px;
 	  margin-right: 10px; }
-
+	  
     #intro #idea-tags-group select {
-      margin-left:15px;
       float: left;
       width: 215px;
 	  border-radius: 8px 8px 8px 8px;
 	  border: none;
       font-size: 16px;
       height: 30px;
-      padding: 5px; }
-
+      padding: 5px;
+	  margin-left: 10px; }
+	  
     #idea-description-group input[type="file"]#idea_document {
 	  opacity: 0;
 	  width: 495px;
@@ -937,11 +942,27 @@ body.life-cycles .nav li a.life-cycles {
 	 }
     .input_file {
 	  float: left;
-      background: url(../images/idea_file_bg.jpg) no-repeat ;
-          margin-left: 8px;
+      background: url(../images/idea_file_bg.jpg) no-repeat;
 	  height: 27px;
 	  padding-top: 3px;
 	 }
+form.main .input_file {
+	margin-left: 138px !important;
+	background: url(../images/inner_file_upload.jpg) no-repeat !important;
+	margin-top: 10px;
+}
+form.main #idea_current_id {
+      float: left;
+      width: 185px;
+	  border: none;
+      font-size: 16px;
+      height: 30px;
+      padding: 5px;
+	  margin-left: 10px; }
+form.main #share .input-submit {
+	  margin-right: 35px; }
+form.main .tagify-container {
+	  border-radius: none; }
   #intro .input-submit {
     float: right;
     margin-top: -5px; }
@@ -1146,7 +1167,7 @@ body.login .panel .body
 body.login .input-text.big
 				{
 				border: none;
-				width: 160px !important;
+				width: 170px !important;
 				background: url(../images/login_input.jpg) no-repeat;
 				padding-top: 3px !important;
 				padding-bottom: 4px !important;
@@ -1192,13 +1213,13 @@ body.login #submit-login
 				font: bold 12px Arial;
 				color: #fff;
 				height: 25px !important;
-				width: 100px !important;
+				width: 150px !important;
 				padding-bottom: 5px !important;
 				}
 
 body.login .form-submit.inline
 				{
-				padding: 0 0 7px 180px !important;
+				padding: 0 0 7px 125px !important;
 				}
 
 
@@ -1434,13 +1455,13 @@ h3.icon {
       margin-bottom: 8px;
       line-height: 24px; }
       .idea.teaser .entry-title a {
-        border-bottom-width: 2px;}
+        border-bottom-width: 2px; }
     .idea.teaser .vote {
-      background: url(../images/idea_bulb.png) no-repeat center bottom;
       border: 1px solid #786860;
 	  padding: 2px;
       left: 9px;
       top: 10px;
+	  background: url(../images/idea_bulb.png) no-repeat center bottom;
 	border-radius: 			5px; /* CSS3 */
 	-moz-border-radius: 	5px; /* Firefox */
 	-webkit-border-radius: 	5px; /* Safari and Chrome */
@@ -2211,12 +2232,10 @@ label#anonymous_checkbox{
 }
 
 .tagify-container{
-    margin-left: 8px;
-    width: 245px !important;
+width: 255px !important;
 }
 
 .form-group.inline label {
 width: 128px !important;
 margin-right: 0 !important;
 }
-body .ui-autocomplete{width:312px}
