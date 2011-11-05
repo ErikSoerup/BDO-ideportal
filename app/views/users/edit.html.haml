@@ -5,7 +5,7 @@
 
     .body.group
       = error_messages_for :user
-      - form_for :user, :url => user_path, :html => { :method => :put, :id => 'edit_user_form' } do |f|
+      - form_for :user, :url => user_path, :html => { :multipart => true, :method => :put, :id => 'edit_user_form' } do |f|
         .form-group.inline
           = f.label :name, "Brugernavn<em>*</em>", :class => 'required'
           = f.text_field :name, :class => "input-text"
@@ -36,6 +36,7 @@
         .form-group.inline
           %label Avatar
           = gravatar_for @user, :size => 64
+          = f.file_field :avatar , :size=>40
           gem dit billede på gravatar
           = link_to 'gravatar.com', 'http://gravatar.com'
         -# ------- /STYLE NEEDED ------
