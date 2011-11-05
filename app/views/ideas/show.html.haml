@@ -42,7 +42,7 @@
       .entry-content
         %p= user_formatted_text @idea.description
         -if @idea.document?
-          .attachment=link_to "Download", @idea.document.url
+          .download.for_idea=link_to "Download", @idea.document.url
       .idea-meta
         %div
           %h3= t("about_this_idea")

@@ -25,6 +25,8 @@
         %p
           = link_to('edit', '#', :onclick => "editCommentText(#{comment.id}); return false")
           == (For the next #{time_ago_in_words(comment.created_at + 15.minutes)})
+    .download.for_comment
+      =link_to "Download", comment.document.url
     - if comment.editable_by?(current_user)
       .edit-comment-content{:style => "display:none"}
         - form_for(comment, :url => comment_url(comment), :html => {:method => :put, :onsubmit => "return validateCommentUpdate(#{comment.id})" }) do |f|
