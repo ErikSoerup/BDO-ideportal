@@ -21,6 +21,8 @@
         -if current_user && (@user.id != current_user.id) && !current_user.following?(@user)
           %li.follow_me
             =link_to "Follow #{@user.name}", follow_path(@user)
+        %li.following.followers
+          =link_to "Followers : <span>#{@user.followers.length }</span>",'#'
 
       - if @user.linked_to_twitter?
         %p.icon.twitter
