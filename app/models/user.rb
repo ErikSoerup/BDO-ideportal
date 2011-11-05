@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   has_many :relationships, :foreign_key => "follower_id",
                            :dependent => :destroy
   has_many :following, :through => :relationships, :source => :followed
+  has_many :followers, :through => :relationships, :source => :follower
 
   validates_presence_of     :name
   validates_presence_of     :email
@@ -240,6 +241,7 @@ class User < ActiveRecord::Base
   def following?(followed)
     relationships.find_by_followed_id(followed)
   end
+
 
   def follow!(followed)
     relationships.create!(:followed_id => followed.id)
