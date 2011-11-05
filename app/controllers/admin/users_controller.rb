@@ -33,7 +33,7 @@ module Admin
 
 
       before :create do
-        @user.active!
+        @user.activate!
       end
 
 
