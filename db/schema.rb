@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104194015) do
+ActiveRecord::Schema.define(:version => 20111105132754) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -278,6 +278,10 @@ ActiveRecord::Schema.define(:version => 20111104194015) do
     t.text     "vectors"
     t.integer  "department_id"
     t.string   "phone"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -1,9 +1,16 @@
 require 'digest/sha1'
+require 'paperclip'
 
 class User < ActiveRecord::Base
 
   acts_as_authorized_user
   acts_as_authorizable
+
+  has_attached_file :avatar,
+  	  :styles => { :small => "64x64>", :large => "128x128>" },
+      :storage => :s3,
+      :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+      :path => ":attachment/user/:id/:style.:extension"
 
   # Virtual attribute for the unencrypted password
   attr_accessor :password
