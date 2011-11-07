@@ -32,9 +32,10 @@
   %body{ :class => @body_class.to_s }
     #wrap
       = render :partial => "shared/header"
-      %hr.hide
-        -unless @body_class == "home"
-          = render :partial => "shared/share_your_idea"
+      -if logged_in?
+        %hr.hide
+          -unless @body_class == "home"
+            = render :partial => "shared/share_your_idea"
       #content
         = render :partial => "shared/flash_messages"
         = yield
