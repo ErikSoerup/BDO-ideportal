@@ -22,8 +22,7 @@ gem "rcov"
 gem "lazy", '0.9.6'
 gem 'pg'
 gem 'aws-s3', :require=>"aws/s3"
-gem "ruby-debug", :group=>:development
-gem 'rmagick'
+gem "ruby-debug"
 
 group :test do
  gem 'shoulda'
