@@ -64,10 +64,12 @@ ActiveRecord::Schema.define(:version => 20111105132754) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.text     "vectors"
   end
 
   add_index "comments", ["author_id"], :name => "index_comments_on_author_id"
   add_index "comments", ["idea_id"], :name => "index_comments_on_idea_id"
+  add_index "comments", ["vectors"], :name => "comments_fts_vectors_index"
 
   create_table "currents", :force => true do |t|
     t.string   "title"

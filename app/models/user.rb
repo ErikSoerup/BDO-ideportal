@@ -1,6 +1,4 @@
 require 'digest/sha1'
-require 'paperclip'
-
 class User < ActiveRecord::Base
 
   acts_as_authorized_user
