@@ -63,6 +63,7 @@ GEM
     rake (0.8.7)
     rbx-require-relative (0.0.5)
     rcov (0.9.9)
+    rmagick (2.13.1)
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
@@ -103,6 +104,7 @@ DEPENDENCIES
   pg
   rails (~> 2.3.10)
   rcov
+  rmagick
   ruby-debug
   ruby-hmac
   shoulda
