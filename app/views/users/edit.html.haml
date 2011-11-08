@@ -2,7 +2,6 @@
   .main.panel.section
     .header
       %h2.icon.user-edit Konto Opsætning
-
     .body.group
       = error_messages_for :user
       - form_for :user, :url => user_path, :html => { :multipart => true, :method => :put, :id => 'edit_user_form' } do |f|

@@ -52,6 +52,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def unfollow
+    @unfollow = User.find(params[:id])
+    if @unfollow
+      current_user.unfollow!(@unfollow)
+      flash[:info] = "You are now unfollowing #{@unfollow.name}"
+      redirect_to profile_url(current_user)
+    end
+  end
+
   def following
     @body_class="following"
     page = params[:page] || 1

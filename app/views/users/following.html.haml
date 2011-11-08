@@ -4,8 +4,12 @@
       %h2.icon{ :class => @body_class }
         - for user in @users
           .user
-            %h3
+            %b
               =link_to user.name, profile_path(user)
+            &nbsp &nbsp &nbsp
+            &nbsp &nbsp &nbsp
+            %b
+              =link_to 'unfollow', unfollow_path(user)
 
       =will_paginate (@users)
 
