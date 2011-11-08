@@ -51,6 +51,14 @@ module ApplicationHelper
     map_path(:idea_ids => ideas.map{ |idea| idea.id }.join(' '))
   end
 
+  def profile_picture(user,options=:small)
+    if user.avatar?
+      user.avatar.url(options)
+    else
+      '/images/default-avatar-24.png'
+    end
+  end
+
   # IE doesn't fire onchange for checkboxes until blur. This helper method repeats a JS action
   # for change, click, and keypress actions so that checkboxes respond immediately in any browser.
   def check_box_onchange(action, opts = {:onchange => true})

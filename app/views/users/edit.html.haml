@@ -35,10 +35,8 @@
         -# ------- STYLE NEEDED ------
         .form-group.inline
           %label Avatar
-          = gravatar_for @user, :size => 64
-          = f.file_field :avatar , :size=>45
-          gem dit billede på gravatar
-          = link_to 'gravatar.com', 'http://gravatar.com'
+          = image_tag profile_picture @user, :large
+          = f.file_field :avatar , :size=>20
         -# ------- /STYLE NEEDED ------
 
         :javascript
