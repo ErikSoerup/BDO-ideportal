@@ -18,6 +18,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :map
 
   map.suggestions         '/suggestions',                        :controller => 'currents',  :action => 'show' , :id=> Current::SUGESSIONS_ID
+
+  map.unfollow            '/users/unfollow/:id',                 :controller => 'users',    :action => 'unfollow'
   map.follow              '/users/follow/:id',                   :controller => 'users',    :action => 'follow'
   map.following           '/users/following',                    :controller => 'users',    :action => 'following'
   map.login               '/login',                              :controller => 'sessions', :action => 'new'
