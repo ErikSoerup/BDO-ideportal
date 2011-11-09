@@ -18,6 +18,7 @@
               = text_field_tag 'search_text', params[:search_text], :class => "input-text"
             .form-submit.inline
               = submit_tag 'Search', :class => "input-submit"
+              .clear{:style=>'clear:both'}
     - else
       .body.currents-list.inset
         %div

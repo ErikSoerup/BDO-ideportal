@@ -90,6 +90,7 @@
             - if current_user && !current_user.active?
               %p.message.info Your comment will not be publicly visible until you confirm your account.
             = submit_tag "Post Comment", :class => "input-submit"
+            .clear{:style=>'clear:both'}
         :javascript
           function validateComment() {
             if($('comment-text').value.blank()) {
