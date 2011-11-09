@@ -85,7 +85,7 @@
           .form-group.inline#post-comment
             %label{ :for => "comment-text" } Din Kommentar
             = f.text_area :text, :id => "comment-text", :class => "input-textarea"
-            = f.file_field :document , :size=>80
+            = f.file_field :document , :size=>40
           .form-submit.inline
             - if current_user && !current_user.active?
               %p.message.info Your comment will not be publicly visible until you confirm your account.

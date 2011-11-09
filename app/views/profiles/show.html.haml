@@ -2,8 +2,7 @@
   .main.panel.section
     .header
       /*------- STYLE NEEDED ------*/
-      .profile_pic
-        = image_tag profile_picture(@user, :large)
+      = image_tag profile_picture(@user, :large),:class=>'profile_pic'
       /*------- /STYLE NEEDED ------*/
       %ul.profile_top
         - if @user.admin?

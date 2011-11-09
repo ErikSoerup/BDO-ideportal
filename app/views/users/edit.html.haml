@@ -34,7 +34,7 @@
         -# ------- STYLE NEEDED ------
         .form-group.inline
           %label Avatar
-          .profile_pic= image_tag profile_picture(@user, :large)
+          =image_tag profile_picture(@user, :large),:class=>'profile_pic'
           = f.file_field :avatar , :size=>20
         -# ------- /STYLE NEEDED ------
 

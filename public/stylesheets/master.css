@@ -470,10 +470,10 @@ body {
     margin-top: 0; }
   .aside #top-all-time-contributors {
     display: none; }
-	
+
 .aside .section {
   margin-bottom: 15px; }
-	
+
 .aside h2.header {
   margin: 0;
   padding: 0 0 10px 0;
@@ -921,7 +921,7 @@ body.life-cycles .nav li a.life-cycles {
       float: left;
       width: 255px;
 	  margin-right: 10px; }
-	  
+
     #intro #idea-tags-group select {
       float: left;
       width: 215px;
@@ -930,7 +930,7 @@ body.life-cycles .nav li a.life-cycles {
       font-size: 16px;
       height: 30px;
       padding: 5px; }
-	  
+
     #idea-description-group input[type="file"]#idea_document {
 	  opacity: 0;
 	  width: 495px;
@@ -1252,7 +1252,7 @@ h3.icon {
 	-moz-border-radius: 	5px; /* Firefox */
 	-webkit-border-radius: 	5px; /* Safari and Chrome */
 	-khtml-border-radius: 	5px; /* Linux Browsers */ }
-	
+
 .footer .pagination {
 margin-left: 28px;
 margin-right: 0;
@@ -1481,7 +1481,7 @@ margin-right: 0;
       .idea.teaser .entry-title a {
         border-bottom-width: 2px; }
     .idea.teaser .vote {
-      border: 1px solid #786860;
+      border: 1px solid #bbb;
 	  padding: 2px;
       left: 9px;
       top: 10px;
