@@ -38,7 +38,7 @@ class IdeasController < ApplicationController
         @idea.add_vote!(@idea.inventor)
 
         if @idea.inventor.followers.present?
-          UserMailer.delay({:run_at => 3.seonds.from_now}).idea_posted_to_followers(@idea.inventor, @idea)
+          UserMailer.delay({:run_at => 3.seconds.from_now}).idea_posted_to_followers(@idea.inventor, @idea)
           #Delayed::Job.enqueue FollowersNotifyJob.new(@idea.inventor.followers, @idea), 5  , 3.seonds.from_now
         end
 
