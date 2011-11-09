@@ -40,7 +40,7 @@ abbr {
   border: none; }
 
 p {
-  margin-bottom: 18px; padding: 0 10px;}
+  margin-bottom: 18px; padding: 0 10px 0 0;}
 
 a {
   color: #0f645d;
@@ -145,7 +145,7 @@ input, textarea {
     line-height: 16px; }
   .form-group.inline label {
     padding-top: 2px;
-	line-height: 25px;
+	xline-height: 25px;
     float: left;
     min-height: 30px;
     text-align: right;
@@ -182,6 +182,7 @@ input, textarea {
   .form-group.inline > .input-text, .form-group.inline > .input-textarea, .form-group.inline > .input-checkbox, .form-group.inline > .fieldWithErrors {
     float: left; border: 1px solid #e9e9e9; margin-left: 10px; }
   .form-group.inline .input-checkbox {
+	margin-top: 3px;
     margin-right: 4px; }
   .form-group .note {
     margin-bottom: 8px;
@@ -885,7 +886,6 @@ body.life-cycles .nav li a.life-cycles {
     background: url(../images/intro-form-icon-pencil.png) left top no-repeat; }
   #intro #idea-tags-group {
     margin-bottom: 5px;
-	margin-left: 8px;
     background: url(../images/intro-form-icon-tag.png) left top no-repeat;
     position: relative; }
     #intro #idea-tags-group a {
@@ -929,8 +929,7 @@ body.life-cycles .nav li a.life-cycles {
 	  border: none;
       font-size: 16px;
       height: 30px;
-      padding: 5px;
-	  margin-left: 10px; }
+      padding: 5px; }
 	  
     #idea-description-group input[type="file"]#idea_document {
 	  opacity: 0;
@@ -950,13 +949,13 @@ body.life-cycles .nav li a.life-cycles {
 	  margin-left: 8px;
 	 }
 form.main .input_file {
-	margin-left: 130px !important;
+	margin-left: 138px !important;
 	background: url(../images/inner_file_upload.jpg) no-repeat !important;
 	margin-top: 10px;
 }
 form.main #idea_current_id {
       float: left;
-      width: 185px;
+      width: 200px;
 	  border: none;
       font-size: 16px;
       height: 30px;
@@ -965,9 +964,11 @@ form.main #idea_current_id {
 form.main .input-submit {
 	  margin: 10px 35px 0 0; }
 form.main .tagify-container {
-	  border-radius:0; }
+	  border-radius:0;
+	  margin-left: 10px; }
   #intro .input-submit {
     float: right;
+	margin-right: 5px;
     margin-top: -5px; }
 #intro p.note {
     background: url(../images/intro-form-note.png) no-repeat scroll left top transparent;
@@ -1216,13 +1217,14 @@ body.login #submit-login
 				font: bold 12px Arial;
 				color: #fff;
 				height: 25px !important;
-				width: 150px !important;
+				width: 100px !important;
 				padding-bottom: 5px !important;
 				}
 
 body.login .form-submit.inline
 				{
-				padding: 0 0 7px 125px !important;
+				padding: 0 0 7px 175px !important;
+				margin-bottom: 5px;
 				}
 
 
@@ -1237,14 +1239,25 @@ h3.icon {
   background-repeat: no-repeat; }
 
 .pagination {
-  margin-bottom: 0;
-  padding: 16px 10px 12px;
+  margin: 15px 15px 10px 10px;;
+  padding: 10px 10px 6px;
+  border: 1px solid #ddd;
   color: #888888;
   font-size: 14px;
   min-height: 18px;
   position: relative;
   text-align: center;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+	border-radius: 			5px; /* CSS3 */
+	-moz-border-radius: 	5px; /* Firefox */
+	-webkit-border-radius: 	5px; /* Safari and Chrome */
+	-khtml-border-radius: 	5px; /* Linux Browsers */ }
+	
+.footer .pagination {
+margin-left: 28px;
+margin-right: 0;
+}
+
   .pagination a {
     padding: 4px 5px 3px;
     color: #2eafa4;
@@ -1304,10 +1317,10 @@ h3.icon {
       font-size: 11px;
       height: 20px;
       text-shadow: 0 1px 1px white;
-				border-radius: 			5px; /* CSS3 */
-				-moz-border-radius: 	5px; /* Firefox */
-				-webkit-border-radius: 	5px; /* Safari and Chrome */
-				-khtml-border-radius: 	5px; /* Linux Browsers */ }
+	border-radius: 			5px; /* CSS3 */
+	-moz-border-radius: 	5px; /* Firefox */
+	-webkit-border-radius: 	5px; /* Safari and Chrome */
+	-khtml-border-radius: 	5px; /* Linux Browsers */ }
       .actions li a img {
         margin-right: 2px;
         vertical-align: top; }
@@ -1350,6 +1363,8 @@ h3.icon {
   overflow: hidden; }
   .inset > div {
     padding-bottom: 5px; }
+  .votes.inset > div {
+    padding-bottom: 2px; }
 
 .group {
   /*padding: 18px 0;*/
@@ -1363,6 +1378,11 @@ h3.icon {
 	margin: 0 10px;
     border-top: 1px solid white;
     border-bottom: 1px solid #ced6dd; }
+  body.search .group.slate {
+	  padding: 15px 0;
+  }
+  body.search .group.slate .form-submit.inline {
+	  padding-left: 135px;  }
   .group form label {
     text-shadow: 0 1px 2px white; }
     .group form label em {
@@ -1395,6 +1415,7 @@ h3.icon {
     .idea .entry-meta li {
       margin: 0 0 6px 0;
       padding-left: 20px;
+	  padding-top: 3px;
       background-position: left top;
       background-repeat: no-repeat; }
       .idea .entry-meta li.ideas {
@@ -1426,7 +1447,7 @@ h3.icon {
     background-position: left -78px; }
   .idea.main .entry-content {
     margin-bottom: 36px;
-    padding: 0 150px 0 20px;
+    padding: 0 150px 0 10px;
     font-size: 14px;
     line-height: 20px; }
   .idea.main .entry-meta li {
@@ -1484,6 +1505,7 @@ h3.icon {
     .idea.teaser .entry-content p {
       font-size: 13px; }
     .idea.teaser .entry-meta {
+	  width: 430px;
       margin-bottom: 8px;
       padding: 6px 8px 4px;
       background: #ffe39c;
@@ -1660,7 +1682,6 @@ h3.icon {
   border-bottom: 1px solid #cccccc; }
   .idea-meta > div,
   .current-meta > div {
-    margin-left: 20px;
     width: 280px;
     float: left; }
   .idea-meta .related-ideas,
@@ -1732,7 +1753,7 @@ h3.icon {
     line-height: 41px;
     position: absolute;
     text-align: right;
-    width: 133px;
+    width: 160px;
     text-shadow: 0 1px 2px #dbedff; }
     .comment h4 a:hover {
       text-decoration: underline; }
@@ -1766,7 +1787,7 @@ h3.icon {
     visibility: hidden; }
 
 .comment-content, .edit-comment-content {
-  padding: 12px 18px 0 170px;
+  padding: 12px 18px 0 180px;
   width: 418px; }
   .comment-content p:last-child, .edit-comment-content p:last-child {
     margin-bottom: 0; }
@@ -1788,11 +1809,11 @@ h3.icon {
 .voted-for {
   margin: 0 auto;
   list-style: none;
-  width: 606px; }
+  width: 600px; }
   .voted-for li {
     margin-bottom: 4px;
     padding-left: 93px;
-    background: url(../images/voted-for.png) left top no-repeat;
+    background: url(../images/voted-for.png) center top no-repeat;
     font-size: 13px;
     height: 41px; }
     .voted-for li a {
@@ -2197,13 +2218,16 @@ h2.icon.user{
 background: url(../images/following.png) no-repeat left center;
 padding: 3px 0 3px 25px;
 margin-top: 5px;
+float: left;
+margin-right: 10px;
 }
 .profile_top li.follow_me {
 background: url(../images/follow.png) no-repeat left center;
 padding: 3px 0 3px 25px;
 margin-top: 5px;
+float: left;
 }
-.header img.gravatar{
+.header img.profile_pic{
   float:left;
   margin: 15px 5px 0 10px;
   border: 1px solid #eee;
@@ -2236,6 +2260,7 @@ label#anonymous_checkbox{
 
 .tagify-container{
 width: 245px !important;
+float: left;
 }
 
 .form-group.inline label {
@@ -2245,4 +2270,61 @@ margin-right: 0 !important;
 
 form#forgot-password .form-submit.inline {
 padding-left: 135px;
+}
+
+form#edit_user_form {
+padding: 20px 0;
+}
+
+select#user_department_id {
+height: 29px;
+padding: 5px;
+width: 300px;
+}
+
+form#edit_user_form .form-group.inline.checkbox {
+padding-left: 130px;
+}
+
+form#edit_user_form .form-submit.inline {
+padding-left: 135px;
+}
+
+form#edit_user_form .form-group.inline span, form#edit_user_form .form-group.inline a {
+float: left;
+margin-right: 5px;
+}
+
+.form-group.inline img.profile_pic {
+float: left;
+border: 1px solid #999;
+padding: 1px;
+margin: 0 10px;
+}
+
+input#user_avatar {
+float: left;
+}
+
+input#comment_document {
+margin-left: 140px;
+margin-top: 15px;
+height: 22px;
+}
+
+.ideas-group .footer .pagination {
+border: none;
+margin: 0;
+}
+
+.download a {
+background: url(../images/download.png) no-repeat;
+text-indent: -9999px;
+display: block;
+width: 20px;
+margin-left: 10px;
+}
+
+.currents .header > p {
+margin-left: 10px;
 }
