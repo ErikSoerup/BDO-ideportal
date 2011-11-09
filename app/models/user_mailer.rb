@@ -47,11 +47,11 @@ class UserMailer < ActionMailer::Base
     @subject += "New idea in current \"#{strip_funkies(idea.current.title)}\""
   end
 
-  def idea_posted_notify_followers(users,idea)
+  def idea_posted_to_followers(users,idea)
     set_up_email(user)
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
-    @body[:unsubscribe_url] = unsubscribe_current_url(idea.current)
+    @body[:unsubscribe_url] = unsubscribe_idea_url(idea)
   end
 
   def life_cycle_notification(user, life_cycle_step)
@@ -65,6 +65,7 @@ class UserMailer < ActionMailer::Base
     def set_up_email(user)
       if user.is_a? Array
         @recipients = user.map(&:email)
+        user=''
       else
         @recipients  = "#{user.email}"
       end
