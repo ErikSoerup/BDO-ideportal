@@ -28,7 +28,7 @@ Rails::Initializer.run do |config|
   # Skip frameworks you're not going to use. To use Rails without a database
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
-#  config.frameworks -=[:action_mailer]
+  #  config.frameworks -=[:action_mailer]
 
   config.autoload_paths += %W(#{Rails.root}/app/jobs)
   
@@ -60,6 +60,21 @@ Rails::Initializer.run do |config|
     :key    => SESSION_KEY,
     :secret => SESSION_SECRET
   }
+  
+  
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.default_charset = "utf-8"
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.webhost4life.com",
+    :port => 587,
+    :domain => "arminus.co.in",
+    :authentication => :login,
+    :user_name => "rajarshi.das@arminus.co.in",
+    :password => "rd2010",
+  }
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
@@ -81,10 +96,10 @@ end
 
 unless SESSION_SECRET
   abort "\n" +
-        "    You must specify a value for SESSION_SECRET in config/environment_custom.rb in order to start the server.\n" +
-        "    The value should be a string of at least 30 random characeters.\n" +
-        "    Here is a suggested value, generated at random just for you:\n\n" +
-        "      SESSION_SECRET = '#{ActiveSupport::SecureRandom.base64(60)}'\n\n"
+    "    You must specify a value for SESSION_SECRET in config/environment_custom.rb in order to start the server.\n" +
+    "    The value should be a string of at least 30 random characeters.\n" +
+    "    Here is a suggested value, generated at random just for you:\n\n" +
+    "      SESSION_SECRET = '#{ActiveSupport::SecureRandom.base64(60)}'\n\n"
 end
 
 require 'will_paginate'
