@@ -2,14 +2,18 @@
   #popular-ideas.main.panel.section.hfeed
     .header
       %h2.icon{ :class => @body_class }
-        - for user in @users
-          .user
-            %b
-              =link_to user.name, profile_path(user)
-            &nbsp &nbsp &nbsp
-            &nbsp &nbsp &nbsp
-            %b
-              =link_to 'unfollow', unfollow_path(user)
+        %table.users_list
+          -for user in @users
+            %tr.user
+              %td.pp
+                = image_tag profile_picture(user, :large) , :width=>64,:height=>64 , :class=>'profile_pic large'
+              %td.name
+                =link_to user.name, profile_path(user)
+              %td.department
+                %b= user.try(:department).try(:name) || "NA"
+              -if current_user == @user
+                %td.links
+                  =link_to 'unfollow', unfollow_path(user)
 
       =will_paginate (@users)
 

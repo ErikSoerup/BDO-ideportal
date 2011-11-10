@@ -1,15 +1,15 @@
-class IdeaPostedFollowerJob 
+class IdeaPostedFollowerJob
 
  attr_accessor :user, :idea
-  
-  def initialize(user,idea)
-     @user = user
+
+  def initialize(users,idea)
+     @user = users
+     logger.info "__WORKING__"
      @idea = idea
-     @user = User.find(@user.id)
      @idea= Idea.find(@idea.id)
-     UserMailer.deliver_idea_posted_to_followers(@user,@idea)
    end
 
   def perform
-  end    
-end  
+     UserMailer.deliver_idea_posted_to_followers(@user,@idea)
+  end
+end

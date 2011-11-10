@@ -36,11 +36,9 @@ class IdeasController < ApplicationController
       if @idea.valid? && @idea.inventor
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)
-        #UserMailer.deliver_idea_posted_to_followers(user,idea)
-        if @idea.inventor
-                  #UserMailer.delay({:run_at => 3.seconds.from_now}).idea_posted_to_followers(@idea.inventor, @idea)
-          #Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor,@idea), 3, 5.minutes.from_now
-           Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor, @idea), 3, 5.seconds.from_now
+
+        if @idea.inventor.followers.present?
+           Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor, idea_url(@idea))
         end
 
         if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.tweet_ideas?

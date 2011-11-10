@@ -21,7 +21,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.unfollow            '/users/unfollow/:id',                 :controller => 'users',    :action => 'unfollow'
   map.follow              '/users/follow/:id',                   :controller => 'users',    :action => 'follow'
-  map.following           '/users/following',                    :controller => 'users',    :action => 'following'
+  map.following           '/users/:id/following',                :controller => 'users',    :action => 'following'
+  map.followers           '/users/:id/followers',                :controller => 'users',    :action => 'following'
   map.login               '/login',                              :controller => 'sessions', :action => 'new'
   map.twitter_login       '/login/twitter',                      :controller => 'sessions', :action => 'new_twitter'
   map.logout              '/logout',                             :controller => 'sessions', :action => 'destroy'

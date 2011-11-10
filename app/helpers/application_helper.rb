@@ -52,11 +52,11 @@ module ApplicationHelper
   end
 
   def profile_picture(user,options=:small)
-    if user.avatar?
-      user.avatar.url(options)
-    else
-      '/images/default-avatar-24.png'
+    unless user.avatar?
+      return '/images/default-avatar-64.png' if options == :large
+      return '/images/default-avatar-32.png' if options == :small
     end
+    return user.avatar.url(options)
   end
 
   # IE doesn't fire onchange for checkboxes until blur. This helper method repeats a JS action

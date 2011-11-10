@@ -64,7 +64,8 @@ class UsersController < ApplicationController
   def following
     @body_class="following"
     page = params[:page] || 1
-    @users = current_user.following.paginate :page =>page , :per_page=>10
+    @user = User.find(params[:id])
+    @users= @user.following.paginate :page =>page , :per_page=>10
   end
 
   def send_activation

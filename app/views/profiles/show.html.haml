@@ -17,7 +17,7 @@
         %li="Antal stemmer : <span> #{@user.votes.length}</span>"
         %li="Antal point : <span>#{ @user.recent_contribution_points || 0 } points</span>"
         %li.following
-          =link_to "Following : <span>#{@user.following.length }</span>", following_path
+          =link_to "Following : <span>#{@user.following.length }</span>", following_path(@user.id)
         %li.following.followers
           =link_to "Followers : <span>#{@user.followers.length }</span>",'#'
         -if current_user && (@user.id != current_user.id) && !current_user.following?(@user)

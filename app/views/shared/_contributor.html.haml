@@ -21,4 +21,4 @@
     %h4.entry-point== #{(contributor.send(points_method) || 0).round } points
     %h4.entry-title= link_to h(contributor.name), profile_path(contributor), :rel => 'bookmark'
   %span{:id => "contributor_#{contributor.id}"}
-    = gravatar_for contributor, :size=>32
+    = image_tag profile_picture(contributor) , :width=>32,:height=>32 , :class=>'profile_pic small'
