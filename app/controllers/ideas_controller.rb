@@ -40,7 +40,7 @@ class IdeasController < ApplicationController
         if @idea.inventor
                   #UserMailer.delay({:run_at => 3.seconds.from_now}).idea_posted_to_followers(@idea.inventor, @idea)
           #Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor,@idea), 3, 5.minutes.from_now
-         Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor, @idea), 5  , 3.seconds.from_now
+        # Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor, @idea), 5  , 3.seconds.from_now
         end
 
         if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.tweet_ideas?
