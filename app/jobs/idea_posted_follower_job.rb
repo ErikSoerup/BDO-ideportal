@@ -1,15 +1,15 @@
 class IdeaPostedFollowerJob 
 
-attr_accessor :user_id, :comment_id
+ attr_accessor :user, :idea
   
-  def initialize(user, comment)
-    @user_id = user.id
-    @comment_id = comment.id
+  def initialize(user,idea)
+     @user = user
+     @idea = idea
+     @user = User.find(@user.id)
+     @idea= Idea.find(@idea.id)
+     UserMailer.deliver_idea_posted_to_followers(@user,@idea)
   end
 
   def perform
-    user = User.find(user_id)
-    comment = Comment.find(comment_id)
-    UserMailer.deliver_idea_posted_to_followers(user,idea)
   end    
 end  
