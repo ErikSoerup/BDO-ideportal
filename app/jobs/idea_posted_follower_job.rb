@@ -8,7 +8,7 @@ class IdeaPostedFollowerJob
      @user = User.find(@user.id)
      @idea= Idea.find(@idea.id)
      UserMailer.deliver_idea_posted_to_followers(@user,@idea)
-  end
+   end
 
   def perform
   end    
