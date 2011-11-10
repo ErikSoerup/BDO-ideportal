@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   before_filter :login_required, :only => [:edit, :update, :authorize_twitter, :following, :follow]
   before_filter :populate_user, :except => [:show, :new]
+  before_filter :get_user, :only => [:following, :followers]
 
   def new
     if params[:user] && params[:user][:twitter_token] || params[:facebook_create]
@@ -62,10 +63,13 @@ class UsersController < ApplicationController
   end
 
   def following
-    @body_class="following"
-    page = params[:page] || 1
-    @user = User.find(params[:id])
-    @users= @user.following.paginate :page =>page , :per_page=>10
+    @show_links = true
+    @users= @user.following.paginate :page => @page , :per_page=>10
+  end
+
+  def followers
+    @users = @user.followers.paginate :page=> @page , :per_page=>10
+    render :following
   end
 
   def send_activation
@@ -172,6 +176,12 @@ class UsersController < ApplicationController
   include TwitterHelper
 
 protected
+
+  def get_user
+    @body_class="following"
+    @page = params[:page] || 1
+    @user = User.find(params[:id])
+  end
 
   def populate_user
     @user = current_user

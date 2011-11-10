@@ -11,7 +11,7 @@
                 =link_to user.name, profile_path(user)
               %td.department
                 %b= user.try(:department).try(:name) || "NA"
-              -if current_user == @user
+              -if current_user == @user && @show_links
                 %td.links
                   =link_to 'unfollow', unfollow_path(user)
 

@@ -4,9 +4,7 @@ class IdeaPostedFollowerJob
 
   def initialize(users,idea)
      @user = users
-     logger.info "__WORKING__"
-     @idea = idea
-     @idea= Idea.find(@idea.id)
+     @idea= Idea.find(idea.id)
    end
 
   def perform
