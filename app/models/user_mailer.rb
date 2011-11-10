@@ -47,8 +47,8 @@ class UserMailer < ActionMailer::Base
     @subject += "New idea in current \"#{strip_funkies(idea.current.title)}\""
   end
 
-  def idea_posted_to_followers(users,idea)
-    set_up_email(user)
+def idea_posted_to_followers(users,idea)
+    set_up_email(users)
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
     @body[:unsubscribe_url] = unsubscribe_idea_url(idea)
@@ -62,20 +62,20 @@ class UserMailer < ActionMailer::Base
   end
 
   protected
-    def set_up_email(user)
-      if user.is_a? Array
-        @recipients = user.map(&:email)
-        user=''
-      else
-        @recipients  = "#{user.email}"
-      end
-      @from        = EMAIL_FROM_ADDRESS
-      @subject     = "[#{SHORT_SITE_NAME.upcase}] "
-      @sent_on     = Time.now
-      @body[:user] = user
+  def set_up_email(user)
+    if user.is_a? Array
+      @recipients = user.map(&:email)
+      user=''
+    else
+      @recipients  = "#{user.email}"
     end
+    @from        = EMAIL_FROM_ADDRESS
+    @subject     = "[#{SHORT_SITE_NAME.upcase}] "
+    @sent_on     = Time.now
+    @body[:user] = user
+  end
 
-    def strip_funkies(s)
-      s.gsub(/[<>&]/, '')
-    end
+  def strip_funkies(s)
+    s.gsub(/[<>&]/, '')
+  end
 end
