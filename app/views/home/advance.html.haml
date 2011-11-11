@@ -13,4 +13,4 @@
   - if @ideas
     = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
   - else
-    = render :partial => '/currents/current', :collection => current_objects if @current_ideas && !@current_ideas.empty?     
+    = render :partial => '/home/current', :collection => @current_ideas unless @current_ideas.empty?     

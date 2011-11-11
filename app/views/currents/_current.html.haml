@@ -16,7 +16,7 @@
       %p= link_to t("submit_ideas"), params[:action] == "show" ? "#add_idea" : current_path(current, :anchor=>"add_idea") unless current.nil?
       %ul.entry-meta
         %li.ideas
-          - unless current_ideas.nil?
+          - unless current_ideas.empty?
             = h "#{current_ideas.total_entries}"
             %span.points= h "idea#{current_ideas.total_entries == 1 ? '' : 's'}"
             =t("in_current")
