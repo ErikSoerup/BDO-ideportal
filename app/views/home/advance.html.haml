@@ -6,7 +6,6 @@
     %h1 Person
     = select_tag "Ideer", options_for_select(["select", "alle", "top bidragydere", "min egne"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
         
- 
-  %div{:id => "Idea"}
-    = render :partial => '/ideas/idea', :collection => @ideas
+%div{:id => "Idea"}
+  = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
        

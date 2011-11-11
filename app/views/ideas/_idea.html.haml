@@ -3,16 +3,16 @@
     %h4.posted
       =t("posted")
       %abbr.published.time-relative
-        = time_ago_in_words(idea.created_at)
+        = time_ago_in_words(idea.created_at) unless idea.created_at.nil?
         =t("ago")
       =t("by")
       %span.vcard.author
         -unless idea.is_anonymous?
-          =link_to idea.inventor.name, profile_path(idea.inventor), :class => idea.inventor.admin? ? 'fn url admin' : 'fn url'
+          =link_to idea.inventor.name, profile_path(idea.inventor), :class => idea.inventor.admin? ? 'fn url admin' : 'fn url' unless idea.inventor.nil?
         -else
           =link_to "Anonymous", "#"
 
-    %h3.entry-title= link_to h(idea.title), idea_path(idea)
+    %h3.entry-title= link_to h(idea.title), idea_path(idea) unless idea.title.nil?
     %span{:id => "vote_#{idea.id}"}= render :partial => 'votes/vote', :locals => { :idea => idea, :dom_id => "vote_#{idea.id}" }
     .entry-content
       %p= h idea.description_excerpt
@@ -20,10 +20,11 @@
       %li.comments
         = link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments', :title_in_url => false)
       %li.tags
-        - idea.tags.each_with_index do |tag, ctr|
-          - unless ctr == idea.tags.length - 1
-            == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])},
-          -else
-            == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])}
+        - unless idea.tags.empty?
+          - idea.tags.each_with_index do |tag, ctr|
+            - unless ctr == idea.tags.length - 1
+              == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])},
+            -else
+              == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])} unless tag.nil?
     %span{:id => "xxx_#{idea.id}", :class=>"hide"}
       = render :partial => 'inappropriate/xxx', :locals => { :model => idea, :dom_id => "xxx_#{idea.id}" }
