@@ -49,9 +49,10 @@ class UserMailer < ActionMailer::Base
 
   def idea_posted_to_followers(user,idea)
     set_up_email(user)
+    @subject += "New idea by #{idea.inventor.name}"
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
-    @body[:unsubscribe_url] = unsubscribe_idea_url(idea)
+    @body[:unsubscribe_url] = unfollow_url(idea.inventor)
   end
 
   def life_cycle_notification(user, life_cycle_step)

@@ -302,7 +302,7 @@ body {
 
 #masthead {
   background: url(../images/header_bg.jpg) repeat-x;
-  height: 183px;
+  height: 150px;
   margin-bottom: 7px;
   min-width: 960px; }
   #masthead > div {
@@ -310,7 +310,7 @@ body {
     margin: 0 auto;
     padding: 0 10px;
     min-width: 940px;
-    min-height: 183px;
+    min-height: 150px;
     position: relative;
     width: 940px; }
 
@@ -599,7 +599,7 @@ h1#logo {
 	float: right;
 	position: relative;
 	left: -180px;
-	top: 130px;
+	top: 107px;
 	border-radius: 			10px; /* CSS3 */
 	-moz-border-radius: 	10px; /* Firefox */
 	-webkit-border-radius: 	10px; /* Safari and Chrome */
@@ -924,7 +924,7 @@ body.life-cycles .nav li a.life-cycles {
 
     #intro #idea-tags-group select {
       float: left;
-      width: 215px;
+      width: 225px;
 	  border-radius: 8px 8px 8px 8px;
 	  border: none;
       font-size: 16px;
@@ -955,7 +955,7 @@ form.main .input_file {
 }
 form.main #idea_current_id {
       float: left;
-      width: 200px;
+      width: 185px;
 	  border: none;
       font-size: 16px;
       height: 30px;
@@ -965,7 +965,7 @@ form.main .input-submit {
 	  margin: 10px 35px 0 0; }
 form.main .tagify-container {
 	  border-radius:0;
-	  margin-left: 10px; }
+	  margin: 0 0 0 10px; }
   #intro .input-submit {
     float: right;
 	margin-right: 5px;
@@ -2261,6 +2261,7 @@ label#anonymous_checkbox{
 .tagify-container{
 width: 245px !important;
 float: left;
+margin: 0 10px 0 8px;
 }
 
 .form-group.inline label {
@@ -2328,4 +2329,42 @@ margin-left: 10px;
 .currents .header > p {
 margin-left: 10px;
 }
-p.page{ padding:4px 10px}
+
+p.page { 
+padding: 4px 10px;
+}
+
+body.following .panel {
+width: 960px;
+}
+
+body.following .panel .header {
+width: 910px;
+padding-top: 30px;
+}
+
+table.users_list {
+margin-bottom: 35px;
+border-right: 1px solid #eee;
+border-bottom: 1px solid #eee;
+}
+
+table.users_list td {
+padding: 0 0 12px 0;
+font-size: 13px;
+border-left: 1px solid #eee;
+border-top: 1px solid #eee;
+}
+
+table.users_list td.name, table.users_list td.department {
+padding: 3px 0 0 15px;
+}
+
+table.users_list td.department {
+color: #786860;
+}
+
+table.users_list td.pp img {
+font: normal 10px Arial;
+color: #bbb;
+}
