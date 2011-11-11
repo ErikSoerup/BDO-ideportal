@@ -21,6 +21,8 @@ class HomeController < ApplicationController
       @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'])
     elsif params[:val] == "min egne"
       @ideas=current_user.ideas
+    elsif params[:val] == "current"
+      @ideas ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
     end 
      
     
