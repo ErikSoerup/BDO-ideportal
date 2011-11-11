@@ -144,6 +144,7 @@ class IdeasController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.js 
       format.rss { render :content_type => 'application/rss+xml'}
       format.xml
     end

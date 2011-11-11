@@ -10,5 +10,7 @@
     %h1 Hovedvej
     = select_tag "Ideer", options_for_select(["select", ["alle", "current"], "list"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
 %div{:id => "Idea"}
-  = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
-       
+  - if @ideas
+    = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
+  - else
+    = render :partial => '/currents/current', :collection => @current_ideas if @current_ideas && !@current_ideas.empty?     
