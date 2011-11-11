@@ -49,6 +49,17 @@ class UserMailer < ActionMailer::Base
 
   def idea_posted_to_followers(user,idea)
     set_up_email(user)
+    emails = []
+    unless user.followers.empty?
+      user.followers.each do |u|
+        emails << u.email + ","
+      end
+    else
+      emails = user.email
+      
+    end
+    @recipients = emails.to_s 
+    
     @subject += "New idea by #{idea.inventor.name}"
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
