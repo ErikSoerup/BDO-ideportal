@@ -22,12 +22,16 @@ class HomeController < ApplicationController
     elsif params[:val] == "min egne"
       @ideas=current_user.ideas
     elsif params[:val] == "current"
-      @ideas ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
+      @current_ideas = Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
     end 
      
     
   end
   
+  
+  def current_objects
+    @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
+  end
   def show
     @body_class = params[:page].nil? ? 'home' : params[:page]
     render :action => params[:page] || 'show'

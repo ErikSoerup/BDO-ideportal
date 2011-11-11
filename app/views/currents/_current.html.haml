@@ -12,11 +12,11 @@
     %h3.entry-title= link_to h(current.title), current_path(current) if current.title
     - current_ideas = search_ideas(:search => ['current', current.id])
     %div
-      %p= h current.description
-      %p= link_to t("submit_ideas"), params[:action] == "show" ? "#add_idea" : current_path(current, :anchor=>"add_idea")
+      %p= h current.description unless current.nil?
+      %p= link_to t("submit_ideas"), params[:action] == "show" ? "#add_idea" : current_path(current, :anchor=>"add_idea") unless current.nil?
       %ul.entry-meta
         %li.ideas
-          - if current_ideas
+          - unless current_ideas.nil?
             = h "#{current_ideas.total_entries}"
             %span.points= h "idea#{current_ideas.total_entries == 1 ? '' : 's'}"
             =t("in_current")
