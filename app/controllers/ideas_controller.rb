@@ -36,7 +36,9 @@ class IdeasController < ApplicationController
       if @idea.valid? && @idea.inventor
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)
-
+        if @idea.inventor.present?
+          Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor, @idea)
+        end
 
         if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.tweet_ideas?
           Delayed::Job.enqueue TweetIdeaJob.new(@idea, idea_url(@idea, :title_in_url => false))
@@ -228,7 +230,7 @@ class IdeasController < ApplicationController
   helper_method :idea_owner?
   helper_method :flagged_as_inappropriate?
 
-private
+  private
 
   # In case Javascript failed to remove example text (IE has trouble with this), we strip it here.
   # example_text.js appends \xA0 (a non-breaking space) to distinguish example text. If we see that
