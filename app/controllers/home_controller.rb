@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
   def advance
     if params[:val] == "alle"
-      @ideas=Idea.all
+      #@ideas=Idea.all
     elsif params[:val] == "de hotteste ideer"
       @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val] == "nye"
