@@ -5,7 +5,10 @@
     %br
     %h1 Person
     = select_tag "Ideer", options_for_select(["select", "alle", "top bidragydere", "min egne"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
-        
+    %h1 Afdeling
+    = select_tag "Ideer", options_for_select(["select", "alle"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+    %h1 Hovedvej
+    = select_tag "Ideer", options_for_select(["select", "alle", "list"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
 %div{:id => "Idea"}
   = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
        
