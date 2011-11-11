@@ -1,0 +1,12 @@
+%div
+  %div
+    %h1 Ideer
+    = select_tag "Ideer", options_for_select(["select", "alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+    %br
+    %h1 Person
+    = select_tag "Ideer", options_for_select(["select", "alle", "top bidragydere", "min egne"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+        
+ 
+  %div{:id => "Idea"}
+    = render :partial => '/ideas/idea', :collection => @ideas
+       

@@ -4,6 +4,28 @@ class HomeController < ApplicationController
     # render the landing page
   end
 
+  def advance
+    if params[:val] == "alle"
+      @ideas=Idea.all
+    elsif params[:val] == "de hotteste ideer"
+      @ideas= Idea.populate_comment_counts(search_ideas(params))
+    elsif params[:val] == "nye"
+      @ideas= Idea.populate_comment_counts(search_ideas(params))
+    elsif params[:val] == "under udvikling"
+       @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
+    elsif params[:val] == "implementeret"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'reviewed'])
+    elsif params[:val] == "under evaluering"  
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'])
+    elsif params[:val] == "ikke evalueret"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'])
+    elsif params[:val] == "min egne"
+      @ideas=current_user.ideas
+    end 
+     
+    
+  end
+  
   def show
     @body_class = params[:page].nil? ? 'home' : params[:page]
     render :action => params[:page] || 'show'
@@ -40,11 +62,11 @@ class HomeController < ApplicationController
       :placements        => [0, 1, 0, 1],
       :initial_placement => top_rated ? [0, 0] : [1, 1],
       :color_scheme      => Layout::GradientColorScheme.new(
-                              if top_rated
-                                ['ff2d16', 'ff7600', 'ffb46e', 'ffffff']
-                              else
-                                ['152333', '005f86', '85dfe2', 'ffffff']
-                              end))
+        if top_rated
+          ['ff2d16', 'ff7600', 'ffb46e', 'ffffff']
+        else
+          ['152333', '005f86', '85dfe2', 'ffffff']
+        end))
     idea_sizer = if top_rated
       lambda { |idea| (idea.rating + 1) ** 0.5 }
     else

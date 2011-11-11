@@ -88,6 +88,7 @@ ActionController::Routing::Routes.draw do |map|
   # Top-level routes
 
   map.root :controller => 'home', :action => 'show'
+  map.home_advance '/home/advance', :controller => 'home', :action => 'advance'
   map.home_nearby_ideas '/home/nearby-ideas', :controller => 'home', :action => 'nearby_ideas'
 
   map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact|rules|privacy-policy|terms-of-use/
