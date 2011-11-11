@@ -7,7 +7,11 @@ module ApplicationHelper
   def logged_in?
     !current_user.nil?
   end
-
+  def url_field(val)
+    "/home/advance?val="+val
+  end 
+  
+ 
   def user_formatted_text(text)
     # Handles free-form text for ideas and comments.
     # We could drop in some more elaborate formatting rules here if we want to,
@@ -22,7 +26,7 @@ module ApplicationHelper
   def has_voted?(idea)
     # Cache all ideas voted on by this user to avoid doing O(n) queries
     @voted_for_idea_ids ||= if current_user
-       Vote.find(:all, :conditions => {:user_id=>current_user.id}, :select=>'votes.idea_id').map{|x| x.idea_id}
+      Vote.find(:all, :conditions => {:user_id=>current_user.id}, :select=>'votes.idea_id').map{|x| x.idea_id}
     else
       []
     end
@@ -84,7 +88,7 @@ module ApplicationHelper
       'total-count' => p.total_entries }
   end
 
-private
+  private
 
   def flagged_as_inappropriate_session_key(model)
     "xxx:#{model.class}:#{model.id}"
