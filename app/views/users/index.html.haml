@@ -1,0 +1,18 @@
+%div
+  #popular-ideas.main.panel.section.hfeed
+    .header
+      %h2.icon{ :class => @body_class }
+        %table.users_list{:width=>'100%', :cellpadding=>0, :cellspacing=>0}
+          -for user in @users
+            %tr.user
+              %td.pp{:width=>90}
+                = image_tag profile_picture(user, :small) , :width=>32,:height=>32 , :class=>'profile_pic large'
+              %td.name
+                =link_to user.name, profile_path(user)
+              %td.department
+                = user.try(:department).try(:name) || "NA"
+              %td.points
+                %b= user.contribution_points.to_i
+
+      =will_paginate (@users)
+
