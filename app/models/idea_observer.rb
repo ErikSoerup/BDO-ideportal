@@ -11,7 +11,7 @@ class IdeaObserver < ActiveRecord::Observer
     if idea.inventor
       puts "Call back called properly"
       
-        Delayed::Job.enqueue IdeaPostedFollowerJob.new(idea.inventor,idea)
+       # Delayed::Job.enqueue IdeaPostedFollowerJob.new(idea.inventor,idea)
       
     end
   end

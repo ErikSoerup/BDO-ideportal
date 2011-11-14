@@ -64,18 +64,19 @@ Rails::Initializer.run do |config|
   
   
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.default_charset = "utf-8"
-#  config.action_mailer.smtp_settings = {
-#    :address => "smtp.webhost4life.com",
-#    :port => 587,
-#    :domain => "arminus.co.in",
-#    :authentication => :login,
-#    :user_name => "rajarshi.das@arminus.co.in",
-#    :password => "rd2010",
-#  }
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => "gmail.com",
+    :authentication => :plain,
+    :user_name => "bdorajars@gmail.com",
+    :password => "arminus1234",
+    :enable_starttls_auto => true
+  }
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
