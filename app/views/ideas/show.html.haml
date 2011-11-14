@@ -50,7 +50,7 @@
             
         %div
           =link_to "Followers(#{@idea.idea_followers.size})", followers_idea_path(@idea.id) unless @idea.idea_followers.empty?
-          = link_to "Unfollow", unfollow_idea_path(:user_id => current_user.id,:idea_id => @idea.id), :method => :delete unless @idea.idea_followers.empty? && IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?
+          = link_to "Unfollow", unfollow_idea_path(@idea.id), :method => :delete unless @idea.idea_followers.empty? && IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?
         -if @idea.document?
           .download.for_idea=link_to "Download", @idea.document.url
       .idea-meta

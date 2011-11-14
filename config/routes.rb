@@ -29,7 +29,8 @@ ActionController::Routing::Routes.draw do |map|
   map.signup              '/signup',                             :controller => 'users', :action => 'new'
   map.idea_search         '/ideas/search/*search',               :controller => 'ideas', :action => 'index'
   map.idea_follow         '/ideas/follow',                    :controller => 'ideas', :action => 'follow', :conditions => {:method => :post}   
-#  map.idea_followers      '/ideas/followes', :controller => 'ideas', :action => 'followers', :conditions => {:method => :get}
+#  map.idea_unfollow       '/ideas/unfollow', :controller => "ideas", :action => "unfollow", :conditions => {:method => :delete}
+  #  map.idea_followers      '/ideas/followes', :controller => 'ideas', :action => 'followers', :conditions => {:method => :get}
   map.send_activation     '/user/send_activation',               :controller => 'users', :action => 'send_activation'
   map.activate            '/user/activate/:activation_code',     :controller => 'users', :action => 'activate'
   map.forgot_password     '/user/password/forgot',               :controller => 'users', :action => 'forgot_password',     :conditions => { :method => :get }
