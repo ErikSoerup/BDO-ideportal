@@ -150,7 +150,10 @@ class IdeasController < ApplicationController
     end
   end
   def unfollow
-    
+    @idea_follow=IdeaFollower.find_by_user_id_and_idea_id(params[:user_id],params[:idea_id])
+    @idea_follow.destroy unless @idea_follow.nil? 
+    flash[:notice] = "Your fellowship of this idea has been removed"
+    redirect_to ideas_path
   end
   
   
