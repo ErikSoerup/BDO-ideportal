@@ -6,12 +6,12 @@
         %h2 Search BY Character 
         = select_tag :search, options_for_select(['Select','A','B','C','D','E','F','G','H','I','J','K','L','M','N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z']), :onchange => "document.location = '/admin/users/search?val='+jQuery(this).val()"
         %h2 Search By Name
-        = form_tag "/admin/user/search_name" do
+        - form_tag "/admin/user/search_name" do
           = text_field_tag :search
-          = submit_tag "Search 
+          = submit_tag "Search" 
       %ul.actions
         %li.input= render :partial => '/admin/search', :locals => { :model => User, :name => lambda { |user| user.name } }
     .body
       #results
-        = render :partial => '/admin/users/search'
+        = render :partial => '/admin/users/search_letter'
     .footer
