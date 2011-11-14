@@ -8,11 +8,11 @@ class IdeaObserver < ActiveRecord::Observer
       end
     end
 
-    if idea.inventor.followers.present?
+    if idea.inventor
       puts "Call back called properly"
-      idea.inventor.followers.each do |follower|
-        Delayed::Job.enqueue IdeaPostedFollowerJob.new(follower,idea)
-      end
+      
+        Delayed::Job.enqueue IdeaPostedFollowerJob.new(idea.inventor,idea)
+      
     end
   end
 
