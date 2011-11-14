@@ -52,13 +52,14 @@ class UserMailer < ActionMailer::Base
     emails = []
     unless user.followers.empty?
       user.followers.each do |u|
-        emails << u.email + ","
+        emails << u.email.to_s + ","
       end
+      @recipients=emails << user.email 
     else
       emails = user.email
-      
+       @recipients = emails.to_s 
     end
-    @recipients = emails.to_s 
+   
     
     @subject += "New idea by #{idea.inventor.name}"
     @body[:idea] = idea
