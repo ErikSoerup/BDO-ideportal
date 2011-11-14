@@ -13,6 +13,9 @@
       %div{:id => "Idea"}
         - unless params[:val] == "current"
           = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
+          .footer
+            = will_paginate @ideas
         - else
           = render :partial => '/home/current', :collection => @current_ideas unless @current_ideas.empty?
-
+          .footer
+            = will_paginate @current_ideas

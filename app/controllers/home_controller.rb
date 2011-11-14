@@ -8,23 +8,24 @@ class HomeController < ApplicationController
     #where is the pagination code ???
     @body_class = 'advance'
     if params[:val] == "alle"
-      @ideas=Idea.all
+      @ideas=Idea.paginate(:page => params[:page])
+
     elsif params[:val] == "de hotteste ideer"
       @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val] == "nye"
       @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val] == "under udvikling"
-       @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
+       @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page])
     elsif params[:val] == "implementeret"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'reviewed'])
+      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'reviewed'], :page => params[:page])
     elsif params[:val] == "under evaluering"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'])
+      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'coming soon'], :page => params[:page])
     elsif params[:val] == "ikke evalueret"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'])
+      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'launched'], :page => params[:page])
     elsif params[:val] == "min egne"
-      @ideas=current_user.ideas
+      @ideas=current_user.ideas.paginate(:page => params[:page])
     elsif params[:val] == "current"
-      @current_ideas = Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
+      @current_ideas = Current.paginate(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}", :page => params[:page])
     end
   end
 
