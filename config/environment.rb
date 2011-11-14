@@ -71,7 +71,7 @@ Rails::Initializer.run do |config|
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
-    :domain => "bdoe.heroku.com",
+    :domain => "bdo.heroku.com",
     :authentication => :plain,
     :user_name => "bdorajars",
     :password => "arminus1234",
