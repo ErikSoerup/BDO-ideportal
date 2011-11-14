@@ -71,9 +71,9 @@ Rails::Initializer.run do |config|
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
-    :domain => "gmail.com",
+    :domain => "bdoe.heroku.com",
     :authentication => :plain,
-    :user_name => "bdorajars@gmail.com",
+    :user_name => "bdorajars",
     :password => "arminus1234",
     :enable_starttls_auto => true
   }
