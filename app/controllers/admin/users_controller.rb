@@ -71,6 +71,14 @@ module Admin
       render :partial => 'admin/users/state'
     end
 
+    def search
+      @users=User.find(:all, :conditions => ['name like ?', "#{params[:val]}%"])
+    end
+    
+    def search_name
+      @user= User.find_by_name(params[:search])
+    end
+    
     include ResourceAdmin
 
   protected
@@ -91,6 +99,8 @@ module Admin
       @body_class = 'users'
     end
 
+    
+    
     def editable_classes
       EDITABLE_CLASSES
     end

@@ -54,7 +54,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace :admin do |admin|
     admin.root :controller => 'home', :action => 'show'
-    admin.resources :users, :member => { :suspend => :put, :unsuspend => :put, :activate => :put}
+    admin.resources :users, :member => { :suspend => :put, :unsuspend => :put, :activate => :put}, :collection =>{:search => :get, :search_name=> [:get,:post]}
     admin.resources :comments
     admin.resources :departments
     admin.resources :tags
