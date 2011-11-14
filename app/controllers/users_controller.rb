@@ -1,9 +1,16 @@
 class UsersController < ApplicationController
   include AuthenticatedSystem
 
-  before_filter :login_required, :only => [:edit, :update, :authorize_twitter, :following, :follow]
+  before_filter :login_required, :only => [:index, :edit, :update, :authorize_twitter, :following, :follow]
   before_filter :populate_user, :except => [:show, :new]
   before_filter :get_user, :only => [:following, :followers]
+
+  def index
+    @body_class='advance'
+    page = 1 || params[:page]
+    @users = User.find_top_contributors(true).paginate :page => page
+  end
+
 
   def new
     if params[:user] && params[:user][:twitter_token] || params[:facebook_create]

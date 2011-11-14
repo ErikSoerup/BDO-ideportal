@@ -1,16 +1,18 @@
 %div
-  %div
-    %h1 Ideer
-    = select_tag "Ideer", options_for_select(["select", "alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
-    %br
-    %h1 Person
-    = select_tag "Ideer", options_for_select(["select", "alle", "top bidragydere", "min egne"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
-    %h1 Afdeling
-    = select_tag "Ideer", options_for_select(["select", "alle"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
-    %h1 Hovedvej
-    = select_tag "Ideer", options_for_select(["select", ["alle", "current"], "list"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
-%div{:id => "Idea"}
-  - unless params[:val] == "current"
-    = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
-  - else
-    = render :partial => '/home/current', :collection => @current_ideas unless @current_ideas.empty?     
+  #popular-ideas.main.panel.section.hfeed
+    %div.filters
+      = select_tag "Ideer", options_for_select(["select", "alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+      %br
+      %h1 Person
+      = select_tag "Ideer", options_for_select(["select", "alle", "top bidragydere", "min egne"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+      %h1 Afdeling
+      = select_tag "Ideer", options_for_select(["select", "alle"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+      %h1 Hovedvej
+      = select_tag "Ideer", options_for_select(["select", ["alle", "current"], "list"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+    -if @ideas || @current_ideas
+      %div{:id => "Idea"}
+        - unless params[:val] == "current"
+          = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
+        - else
+          = render :partial => '/home/current', :collection => @current_ideas unless @current_ideas.empty?
+

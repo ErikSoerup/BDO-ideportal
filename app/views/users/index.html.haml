@@ -6,14 +6,13 @@
           -for user in @users
             %tr.user
               %td.pp{:width=>90}
-                = image_tag profile_picture(user, :large) , :width=>64,:height=>64 , :class=>'profile_pic large'
+                = image_tag profile_picture(user, :small) , :width=>32,:height=>32 , :class=>'profile_pic large'
               %td.name
                 =link_to user.name, profile_path(user)
               %td.department
-                %b= user.try(:department).try(:name) || "NA"
-              -if current_user == @user && @show_links
-                %td.links
-                  =link_to 'unfollow', unfollow_path(user)
+                = user.try(:department).try(:name) || "NA"
+              %td.points
+                %b= user.contribution_points.to_i
 
       =will_paginate (@users)
 

@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :currents, :member => { :subscribe => :post, :unsubscribe => [:post, :get] } do |current|
     current.resources :ideas
   end
-  map.resource :user
+  map.resource :user, :member=>{:index=>:get}
   map.resource :session, :member => {
     :create_twitter => :get,
     :create_facebook => :get

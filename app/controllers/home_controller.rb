@@ -5,6 +5,8 @@ class HomeController < ApplicationController
   end
 
   def advance
+    #where is the pagination code ???
+    @body_class = 'advance'
     if params[:val] == "alle"
       @ideas=Idea.all
     elsif params[:val] == "de hotteste ideer"
@@ -15,7 +17,7 @@ class HomeController < ApplicationController
        @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
     elsif params[:val] == "implementeret"
       @ideas=Idea.find(:all, :conditions => ['status=?', 'reviewed'])
-    elsif params[:val] == "under evaluering"  
+    elsif params[:val] == "under evaluering"
       @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'])
     elsif params[:val] == "ikke evalueret"
       @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'])
@@ -23,12 +25,10 @@ class HomeController < ApplicationController
       @ideas=current_user.ideas
     elsif params[:val] == "current"
       @current_ideas = Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
-    end 
-     
-    
+    end
   end
-  
-  
+
+
   def current_objects
     @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
