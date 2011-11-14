@@ -1,0 +1,8 @@
+Hi <%= @user.name %>,
+
+List of the comments of that idea
+<ul>
+  <% @text.each do |comment| %>
+  <li><%= comment %></li>
+  <% end %>
+</ul>

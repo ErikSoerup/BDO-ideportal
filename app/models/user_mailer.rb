@@ -17,6 +17,24 @@ class UserMailer < ActionMailer::Base
     @body[:url] = password_reset_url(:activation_code => user.activation_code)
   end
 
+  
+  def notification_followers_comments(user, comments)
+    set_up_email(user)
+    
+    @subject = "All comments of your follower ideas"
+    @body[:user] = user
+    text=[]
+    comments.each do |c|
+      text << c.text
+    end
+    
+    unless comments.empty?
+     
+        @body[:text] = text
+     
+    end
+  end
+  
   def password_change_notification(user)
     set_up_email(user)
     @subject += 'Your password was changed'
@@ -57,7 +75,7 @@ class UserMailer < ActionMailer::Base
       @recipients=emails << user.email 
     else
       emails = user.email
-       @recipients = emails.to_s 
+      @recipients = emails.to_s 
     end
    
     
