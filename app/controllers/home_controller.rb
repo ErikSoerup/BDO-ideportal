@@ -4,6 +4,11 @@ class HomeController < ApplicationController
     # render the landing page
   end
 
+  def current_ideas
+    @ideas = current_user.ideas
+    @current_ideas = current_user.currents
+  end
+  
   def advance
     #where is the pagination code ???
     @body_class = 'advance'
