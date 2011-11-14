@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
           :limit => 10))
     end
   end
+  
+  
   has_many :currents, :foreign_key => 'inventor_id'
   has_many :comments, :foreign_key => 'author_id' do
     def recent_visible(opts = {})

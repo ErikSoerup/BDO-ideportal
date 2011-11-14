@@ -16,6 +16,15 @@
     %span{:id => "vote_#{idea.id}"}= render :partial => 'votes/vote', :locals => { :idea => idea, :dom_id => "vote_#{idea.id}" }
     .entry-content
       %p= h idea.description_excerpt
+    %br
+    %div
+      - if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?
+        - form_tag idea_follow_path do 
+          = hidden_field_tag :idea_id, idea.id
+          = submit_tag "Follow" 
+    %div
+      = link_to "Followers(#{idea.idea_followers.size})", followers_idea_path(idea.id) unless idea.idea_followers.empty?
+    
     %ul.entry-meta
       %li.comments
         = link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments', :title_in_url => false)

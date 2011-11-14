@@ -131,6 +131,29 @@ class IdeasController < ApplicationController
     redirect_to idea_path(@idea)
   end
 
+  def follow
+    
+    @idea= Idea.find(params[:idea_id])
+    IdeaFollower.create!(:user_id => current_user.id, :idea_id => @idea.id)
+    flash[:notice] = "You have successfully followed the idea"
+    redirect_to idea_path(@idea)
+    
+  end
+  
+  
+  def followers
+    @idea=Idea.find(params[:id])
+    @followers=@idea.idea_followers
+    @users=[]
+    @followers.each do |f|
+      @users << f.user
+    end
+  end
+  def unfollow
+    
+  end
+  
+  
   def index
     if params[:page_size]
       page_size = params[:page_size].to_i
