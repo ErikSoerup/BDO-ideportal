@@ -57,7 +57,7 @@ class CurrentsController < ApplicationController
       redirect_to current_path(@current)
       Delayed::Job.enqueue NotificationCurrentJob.new(current_user, @current)
    
-      rescue
+    rescue
       flash[:notice] = "You have successfully followed the idea"
       redirect_to current_path(@current)
     end  

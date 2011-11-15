@@ -4,10 +4,10 @@ List of the comments of that idea
 <ul>
   <% unless @title.nil? || @desc.nil? %>
     <% @title.each do |title| %>
-      <li><%= title %></li>
+      <li>Title:-<%= title %></li>
     <% end %>
     <% @desc.each do |desc| %>
-      <li><%= desc %></li>
+      <li>Description:-<%= desc %></li>
     <% end %>
   <% end %>
 
