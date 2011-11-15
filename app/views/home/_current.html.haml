@@ -10,6 +10,14 @@
         - if current.inventor
           = link_to h(current.inventor.name), profile_path(current.inventor), :class => current.inventor.admin? ? 'fn url admin' : 'fn url' unless current.nil? || current.inventor.nil?
     %h3.entry-title= link_to h(current.title), current_path(current) unless current.nil?
+    %div
+      - if CurrentFollower.find_by_user_id_and_current_id(current_user.id,current.id).nil?
+        - form_tag current_follow_path do 
+          = hidden_field_tag :current_id, current.id
+          = submit_tag "Follow" 
+    %div
+      = link_to "Followers(#{current.current_followers.size})", followers_current_path(current.id) unless current.current_followers.empty?
+      = link_to "Unfollow", unfollow_current_path(current.id), :method => :delete unless current.current_followers.empty? && CurrentFollower.find_by_user_id_and_current_id(current_user.id,current.id).nil?
    
     %div
       %p= h current.description unless current.nil? 
