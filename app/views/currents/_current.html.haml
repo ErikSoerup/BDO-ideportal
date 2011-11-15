@@ -18,10 +18,10 @@
         - if CurrentFollower.find_by_user_id_and_current_id(current_user.id,current.id).nil?
           - form_tag current_follow_path do 
             = hidden_field_tag :current_id, current.id
-            = submit_tag "Follow" 
+            = submit_tag "Follow", :class => "idea_submit"
       %div
         = link_to "Followers(#{current.current_followers.size})", followers_current_path(current.id) unless current.current_followers.empty?
-        = link_to "Unfollow", unfollow_current_path(current.id), :method => :delete unless current.current_followers.empty? && CurrentFollower.find_by_user_id_and_current_id(current_user.id,current.id).nil?
+        = link_to "Unfollow", unfollow_current_path(current.id), :method => :delete unless CurrentFollower.find_by_user_id_and_current_id(current_user.id,current.id).nil?
 
       %ul.entry-meta
         %li.ideas

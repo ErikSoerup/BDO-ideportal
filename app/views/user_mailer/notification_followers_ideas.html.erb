@@ -1,0 +1,15 @@
+Hi <%= @user.name %>,
+
+List of the comments of that idea
+<ul>
+  <% unless @title.nil? || @desc.nil? %>
+    <% @title.each do |title| %>
+      <li><%= title %></li>
+    <% end %>
+    <% @desc.each do |desc| %>
+      <li><%= desc %></li>
+    <% end %>
+  <% end %>
+
+  
+</ul>

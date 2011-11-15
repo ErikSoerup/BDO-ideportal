@@ -1,10 +1,12 @@
 Hi <%= @user.name %>,
 
-List of the comments of that idea
+List of the ideas of that current
 <ul>
   <% unless @text.nil? %>
-  <% @text.each do |comment| %>
-  <li><%= comment %></li>
+    <% @text.each do |comment| %>
+      <li><%= comment %></li>
+    <% end %>
   <% end %>
-  <% end %>
+
+
 </ul>

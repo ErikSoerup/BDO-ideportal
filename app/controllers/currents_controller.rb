@@ -1,5 +1,7 @@
 class CurrentsController < ApplicationController
 
+  
+  require "#{RAILS_ROOT}/app/jobs/NotificationCurrentJob.rb"
   make_resourceful do
     actions :show, :index
 
@@ -47,17 +49,19 @@ class CurrentsController < ApplicationController
   end
 
   def follow
-    begin
+    
+#    begin
       @current= Current.find(params[:current_id])
       CurrentFollower.create!(:user_id => current_user.id, :current_id => @current.id)
       flash[:notice] = "You have successfully followed the idea"
       redirect_to current_path(@current)
+      Delayed::Job.enqueue NotificationCurrentJob.new(current_user, @current)
 #      Delayed::Job.enqueue NotificationCommentJob.new(current_user, @current)
 #      UserMailr.deliver_notification_comments()
-      rescue
-      flash[:notice] = "You have successfully followed the idea"
-      redirect_to current_path(@current)
-    end  
+#      rescue
+#      flash[:notice] = "You have successfully followed the idea"
+#      redirect_to current_path(@current)
+#    end  
   end
   
   

@@ -24,13 +24,14 @@ class UserMailer < ActionMailer::Base
     @subject = "All comments of your follower ideas"
     @body[:user] = user
     text=[]
+    unless comments.empty?
     comments.each do |c|
       text << c.text
     end
-    
+    end
     unless comments.empty?
      
-        @body[:text] = text
+      @body[:text] = text
      
     end
   end
@@ -48,6 +49,29 @@ class UserMailer < ActionMailer::Base
     @body[:url] = home_url('contact')
   end
 
+  def notification_followers_ideas(user, ideas)
+    set_up_email(user)
+    @body[:ideas] = ideas
+    @subject ="All ideas of the current which you follow"
+    title=[]
+    description=[]
+    unless ideas.empty?
+      ideas.each do |i|
+        title << i.title
+      end
+    
+      ideas.each do |ii|
+        description << ii.description
+      end
+    end
+    
+    unless ideas.empty?
+     
+      @body[:title] = title
+      @body[:desc] = description
+    end
+  end
+  
   def comment_notification(user, comment)
     set_up_email(user)
     @body[:comment] = comment
