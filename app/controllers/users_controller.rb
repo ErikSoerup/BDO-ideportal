@@ -23,6 +23,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def current_ideas
+    @ideas = current_user.idea_followers.collect(&:idea)
+    @current_ideas = current_user.current_followers.collect(&:current)
+  end
+  
+  
   def create
     cookies.delete :auth_token
     new_user_from_params

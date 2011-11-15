@@ -95,7 +95,7 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'home', :action => 'show'
   map.home_advance '/home/advance', :controller => 'home', :action => 'advance'
   map.home_nearby_ideas '/home/nearby-ideas', :controller => 'home', :action => 'nearby_ideas'
-  map.current_ideas '/home/current_ideas', :controller => "home", :action => "current_ideas"
+  map.current_ideas '/users/current_ideas', :controller => "users", :action => "current_ideas"
   map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact|rules|privacy-policy|terms-of-use/
 
   # No default routes declared for security & tidiness. (They make all actions in every controller accessible via GET requests.)

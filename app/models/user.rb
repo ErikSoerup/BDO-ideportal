@@ -55,7 +55,8 @@ class User < ActiveRecord::Base
   end
   has_and_belongs_to_many :subscribed_ideas,    :class_name => 'Idea',    :join_table => 'ideas_subscribers'
   has_and_belongs_to_many :subscribed_currents, :class_name => 'Current', :join_table => 'currents_subscribers'
-
+  has_many :idea_followers, :class_name => "IdeaFollower"
+  has_many :current_followers, :class_name => "CurrentFollower"
   # OAuth support
   has_many :client_applications
   has_many :tokens, :class_name => 'OauthToken', :order => 'authorized_at desc', :include => [:client_application]
