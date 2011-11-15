@@ -18,7 +18,7 @@
       %p= h idea.description_excerpt
     %br
     %div
-      - if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?
+      - if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank?
         - form_tag idea_follow_path do
           = hidden_field_tag :idea_id, idea.id
           = submit_tag "Follow", :class => "idea_submit"
