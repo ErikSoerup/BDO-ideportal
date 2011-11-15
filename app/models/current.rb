@@ -16,6 +16,8 @@ class Current < ActiveRecord::Base
 
   validates_presence_of :title, :description
 
+  
+  has_many :current_followers
   DEFAULT_CURRENT_ID = -1
   SUGESSIONS_ID = 6 #depends on the DB record id
 

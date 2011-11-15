@@ -46,6 +46,37 @@ class CurrentsController < ApplicationController
     end
   end
 
+  def follow
+    begin
+      @current= Current.find(params[:current_id])
+      CurrentFollower.create!(:user_id => current_user.id, :current_id => @current.id)
+      flash[:notice] = "You have successfully followed the idea"
+      redirect_to current_path(@current)
+#      Delayed::Job.enqueue NotificationCommentJob.new(current_user, @current)
+#      UserMailr.deliver_notification_comments()
+      rescue
+      flash[:notice] = "You have successfully followed the idea"
+      redirect_to current_path(@current)
+    end  
+  end
+  
+  
+  def followers
+    @current=Current.find(params[:id])
+    @followers=@current.current_followers
+    @users=[]
+    @followers.each do |f|
+      @users << f.user
+    end
+  end
+  def unfollow
+    @current_follow=CurrentFollower.find_by_user_id_and_current_id(current_user.id,params[:id])
+    @current_follow.destroy unless @current_follow.nil? 
+    flash[:notice] = "Your fellowship of this idea has been removed"
+    redirect_to currents_path
+  end
+  
+  
   def subscribe
     change_subscription(true)
   end

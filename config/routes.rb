@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
     idea.resource :vote
   end
 
-  map.resources :currents, :member => { :subscribe => :post, :unsubscribe => [:post, :get] } do |current|
+  map.resources :currents, :member => { :subscribe => :post, :unsubscribe => [:post, :get], :unfollow => :delete, :followers => :get } do |current|
     current.resources :ideas
   end
   map.resource :user, :member=>{:index=>:get}
@@ -31,6 +31,8 @@ ActionController::Routing::Routes.draw do |map|
   map.idea_follow         '/ideas/follow',                    :controller => 'ideas', :action => 'follow', :conditions => {:method => :post}   
 #  map.idea_unfollow       '/ideas/unfollow', :controller => "ideas", :action => "unfollow", :conditions => {:method => :delete}
   #  map.idea_followers      '/ideas/followes', :controller => 'ideas', :action => 'followers', :conditions => {:method => :get}
+  map.current_follow         '/currents/follow', :controller => 'currents', :action => 'follow', :conditions => {:method => :post}
+  
   map.send_activation     '/user/send_activation',               :controller => 'users', :action => 'send_activation'
   map.activate            '/user/activate/:activation_code',     :controller => 'users', :action => 'activate'
   map.forgot_password     '/user/password/forgot',               :controller => 'users', :action => 'forgot_password',     :conditions => { :method => :get }
