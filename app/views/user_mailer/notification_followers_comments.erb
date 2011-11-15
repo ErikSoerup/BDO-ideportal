@@ -2,7 +2,9 @@ Hi <%= @user.name %>,
 
 List of the comments of that idea
 <ul>
+  <% unless @text.nil? %>
   <% @text.each do |comment| %>
   <li><%= comment %></li>
+  <% end %>
   <% end %>
 </ul>
