@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111105132754) do
+ActiveRecord::Schema.define(:version => 20111114125529) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -71,6 +71,13 @@ ActiveRecord::Schema.define(:version => 20111105132754) do
   add_index "comments", ["idea_id"], :name => "index_comments_on_idea_id"
   add_index "comments", ["vectors"], :name => "comments_fts_vectors_index"
 
+  create_table "current_followers", :force => true do |t|
+    t.integer  "current_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "currents", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -105,6 +112,13 @@ ActiveRecord::Schema.define(:version => 20111105132754) do
 
   create_table "departments", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "idea_followers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "idea_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

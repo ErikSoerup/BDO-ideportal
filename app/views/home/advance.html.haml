@@ -1,6 +1,7 @@
 %div
   #popular-ideas.main.panel.section.hfeed
     %div.filters
+      %h1 Idea
       = select_tag "Ideer", options_for_select(["select", "alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
       %br
       %h1 Person
