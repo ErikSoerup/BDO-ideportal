@@ -6,7 +6,7 @@
       %h1 Person
       = select_tag "Ideer", options_for_select(["select", "alle", "top bidragydere", "min egne"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
       %h1 Afdeling
-      = select_tag "Ideer", options_for_select([["select"]] +Department.all.collect{ |dep| [dep.name]}), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+      = select_tag "Ideer", options_for_select([["select"]] +Department.all.collect{ |dep| [dep.name,dep.id]}), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
       %h1 Hovedvej
       = select_tag "Ideer", options_for_select(["select", ["alle", "current"], "list"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
     -if @ideas || @current_ideas
