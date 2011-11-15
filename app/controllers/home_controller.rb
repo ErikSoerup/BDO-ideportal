@@ -27,12 +27,12 @@ class HomeController < ApplicationController
       @ideas=current_user.ideas.paginate(:page => params[:page])
     elsif params[:val] == "current"
       @current_ideas = Current.paginate(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}", :page => params[:page])
-    elsif Department.all.collect(&:name).include?(params[:val])
-      @dep= Department.find_by_id params[:val]
+    else
+      @dep= Department.find_by_id(params[:val])
        val=[]
         @dep.users.each do |user|
           val << user.ideas unless user.ideas.empty?
-          @idea={@dep.name => val} unless val.empty?
+          @idea={@dep.id => val} unless val.empty?
         end
       
       @ideas=@idea.values.first.first.paginate(:page => params[:page])
