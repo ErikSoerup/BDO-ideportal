@@ -2,6 +2,14 @@
   #popular-ideas.main.panel.section.hfeed
     .header
       %h2.icon{ :class => @body_class }
+      %div
+        %h2 Search BY Character 
+        = select_tag :search, options_for_select(['Select','A','B','C','D','E','F','G','H','I','J','K','L','M','N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z']), :onchange => "document.location = '/user/index?val='+jQuery(this).val()"
+        %h2 Search By Name
+        - form_tag "/admin/users/search_name" do
+          = text_field_tag :search
+          = submit_tag "Search"       
+
         %table.users_list{:width=>'100%', :cellpadding=>0, :cellspacing=>0}
           -for user in @users
             %tr.user

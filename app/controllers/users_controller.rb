@@ -8,7 +8,17 @@ class UsersController < ApplicationController
   def index
     @body_class='advance'
     page = 1 || params[:page]
-    @users = User.find_top_contributors(true).paginate :page => page
+    
+    if params[:val]
+      @users=User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:val]}%"])
+      @users=@users.paginate :page => page
+    elsif params[:search]
+      @user= User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:search]}%"])
+      @users=@users.paginate :page => page
+    else
+      @users = User.find_top_contributors(true).paginate :page => page
+    end
+    
   end
 
 
@@ -196,7 +206,7 @@ class UsersController < ApplicationController
 
   include TwitterHelper
 
-protected
+  protected
 
   def get_user
     @body_class="following"
