@@ -23,8 +23,9 @@
           = hidden_field_tag :idea_id, idea.id
           = submit_tag "Follow", :class => "idea_submit"
     %div
-      = link_to "Followers(#{idea.idea_followers.size})", followers_idea_path(idea.id) unless idea.idea_followers.empty?
-      = link_to "Unfollow", unfollow_idea_path(idea.id), :method => :delete unless idea.idea_followers.empty? && IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?
+      - unless idea.idea_followers.empty?
+        = link_to "Followers(#{idea.idea_followers.size})", followers_idea_path(idea.id) 
+        = link_to "Unfollow", unfollow_idea_path(idea.id), :method => :delete unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?
     %ul.entry-meta
       %li.comments
         = link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments', :title_in_url => false)
