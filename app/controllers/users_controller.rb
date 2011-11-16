@@ -11,10 +11,10 @@ class UsersController < ApplicationController
     
     if params[:val]
       @users=User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:val]}%"])
-      @users=@users.paginate :page => page
+      @users=@users.paginate :page => page unless @users.nil?
     elsif params[:search]
       @user= User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:search]}%"])
-      @users=@users.paginate :page => page
+      @users=@users.paginate :page => page unless @users.nil?
     else
       @users = User.find_top_contributors(true).paginate :page => page
     end

@@ -6,7 +6,7 @@
         %h2 Search BY Character 
         = select_tag :search, options_for_select(['Select','A','B','C','D','E','F','G','H','I','J','K','L','M','N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z']), :onchange => "document.location = '/user/index?val='+jQuery(this).val()"
         %h2 Search By Name
-        - form_tag "/users/index" do
+        - form_tag "/user/index", :method => :get do
           = text_field_tag :search
           = submit_tag "Search"       
 
