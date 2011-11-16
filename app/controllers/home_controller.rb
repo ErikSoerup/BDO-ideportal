@@ -30,8 +30,9 @@ class HomeController < ApplicationController
     elsif params[:val] == "top"
       @users=User.find_top_contributors
       @ideas=[]
+      
       @users.each do |u|
-        @ideas << u.ideas
+        @ideas << u.ideas unless u.ideas.empty?
       end
       @ideas=@ideas.paginate(:page => params[:page])
     elsif params[:val]
