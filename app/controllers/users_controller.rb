@@ -25,9 +25,17 @@ class UsersController < ApplicationController
 
   def current_ideas
     @ideas = current_user.idea_followers.collect(&:idea)
+    
+  end
+  
+  
+  def current_currents
     @current_ideas = current_user.current_followers.collect(&:current)
   end
   
+  def follow_users
+    @users=current_user.followers.paginate(:page => params[:page])
+  end
   
   def create
     cookies.delete :auth_token
