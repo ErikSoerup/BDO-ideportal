@@ -42,9 +42,10 @@ class HomeController < ApplicationController
           val << user.ideas unless user.ideas.empty?
           @idea={@dep.id => val} unless val.empty?
         end
+        @ideas=@idea.values.first.first.paginate(:page => params[:page]) 
        end
       
-      @ideas=@idea.values.first.first.paginate(:page => params[:page])
+      
     else 
     end
   end
