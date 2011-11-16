@@ -44,10 +44,10 @@
         %br
         %div
           - if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?
-            - form_tag idea_follow_path do 
+            - form_tag idea_follow_path do
               = hidden_field_tag :idea_id, @idea.id
               = submit_tag "Follow"
-            
+
         %div
           =link_to "Followers(#{@idea.idea_followers.size})", followers_idea_path(@idea.id) unless @idea.idea_followers.empty?
           = link_to "Unfollow", unfollow_idea_path(@idea.id), :method => :delete unless @idea.idea_followers.empty? && IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?
@@ -61,12 +61,12 @@
               = link_to "Kommentarer #{"(#{@idea.comment_count})" if @idea.comment_count > 0}", "#comments"
               |
               = link_to "Kommentar", "#post-comment"
-            #subscription
+            -##subscription
               = render :partial => 'subscription'
             %li.tags
               = @idea.tags.map { |tag| link_to h(tag.name), idea_search_path(:search => ['tag', tag.name]) }.join(', ')
             %li.sharethis= render :partial => 'sharethis'
-            %li.flag#xxx= render :partial => 'inappropriate/xxx', :locals => { :model => @idea, :dom_id => 'xxx' }
+            -#%li.flag#xxx= render :partial => 'inappropriate/xxx', :locals => { :model => @idea, :dom_id => 'xxx' }
         %div.related-ideas
           -# %h3
           -#   Related Ideas

@@ -18,8 +18,8 @@
       %p= h idea.description_excerpt
     %br
     %div
-      - if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?
-        - form_tag idea_follow_path do 
+      - if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank?
+        - form_tag idea_follow_path do
           = hidden_field_tag :idea_id, idea.id
           = submit_tag "Follow", :class => "idea_submit"
     %div
@@ -34,6 +34,6 @@
             - unless ctr == idea.tags.length - 1
               == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])},
             -else
-              == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])} unless tag.nil?
+              == #{link_to h(tag.name), idea_search_path(:search => ['tag', tag.name])}
     %span{:id => "xxx_#{idea.id}", :class=>"hide"}
       = render :partial => 'inappropriate/xxx', :locals => { :model => idea, :dom_id => "xxx_#{idea.id}" }
