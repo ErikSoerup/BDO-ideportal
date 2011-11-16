@@ -37,10 +37,12 @@ class HomeController < ApplicationController
     elsif params[:val]
       @dep= Department.find_by_id(params[:val])
        val=[]
+       unless @dep.users.empty?
         @dep.users.each do |user|
           val << user.ideas unless user.ideas.empty?
           @idea={@dep.id => val} unless val.empty?
         end
+       end
       
       @ideas=@idea.values.first.first.paginate(:page => params[:page])
     else 
