@@ -27,6 +27,13 @@ class HomeController < ApplicationController
       @ideas=current_user.ideas.paginate(:page => params[:page])
     elsif params[:val] == "current"
       @current_ideas = Current.paginate(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}", :page => params[:page])
+    elsif params[:val] == "top"
+      @users=User.find_top_contributors
+      @ideas=[]
+      @users.each do |u|
+        @ideas << u.ideas
+      end
+      @ideas=@ideas.paginate(:page => params[:page])
     elsif params[:val]
       @dep= Department.find_by_id(params[:val])
        val=[]
