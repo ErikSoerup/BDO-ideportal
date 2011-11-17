@@ -13,9 +13,6 @@
           %li= link_to t("menu.tags"), tags_path, :class => 'tags'
           %li= link_to t("menu.advance_search"), home_advance_path
         
-          %li= link_to t('menu.ideas_following'), '/users/current_ideas'
-          %li= link_to t('menu.currents_following'), '/users/current_currents'
-          %li.last= link_to t('menu.users_following'), '/users/follow_users'
 
       %ul.nav.user
         %li.first= link_to t('menu.my_profile')  , profile_url(current_user)

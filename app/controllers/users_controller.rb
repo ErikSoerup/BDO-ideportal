@@ -20,10 +20,8 @@ class UsersController < ApplicationController
   end
 
   def search_user
-      @users= User.find(:all, :conditions => ['name like ?', "#{params[:search]}%"])
-      
-      @users=@users.paginate :page => params[:page] unless @users.nil?
-      
+    @users= User.find(:all, :conditions => ['name like ?', "#{params[:search]}%"])
+    @users=@users.paginate :page => params[:page] unless @users.nil?
   end
 
   def new
@@ -39,16 +37,25 @@ class UsersController < ApplicationController
 
   def current_ideas
     @ideas = current_user.idea_followers.collect(&:idea)
-    
+    respond_to do |format|
+      format.js { render :layout=>false }
+    end
+
   end
   
   
   def current_currents
     @current_ideas = current_user.current_followers.collect(&:current)
+    respond_to do |format|
+      format.js { render :layout=>false }
+    end
   end
   
   def follow_users
     @users=current_user.followers.paginate(:page => params[:page])
+    respond_to do |format|
+      format.js { render :layout=>false }
+    end
   end
   
   def create
