@@ -12,15 +12,19 @@ class UsersController < ApplicationController
     if params[:val]
       @users=User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:val]}%"])
       @users=@users.paginate :page => page unless @users.nil?
-    elsif params[:search]
-      @user= User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:search]}%"])
-      @users=@users.paginate :page => page unless @users.nil?
+    
     else
       @users = User.find_top_contributors(true).paginate :page => page
     end
     
   end
 
+  def search_user
+      @users= User.find(:all, :conditions => ['name like ?', "#{params[:search]}%"])
+      
+      @users=@users.paginate :page => params[:page] unless @users.nil?
+      
+  end
 
   def new
     if params[:user] && params[:user][:twitter_token] || params[:facebook_create]

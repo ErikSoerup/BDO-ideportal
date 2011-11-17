@@ -91,7 +91,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Top-level routes
-
+  map.search_user '/users/search_user', :controller => 'users', :action => 'search_user', :conditions => {:method =>[:get,:post]}
   map.root :controller => 'home', :action => 'show'
   map.home_advance '/home/advance', :controller => 'home', :action => 'advance'
   map.home_nearby_ideas '/home/nearby-ideas', :controller => 'home', :action => 'nearby_ideas'
