@@ -612,7 +612,7 @@ h1#logo {
     margin: 0;
 	background: url(../images/menu_left.jpg) no-repeat left top;
     float: left;
-    width:522px;
+/*    width:522px;*/
     height: 30px;
     list-style: none; }
     .nav.site li {
@@ -620,9 +620,9 @@ h1#logo {
       float: left;
       height: 30px; }
       .nav.site li a {
-          font-size: 8px;
+/*          font-size: 8px;*/
 		background-color: #ffe39c;
-        padding: 0 5px;
+        padding: 0 10px;
         color: #786860;
         display: block;
         font-weight: bold;
@@ -646,8 +646,8 @@ h1#logo {
 		-khtml-border-radius: 	10px 0 0 10px; /* Linux Browsers */
 		 }
       .nav.site li.last a {
-        padding-right: 15px;
-        font-size: 8px;
+        padding-right: 10px;
+/*        font-size: 8px;*/
         border: none; }
 	  .nav.site li.last a {
 		background: #ffe39c url(../images/menu_right.jpg) no-repeat right top; }
@@ -655,8 +655,8 @@ h1#logo {
 		background: #ebba3d url(../images/menu_right_hov.jpg) no-repeat right top; }
     .nav.site.alt.title-ideas {
       xpadding-left: 54px;
-      width:194px;
-	  margin-right: 0px; }
+/*      width:194px;*/
+	  margin-right: 10px; }
     .nav.site.alt.admin {
       padding-left: 54px; }
       .nav.site li.search input {
