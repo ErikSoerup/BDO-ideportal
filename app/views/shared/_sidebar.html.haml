@@ -11,6 +11,7 @@
 
   -cache 'top_contributors', :expires_in => 3.minutes, :unless => logged_in? do
     .section
+      %div{:id => "followers"}
       %h2.header=t("top_contributors")
       -#%p Earn points for sharing, voting, and discussing ideas.
       %ul#top-recent-contributors.list-block

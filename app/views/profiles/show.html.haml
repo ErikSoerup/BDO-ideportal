@@ -16,9 +16,9 @@
         %li="Antal kommentarer : <span>#{@user.ideas.length}</span>"
         %li="Antal stemmer : <span> #{@user.votes.length}</span>"
         %li="Antal point : <span>#{ @user.recent_contribution_points || 0 } points</span>"
-        %li= link_to_remote t('menu.ideas_following'),:update => "sidebar", :url => {:controller => "users", :action => "current_ideas"}
-        %li= link_to_remote t('menu.currents_following'), :update => "sidebar", :url => {:controller => "users", :action => "current_currents"}
-        %li= link_to_remote t('menu.users_following'), :update => "sidebar", :url => {:controller => "users", :action => "follow_users"}
+        %li= link_to_remote t('menu.ideas_following'),:update => "followers", :url => {:controller => "users", :action => "current_ideas"}
+        %li= link_to_remote t('menu.currents_following'), :update => "followers", :url => {:controller => "users", :action => "current_currents"}
+        %li= link_to_remote t('menu.users_following'), :update => "followers", :url => {:controller => "users", :action => "follow_users"}
 
         %li.following
           =link_to "Following : <span>#{@user.following.length }</span>", following_path(@user.id)

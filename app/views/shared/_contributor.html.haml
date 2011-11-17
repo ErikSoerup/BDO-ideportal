@@ -18,7 +18,8 @@
       =t("by")
       %span.vcard.author
         = link_to h(contributor.name), profile_path(contributor), :class => 'fn url'
-    %h4.entry-point== #{(contributor.send(points_method) || 0).round } points
-    %h4.entry-title= link_to h(contributor.name), profile_path(contributor), :rel => 'bookmark'
+    - unless points_method.nil?
+      %h4.entry-point== #{(contributor.send(points_method) || 0).round } points
+      %h4.entry-title= link_to h(contributor.name), profile_path(contributor), :rel => 'bookmark'
   %span{:id => "contributor_#{contributor.id}"}
     = image_tag profile_picture(contributor) , :width=>32,:height=>32 , :class=>'profile_pic small'

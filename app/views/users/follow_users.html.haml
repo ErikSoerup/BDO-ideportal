@@ -1,2 +1,2 @@
 %div
-  = render :partial => '/users/followers', :collection => @users if @users && !@users.empty?
+  = render :partial => 'shared/contributor', :collection => @users, :locals => { :points_method => :contribution_points } if @users && !@users.empty?
