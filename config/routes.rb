@@ -29,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.signup              '/signup',                             :controller => 'users', :action => 'new'
   map.idea_search         '/ideas/search/*search',               :controller => 'ideas', :action => 'index'
   map.idea_follow         '/ideas/follow',                    :controller => 'ideas', :action => 'follow', :conditions => {:method => :post}   
-#  map.idea_unfollow       '/ideas/unfollow', :controller => "ideas", :action => "unfollow", :conditions => {:method => :delete}
+  #  map.idea_unfollow       '/ideas/unfollow', :controller => "ideas", :action => "unfollow", :conditions => {:method => :delete}
   #  map.idea_followers      '/ideas/followes', :controller => 'ideas', :action => 'followers', :conditions => {:method => :get}
   map.current_follow         '/currents/follow', :controller => 'currents', :action => 'follow', :conditions => {:method => :post}
   
@@ -89,7 +89,7 @@ ActionController::Routing::Routes.draw do |map|
       dup.link_duplicates    'ideas/:id/link_duplicate/:other_id', :action => 'link_duplicates',    :conditions => { :method => :post }
     end
   end
-
+  map.home_main_search '/home/main_search', :controller => "home", :action => "main_search", :conditions => {:method => [:get,:post]}
   # Top-level routes
   map.search_user '/users/search_user', :controller => 'users', :action => 'search_user', :conditions => {:method =>[:get,:post]}
   map.root :controller => 'home', :action => 'show'

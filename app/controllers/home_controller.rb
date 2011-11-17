@@ -16,7 +16,7 @@ class HomeController < ApplicationController
     elsif params[:val] == "nye"
       @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val] == "under udvikling"
-       @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page])
+      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page])
     elsif params[:val] == "implementeret"
       @ideas=Idea.paginate(:all, :conditions => ['status=?', 'reviewed'], :page => params[:page])
     elsif params[:val] == "under evaluering"
@@ -40,14 +40,14 @@ class HomeController < ApplicationController
       
     elsif params[:val]
       @dep= Department.find_by_id(params[:val])
-       val=[]
-       unless @dep.users.empty?
+      val=[]
+      unless @dep.users.empty?
         @dep.users.each do |user|
           val << user.ideas unless user.ideas.empty?
           @idea={@dep.id => val} unless val.empty?
         end
         @ideas=@idea.values.first.first.paginate(:page => params[:page]) 
-       end
+      end
       
       
     else 
@@ -55,6 +55,81 @@ class HomeController < ApplicationController
   end
 
 
+  def main_search
+    @m_ideas=[]
+    #    unless params[:val1] == "Select" || params[:val2] == "Select" || params[:val3] == "select" || params[:val4] == "select"
+
+      
+    if params[:val1] == "alle"
+      @ideas=Idea.all
+
+    elsif params[:val1] == "de hotteste ideer"
+      @ideas= Idea.populate_comment_counts(search_ideas(params))
+    elsif params[:val1] == "nye"
+      @ideas= Idea.populate_comment_counts(search_ideas(params))
+    elsif params[:val1] == "under udvikling"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
+    elsif params[:val1] == "implementeret"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'reviewed'])
+    elsif params[:val1] == "under evaluering"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'])
+    elsif params[:val1] == "ikke evalueret"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'])
+    end
+             
+      @m_ideas = []
+    if params[:val2] == "min egne"
+      
+      @ideas.each do |idea|
+        if idea.inventor == current_user
+            
+          @m_ideas << idea   
+        end  
+      end
+    elsif params[:val] == "top"
+      
+      @ideas.each do |idea|
+        if User.find_top_contributors.include?(idea.inventor)
+          @m_ideas << idea
+        end
+      end
+    else
+      @m_ideas << @ideas
+    end
+    
+    @d_ideas=[]
+    
+    if !Department.find_by_id(params[:val3]).nil?
+      @m_ideas.first.each do |idea|
+        if idea.inventor.department == Department.find_by_id(params[:val3])
+          @d_ideas << idea
+        end
+      end
+    else
+      @d_ideas << @m_ideas
+    end
+    @c_ideas=[]
+    if Current.all.collect(&:title).include?(params[:val4])
+      @current=Current.find_by_title(params[:val4])
+      @d_ideas.first.each do |idea|
+        if @current.ideas.include?(idea)
+         @c_ideas << idea
+        end
+      end
+    else
+      @c_ideas << @d_ideas
+      
+    end
+      
+    
+    
+    @c_ideas=@c_ideas.first.paginate :page => params[:page]
+    
+    #    end  
+  end 
+
+  
+  
   def current_objects
     @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
