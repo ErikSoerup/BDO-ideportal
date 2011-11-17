@@ -9,7 +9,7 @@
       %h1 Afdeling
       = select_tag "Ideer", options_for_select([["select"]] +Department.all.collect{ |dep| [dep.name,dep.id]}), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
       %h1 Hovedvej
-      = select_tag "Ideer", options_for_select(["select", ["alle", "current"], ["list", "current"]]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+      = select_tag "Ideer", options_for_select([["select"], ["alle", "current"]]+Current.all.collect{ |current| [current.title]} ), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
     -if @ideas || @current_ideas
       %div{:id => "Idea"}
         - unless params[:val] == "current"

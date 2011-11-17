@@ -34,6 +34,10 @@ class HomeController < ApplicationController
         @ideas << u.ideas unless u.ideas.empty?
       end
       @ideas=@ideas.first.paginate(:page => params[:page])
+    elsif Current.all.collect(&:title).include?(params[:val])
+      @current=Current.find_by_title(params[:val])
+      @ideas=@current.ideas.paginate(:page => params[:page])
+      
     elsif params[:val]
       @dep= Department.find_by_id(params[:val])
        val=[]
