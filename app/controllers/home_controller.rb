@@ -6,6 +6,7 @@ class HomeController < ApplicationController
 
   
   def advance
+    @ideas=Idea.paginate(:page => params[:page])
     #where is the pagination code ???
     @body_class = 'advance'
     if params[:val] == "alle"
@@ -48,7 +49,7 @@ class HomeController < ApplicationController
         end
         @ideas=@idea.values.first.first.paginate(:page => params[:page]) 
       end
-      
+     
       
     else 
     end
@@ -99,7 +100,7 @@ class HomeController < ApplicationController
     
     @d_ideas=[]
     
-    if !Department.find_by_id(params[:val3]).nil?
+    if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil? 
       @m_ideas.first.each do |idea|
         if idea.inventor.department == Department.find_by_id(params[:val3])
           @d_ideas << idea
@@ -111,7 +112,7 @@ class HomeController < ApplicationController
     @c_ideas=[]
     if Current.all.collect(&:title).include?(params[:val4])
       @current=Current.find_by_title(params[:val4])
-      @d_ideas.first.each do |idea|
+      @d_ideas.each do |idea|
         if @current.ideas.include?(idea)
          @c_ideas << idea
         end
@@ -120,10 +121,8 @@ class HomeController < ApplicationController
       @c_ideas << @d_ideas
       
     end
-      
     
-    
-    @c_ideas=@c_ideas.first.paginate :page => params[:page]
+    @c_ideas=@c_ideas.paginate :page => params[:page]
     
     #    end  
   end 

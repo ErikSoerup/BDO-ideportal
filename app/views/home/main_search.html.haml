@@ -3,14 +3,14 @@
     %div.filters
       %h1 Idea
       - form_tag "/home/main_search", :method => :get do 
-        = select_tag "val1", options_for_select(["select", "alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"])
+        = select_tag "val1", options_for_select(["alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"], params[:val1])
         %br
         %h1 Person
-        = select_tag "val2", options_for_select(["select", "alle", ["top bidragydere", "top"], "min egne"])
+        = select_tag "val2", options_for_select(["alle", ["top bidragydere", "top"], "min egne"], params[:val2])
         %h1 Afdeling
-        = select_tag "val3", options_for_select([["select"]] +Department.all.collect{ |dep| [dep.name,dep.id]})
+        = select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, params[:val3])
         %h1 Hovedvej
-        = select_tag "val4", options_for_select([["select"], ["alle", "current"]]+Current.all.collect{ |current| [current.title]} )
+        = select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, params[:val4] )
         %br
         = submit_tag "Advanced Search"   
       - if @ideas || @current_ideas

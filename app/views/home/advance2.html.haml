@@ -1,0 +1,25 @@
+%div
+  #popular-ideas.main.panel.section.hfeed
+    %div.filters
+      %h1 Idea
+      - form_tag "/home/main_search" do 
+        = select_tag "val1", options_for_select(["select", "alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+        %br
+        %h1 Person
+        = select_tag "val2", options_for_select(["select", "alle", ["top bidragydere", "top"], "min egne"]), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+        %h1 Afdeling
+        = select_tag "val3", options_for_select([["select"]] +Department.all.collect{ |dep| [dep.name,dep.id]}), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+        %h1 Hovedvej
+        = select_tag "val4", options_for_select([["select"], ["alle", "current"]]+Current.all.collect{ |current| [current.title]} ), :onchange => "document.location = '/home/advance?val='+jQuery(this).val()"
+        %br
+        = submit_tag "Advanced Search"   
+      - if @ideas || @current_ideas
+        %div{:id => "Idea"}
+          - unless params[:val] == "current"
+            = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?
+            .footer
+              = will_paginate @ideas
+          - else
+            = render :partial => '/home/current', :collection => @current_ideas unless @current_ideas.empty?
+            .footer
+              = will_paginate @current_ideas
