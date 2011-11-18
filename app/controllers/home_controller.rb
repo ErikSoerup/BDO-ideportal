@@ -78,7 +78,7 @@ class HomeController < ApplicationController
       @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'])
     end
              
-      @m_ideas = []
+    @m_ideas = []
     if params[:val2] == "min egne"
       
       @ideas.each do |idea|
@@ -95,7 +95,9 @@ class HomeController < ApplicationController
         end
       end
     else
-      @m_ideas << @ideas
+      @ideas.each do |idea|
+        @m_ideas << idea
+      end
     end
     
     @d_ideas=[]
@@ -107,22 +109,26 @@ class HomeController < ApplicationController
         end
       end
     else
-      @d_ideas << @m_ideas
+      @m_ideas.each do | idea|
+        @d_ideas << idea
+      end
     end
     @c_ideas=[]
     if Current.all.collect(&:title).include?(params[:val4])
       @current=Current.find_by_title(params[:val4])
       @d_ideas.each do |idea|
         if @current.ideas.include?(idea)
-         @c_ideas << idea
+          @c_ideas << idea
         end
       end
     else
-      @c_ideas << @d_ideas
+      @d_ideas.each do |idea|
+        @c_ideas << idea
+      end
       
     end
     
-    @c_ideas=@c_ideas.first.paginate :page => params[:page]
+    @c_ideas=@c_ideas.paginate :page => params[:page]
     
     #    end  
   end 
