@@ -133,7 +133,7 @@ class HomeController < ApplicationController
       
     end
     
-    @c_ideas=@c_ideas.paginate :page => params[:page]
+    @c_ideas=@c_ideas.paginate :page => params[:page], :per_page => 5
     
     #    end  
   end 
