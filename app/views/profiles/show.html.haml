@@ -44,6 +44,8 @@
             %div
               %div
                 = render_recent :recent => 'ideas', :offset => 0, :limit => 5
+                .footer
+                 = will_paginate @user.ideas   
         -else
           %h4
             =h @user.name
@@ -59,6 +61,8 @@
             %div
               %div
                 = render_recent :recent => 'comments', :offset => 0, :limit => 8
+                .footer
+                 = will_paginate @user.comments 
         - else
           %h4
             =h @user.name
