@@ -101,7 +101,7 @@ class HomeController < ApplicationController
     @d_ideas=[]
     
     if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil? 
-      @m_ideas.first.each do |idea|
+      @m_ideas.each do |idea|
         if idea.inventor.department == Department.find_by_id(params[:val3])
           @d_ideas << idea
         end
@@ -122,7 +122,7 @@ class HomeController < ApplicationController
       
     end
     
-    @c_ideas=@c_ideas.paginate :page => params[:page]
+    @c_ideas=@c_ideas.first.paginate :page => params[:page]
     
     #    end  
   end 
