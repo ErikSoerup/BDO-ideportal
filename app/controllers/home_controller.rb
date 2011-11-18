@@ -82,10 +82,12 @@ class HomeController < ApplicationController
     if params[:val2] == "min egne"
       
       @ideas.each do |idea|
-        if idea.inventor == current_user
+        unless idea.inventor.nil?
+          if idea.inventor == current_user
             
-          @m_ideas << idea   
-        end  
+            @m_ideas << idea   
+          end  
+        end
       end
     elsif params[:val] == "top"
       
@@ -102,10 +104,13 @@ class HomeController < ApplicationController
     
     @d_ideas=[]
     
-    if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil? 
+    if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil?
+      
       @m_ideas.each do |idea|
-        if idea.inventor.department == Department.find_by_id(params[:val3])
-          @d_ideas << idea
+        unless idea.inventor.nil?
+          if idea.inventor.department == Department.find_by_id(params[:val3])
+            @d_ideas << idea
+          end
         end
       end
     else
