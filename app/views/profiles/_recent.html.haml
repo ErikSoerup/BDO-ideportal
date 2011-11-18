@@ -1,4 +1,4 @@
-- results = collection.recent_visible.paginate(:offset => offset, :limit => limit+1, :page => params[:page])
+- results = collection.recent_visible.paginate(:offset => offset, :limit => limit+1, :page => params[:page], :per_page => 5)
 - has_more = results.size >= limit+1
 
 = render :partial => partial,
