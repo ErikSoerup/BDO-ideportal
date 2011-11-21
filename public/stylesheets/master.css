@@ -2418,3 +2418,10 @@ width: 620px;
     text-decoration: none;
     cursor: pointer;
 }
+
+
+.filters h1 {
+font: bold 14px Arial;
+color: #2EAFA4;
+margin: 10px 0 4px 0;
+}
