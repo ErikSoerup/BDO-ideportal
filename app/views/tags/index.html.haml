@@ -3,6 +3,11 @@
   .main.panel.section
     .header
       %h2.icon.tag=t("menu.tags")
+      %div
+        %h2 Search BY Character
+        - ['A','B','C','D','E','F','G','H','I','J','K','L','M','N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z', 'Æ', 'Ø','Å'].each do |letter|
+          %b= link_to letter, "/tags?val=#{letter}", :style => "margin-left:10px;"
+      %br   
       -# Uncomment once we have the ability to sort tags
       -#%ul.actions
       -#  %li= link_to image_tag("icn/16-sq-map.png", :alt => "Sort alphabetically") + "Sort Alphabetically", "#"

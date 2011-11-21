@@ -3,16 +3,23 @@ class TagsController < ApplicationController
   before_filter :login_required
 
   def index
+    
+      
     @body_class = "tags-page"
   end
 
   def current_objects
     unless @tags
-      @tags = Tag.find_top_tags 100
-      return if @tags.empty?
-      idea_counts = @tags.map{ |tag| tag.idea_count.to_i }
-      @min_idea_count = Math.sqrt(idea_counts.min)
-      @max_idea_count = Math.sqrt(idea_counts.max)
+      if params[:val]
+        @tags = Tag.find_with_idea_counts(:conditions => ['tags.name like ?', "#{params[:val].downcase!}%"], :limit => 100)
+      else
+        @tags = Tag.find_top_tags 100
+      end  
+        return if @tags.empty?
+        idea_counts = @tags.map{ |tag| tag.idea_count.to_i }
+        @min_idea_count = Math.sqrt(idea_counts.min)
+        @max_idea_count = Math.sqrt(idea_counts.max)
+      
     end
     @tags
   end
