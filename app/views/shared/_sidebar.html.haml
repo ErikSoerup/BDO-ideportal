@@ -13,6 +13,8 @@
     .section
       %div{:id => "followers"}
       %h2.header=t("top_contributors")
+      = link_to t("menu.all_users"), "/user/index", :style => "text-decoration:none;text-width:bold;"
+      %br
       -#%p Earn points for sharing, voting, and discussing ideas.
       %ul#top-recent-contributors.list-block
         /*------- STYLE NEEDED ------*/
