@@ -20,7 +20,7 @@
     %label{:for => "tags"} Tags
     = render :partial => 'ideas/tag_editor', :locals => { :f => f }
     -unless defined?(current) && current.id
-      = f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}
+      = f.collection_select :current_id, Current.all, :id, :title , {:include_blank=>'Hovedveje ...'}
 
   .form-group.inline
     = submit_tag 'Share My Idea', :class => "input-submit big"

@@ -10,7 +10,7 @@
         %h1 Afdeling
         = select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]},  Department.find(params[:val3]).id)
         %h1 Hovedvej
-        = select_tag "val4", options_for_select([["alle", "current"]]+Current.all_except_default.collect{ |current| [current.title]}, params[:val4] )
+        = select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, params[:val4] )
         %br
         = submit_tag "Advanced Search"   
       - if @ideas || @current_ideas
