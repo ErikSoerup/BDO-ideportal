@@ -8,7 +8,7 @@
         %h1 Person
         = select_tag "val2", options_for_select(["alle", ["top bidragydere", "top"], "min egne"], params[:val2])
         %h1 Afdeling
-        = select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, Department.find(params[:val3]).id)
+        = select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]})
         %h1 Hovedvej
         = select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]} )
         %br
