@@ -385,20 +385,20 @@ h3 a:hover {
 .pagination {
     margin:0;
     padding:0;
-    list-style-type:none;
+    
 }
-.pagination li {
+.pagination  {
     float:left;
     margin:0 0 0 5px;
 }
-.pagination li a {
+.pagination  a {
     color:#0b3597;
     text-decoration:none;
 }
-.pagination li a:hover {
+.pagination  a:hover {
     color:#e4170d;
 }
-.pagination li a.select {
+.pagination  a.select {
     color:#e4170d;
     font-weight:bold;
 }

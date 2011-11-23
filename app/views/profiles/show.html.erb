@@ -82,13 +82,7 @@
             <div class="fl"><strong>These are some of the ideas that <%= @user.name %> created.</strong></div>
             <!--Pagination Starts -->
             <div class="fr">
-              <ul class="pagination">
-                <!--<li><a href="#">«</a></li> --> 
-                <li><a href="#" class="select">1</a></li>
-                <li><a href="#">2</a></li> 
-                <li><a href="#">3</a></li> 
-                <li><a href="#">»</a></li>
-              </ul>
+              <%= will_paginate @ideas %>
             </div>
             <!--Pagination Ends -->
           </div>
@@ -161,10 +155,7 @@
                 <div class="fr">
                   <ul class="pagination">
                     <!--<li><a href="#">«</a></li> --> 
-                    <li><a href="#" class="select">1</a></li>
-                    <li><a href="#">2</a></li> 
-                    <li><a href="#">3</a></li> 
-                    <li><a href="#">»</a></li>
+                    <%= will_paginate @comments %>
                   </ul>
                 </div>
                 <!--Pagination Ends -->
@@ -210,13 +201,7 @@
                 <div class="fl"><strong>These are some of the ideas that Erik Sørup voted for.</strong></div>
                 <!--Pagination Starts -->
                 <div class="fr">
-                  <ul class="pagination">
-                    <!--<li><a href="#">«</a></li> --> 
-                    <li><a href="#" class="select">1</a></li>
-                    <li><a href="#">2</a></li> 
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">»</a></li>
-                  </ul>
+                  <%= will_paginate @votes %>
                 </div>
                 <!--Pagination Ends -->
               </div>
