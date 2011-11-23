@@ -635,7 +635,7 @@ h3 a:hover {
     background-color: #ffe39c;
     border-bottom: 1px solid #888; }
 .idea.mini.contributor {
-    min-height: 30px; }
+    min-height: 60px; width:234px;}
 .idea.mini .title {
     display: table-cell;
     font-weight: normal;
