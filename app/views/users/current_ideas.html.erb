@@ -1,0 +1,40 @@
+<!--Stem Starts -->
+<div class="d_panel">
+
+
+  <% if @ideas && @ideas.blank? && @current_ideas.blank? %>
+    <h2>Not following any ideas or currents</h2>
+  <% else %>
+    <%  @ideas.each do |idea| %>
+      <div class="plainwrap">
+        <div class="d_panel_stemt"><div class="stemt"><%=  idea.vote_count%></div></div>
+      </div>
+      <!--Stem Ends -->
+      <!--Content Head Starts -->
+      <div class="p_content_head">
+        Sendt <%= time_ago_in_words(idea.created_at)%> <strong>dage siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%>
+      </div>
+      <!--Content Head Ends -->
+      <!--Posted Content Starts -->
+      <div class="plainwrap">
+        <h3><a href="#"><%=link_to h(idea.title), idea_path(idea) unless idea.title.nil?%></a></h3>
+        <p><%= h idea.description_excerpt %></p>
+      </div>
+      <!--Posted Content Ends -->
+      <div class="plainwrap" style="margin:10px 0">
+        <div class="fl">
+          <% unless idea.idea_followers.empty? %>
+            <%= link_to "Followers(#{idea.idea_followers.size})", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+            <%= link_to "Unfollow", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
+          <% end %>
+          <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank? %>
+            <% form_tag idea_follow_path do%>
+              <%= hidden_field_tag :idea_id, idea.id%>
+              <%= submit_tag "Follow", :class => "idea_submit"%>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

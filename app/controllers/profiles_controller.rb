@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   
   before_filter :populate_user
-  
+  layout "profile"
   def populate_user
     @body_class = 'profile'
     @user = User.find(params[:id])
@@ -10,10 +10,13 @@ class ProfilesController < ApplicationController
   end
   
   def show
+    @ideas= @user.ideas.paginate(:page => params[:page], :per_page => 3)
+    @comments= @user.comments.paginate(:page => params[:page], :per_page => 3)
+    @votes=@user.votes.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html
       format.xml
-      format.js { render :text => render_recent(params) }
+#      format.js { render :text => render_recent(params) }
     end
   end
   
