@@ -466,7 +466,7 @@ h3 a:hover {
 }
 
 .download {
-    margin:47px 0 0 25px;
+    margin:5px 0 0 25px;
     float:left;
     width:auto;
 }
@@ -549,8 +549,11 @@ h3 a:hover {
 
 .list-block {
     border-radius: 5px 5px 5px 5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
     margin: 0 0 8px 0;
     padding: 5px;
+    background:#FFE39C ;
 }
 /*--- FOOTER ---*/
 .footer {
@@ -605,9 +608,9 @@ h3 a:hover {
     visibility: hidden; }
 
 .aside {
-    float: right;
+    float: left;
     width: 225px;
-    padding: 15px; }
+   padding:0 0 0 5px; }
 .aside .section:first-child h2.header {
     margin-top: 0; }
 .aside #top-all-time-contributors {
@@ -635,7 +638,7 @@ h3 a:hover {
     background-color: #ffe39c;
     border-bottom: 1px solid #888; }
 .idea.mini.contributor {
-    min-height: 60px; width:234px;}
+    min-height: 60px; width:210px;}
 .idea.mini .title {
     display: table-cell;
     font-weight: normal;
@@ -666,7 +669,7 @@ h3 a:hover {
     overflow: hidden; }
 .idea.mini.contributor .title .entry-point {
     float: right;
-    font-size: 12px; }
+    font-size: 12px; margin: 0;}
 .idea.mini .entry-title a {
     font-weight: bold; }
 .idea.mini .entry-title .vcard .url {
