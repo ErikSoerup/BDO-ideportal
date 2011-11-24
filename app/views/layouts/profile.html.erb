@@ -64,7 +64,9 @@
               <% end %>
               <li class="last">
                 <% form_tag ideas_path, :method => :get do %>
+                  <%= submit_tag "Søg", :style=> "color: #FFFFFF;background: none;border: none;text-decoration: none;cursor: pointer;" %>
                   <%= text_field_tag 'search_text', params[:search_text], :class => "search_input"%>
+                
                 <% end %>
               </li>
             </ul>
