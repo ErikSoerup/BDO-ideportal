@@ -6,6 +6,6 @@
     -#- unless logged_in?
       -#= link_to "Sign up", signup_url
       -#now and join the community.
-    %a.btn.gray{ :href => home_path('about') }
+    %a.btn.gray{ :href => home_path('about'), :class => "bold_link" }
       %b=t("learn_more")
 

@@ -6,7 +6,7 @@
       %h2.header=t("most_popular") + t("menu.tags")
       .tag-cloud
         = render :partial => 'tags/tag', :collection => Tag.find_top_tags(10)
-      %a.btn.gray{ :href => tags_path, :style => "width: 180px; " }
+      %a.btn.gray{ :href => tags_path, :style => "width: 180px; ", :class => "bold_link" }
         %b{ :style=> "padding-right:0;"}=t("see_more_tags")
 
   -cache 'top_contributors', :expires_in => 3.minutes, :unless => logged_in? do

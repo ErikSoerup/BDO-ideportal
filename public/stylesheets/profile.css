@@ -247,7 +247,7 @@ a.f_link {
     width:100%;
     float:left;
     margin:0;
-    min-height: 585px;
+    
 }
 ul.tabs {
     float: left;
@@ -316,14 +316,14 @@ ul.tabs li.active a {
     width:100%;
     float:left;
     border-bottom:dashed 1px #000;
-    margin-bottom:6px;
+     margin: 10px 0 22px;
     padding-bottom:6px;
 }
 /*-- Ideer --*/
 .green_wrap {
     background:#6ae5db;
     width:637px;
-    height:122px;
+    height:140px;
     padding:7px 10px;
     float:left;
     border-radius:5px;
@@ -333,7 +333,7 @@ ul.tabs li.active a {
 .yellow_wrap {
     background:#ffeab5;
     width:637px;
-    height:122px;
+    height:140px;
     padding:7px 10px;
     float:left;
     border-radius:5px;
@@ -343,7 +343,7 @@ ul.tabs li.active a {
 .blue_wrap {
     background:#97e0f1;
     width:637px;
-    height:134px;
+    height:140px;
     padding:7px 10px;
     float:left;
     border-radius:5px;
