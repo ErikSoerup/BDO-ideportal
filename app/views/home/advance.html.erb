@@ -5,18 +5,31 @@
         <table width="100%" border="0" cellspacing="2" cellpadding="0">
           <tr>
             <td align="left" valign="middle"><h3>Idea</h3></td>
+            
+            <td align="left" valign="middle"><h3>Person</h3></td>
+           
+            <td align="left" valign="middle"><h3>Afdeling</h3></td>
+            
+            <td align="left" valign="middle"><h3>Hovedvej</h3></td>
+            
+            <td align="left" valign="middle">&nbsp; </td>
+          </tr>
+          <tr>
+            
             <td align="left" valign="middle">
               <%= select_tag "val1", options_for_select(["alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"]), :id => "select", :class => "select_input"%>
             </td>
-            <td align="left" valign="middle"><h3>Person</h3></td>
+            
+            
             <td align="left" valign="middle">
               <%= select_tag "val2", options_for_select(["alle", ["top bidragydere", "top"], "min egne"], params[:val2]), :id => "select", :class => "select_input"%>
             </td>
-            <td align="left" valign="middle"><h3>Afdeling</h3></td>
+            
+            
             <td align="left" valign="middle">
               <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}),:id => "select", :class => "select_input"%>
             </td>
-            <td align="left" valign="middle"><h3>Hovedvej</h3></td>
+            
             <td align="left" valign="middle">
               <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]} )%>
             </td>
