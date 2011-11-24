@@ -82,7 +82,7 @@
             <div class="fl"><strong>These are some of the ideas that <%= @user.name %> created.</strong></div>
             <!--Pagination Starts -->
             <div class="fr">
-              <%= will_paginate @ideas, :inner_window => 0, :outer_window => 1 %>
+              <%= will_paginate @ideas %>
             </div>
             <!--Pagination Ends -->
           </div>
