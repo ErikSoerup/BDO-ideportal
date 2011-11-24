@@ -1,5 +1,16 @@
 class HomeController < ApplicationController
   before_filter :login_required
+ 
+   layout  :compute_layout
+   
+  def compute_layout
+    if action_name == "show" 
+     'profile'
+    else
+      'application'
+    end
+  end
+
   def index
     # render the landing page
   end
@@ -58,9 +69,7 @@ class HomeController < ApplicationController
 
   def main_search
     @m_ideas=[]
-    #    unless params[:val1] == "Select" || params[:val2] == "Select" || params[:val3] == "select" || params[:val4] == "select"
-
-      
+    
     if params[:val1] == "alle"
       @ideas=Idea.all
 

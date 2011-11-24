@@ -724,3 +724,79 @@ h3 a:hover {
 .pagination .current{
     color:#e4170d;
 }
+
+/*About page*/
+h2.title {
+	font-size:22px;
+	font-weight:bold;
+	color:#0f645d;
+	padding:0 0 5px 0;
+	border-bottom:4px solid #e6e3e1;
+	margin:6px 0 8px 0;
+}
+
+.full_wrap {
+	width:925px;
+	float:left;
+	padding:10px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background:#fff;
+}
+.full_wrap p {
+	margin:0 0 15px 0;
+	line-height:20px;
+}
+/*--- User Index ---*/
+.uindex_tbg {
+	background:#f4f4f4;
+}
+.uindex_img img {
+	padding:1px;
+	background:#fff;
+	border:solid 1px #ccc;
+	box-shadow:#ccc 1px 1px 2px;
+}
+ul.index {
+	margin:0 0 0 50px;
+	padding:0;
+	list-style-type:none;
+}
+ul.index li {
+	float:left;
+	margin:0 0 0 20px;
+	font-weight:bold;
+}
+/*--- Advance ---*/
+.select_input {
+	width:110px;
+}
+.blank_button {
+	background:#33c5b9;
+	border:solid 1px #259188;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	text-align:center;
+	color:#fff;
+	cursor:pointer;
+	padding:2px 3px;
+	font-weight:bold;
+	text-decoration:none;	
+	
+}
+a.blank_button {
+	background:#33c5b9;
+	border:solid 1px #259188;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	text-align:center;
+	color:#fff;
+	cursor:pointer;
+	padding:2px 5px;
+	font-weight:bold;
+	text-decoration:none;	
+	
+}
