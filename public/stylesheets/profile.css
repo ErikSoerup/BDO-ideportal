@@ -323,7 +323,7 @@ ul.tabs li.active a {
 .green_wrap {
     background:#6ae5db;
     width:637px;
-    height:140px;
+    height:122px;
     padding:7px 10px;
     float:left;
     border-radius:5px;
@@ -333,7 +333,7 @@ ul.tabs li.active a {
 .yellow_wrap {
     background:#ffeab5;
     width:637px;
-    height:140px;
+    height:122px;
     padding:7px 10px;
     float:left;
     border-radius:5px;
@@ -343,7 +343,7 @@ ul.tabs li.active a {
 .blue_wrap {
     background:#97e0f1;
     width:637px;
-    height:140px;
+    height:122px;
     padding:7px 10px;
     float:left;
     border-radius:5px;
@@ -483,7 +483,7 @@ h3 a:hover {
     -moz-border-radius:0 5px 5px 5px;
     -webkit-border-radius:0 5px 5px 5px;
     padding:7px 10px;
-    height:100px;
+    height:130px;
 }
 .comments_wrap_yellow {
     width:493px;
