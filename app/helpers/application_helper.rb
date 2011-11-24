@@ -57,8 +57,8 @@ module ApplicationHelper
 
   def profile_picture(user,options=:small)
     unless user.avatar?
-      return '/images/default-avatar-64.png' if options == :large
-      return '/images/default-avatar-32.png' if options == :small
+      return '/images/default-avatar-128.png' if options == :large
+      return '/images/default-avatar-80.png' if options == :small
     end
     return user.avatar.url(options)
   end
