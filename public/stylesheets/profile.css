@@ -721,3 +721,6 @@ h3 a:hover {
     text-decoration: none;
     cursor: pointer;
 }
+.pagination .current{
+    color:#e4170d;
+}
