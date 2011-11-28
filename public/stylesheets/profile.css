@@ -1328,3 +1328,47 @@ ul.index li {
 	margin:0 0 0 20px;
 	font-weight:bold;
 }
+
+/* Home Page Side top contributor */
+
+.top_bidragydere {
+	width:223px;
+	background:#fff;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	padding:20px 1px;
+	float:right;
+	margin:0 15px 0 0;
+}
+.top_bid_inner {
+	width:223px;
+	float:left;
+	margin:5px 0 10px 0;
+	background:#ffe39c;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	padding:10px 0;
+}
+.top_bid_row {
+	width:100%;
+	float:left;
+	height:39px;
+	border-bottom:solid 1px #888;
+	padding:3px 0 0 0;
+}
+.top_bid_img {
+	width:auto;
+	float:left;
+	margin:0 18px 0 10px;
+}
+.entry_title {
+	float:left;
+	width:85px;
+}
+.entry_point {
+	float:right;
+	width:auto;
+	margin:0 10px 0 0;
+}
