@@ -1,13 +1,11 @@
 development:
-  access_key_id: AKIAJTN2EZPPE6I2ROZA
-  secret_access_key: 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
-  bucket: bdo-rajib
-
+  access_key_id: AKIAJWRAZDX35IHC45XQ
+  secret_access_key: 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
+  bucket: BDO_Ideportal
 test:
   access_key_id: abc
   secret_access_key: abc/efg
-
 production:
-  access_key_id: AKIAJTN2EZPPE6I2ROZA
-  secret_access_key: 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
-  bucket: bdo-rajib
+  access_key_id: AKIAJWRAZDX35IHC45XQ
+  secret_access_key: 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
+  bucket: BDO_Ideportal
