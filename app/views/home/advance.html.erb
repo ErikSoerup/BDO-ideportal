@@ -1,0 +1,56 @@
+<div class="body_wrap">
+  <div class="full_wrap">
+    <div class="plainwrap">
+      <% form_tag "/home/main_search", :method => :get do  %>
+        <table width="100%" border="0" cellspacing="2" cellpadding="0">
+          <tr>
+            <td align="left" valign="middle"><h3>Idea</h3></td>
+            
+            <td align="left" valign="middle"><h3>Person</h3></td>
+           
+            <td align="left" valign="middle"><h3>Afdeling</h3></td>
+            
+            <td align="left" valign="middle"><h3>Hovedvej</h3></td>
+            
+            <td align="left" valign="middle">&nbsp; </td>
+          </tr>
+          <tr>
+            
+            <td align="left" valign="middle">
+              <%= select_tag "val1", options_for_select(["alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"]), :id => "select", :class => "select_input"%>
+            </td>
+            
+            
+            <td align="left" valign="middle">
+              <%= select_tag "val2", options_for_select(["alle", ["top bidragydere", "top"], "min egne"], params[:val2]), :id => "select", :class => "select_input"%>
+            </td>
+            
+            
+            <td align="left" valign="middle">
+              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}),:id => "select", :class => "select_input"%>
+            </td>
+            
+            <td align="left" valign="middle">
+              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]} )%>
+            </td>
+            <td align="left" valign="middle"><%= submit_tag "Advance Search", :class=>"blank_button", :id => "button" %> </td>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+    <div class="b_divider"></div>
+
+    <div class="plainwrap">
+      <!--Header Portion Starts -->
+      <div class="tab_headline">
+        <!--Pagination Starts -->
+        <div class="fr">
+          <%= will_paginate @ideas %>
+        </div>
+        <!--Pagination Ends -->
+      </div>
+      <%  if @ideas || @current_ideas%>
+        <%= render :partial => "ideas/search_idea", :collection => @ideas if @ideas && !@ideas.empty? %>
+      <% else %>
+
+      <% end %>

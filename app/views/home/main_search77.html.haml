@@ -15,7 +15,7 @@
         = submit_tag "Advanced Search"   
       - if @ideas || @current_ideas
         %div{:id => "Idea"}
-          = render :partial => '/ideas/idea', :collection => @c_ideas if @ideas && !@ideas.empty?
+          = render :partial => '/ideas/search_idea', :collection => @c_ideas if @ideas && !@ideas.empty?
           .footer
             = will_paginate @c_ideas
           

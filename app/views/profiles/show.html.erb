@@ -18,7 +18,7 @@
       <!--User Detail Stuff Starts -->
       <div class="plainwrap">
         <!--Profile Image Starts -->
-        <div class="user_imgwrap"> <%= image_tag profile_picture(@user, :large) %></div>
+        <div class="user_imgwrap"> <%= image_tag profile_picture(@user, :large), :width => 85, :height => 130 %></div>
         <!--Profile Image Ends -->
         <!--User Detail Stuff Starts -->
         <div class="user_dwrap"><table width="100%" border="0" cellspacing="1" cellpadding="2">
@@ -26,7 +26,7 @@
               <td width="135" align="left" valign="middle"><strong>Afdelings navn</strong></td>
               <td align="left" valign="middle">
                 <div class="fl"><%= @user.department.try(:name) %></div>
-                <div class="fr" style="color:#2cafa4"><%= link_to_remote t('menu.ideas_following'),:update => "ajax-tab", :url => {:controller => "users", :action => "current_ideas"} %>  |   <%= link_to_remote t('menu.currents_following'), :update => "ajax-tab", :url => {:controller => "users", :action => "current_currents"}%></div>
+                <div class="fr" style="color:#2cafa4"><%= link_to_remote t('menu.ideas_following'),:update => "ajax-tab", :url => {:controller => "users", :action => "current_ideas"},:html => { :class => "bold_link"} %>  |   <%= link_to_remote t('menu.currents_following'), :update => "ajax-tab", :url => {:controller => "users", :action => "current_currents"}, :html => {:class => "bold_link"}%></div>
               </td>
             </tr>
             <tr>
@@ -82,13 +82,7 @@
             <div class="fl"><strong>These are some of the ideas that <%= @user.name %> created.</strong></div>
             <!--Pagination Starts -->
             <div class="fr">
-              <ul class="pagination">
-                <!--<li><a href="#">«</a></li> --> 
-                <li><a href="#" class="select">1</a></li>
-                <li><a href="#">2</a></li> 
-                <li><a href="#">3</a></li> 
-                <li><a href="#">»</a></li>
-              </ul>
+              <%= will_paginate @ideas %>
             </div>
             <!--Pagination Ends -->
           </div>
@@ -108,7 +102,7 @@
                   <!--Right Content Starts -->
                   <div class="p_content">
                     <!--Content Head Starts -->
-                    <div class="p_content_head"><
+                    <div class="p_content_head">
                       <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%> <strong>dage siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
                       <div class="fr">
                         <% unless idea.idea_followers.empty? %>
@@ -161,10 +155,7 @@
                 <div class="fr">
                   <ul class="pagination">
                     <!--<li><a href="#">«</a></li> --> 
-                    <li><a href="#" class="select">1</a></li>
-                    <li><a href="#">2</a></li> 
-                    <li><a href="#">3</a></li> 
-                    <li><a href="#">»</a></li>
+                    <%= will_paginate @comments %>
                   </ul>
                 </div>
                 <!--Pagination Ends -->
@@ -178,7 +169,7 @@
                     <div class="commentator_wrap_green"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
                     <div class="plainwrap">
                       <div class="fl"><%= image_tag profile_picture(comment.author, :small)%></div>
-                      <div class="download"><%= link_to image_tag("/images/download.png"), comment.document.url, :border => "0" %></div>
+                      <div class="download"><%= link_to image_tag("/images/download.png", :border => "0"), comment.document.url %></div>
                     </div>
                   </div>
                   <!--Commentator Ends -->
@@ -210,13 +201,7 @@
                 <div class="fl"><strong>These are some of the ideas that Erik Sørup voted for.</strong></div>
                 <!--Pagination Starts -->
                 <div class="fr">
-                  <ul class="pagination">
-                    <!--<li><a href="#">«</a></li> --> 
-                    <li><a href="#" class="select">1</a></li>
-                    <li><a href="#">2</a></li> 
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">»</a></li>
-                  </ul>
+                  <%= will_paginate @votes %>
                 </div>
                 <!--Pagination Ends -->
               </div>
@@ -245,7 +230,7 @@
       <!--Left Panel Ends -->
       <!--Right Panel Starts -->
       <div class="right_panel">
-        <div class="plainwrap"><div id="sidebar" class="aside" style="margin-bottom:15px;"><%= render :partial => "shared/sidebar" %></div></div>
+        <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
         <div class="plainwrap"><a href="/user/index" class="bold_link">All Users</a></div>
         <!--Display Section Starts -->
         <div id="ajax-tab">

@@ -1,23 +1,41 @@
 class HomeController < ApplicationController
   before_filter :login_required
+ 
+   layout  :compute_layout
+   
+  def compute_layout
+    if action_name == "show"  
+     if params[:page] == "about" 
+     'profile' 
+     else
+       'application'
+     end 
+    elsif  action_name == "advance" || action_name == "main_search"
+      'profile'
+      
+    else
+      'application'
+    end
+  end
+
   def index
     # render the landing page
   end
 
   
   def advance
-    @ideas=Idea.paginate(:page => params[:page])
+    @ideas=Idea.paginate(:page => params[:page], :per_page => 3)
     #where is the pagination code ???
     @body_class = 'advance'
     if params[:val] == "alle"
-      @ideas=Idea.paginate(:page => params[:page])
+      @ideas=Idea.paginate(:page => params[:page], :per_page => 3)
 
     elsif params[:val] == "de hotteste ideer"
       @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val] == "nye"
       @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val] == "under udvikling"
-      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page])
+      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page], :per_page => 3)
     elsif params[:val] == "implementeret"
       @ideas=Idea.paginate(:all, :conditions => ['status=?', 'reviewed'], :page => params[:page])
     elsif params[:val] == "under evaluering"
@@ -58,9 +76,7 @@ class HomeController < ApplicationController
 
   def main_search
     @m_ideas=[]
-    #    unless params[:val1] == "Select" || params[:val2] == "Select" || params[:val3] == "select" || params[:val4] == "select"
-
-      
+    
     if params[:val1] == "alle"
       @ideas=Idea.all
 
@@ -133,7 +149,7 @@ class HomeController < ApplicationController
       
     end
     
-    @c_ideas=@c_ideas.paginate :page => params[:page], :per_page => 5
+    @c_ideas=@c_ideas.paginate :page => params[:page], :per_page => 3
     
     #    end  
   end 
