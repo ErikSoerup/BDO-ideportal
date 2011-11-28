@@ -11,33 +11,23 @@
           </div>
           <!--Form Stuff Ends -->
           <!--Top Bidragydere Panel Starts -->
-          
 
-                <div class="top_bidragydere">
-                  <div class="plainwrap"><h3 style="margin-left:15px">Top Bidragydere</h3></div>
-                  <div class="top_bid_inner">
-                    <%= render :partial => 'shared/home_contributor',
-                   :collection => User.find_top_contributors(true, :limit => 10),
-                   :locals => { :points_method => :recent_contribution_points }%>
-                    <!--Single Row1 Starts -->
-                    
-                   
-                    
-                    <!--Single Row5 Ends -->
-                  </div>
-                  <div class="plainwrap"><a class="flere" href="/user/index">Flere</a></div>
-                </div>
+
+          <div class="top_bidragydere">
+            <div class="plainwrap"><h3 style="margin-left:15px">Top Bidragydere</h3></div>
+            <div class="top_bid_inner">
+              <%= render :partial => 'shared/home_contributor',
+                :collection => User.find_top_contributors(true, :limit => 10),
+                :locals => { :points_method => :recent_contribution_points }%>
+              <!--Single Row1 Starts -->
 
 
 
+              <!--Single Row5 Ends -->
+            </div>
+            <div class="plainwrap"><a class="flere" href="/user/index">Flere</a></div>
+          </div>
 
-
-<%#*<div id="nearby-idea-results" class="body ideas">%>
-<%#= render :partial => 'shared/contributor',
-:collection => User.find_top_contributors(true, :limit => 5),
-:locals => { :points_method => :recent_contribution_points }%>
-<%#*</div>%>
-              
           <!--Top Bidragydere Panel Starts -->
         </div>
       </div>

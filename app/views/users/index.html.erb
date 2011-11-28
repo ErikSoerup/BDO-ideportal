@@ -99,21 +99,21 @@
             <td align="left" valign="middle">&nbsp;</td>
             <td align="left" valign="middle">&nbsp;</td>
             <td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="uindex_img">
-                
-                    <tr>
-                      <td rowspan="2" align="left" valign="middle"><%= image_tag profile_picture(user, :small), :width=>32,:height=>32 , :class=>'profile_pic large'%></td>
-                      <td align="left" valign="middle"><a href="#">Follow</a></td>
-                    </tr>
-                    <tr>
-                      <td align="left" valign="middle"><a href="#">Unfollow</a></td>
-                    </tr>
-                  </table></td>
-                <td align="left" valign="middle"><%=link_to user.name, profile_path(user)%></td>
-                <td align="left" valign="middle"><%= user.try(:department).try(:name) || "NA"%></td>
-                <td align="left" valign="middle"><strong><%= user.contribution_points.to_i%></strong></td>
-                <td align="left" valign="middle">&nbsp;</td>
-                <td align="left" valign="middle">&nbsp;</td>
-                <td align="left" valign="middle">&nbsp;</td>              
+
+                <tr>
+                  <td rowspan="2" align="left" valign="middle"><%= image_tag profile_picture(user, :small), :width=>32,:height=>32 , :class=>'profile_pic large'%></td>
+                  <td align="left" valign="middle"><% unless user.followers.include?(current_user) %><%= link_to "Follow", follow_path(user.id)%> <% else %> <%= link_to "Unfollow", unfollow_path(user.id)%><% end %>  </td>
+                </tr>
+                <tr>
+                  <td align="left" valign="middle"><%=link_to "Followers : #{user.followers.length }", followers_path(user.id), :class => "bold_link"%></td>
+                </tr>
+              </table></td>
+            <td align="left" valign="middle"><%=link_to user.name, profile_path(user)%></td>
+            <td align="left" valign="middle"><%= user.try(:department).try(:name) || "NA"%></td>
+            <td align="left" valign="middle"><strong><%= user.contribution_points.to_i%></strong></td>
+            <td align="left" valign="middle">&nbsp;</td>
+            <td align="left" valign="middle">&nbsp;</td>
+            <td align="left" valign="middle">&nbsp;</td>              
 
           </tr>
 
