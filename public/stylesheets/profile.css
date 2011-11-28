@@ -52,7 +52,7 @@ a:hover { text-decoration:underline;}
     margin:10px 0 0 10px;
 }
 .top_nav {
-    width:421px;
+    width:448px;
     height:32px;
     padding:0 7px;
     margin:0 10px 0 0;
@@ -85,16 +85,20 @@ a:hover { text-decoration:underline;}
     color:#fff895;
 }
 .top_nav ul li.last {
-    margin:0;
+    margin:8px 0 0 0;
     padding:0;
+    width:150px;
+    font-weight: bold;
 }
 .search_input {
     background-color: #FFFFFF;
     border: medium none;
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     font-size: 11px;
-    height: 16px;
-    margin: 2px 1px 0 6px;
+    height: 14px;
+    margin: 0 1px 0 6px;
     padding: 3px 0 3px 4px;
     width: 111px;
 }
