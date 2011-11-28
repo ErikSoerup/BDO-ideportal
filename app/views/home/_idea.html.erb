@@ -1,0 +1,35 @@
+<%
+a=[]
+for i in 0..100 do
+  if i % 3 == 0
+    a << i
+
+  end
+end
+c=1
+b=[]
+
+while c<100
+  b << c
+  c=c+3
+end
+
+%>
+
+<% if  a.include?(idea_counter)   %>
+  <div class="id_green">
+  <% elsif b.include?(idea_counter) %>
+    <div class="id_yellow">
+    <% else %>
+      <div class="id_blue">
+      <% end %>    
+      <div class="id_stem"><p class="num"><%= h "#{idea.vote_count}"%></p><p>stem</p></div>
+      <!--Content Starts -->
+      <div class="id_content">
+        <div class="p_content_head">Sendt <%= time_ago_in_words(idea.created_at)%> <strong>dage siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
+        <div class="plainwrap"><h3><%= link_to h(idea.title), idea_path(idea), :rel => 'bookmark'%></h3>
+        </div>
+      </div>
+      <!--Content Ends -->
+    </div>
+    <div class="b_divider"></div>

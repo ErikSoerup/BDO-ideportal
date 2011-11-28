@@ -66,7 +66,7 @@
                 <% form_tag ideas_path, :method => :get do %>
                   <%= submit_tag "Søg", :style=> "color: #FFFFFF;background: none;border: none;text-decoration: none;cursor: pointer;" %>
                   <%= text_field_tag 'search_text', params[:search_text], :class => "search_input"%>
-                
+
                 <% end %>
               </li>
             </ul>
@@ -108,7 +108,9 @@
       <!--Header Ends -->
       <!--Slider Starts -->
       <div class="plainwrap">
-        <a href="#" class="tab"><span class="dn">Del dine Ideer</span> </a>
+        <% unless current_page?("/") %>
+          <a href="#" class="tab"><span class="dn">Del dine Ideer</span> </a>
+        <% end %>
       </div>
       <%= render :partial => "shared/flash_messages"%>
       <%= yield %>
@@ -116,7 +118,7 @@
 
       <%if FACEBOOK_ENABLED%>
         <%= fb_connect_async_js%>
-      <script type="text/javascript">
+        <script type="text/javascript">
           facebook_auth = function(success_callback) {
             FB.login(
             function(response) {
@@ -133,12 +135,12 @@
         </script>
       <% end %>
       <%if GOOGLE_ANALYTICS_TRACKING_CODE%>
-      <script type="text/javascript">
+        <script type="text/javascript">
        
           var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
           document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
         </script>
-      <script type="text/javascript">
+        <script type="text/javascript">
           try {
             var pageTracker = _gat._getTracker("#{GOOGLE_ANALYTICS_TRACKING_CODE}");
             pageTracker._trackPageview();
@@ -146,29 +148,34 @@
 
         </script>
       <% end %>
-      
-      <script type="text/javascript">
-      jQuery('#idea_document').change(function(){
-        var i=this
-        jQuery('input#fakeupload').val(i.value);
-      })
-      var myTextArea = jQuery('#idea_tag_names').tagify();
 
-      myTextArea.tagify('inputField').autocomplete({
-          
-          position: { of: myTextArea.tagify('containerDiv') },
-          close: function(event, ui) { myTextArea.tagify('add'); }
+      <script type='text/javascript'>
+  //<![CDATA[
+    jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
+    jQuery('#idea_document').change(function(){
+      var i=this
+      jQuery('input#fakeupload').val(i.value);
+    })
+    var tags=<%= Tag.all.map(&:name).to_json %>
+    var myTextArea = jQuery('#idea_tag_names').tagify();
+    
+    myTextArea.tagify('inputField').autocomplete({
+        source: tags,
+        position: { of: myTextArea.tagify('containerDiv') },
+        close: function(event, ui) { myTextArea.tagify('add'); }
+    });
+    
+    jQuery("#idea_form").submit(function(e){
+      var new_values = jQuery(".tagify-container input:first").val();
+      jQuery.each(new_values.split(","),function(i,data){
+        myTextArea.tagify("add",data);
       });
+      myTextArea.tagify("serialize");
+    });
+  //]]>
+</script>
 
-      jQuery("#idea_form").submit(function(e){
-        var new_values = jQuery(".tagify-container input:first").val();
-        jQuery.each(new_values.split(","),function(i,data){
-          myTextArea.tagify("add",data);
-        });
-        myTextArea.tagify("serialize");
-      });
-        </script>
-      
+
       <!--Footer Starts -->
       <div class="footer">© BDO Kommunernes Revision, Godkendt revisionsaktieselskab</div>
       <!--Footer Ends -->

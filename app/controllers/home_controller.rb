@@ -4,13 +4,8 @@ class HomeController < ApplicationController
    layout  :compute_layout
    
   def compute_layout
-    if action_name == "show"  
-     if params[:page] == "about" 
-     'profile' 
-     else
-       'application'
-     end 
-    elsif  action_name == "advance" || action_name == "main_search"
+   
+    if  action_name == "advance" || action_name == "main_search" || action_name == "show"
       'profile'
       
     else
