@@ -5,6 +5,15 @@ class UsersController < ApplicationController
   before_filter :populate_user, :except => [:show, :new]
   before_filter :get_user, :only => [:following, :followers]
 
+  layout :compute_layout
+  
+  def compute_layout
+    if action_name == "index"
+      'profile'
+    else
+      'application'
+    end
+  end
   def index
     @body_class='advance'
     page = 1 || params[:page]

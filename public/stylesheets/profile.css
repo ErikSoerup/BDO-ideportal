@@ -100,7 +100,7 @@ a:hover { text-decoration:underline;}
     height: 14px;
     margin: 0 1px 0 6px;
     padding: 3px 0 3px 4px;
-    width: 111px;
+    width: 105px;
 }
 .h_btm {
     width:100%;
@@ -809,6 +809,59 @@ a.blank_button {
 
 }
 
+/*--- Advance ---*/
+.select_input {
+	width:110px;
+}
+.blank_button {
+	background:#33c5b9;
+	border:solid 1px #259188;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	text-align:center;
+	color:#fff;
+	cursor:pointer;
+	padding:2px 3px;
+	font-weight:bold;
+	text-decoration:none;	
+	
+}
+a.blank_button {
+	background:#33c5b9;
+	border:solid 1px #259188;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	text-align:center;
+	color:#fff;
+	cursor:pointer;
+	padding:2px 5px;
+	font-weight:bold;
+	text-decoration:none;	
+	
+}
+.sort {
+	width:75px;
+	float:left;
+	font-size:11px;
+	font-weight:bold;
+}
+.sortarrow_wrap {
+	width:9px;
+	float:left;
+	margin:0 5px 0 0;
+}
+.sortarrow_wrap img {
+	margin:0 0 1px 0;
+}
+.rest_sort {
+	width:325px;
+	float:left;
+	margin:0 0 0 12px;
+}
+
+
 
 .home_top {
     width:845px;
@@ -1247,4 +1300,31 @@ input.blur, input.example, textarea.blur, textarea.example {
     background: none;
     border: none;
     padding: 4px 0 0 5px;
+}
+
+
+
+/*--- User Index ---*/
+.uindex_tbg {
+	background:#f4f4f4;
+}
+.uindex_img {
+	font-size:11px;
+}
+.uindex_img img {
+	padding:1px;
+	background:#fff;
+	border:solid 1px #ccc;
+	box-shadow:#ccc 1px 1px 2px;
+	font-size:11px;
+}
+ul.index {
+	margin:0 0 0 50px;
+	padding:0;
+	list-style-type:none;
+}
+ul.index li {
+	float:left;
+	margin:0 0 0 20px;
+	font-weight:bold;
 }
