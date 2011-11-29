@@ -3,7 +3,7 @@ a=[]
 for i in 0..100 do
   if i % 3 == 0
     a << i
-    
+
   end
 end
 c=1
@@ -24,7 +24,7 @@ end
     <% else %>
       <div class="blue_wrap">
       <% end %>
-        <div><strong><%= search_idea.current.title unless search_idea.current.nil? %></strong></div>
+      <div><strong><%= search_idea.current.title unless search_idea.current.nil? %></strong></div>
       <div class="stemt"><%= h "#{search_idea.vote_count}"%></div>
       <div class="p_content">
 
@@ -57,10 +57,30 @@ end
           <p><%= h search_idea.description_excerpt%> </p>
         </div>
         <!--Posted Content Ends -->
+      
+
+      
+        <ul class="entry-meta">      
+          <li class="comments">
+            <%= link_to "#{t('menu.comments')} #{"(#{search_idea.comment_count})" if search_idea.comment_count > 0}", idea_path(search_idea, :anchor => 'comments', :title_in_url => false)%>
+          </li>
+          <li class="tags">
+            <% unless search_idea.tags.empty?%>
+              <% search_idea.tags.each_with_index do |tag, ctr|%>
+                <%unless ctr == search_idea.tags.length - 1%>
+                  <%= link_to h(tag.name) , idea_search_path(:search => ['tag', tag.name]) %>
+                <%  else %>
+                  <%= link_to h(tag.name), idea_search_path(:search => ['tag', tag.name]) %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </li> 
+        </ul>
       </div>
+
       <!--Right Content Ends -->
-    
-  </div>
-  <!--Green Panel Ends -->
-  <!--Breaker Starts -->
-  <div class="b_divider"></div>
+
+    </div>
+    <!--Green Panel Ends -->
+    <!--Breaker Starts -->
+    <div class="b_divider"></div>
