@@ -15,6 +15,8 @@ while c<100
 end
 
 %>
+
+
 <% if  a.include?(search_idea_counter)   %>
   <div class="green_wrap">
   <% elsif b.include?(search_idea_counter)  %>
@@ -22,6 +24,7 @@ end
     <% else %>
       <div class="blue_wrap">
       <% end %>
+        <div><strong><%= search_idea.current.title unless search_idea.current.nil? %></strong></div>
       <div class="stemt"><%= h "#{search_idea.vote_count}"%></div>
       <div class="p_content">
 
