@@ -18,53 +18,55 @@ end
 
 
 <% if  a.include?(search_idea_counter)   %>
-  <div class="green_wrap">
+  <div class="green_wrap" style="height: auto;">
   <% elsif b.include?(search_idea_counter)  %>
-    <div class="yellow_wrap">
+    <div class="yellow_wrap" style="height: auto;">
     <% else %>
-      <div class="blue_wrap">
+      <div class="blue_wrap" style="height: auto;">
       <% end %>
       <div><strong><%= search_idea.current.title unless search_idea.current.nil? %></strong></div>
-      <div class="stemt"><%= h "#{search_idea.vote_count}"%></div>
-      <div class="p_content">
+      <div class="plainwrap">
+        <div class="stemt"><%= h "#{search_idea.vote_count}"%></div>
+        <div class="p_content">
 
-        <!--Content Head Starts -->
-        <div class="p_content_head">
-          <div class="fl">Sendt <%= time_ago_in_words(search_idea.created_at) unless search_idea.created_at.nil? %><strong>dage siden</strong> af 
-            <% unless search_idea.is_anonymous? %>
-              <%=  link_to search_idea.inventor.name, profile_path(search_idea.inventor) unless search_idea.inventor.nil?%>
-            <% else %>
-              <%=  link_to "Anonymous", "#"%>
-            <% end %>
-          </div>
-          <div class="fr">
-            <% unless search_idea.idea_followers.empty? %>
-              <%= link_to "Followers(#{search_idea.idea_followers.size})", followers_idea_path(search_idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
-              <%= link_to "Unfollow", unfollow_idea_path(search_idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,search_idea.id).nil?%>
-            <% end %>
-            <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,search_idea.id).blank? %>
-              <% form_tag idea_follow_path do%>
-                <%= hidden_field_tag :idea_id, search_idea.id%>
-                <%= submit_tag "Follow", :class => "idea_submit"%>
+          <!--Content Head Starts -->
+          <div class="p_content_head">
+            <div class="fl">Sendt <%= time_ago_in_words(search_idea.created_at) unless search_idea.created_at.nil? %><strong>dage siden</strong> af 
+              <% unless search_idea.is_anonymous? %>
+                <%=  link_to search_idea.inventor.name, profile_path(search_idea.inventor) unless search_idea.inventor.nil?%>
+              <% else %>
+                <%=  link_to "Anonymous", "#"%>
               <% end %>
-            <% end %>
+            </div>
+            <div class="fr">
+              <% unless search_idea.idea_followers.empty? %>
+                <%= link_to "Followers(#{search_idea.idea_followers.size})", followers_idea_path(search_idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+                <%= link_to "Unfollow", unfollow_idea_path(search_idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,search_idea.id).nil?%>
+              <% end %>
+              <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,search_idea.id).blank? %>
+                <% form_tag idea_follow_path do%>
+                  <%= hidden_field_tag :idea_id, search_idea.id%>
+                  <%= submit_tag "Follow", :class => "idea_submit"%>
+                <% end %>
+              <% end %>
+            </div>
           </div>
-        </div>
-        <!--Content Head Ends -->
-        <!--Posted Content Starts -->
-        <div class="plainwrap">
-          <h3><%= link_to h(search_idea.title), idea_path(search_idea) unless search_idea.title.nil?%></h3>
-          <p><%= h search_idea.description_excerpt%> </p>
-        </div>
-        <!--Posted Content Ends -->
-      
+          <!--Content Head Ends -->
+          <!--Posted Content Starts -->
+          <div class="plainwrap">
+            <h3><%= link_to h(search_idea.title), idea_path(search_idea) unless search_idea.title.nil?%></h3>
+            <p><%= h search_idea.description_excerpt%> </p>
+          </div>
+          <!--Posted Content Ends -->
 
-      
-        <ul class="entry-meta">      
-          <li class="comments">
-            <%= link_to "#{t('menu.comments')} #{"(#{search_idea.comment_count})" if search_idea.comment_count > 0}", idea_path(search_idea, :anchor => 'comments', :title_in_url => false)%>
-          </li>
-          <li class="tags">
+
+        </div>
+      </div>
+      <div class="plainwrap">
+        <div class="d_panel_commentator_big">
+          <div class="fl"><img src="/images/small-bulb.png" alt="" /></div>
+          <div class="fl"><%= link_to "#{t('menu.comments')} #{"(#{search_idea.comment_count})" if search_idea.comment_count > 0}", idea_path(search_idea, :anchor => 'comments', :title_in_url => false)%></div>
+          <div class="fl">
             <% unless search_idea.tags.empty?%>
               <% search_idea.tags.each_with_index do |tag, ctr|%>
                 <%unless ctr == search_idea.tags.length - 1%>
@@ -74,10 +76,11 @@ end
                 <% end %>
               <% end %>
             <% end %>
-          </li> 
-        </ul>
-      </div>
 
+          </div>
+
+        </div>
+      </div>
       <!--Right Content Ends -->
 
     </div>
