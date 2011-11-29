@@ -1430,3 +1430,12 @@ ul.index li {
 .d_panel_commentator_big img {
     margin:0 15px 0 0;
 }
+
+/* tags hole */
+
+.hole{
+ background: url("../images/tag-hole.gif") no-repeat 0 8px;
+ padding-left: 12px;
+ margin-right: 4px;
+ float: left;
+}

@@ -64,18 +64,18 @@ end
       </div>
       <div class="plainwrap">
         <div class="d_panel_commentator_big">
-          <div class="fl"><img src="/images/small-bulb.png" alt="" /></div>
+
           <div class="fl" style="margin-right: 12px;"><%= link_to "#{t('menu.comments')} #{"(#{search_idea.comment_count})" if search_idea.comment_count > 0}", idea_path(search_idea, :anchor => 'comments', :title_in_url => false)%></div>
           <div class="fl">
             <% unless search_idea.tags.empty?%>
               <% search_idea.tags.each_with_index do |tag, ctr|%>
                 <%unless ctr == search_idea.tags.length - 1%>
-                  <%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %>
+                  <span class="hole"><%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %></span>
                 <%  else %>
-                  <%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %>
+                  <span class="hole"><%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %></span>
+                  <% end %>
                 <% end %>
               <% end %>
-            <% end %>
 
           </div>
 
