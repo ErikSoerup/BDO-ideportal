@@ -19,18 +19,18 @@ class HomeController < ApplicationController
 
   
   def advance
-    @ideas=Idea.paginate(:page => params[:page], :per_page => 3)
+    @ideas=Idea.paginate(:page => params[:page], :per_page => 10)
     #where is the pagination code ???
     @body_class = 'advance'
     if params[:val] == "alle"
-      @ideas=Idea.paginate(:page => params[:page], :per_page => 3)
+      @ideas=Idea.paginate(:page => params[:page], :per_page => 10)
 
     elsif params[:val] == "de hotteste ideer"
       @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val] == "nye"
       @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val] == "under udvikling"
-      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page], :per_page => 3)
+      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page], :per_page => 10)
     elsif params[:val] == "implementeret"
       @ideas=Idea.paginate(:all, :conditions => ['status=?', 'reviewed'], :page => params[:page])
     elsif params[:val] == "under evaluering"
@@ -144,7 +144,7 @@ class HomeController < ApplicationController
       
     end
     
-    @c_ideas=@c_ideas.paginate :page => params[:page], :per_page => 3
+    @c_ideas=@c_ideas.paginate :page => params[:page], :per_page => 10
     
     #    end  
   end 
