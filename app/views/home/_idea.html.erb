@@ -16,9 +16,9 @@ end
 
 %>
 
-<% if  a.include?(idea_counter)   %>
+<% if  idea.status == "new"   %>
   <div class="id_green">
-  <% elsif b.include?(idea_counter) %>
+  <% elsif idea.status == "under review" %>
     <div class="id_yellow">
     <% else %>
       <div class="id_blue">
