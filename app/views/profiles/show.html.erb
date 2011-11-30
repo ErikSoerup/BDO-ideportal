@@ -90,16 +90,24 @@
           <!--Green Panel Starts -->
           <% @ideas.each_with_index do |idea,i| %>
             <% if idea.status == "new" %>
-              <div class="green_wrap">
+              <div class="green_wrap" style="height: auto;">
               <% elsif idea.status == "under review"  %> 
-                <div class="yellow_wrap">
+                <div class="yellow_wrap" style="height: auto;">
                 <% else %>
-                  <div class="blue_wrap">
+                  <div class="blue_wrap" style="height: auto;">
                   <% end %>  
                   <!--Stemt Stuff Starts -->
 
-                  <div class="stemt"><p class="num"><%= h "#{idea.vote_count}"%></p>
+                  <div id="stem-<%= idea.id %>" class="stem">
 
+                    <p id="vote-<%= idea.id %>"class="num"><%= h "#{idea.vote_count}"%></p>
+
+                    <% if has_voted?(idea)%>
+
+
+                    <% else%>
+                      <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button",}%>
+                    <% end %>
                   </div>
 
 
@@ -128,30 +136,37 @@
                       <h3><%=link_to h(idea.title), idea_path(idea) unless idea.title.nil?%></h3>
                       <p><%= h idea.description_excerpt %> </p>
                     </div>
+
+
+
                     <!--Posted Content Ends -->
+                    <div class="plainwrap">
+                      <div class="d_panel_commentator_big">
+                        <div class="fl"><img src="/images/comment-icon.png" alt="" /><%= link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments', :title_in_url => false)%></div>
+                        <div class="tag_container">
+                          <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
+                          <div class="tag_container_inner">
+                            <% unless idea.tags.empty?%>
+                              <% idea.tags.each_with_index do |tag, ctr|%>
+                                <%unless ctr == idea.tags.length - 1%>
+                                  <%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %>
+                                <%  else %>
+                                  <%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
                   </div>
                   <!--Right Content Ends -->
                 </div>
 
-                <div class="plainwrap">
-                  <div class="d_panel_commentator_big">
-                    <div class="fl"><img src="/images/small-bulb.png" alt="" /></div>
-                    <div class="fl" style="margin-right: 12px;"><%= link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" if idea.comment_count > 0}", idea_path(idea, :anchor => 'comments', :title_in_url => false)%></div>
-                    <div class="fl">
-                      <% unless idea.tags.empty?%>
-                        <% idea.tags.each_with_index do |tag, ctr|%>
-                          <%unless ctr == idea.tags.length - 1%>
-                            <%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %>
-                          <%  else %>
-                            <%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %>
-                          <% end %>
-                        <% end %>
-                      <% end %>
 
-                    </div>
-
-                  </div>
-                </div> 
 
                 <!--Green Panel Ends -->
                 <!--Breaker Starts -->

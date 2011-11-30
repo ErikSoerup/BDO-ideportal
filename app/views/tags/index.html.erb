@@ -1,0 +1,41 @@
+<div class="body_wrap">
+  <!--Left Panel Starts -->
+  <div class="left_panel">
+    <!--Profile Top Stuff Starts -->
+    <div class="profile_wrap">
+      <div class="plainwrap">
+        <!--User Name Starts -->
+        <div class="fl"><h2>Emneord</h2>
+        </div>
+        <!--User Name Ends -->
+      </div>
+      <!--Breaker Starts -->
+      <div class="b_divider"></div>
+      <!--Breaker Ends -->
+      <div class="plainwrap">
+
+        <ul class="index">
+          <%  ['A','B','C','D','E','F','G','H','I','J','K','L','M','N', 'O','P','Q','R','S','T','U','V','W','X','Y','Z', 'Æ', 'Ø','Å'].each do |letter|%>
+            <li><%= link_to letter, "/tags?val=#{letter}", :style => "margin-left:10px;"%></li>
+          <% end %> 
+        </ul>
+      </div>
+      <div class="b_divider"></div>
+    </div>
+    <!--Profile Top Stuff Ends -->
+    <!--Tag Panel Starts -->
+    <div class="plainwrap">
+      
+      
+      <%= render :partial => 'tag', :collection => current_objects%>
+    </div>
+    <!--Tag Panel Ends -->
+  </div>
+  <!--Left Panel Ends -->
+  <!--Right Panel Starts -->
+  <div class="right_panel">
+    <div class="plainwrap"><p align="center" style="margin-bottom:15px;"><img src="image/right-panel.jpg" alt="" /></p></div>
+    <div class="plainwrap"><a href="#" class="bold_link">All Users</a></div>
+  </div>
+  <!--Right Panel Ends -->
+</div>

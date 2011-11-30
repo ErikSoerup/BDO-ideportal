@@ -210,6 +210,17 @@ h2 {
     margin:0;
     padding:0;
 }
+
+h2 span{
+   color:#2cb0bd; 
+    
+    
+}
+
+h2 span a{
+   color:#2cb0bd; 
+    
+}
 a.bold_link {
     font-weight:bold;
     color:#0f645d;
@@ -1452,7 +1463,7 @@ ul.index li {
 }
 
 .d_panel_commentator_big {
-	background:#f4f4f4;
+	background: #B3AAA3;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -1492,7 +1503,7 @@ ul.index li {
 	float:right;
 }
 .tag_container a {
-	color:#2CAFA4;
+	color:#ffe29c;
 	font-weight:bold;
 	font-size:11px;
 }

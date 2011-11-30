@@ -26,7 +26,20 @@ end
       <% end %>
       <div><strong><%= search_idea.current.title unless search_idea.current.nil? %></strong></div>
       <div class="plainwrap">
-        <div class="stemt"><%= h "#{search_idea.vote_count}"%></div>
+        <!--stem Stuff Starts -->
+        <div id="stem-<%= search_idea.id %>" class="stem">
+<%#= render :partial => "votes/vote", :locals => { :idea => idea, :dom_id => "stem-#{idea.id}" } %>
+          <p id="vote-<%= search_idea.id %>"class="num"><%= h "#{search_idea.vote_count}"%></p>
+
+          <% if has_voted?(search_idea)%>
+
+
+          <% else%>
+            <%= link_to_remote "#{t('vote')}!", :update => "vote-#{search_idea.id}", :url => idea_vote_path(search_idea.id), :complete => visual_effect(:highlight, "vote-#{search_idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button",}%>
+          <% end %>
+        </div>
+
+       
         <div class="p_content">
 
           <!--Content Head Starts -->
@@ -63,23 +76,30 @@ end
         </div>
       </div>
       <div class="plainwrap">
-        <div class="d_panel_commentator_big">
 
-          <div class="fl" style="margin-right: 12px;"><%= link_to "#{t('menu.comments')} #{"(#{search_idea.comment_count})" if search_idea.comment_count > 0}", idea_path(search_idea, :anchor => 'comments', :title_in_url => false)%></div>
-          <div class="fl">
-            <% unless search_idea.tags.empty?%>
-              <% search_idea.tags.each_with_index do |tag, ctr|%>
-                <%unless ctr == search_idea.tags.length - 1%>
-                  <span class="hole"><%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %></span>
-                <%  else %>
-                  <span class="hole"><%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %></span>
+        <div class="d_panel_commentator_big">
+          <div class="fl"><img src="/images/comment-icon.png" alt="" /><%= link_to "#{t('menu.comments')} #{"(#{search_idea.comment_count})" if search_idea.comment_count > 0}", idea_path(search_idea, :anchor => 'comments', :title_in_url => false)%></div>
+          <div class="tag_container">
+            <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
+            <div class="tag_container_inner">
+              <% unless search_idea.tags.empty?%>
+                <% search_idea.tags.each_with_index do |tag, ctr|%>
+                  <%unless ctr == search_idea.tags.length - 1%>
+                    <%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %>
+                  <%  else %>
+                    <%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %>
                   <% end %>
                 <% end %>
               <% end %>
 
+            </div>
           </div>
-
         </div>
+
+
+
+
+
       </div>
       <!--Right Content Ends -->
 
