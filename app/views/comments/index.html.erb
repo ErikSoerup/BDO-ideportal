@@ -1,0 +1,122 @@
+<div class="body_wrap">
+  <!--Left Panel Starts -->
+  <div class="left_panel">
+    <!--Profile Top Stuff Starts -->
+    <div class="profile_wrap">
+      <div class="plainwrap">
+        <!--User Name Starts -->
+        <div class="fl"><h2><%= t("menu.comments")%></h2></div>
+        <!--User Name Ends -->
+        <!--Pagination Starts -->
+        <div class="fr">
+          <ul class="pagination" style="margin-top:8px;">
+            <!--<li><a href="#">«</a></li> --> 
+            <%= will_paginate current_objects%>
+          </ul>
+        </div>
+        <!--Pagination Ends -->
+      </div>
+      <!--Breaker Starts -->
+      <%
+      a=[]
+      for i in 0..100 do
+        if i % 3 == 0
+          a << i
+
+        end
+      end
+      c=1
+      b=[]
+
+      while c<100
+        b << c
+        c=c+3
+      end
+
+    %>
+      <!--Breaker Ends -->
+    </div>
+    <!--Profile Top Stuff Ends -->
+    <!--Tab Panel Starts -->
+    <div class="tab_wrap">
+      <div class="tab_container">
+        <!--Kommentarer container Starts -->
+        <div id="tab2" class="tab_content">
+          <% current_objects.each_with_index do |comment,i| %>
+
+
+
+
+            <div class="plainwrap">
+              <!--Commentator Starts -->
+              <div class="commentator_panel">
+                <% if a.include?(i) %>
+                  <div class="commentator_wrap_green"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
+                <% elsif b.include?(i) %>
+                  <div class="commentator_wrap_yellow"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
+                <% else %>
+                  <div class="commentator_wrap_blue"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
+                <% end %>
+                <div class="plainwrap">
+                  <div class="fl">
+
+                    <%= image_tag profile_picture(comment.author, :small)%>
+                  </div>
+                  <div class="download">
+                    <%=link_to image_tag("/images/download.png"), comment.document.url%>
+
+                  </div>
+                </div>
+              </div>
+              <!--Commentator Ends -->
+              <!--Posted Comments Starts -->
+              <% if a.include?(i) %>
+                <div class="comments_wrap_green">
+                <% elsif b.include?(i) %>
+                  <div class="comments_wrap_yellow">
+                  <% else %>
+                    <div class="comments_wrap_blue">
+                    <% end %>
+
+                    <!--Content Head Starts -->
+                    <div class="p_content_head">
+                      <div class="fl">
+
+                        <%=t("in_response_to")%>
+                        <%= link_to h(comment.idea.title), idea_path(comment.idea)%>
+
+                      </div>
+                      <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}  #{t("ago")}"%></strong> som svar på <a href="#" class="bold_link">Hi</a></div>
+                    </div>
+                    <!--Content Head Ends -->
+                    <!--Posted Content Starts -->
+                    <div class="plainwrap">
+                      <p><%= user_formatted_text comment.text%> </p>
+                    </div>
+                    <!--Posted Content Ends -->
+                  </div>
+                  <!--Posted Comments Ends -->
+                </div>
+                <div class="b_divider"></div>
+              <% end %>
+              <!--Breaker Starts -->
+
+            </div>
+          </div>
+<%#= render :collection => current_objects, :partial => 'comment', :locals => { :idea_link => true, :show_avatar => true } %>
+        </div>
+        <!--Tab Panel Ends -->
+      </div>
+      <!--Left Panel Ends -->
+      <!--Right Panel Starts -->
+      <div class="right_panel">
+        <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
+        <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;">All Users</a></div>
+        <!--Display Section Starts -->
+        <div id="ajax-tab">
+
+        </div>
+      </div>
+      <!--Right Panel Ends -->
+    </div>
+

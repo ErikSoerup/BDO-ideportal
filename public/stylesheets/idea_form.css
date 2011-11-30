@@ -392,44 +392,9 @@ body {
   width: 630px;
   margin-left: 55px; }
 
-.aside {
-  float: right;
-  width: 225px;
-  padding: 15px; }
-  .aside .section:first-child h2.header {
-    margin-top: 0; }
-  .aside #top-all-time-contributors {
-    display: none; }
 
-.aside .section {
-  margin-bottom: 15px; }
 
-.aside h2.header {
-  margin: 0;
-  padding: 0 0 10px 0;
-  background: none;
-  text-shadow: none;
-  color: #fff; }
 
-h2.header {
-    background: url(../images/line.gif) repeat-x scroll left top transparent;
-    color: #2eafa4;
-    font-size: 13px;
-    line-height: 18px;
-    margin: 24px 0 10px 0;
-    padding: 6px 0 12px;
-    text-shadow: 0 1px 2px white;
-    text-transform: uppercase;
-}
-  h2.header em {
-    color: #2eafa4;
-    font-family: Georgia, serif;
-    font-weight: normal;
-    text-transform: none; }
-h2.icon {
-  padding-left: 36px;
-  background-position: left 6px;
-  background-repeat: no-repeat; }
 
 img.framed {
   padding: 3px;
@@ -486,44 +451,9 @@ a.admin {
   .success a {
     color: #264409; }
 
-.btn.gray {
-  display: block;
-  height: 25px;
-  margin-top: 8px;
-  color: #eeeeee;
-  font-weight: bold;
-  line-height: 25px; }
-  .btn.gray span {
-    display: block;
-    height: 25px;
-    padding-right: 15px;
-    background-position: right top; }
-  .btn.gray:hover {
-    background-position: left -25px;
-    color: white;
-    text-decoration: none !important; }
-    .btn.gray:hover span {
-      background-position: right -25px; }
-  .btn.gray:active {
-    background-position: left -50px;
-    color: #bbbbbb; }
-    .btn.gray:active span {
-      background-position: right -50px; }
 
-h1#logo {
-  margin: 0;
-  float: left;
-  position: relative;
-  left: 30px;
-  top: 35px;
-  }
 
-  h1#logo a {
-    height: 66px;
-    width: 166px;
-    display: block;
-    overflow: hidden;
-	}
+
 
 #nav-primary {
 	float: right;
@@ -1175,65 +1105,7 @@ h3.icon {
   background-position: left center;
   background-repeat: no-repeat; }
 
-.pagination {
-  margin: 15px 15px 10px 10px;;
-  padding: 10px 10px 6px;
-  border: 1px solid #ddd;
-  color: #888888;
-  font-size: 14px;
-  min-height: 18px;
-  position: relative;
-  text-align: center;
-  text-transform: uppercase;
-	border-radius: 			5px; /* CSS3 */
-	-moz-border-radius: 	5px; /* Firefox */
-	-webkit-border-radius: 	5px; /* Safari and Chrome */
-	-khtml-border-radius: 	5px; /* Linux Browsers */ }
 
-.footer .pagination {
-margin-left: 28px;
-margin-right: 0;
-}
-
-  .pagination a {
-    padding: 4px 5px 3px;
-    color: #2eafa4;
-	font-weight: bold; }
-    .pagination a:hover {
-      background-color: #eeeeee;
-      -moz-border-radius: 4px;
-      -webkit-border-radius: 4px; }
-    .pagination a.prev_page:hover, .pagination a.next_page:hover {
-      background-color: transparent;
-      text-decoration: underline; }
-  .pagination span {
-    padding: 4px 8px 3px;
-    color: #888888; }
-  .pagination .gap {
-    padding: 0; }
-  .pagination .prev_page {
-    padding: 0;
-    padding-left: 10px;
-    background: url(../images/pagination-prev.png) left center no-repeat;
-    left: 20px;
-    position: absolute; }
-    .pagination .prev_page.disabled {
-      background-image: url(../images/pagination-prev-off.png); }
-  .pagination .next_page {
-    padding: 0;
-    padding-right: 10px;
-    background: url(../images/pagination-next.png) right center no-repeat;
-    position: absolute;
-    right: 20px; }
-    .pagination .next_page.disabled {
-      background-image: url(../images/pagination-next-off.png); }
-  .pagination .current {
-    background: #888888;
-    color: white;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px; }
-  .pagination .disabled {
-    color: #cccccc; }
 
 .actions {
   margin: 0;
@@ -1813,13 +1685,7 @@ margin-right: 0;
     clear: both;
     visibility: hidden; }
 
-#sidebar {
-  background-color: #ccc; }
-  #sidebar .tag-cloud {
-    padding: 0; }
 
-#sidebar a:hover {
-  text-decoration: underline; }
 
 .list-block {
   margin: 0;

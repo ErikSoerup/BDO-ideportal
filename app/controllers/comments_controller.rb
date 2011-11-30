@@ -7,6 +7,16 @@ class CommentsController < ApplicationController
 
   param_accessible :comment => [:text, :document]
 
+  layout :compute_layout
+  
+  def compute_layout
+    if action_name == "index"
+      'profile'
+    else
+      'application'
+    end
+  end
+  
   make_resourceful do
     actions :new, :create, :update
     belongs_to :idea

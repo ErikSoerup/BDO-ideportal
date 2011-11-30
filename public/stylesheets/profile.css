@@ -369,7 +369,7 @@ ul.tabs li.active a {
     float:right;
 }
 .p_content_head {
-    
+
     margin-bottom:5px;
     padding-bottom:4px;
     float:left;
@@ -1434,8 +1434,109 @@ ul.index li {
 /* tags hole */
 
 .hole{
- background: url("../images/tag-hole.gif") no-repeat 0 8px;
- padding-left: 12px;
- margin-right: 4px;
- float: left;
+    background: url("../images/tag-hole.gif") no-repeat 0 8px;
+    padding-left: 12px;
+    margin-right: 4px;
+    float: left;
+}
+
+
+/*--- Kommentarer ---*/
+.commentator_panel {
+	width:144px;
+	float:left;
+}
+.commentator_wrap_green {
+	width:134px;
+	height:32px;
+	line-height:32px;
+	padding:0 0 0 10px;
+	margin:0 0 5px 0;
+	float:left;
+	background:url(../images/commentator-wrap_green.gif) no-repeat;
+	color:#fff;
+	font-weight:bold;
+}
+.commentator_wrap_green a {
+	color:#fff;
+	text-decoration:none;
+}
+.commentator_wrap_green a:hover {
+	color:#333;
+}
+
+.commentator_wrap_yellow {
+	width:134px;
+	height:32px;
+	line-height:32px;
+	padding:0 0 0 10px;
+	margin:0 0 5px 0;
+	float:left;
+	background:url(../images/commentator-wrap_yellow.gif) no-repeat;
+	color:#fff;
+	font-weight:bold;
+}
+.commentator_wrap_yellow a {
+	color:#fff;
+	text-decoration:none;
+}
+.commentator_wrap_yellow a:hover {
+	color:#333;
+}
+
+.commentator_wrap_blue {
+	width:134px;
+	height:32px;
+	line-height:32px;
+	padding:0 0 0 10px;
+	margin:0 0 5px 0;
+	float:left;
+	background:url(../images/commentator-wrap_blue.gif) no-repeat;
+	color:#fff;
+	font-weight:bold;
+}
+.commentator_wrap_blue a {
+	color:#fff;
+	text-decoration:none;
+}
+.commentator_wrap_blue a:hover {
+	color:#333;
+}
+
+.download {
+	margin:47px 0 0 25px;
+	float:left;
+	width:auto;
+}
+
+.comments_wrap_green {
+	width:493px;
+	float:right;
+	background:#6ae5db;
+	border-radius:0 5px 5px 5px;
+	-moz-border-radius:0 5px 5px 5px;
+	-webkit-border-radius:0 5px 5px 5px;
+	padding:7px 10px;
+	height:100px;
+}
+.comments_wrap_yellow {
+	width:493px;
+	float:right;
+	background:#ffe39c;
+	border-radius:0 5px 5px 5px;
+	-moz-border-radius:0 5px 5px 5px;
+	-webkit-border-radius:0 5px 5px 5px;
+	padding:7px 10px;
+	height:100px;
+}
+
+.comments_wrap_blue {
+	width:493px;
+	float:right;
+	background:#97e0f1;
+	border-radius:0 5px 5px 5px;
+	-moz-border-radius:0 5px 5px 5px;
+	-webkit-border-radius:0 5px 5px 5px;
+	padding:7px 10px;
+	height:100px;
 }
