@@ -15,6 +15,15 @@ class IdeasController < ApplicationController
   before_filter :strip_example_text
   before_filter :add_search_feed, :only => :index
   before_filter :add_comments_feed, :only => [:show, :update]
+  layout :compute_layout
+  
+  def compute_layout
+    if action_name == "index" && params[:search] == ["hot"]
+      'profile'
+    else
+      'application'
+    end
+  end
 
   param_accessible :idea => [:title, :description, :tag_names, :current_id, :document ]
 
