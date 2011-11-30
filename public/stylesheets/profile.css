@@ -51,6 +51,10 @@ a:hover { text-decoration:underline;}
     text-shadow:#14544f 2px 1px 2px;
     margin:35px 0 0 10px;
 }
+.logo img{
+    border: medium none;
+    
+}
 .top_nav {
     width:448px;
     height:32px;

@@ -5,7 +5,12 @@
     <div class="profile_wrap">
       <div class="plainwrap">
         <!--User Name Starts -->
-        <div class="fl"><h2><span style="color:#2CAFA4;">Hotte ideer</span>: Seneste | <a href="/ideas/search/hot">Helt fra starten</a></h2>
+        <div class="fl">
+          <% if params[:search] == ["hot"] %>
+            <h2><span style="color:#2CAFA4;">Hotte ideer</span>: Seneste | <a href="/ideas/search/hot">Helt fra starten</a></h2>
+         <% elsif params[:search] == ["recent"] %>
+            <h2>Seneste ideer</h2>
+         <% end %>
         </div>
         <!--User Name Ends -->
         <!--Pagination Starts -->
