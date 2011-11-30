@@ -1,6 +1,17 @@
 class TagsController < ApplicationController
 
   before_filter :login_required
+  
+  
+  layout :compute_layout
+  
+  def compute_layout
+    if action_name == "index"
+      'profile'
+    else
+      'application'
+    end
+  end
 
   def index
     

@@ -25,17 +25,23 @@
     <!--Profile Top Stuff Ends -->
     <!--Tag Panel Starts -->
     <div class="plainwrap">
-      
-      
-      <%= render :partial => 'tag', :collection => current_objects%>
+      <div class="body">
+        <div class="tag-cloud">
+
+          <%= render :partial => 'tag', :collection => current_objects%></div>
+      </div>
     </div>
     <!--Tag Panel Ends -->
   </div>
   <!--Left Panel Ends -->
-  <!--Right Panel Starts -->
   <div class="right_panel">
-    <div class="plainwrap"><p align="center" style="margin-bottom:15px;"><img src="image/right-panel.jpg" alt="" /></p></div>
-    <div class="plainwrap"><a href="#" class="bold_link">All Users</a></div>
+    <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
+    <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;">All Users</a></div>
+    <!--Display Section Starts -->
+    <div id="ajax-tab">
+
+    </div>
+    <!--Display Section Ends -->
   </div>
   <!--Right Panel Ends -->
 </div>
