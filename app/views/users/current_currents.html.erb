@@ -1,0 +1,23 @@
+<%  @current_ideas.each do |comment| %>
+<div class="d_panel">
+  <!--Stem Starts -->
+  <div class="plainwrap">
+    <div class="fl"><%= image_tag profile_picture(comment.inventor, :small)%></div>
+    
+  </div>
+  <!--Stem Ends -->
+  <div class="d_panel_commentator"><%= link_to h(comment.inventor.name), profile_path(comment.inventor)%></div>
+  <div class="d_panel_commentbg">
+    <!--Content Head Starts -->
+    <div class="p_content_head">
+      <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}"%> dage siden</strong> som svar på <%= link_to h(comment.title), idea_path(comment.idea)%></div>
+    </div>
+    <!--Content Head Ends -->
+    <!--Posted Content Starts -->
+    <div class="plainwrap">
+      <p><%= user_formatted_text comment.description%></p>
+    </div>
+    <!--Posted Content Ends -->
+  </div>
+</div>
+<% end %>

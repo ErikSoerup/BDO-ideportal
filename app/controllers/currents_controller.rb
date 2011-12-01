@@ -2,6 +2,17 @@ class CurrentsController < ApplicationController
 
   
   require "#{RAILS_ROOT}/app/jobs/NotificationCurrentJob.rb"
+  
+  layout :compute_layout
+  
+  def compute_layout
+    if action_name == "index"
+      'profile'
+    else
+      'application'
+    end
+  end
+  
   make_resourceful do
     actions :show, :index
 
