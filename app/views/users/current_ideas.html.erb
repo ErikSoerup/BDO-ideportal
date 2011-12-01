@@ -9,7 +9,7 @@
       <div class="plainwrap">
         <div class="stem" id="stem-<%= idea.id %>">
         <% if has_voted?(idea)%>
-          <p id="vote-<%= idea.id %>"class="num"><%= h "#{idea.vote_count}"%></p>
+          <p id="vote-<%= idea.id %>"><%= h "#{idea.vote_count}"%></p>
         <% else%>
           <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "stem_button"}%>
         <% end %>

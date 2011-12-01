@@ -27,9 +27,9 @@ end
 
       <% if has_voted?(idea)%>
          
-          <p>stem</p>
+          <p style="display: none;">&nbsp;</p>
         <% else%>
-          <p> <%= link_to_remote "#{t('vote')}!", :update => "stem-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :style => "color:white;"%></p>
+          <p> <%= link_to_remote "#{t('vote')}!", :update => "stem-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html => {:class => "stem_button"}%></p>
         <% end %>
 
 

@@ -6,11 +6,11 @@
       <div class="blue_wrap" style="height:auto;">
       <% end %>  
       <!--stem Stuff Starts -->
-      <div class="stem" id="stem-<%= idea.id %>">
+      <div class="stem" id="vote-<%= idea.id %>">
         <% if has_voted?(idea)%>
-          <p id="vote-<%= idea.id %>"class="num"><%= h "#{idea.vote_count}"%></p>
+          <p><%= h "#{idea.vote_count}"%></p>
         <% else%>
-          <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "stem_button"}%>
+          <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
         <% end %>
       </div>
 

@@ -381,6 +381,20 @@ ul.tabs li.active a {
 }
 
 .bigstem_button {
+	background:url(../images/big-stem_button.png) no-repeat;
+	width:84px;
+	height:20px;
+	border:none;
+	color:#fff;
+	font-size:12px;
+	margin:65px 0 0 0;
+	cursor:pointer;
+	font-weight:bold;
+        display: block;
+        text-decoration: none;
+}
+
+/*.bigstem_button {
     background:url(../images/big-stem_button.png) no-repeat;
     width:67px;
     line-height:20px;
@@ -392,7 +406,7 @@ ul.tabs li.active a {
     font-weight:bold;
     display: block;
     text-align:center;
-}
+}*/
 
 
 .p_content {
@@ -1503,7 +1517,7 @@ ul.index li {
     font-weight:bold;
     font-size:22px;
 }
-.bigstem_button {
+/*.bigstem_button {
     background:url(../images/big-stem_button.png) no-repeat;
     width:67px;
     height:20px;
@@ -1513,7 +1527,7 @@ ul.index li {
     margin:40px 0 0 9px;
     cursor:pointer;
     font-weight:bold;
-}
+}*/
 
 
 .non_stem {
@@ -1695,11 +1709,11 @@ ul.index li {
 .block {
 	width:222px;
 	float:left;
-	margin:0 9px 0 0;
+	margin:0 12px 0 0;
 }
 .block_last {
 	width:222px;
-	float:left;
+	float:right;
 	margin:0;
 }
 .block_head {
@@ -1722,7 +1736,7 @@ ul.index li {
 	border-radius:0 0 5px 5px;
 	-moz-border-radius:0 0 5px 5px;
 	-webkit-border-radius:0 0 5px 5px;
-	min-height:45px;
+	height:50px;
 }
 
 /*--- Home Ideas Nov 29th 2011 ---*/
@@ -1808,6 +1822,12 @@ ul.index li {
 	font-size:9px;
 	margin:15px 0 0 0;
 	cursor:pointer;
+        display: block;
+        text-decoration: none;
+        line-height: normal;
+}
+.stem_button:hover{
+    text-decoration: none;
 }
 .id_stem .num {
 	font-weight:bold;
