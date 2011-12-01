@@ -6,7 +6,7 @@
     <meta name = 'keywords' content = "#{COMPANY_NAME}, #{SHORT_SITE_NAME}, #{LONG_SITE_NAME}, Idea Exchange, share, vote, rate" />
     <meta name = 'description' content = "#{LONG_SITE_NAME} is a forum for #{COMPANY_NAME} customers to share, rate, and discuss ideas about #{COMPANY_NAME}."/>
 
-    <title>BDO Idea | User Profile: </title>
+    <title><%= " #{LONG_SITE_NAME} | #{h(page_title || "Exchange your ideas, vote, and discuss. Let's make it better.")}" %> </title>
     <%= stylesheet_link_tag "profile" %>
     <%= stylesheet_link_tag "idea_form" %>
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js", "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js", "jquery.tagify" %>
