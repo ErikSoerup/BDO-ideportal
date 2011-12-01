@@ -21,15 +21,16 @@
       <div class="p_content">
         <!--Content Head Starts -->
         <div class="p_content_head">
-          <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%><strong>siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
-          <div class="fr" style="width:120px;">
+          <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%><strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
+          <div class="fr" style="width:133px;">
             <div class="fl">
               <% unless idea.idea_followers.empty? %>
                 <%= link_to "Followers(#{idea.idea_followers.size})", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
-                <%= link_to "Unfollow", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
+                
               <% end %>
             </div>
             <div class="fr">
+              <%= link_to "Unfollow", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
               <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank? %>
                 <% form_tag idea_follow_path do%>
                   <%= hidden_field_tag :idea_id, idea.id%>

@@ -7,7 +7,13 @@
   <% else %>
     <%  @ideas.each do |idea| %>
       <div class="plainwrap">
-        <div class="d_panel_stemt"><div class="stemt"><%=  idea.vote_count%></div></div>
+        <div class="stem" id="stem-<%= idea.id %>">
+        <% if has_voted?(idea)%>
+          <p id="vote-<%= idea.id %>"class="num"><%= h "#{idea.vote_count}"%></p>
+        <% else%>
+          <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "stem_button"}%>
+        <% end %>
+      </div>
       </div>
       <!--Stem Ends -->
       <!--Content Head Starts -->

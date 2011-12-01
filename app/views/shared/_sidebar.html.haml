@@ -1,7 +1,7 @@
 - if logged_in?
   = render :partial => 'custom/sidebar'
 
-  - unless @body_class == 'tags-page'
+  - unless @body_class == ''
     .section
       %h2.header=t("most_popular") + t("menu.tags")
       .tag-cloud
