@@ -110,52 +110,7 @@
       <!--Header Ends -->
       <!--Slider Starts -->
       <div class="plainwrap">
-        <div id ="share" class="section">
-          <div class="body">
-            <div id="submit-idea">
-
-              <% form_for :idea, :url => ideas_path, :has_example_text => true, :html => { :multipart=>true, :class => 'main' } do |f|%>
-                <div id="idea-title-group" class="form-group inline">
-                  <label for = "idea-title">
-                    <strong><%=t("idea")%></strong>
-                    <small><%=t("idea_in_short")%></small></label>
-                  <%= f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
-                </div>
-                <div id="idea-description-group" class="form-group inline">
-                  <label for = "idea-description">
-                    <strong> <%=t("description")%></strong>
-                    <small><%=t('breif_explaination')%></small>
-                  </label>    
-                  <%= f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"%>
-
-                  <div class="input_file">
-                    <%= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
-                    <%=f.file_field :document , :size=>80%>
-                  </div>
-                </div> 
-                <div id="idea-tags-group" class="form-group inline">
-                  <label for = "idea-tags">
-                    <strong><%=t('menu.tags')%></strong>
-                    <small> <%=t("seperate_with_coma")%></small>
-                  </label>
-                  <%= render :partial => 'ideas/tag_editor', :locals => { :f => f }%>
-                  <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}%>
-                </div>
-
-                <div class="form-group inline">
-                  <%= submit_tag 'Share My Idea', :class => "input-submit"%>
-                </div>     
-
-              <% end %>
-            </div>
-
-          </div>
-
-
-          <% unless current_page?("/") %>
-            <a href="#" class="tab" onclick="jQuery('.body').toggle();"><span class="dn">Del dine Ideer</span> </a>
-          <% end %>
-        </div>
+        <%= render :partial => "shared/drop_share_idea" %>
       </div>
       <%= render :partial => "shared/flash_messages"%>
       <%= yield %>
