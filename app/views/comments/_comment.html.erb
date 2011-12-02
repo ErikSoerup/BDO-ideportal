@@ -22,7 +22,7 @@
       <div class="comments_wrap_green">
         <!--Content Head Starts -->
         <div class="p_content_head">
-          <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}  #{t("ago")}"%></strong> som svar på <a href="#" class="bold_link">Hi</a></div>
+          <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(comment.idea.title), idea_path(comment.idea), :class => "bold_link"%></div>
         </div>
         <!--Content Head Ends -->
         <!--Posted Content Starts -->
