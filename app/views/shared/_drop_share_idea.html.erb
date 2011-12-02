@@ -1,7 +1,8 @@
 <script type='text/javascript'>
   //<![CDATA[
   jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
-  jQuery('#idea_tag_names').show();
+  
+  
   jQuery('#idea_document').change(function(){
     var i=this
     jQuery('input#fakeupload').val(i.value);
@@ -53,8 +54,8 @@
             <strong><%=t('menu.tags')%></strong>
             <small> <%=t("seperate_with_coma")%></small>
           </label>
-          <%= render :partial => 'ideas/tag_editor', :locals => { :f => f }%>
-          <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}%>
+          <%=  f.text_field :tag_names, :html => {:class => "input-text big"}, :style => "border:none;" %>
+          <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "margin-left:60px;"%>
         </div>
 
         <div class="form-group inline">
@@ -68,7 +69,7 @@
 
 
   <% unless current_page?("/") %>
-    <a href="#" class="tab" onclick="jQuery('.body').toggle();changeContain();"><span class="dn">Del dine Ideer</span> </a>
+    <a href="#" class="tab" onclick="jQuery('.body').toggle();changeContain();jQuery('.ui-autocomplete-input').addClass('input-text');"><span class="dn">Del dine Ideer</span> </a>
   <% end %>
 </div>
 
@@ -76,9 +77,11 @@
   function changeContain(){
     if(jQuery('.body').is(":visible")){
       jQuery('.dn').html("luk ideformular");
+      
     }
     else{
       jQuery('.dn').html("Del dine Ideer");
+      jQuery('.ui-autocomplete-input').addClass('input-text');
     }
   }
 </script>

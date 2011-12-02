@@ -325,6 +325,7 @@ body {
   #share #idea-tags-group {
     margin-bottom: 0; }
     #share #idea-tags-group .input-text {
+        border:none;
       width: 270px; }
   #share .input-submit {
     float: right; }
