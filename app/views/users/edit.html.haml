@@ -1,7 +1,7 @@
 %div
   .main.panel.section
-    .header
-      %h2.icon.user-edit Konto Opsætning
+    .plainwrap
+      %h2.title Konto Opsætning
     .body.group
       = error_messages_for :user
       - form_for :user, :url => user_path, :html => { :multipart => true, :method => :put, :id => 'edit_user_form' } do |f|
@@ -103,7 +103,12 @@
 
         .form-submit.inline
           = submit_tag 'Update Account', :id => "submit-save-changes", :class => "input-submit"
-    .footer
-  %hr.hide
-  #sidebar.aside
-    = render :partial => "shared/sidebar"
+    
+.right_panel
+  .plainwrap
+    #sidebar.aside= render :partial => "shared/sidebar"
+  .plainwrap
+    %a.bold_link{:href => "/user/index", :style => " padding-left: 10px;"} All Users
+  / Display Section Starts
+  #ajax-tab
+  / Display Section Ends

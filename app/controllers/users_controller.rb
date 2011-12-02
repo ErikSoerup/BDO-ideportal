@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   layout :compute_layout
   
   def compute_layout
-    if action_name == "index" || action_name == "search_user"
+    if action_name == "index" || action_name == "search_user" || action_name == "edit"
       'profile'
     else
       'application'
