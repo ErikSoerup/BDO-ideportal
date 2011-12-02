@@ -67,6 +67,17 @@
 
 
   <% unless current_page?("/") %>
-    <a href="#" class="tab" onclick="jQuery('.body').toggle();"><span class="dn">Del dine Ideer</span> </a>
+    <a href="#" class="tab" onclick="jQuery('.body').toggle();changeContain();"><span class="dn">Del dine Ideer</span> </a>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  function changeContain(){
+    if(jQuery('.body').is(":visible")){
+      jQuery('.dn').html("luk ideformular");
+    }
+    else{
+      jQuery('.dn').html("Del dine Ideer");
+    }
+  }
+</script>
