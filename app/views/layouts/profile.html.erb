@@ -156,24 +156,20 @@
           var i=this
           jQuery('input#fakeupload').val(i.value);
         })
-        var tags=<%= Tag.all.map(&:name).to_json %>
-        var myTextArea = jQuery('#idea_tag_names').tagify();
-    
-        myTextArea.tagify('inputField').autocomplete({
-          source: tags,
-          position: { of: myTextArea.tagify('containerDiv') },
-          close: function(event, ui) { myTextArea.tagify('add'); }
-        });
-    
-        jQuery("#idea_form").submit(function(e){
-          var new_values = jQuery(".tagify-container input:first").val();
-          jQuery.each(new_values.split(","),function(i,data){
-            myTextArea.tagify("add",data);
-          });
-          myTextArea.tagify("serialize");
-        });
-        //]]>
       </script>
+
+      <script type="text/javascript">
+        jQuery(function() {
+          var tags=<%= Tag.all.map(&:name).to_json %>;
+          jQuery( "#idea_tag_names" ).autocomplete({
+            source: tags
+          });
+        });
+      </script>
+
+
+
+
 
 
       <!--Footer Starts -->
