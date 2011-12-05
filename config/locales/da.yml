@@ -118,7 +118,9 @@ da:
   zipcode: postnummer
   current_created: Fokusområde oprettet
   submit_ideas: Publicer ideer!
-  in_current: i det nuværende
+  submit_idea: Tilføj din ide!
+#  in_current: i det nuværende
+  in_current: hovedvejen
   opening: SÅDAN VIRKER DET
   phone: tlf nr.
   forgot_pass: Har du glemt dit kodeord?
