@@ -7,7 +7,8 @@
   <!--Content Head Ends -->
   <!--Posted Content Starts -->
   <div class="plainwrap">
-    <div class="fl" style="width:auto;"><h3><%= link_to h(current.title), current_path(current) if current.title%></h3></div>
+    <div>
+    <h3 style="float: left;width:auto;"><%= link_to h(current.title), current_path(current) if current.title%></h3>
       
       <div class="fr">
         <%  current_ideas = search_ideas(:search => ['current', current.id]) %>
@@ -29,9 +30,11 @@
         </div>
 
       </div>
-      <p><%= h current.description unless current.nil?%></p>
+    </div>
+    <br/>
+      <p style="float:left;width:100%;"><%= h current.description unless current.nil?%></p>
       <br />
-      <p><%= link_to t("submit_idea"), params[:action] == "show" ? "#add_idea" : current_path(current, :anchor=>"add_idea") unless current.nil?%></p>
+      <p style="float:left;width:100%;"><%= link_to t("submit_idea"), params[:action] == "show" ? "#add_idea" : current_path(current, :anchor=>"add_idea") unless current.nil?%></p>
       <br />
 
     </div>
