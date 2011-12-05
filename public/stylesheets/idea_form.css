@@ -317,11 +317,11 @@ body {
     color: white; }
   #share .input-text, #share .input-textarea {
     border-color: #6883a0;
-    -moz-border-radius: 0;
+    -moz-border-radius: 5px;
     -webkit-border-radius: 0;
     width: 440px; }
   #share .input-textarea {
-    width: 440px !important; }
+    width: 474px !important; }
   #share #idea-tags-group {
     margin-bottom: 0; }
     #share #idea-tags-group .input-text {

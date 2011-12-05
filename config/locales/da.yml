@@ -72,10 +72,10 @@ da:
   nearby_ideas: Ideer fra din afdeling
   more: mere
   recent_ideas: Seneste ideer
-  my_idea_is: Overskrift
+  my_idea_is: Tænk på en avisoverskrift - Fængende og kort
   look_around: Se dig omkring
   get_to_know_us: Lær os at kende
-  great_if: Det kunne være smart, hvis..
+  great_if: Det kunne være smart hvis Beskriv kort ideen, så en anden person med kendskab til området kan forstå hvad ideen handler om.
   tag_names: Kundesegment, forretningsområde, ydelse, proces,..
   idea: ide
   here_are_some_ideas: HER ER ET PAR IDEER. Hvad synes du om dem?
@@ -89,7 +89,7 @@ da:
   by: af
   flag_as_inappropriate: Marker som upassende
   here_are_some_idea: HER ER ET PAR IDEER
-  most_popular: Mest populære
+  most_popular: MEST POPULÆRE EMNEORD
   no_result_found: Ingen søgeresultater fundet. Prøv en anden søgning?
   lately: Seneste
   all_time: Helt fra starten
@@ -105,11 +105,11 @@ da:
   idea_status: ideen status
   idea_current: Fokusområder
   idea_current_text: Fokusområder er samlinger af ideer med et fælles overordnet tema. Find ud af, hvad du kan bidrage med i dine favoritområder!
-  idea_in_short: din idé i korte
+  idea_in_short: OVERSKRIFTEN PÅ DIN IDE
   description: Beskrivelse
   edit_idea: Ret din ide
   breif_explaination: En kort forklaring
-  seperate_with_coma: Separat med kommaer
+  seperate_with_coma: ADSKIL EMNEORD med kommaer
   dont_have_account: Har du ikke en konto?
   email_address: E-mail adresse
   enter_comment: Indtast venligst en kommentar.

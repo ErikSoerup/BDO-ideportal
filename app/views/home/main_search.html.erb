@@ -103,7 +103,7 @@
       <div class="tab_headline">
         <!--Pagination Starts -->
         <div class="fr">
-          <%= will_paginate @c_ideas %>
+          <%= will_paginate @c_ideas, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige"%>
         </div>
         <!--Pagination Ends -->
       </div>

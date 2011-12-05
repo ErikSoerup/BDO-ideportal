@@ -15,7 +15,7 @@
         <!--User Name Ends -->
         <!--Pagination Starts -->
         <div class="fr" style="margin-top:8px;">
-          <%= will_paginate current_objects %>
+          <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
         </div>
         <!--Pagination Ends -->
       </div>
