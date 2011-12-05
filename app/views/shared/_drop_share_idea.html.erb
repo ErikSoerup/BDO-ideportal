@@ -28,14 +28,14 @@
           <label for = "idea-title">
             <strong><%=t("idea")%></strong>
             <small><%=t("idea_in_short")%></small></label>
-          <%= f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text", :style => "width:474px;", :onmouseover => "jQuery(this).val('Overskrift: ”Tænk på en avisoverskrift - Fængende og kort”');", :onmouseout => "jQuery(this).val('Overskrift:')", :onclick => "jQuery(this).val('');"%>
+          <%= f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text", :style => "width:474px;", :onmouseover => "jQuery(this).val('Overskrift: ”Tænk på en avisoverskrift - Fængende og kort”');", :onclick => "jQuery(this).val('');"%>
         </div>
         <div id="idea-description-group" class="form-group inline">
           <label for = "idea-description">
             <strong> <%=t("description")%></strong>
             <small><%=t('breif_explaination')%></small>
           </label>    
-          <%= f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30", :style => "width:474px;", :onmouseover => "jQuery(this).val('Det kunne være smart hvis: ”Beskriv kort ideen, så en anden person med kendskab til området kan forstå hvad ideen handler om.”');", :onmouseout => "jQuery(this).val('Det kunne være smart hvis:')", :onclick => "jQuery(this).val('');", :onkeyup => "jQuery(this).val('');"%>
+          <%= f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30", :style => "width:474px;", :onmouseover => "jQuery(this).val('Det kunne være smart hvis: ”Beskriv kort ideen, så en anden person med kendskab til området kan forstå hvad ideen handler om.”');", :onclick => "jQuery(this).val('');"%>
 
           <div class="input_file">
             <%= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
