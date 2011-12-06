@@ -22,7 +22,7 @@
         <!--Content Head Starts -->
         <div class="p_content_head">
           <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%><strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
-          <div class="fr" style="width:159px;">
+          <div class="fr" style="width:169px;">
             <div class="fl">
               <% unless idea.idea_followers.empty? %>
                 <%= link_to "#{idea.idea_followers.size} følger ideen", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
@@ -30,7 +30,7 @@
               <% end %>
             </div>
             <div class="fr">
-              <%= link_to "det nuværende", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
+              <%= link_to "Stop følg", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
               <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank? %>
                 <% form_tag idea_follow_path do%>
                   <%= hidden_field_tag :idea_id, idea.id%>
