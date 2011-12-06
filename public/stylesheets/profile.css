@@ -556,6 +556,10 @@ h3 a:hover {
     height:100px;
 }
 
+.comment-submit {
+    background-image: url("../images/form-submit-post-comment.gif");
+    margin: 0 0 18px -23px;
+}
 
 /*--- Stemmer ---*/
 .vote_check {
@@ -1332,23 +1336,23 @@ ul.index li {
 }
 
 .d_panel_commentator2 {
-    background:#f4f4f4;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    width:654px;
-    line-height:22px;
-    color:#463d38;
-    padding:5px;
-    float:left;
-    margin:5px 0 0 0;
+	background:#B3AAA3;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	width:654px;
+	line-height:22px;
+	color:#463d38;
+	padding:5px;
+	float:left;
+	margin:5px 0 0 0;
 }
 .d_panel_commentator2 img {
-    margin:0 5px 0 0;
+	margin:0 5px 0 0;
 }
 .d_panel_commentator2 .tag_container {
-    width:530px;
-    float:right;
+	width:530px;
+	float:right;
 }
 
 .tag_container {

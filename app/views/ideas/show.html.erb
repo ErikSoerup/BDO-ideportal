@@ -1,0 +1,162 @@
+<div class="body_wrap">
+  <!--Left Panel Starts -->
+  <div class="left_panel">
+    <!--Profile Top Stuff Starts -->
+    <div class="plainwrap"><h2 class="title"><%= h @idea.title%> </h2>
+      <%if @idea.editable_by?(current_user)%>
+        <div>
+          <%= link_to('edit', '#', :onclick => 'editIdeaText(); return false')%>
+          <%= ("For the next #{time_ago_in_words(@idea.created_at + 15.minutes)}")%>
+        </div>
+      <% end %>
+
+    </div>
+    <!--Profile Top Stuff Ends -->
+    <!--Tag Panel Starts -->
+    <div class="tab_headline">
+      <div class="fl"><h3 class="subhead">Sendt <strong><%= time_ago_in_words(@idea.created_at) %> <%= t("ago") %> siden</strong> af 
+          <%unless @idea.is_anonymous?%>
+            <%=link_to @idea.inventor.name, profile_path(@idea.inventor), :class => "bold_link"%>
+          <%else%>
+            <%=link_to "Anonymous", "#", :class=> "bold_link" %>
+          <% end %>
+        </h3>
+        <h3 class="subhead">Ideen har status <strong>new</strong></h3></div>
+      <div class="fr">
+        <div class="fl" style="margin-right:15px">
+          <% unless @idea.idea_followers.empty? %>
+            <%= link_to "#{@idea.idea_followers.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+
+          <% end %>
+        </div>
+        <div class="fl">
+          <%= link_to "det nuværende", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
+          <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).blank? %>
+            <% form_tag idea_follow_path do%>
+              <%= hidden_field_tag :idea_id, @idea.id%>
+              <%= submit_tag "Følg denne", :class => "idea_submit"%>
+            <% end %>
+          <% end %>
+        </div></div>
+    </div>
+
+    <div class="plainwrap">
+      <!--stem Stuff Starts -->
+      <div class="stem" id="vote-<%= @idea.id %>">
+
+        <%= h "#{@idea.vote_count}"%>
+        <% unless has_voted?(@idea)%>
+          <%= link_to_remote "#{t('vote')}!", :update => "vote-#{@idea.id}", :url => idea_vote_path(@idea.id), :complete => visual_effect(:highlight, "vote-#{@idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
+        <% end %>
+      </div>
+      <div class="plainwrap">
+        <%= user_formatted_text @idea.description %>
+      </div>
+      <!--stem Stuff Ends -->
+    </div>
+
+    <div class="plainwrap" style="margin:10px 0">
+
+    </div>
+    <div class="plainwrap"><h3>Om denne idé</h3></div>
+    <div class="d_panel_commentator2">
+      <div class="fl" style="margin-right:15px"><%= link_to "Kommentarer #{"(#{@idea.comment_count})" if @idea.comment_count > 0}", "#comments", :class => "bold_link"%> | <%= link_to "Kommentar", "#post-comment", :class => "bold_link"%></div>
+      <div class="tag_container" style="width:450px;">
+        <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
+        <div class="tag_container_inner"> <%= @idea.tags.map { |tag| link_to h(tag.name), idea_search_path(:search => ['tag', tag.name]) }.join(', ')%></div>
+      </div>
+    </div>
+
+    <div class="plainwrap" style="margin-top:10px"><h2 class="title"><%= @idea.comment_count %> Kommentarer</h2></div>
+    <div class="plainwrap" id="comments">
+      <!--Comments1 Starts -->
+      <%= render :partial => 'idea_comment',
+        :collection => @idea.comments.visible,
+        :controller => 'comments',
+        :locals => { :show_avatar => true }%>
+      <!--Breaker Ends -->
+      <!--Comments3 Ends -->
+    </div>
+
+    <div class="submit_idea_wrap" id="comments">
+      <div class="plainwrap"style="background-color: #6AE5DB;" id="post-comment">
+        <p align="center">
+          <% form_for :comment, :url => idea_comments_url(@idea), :html => { :multipart => true, :onsubmit => 'return validateComment()' } do |f|%>
+          <div id ="comment-missing" class="message error" style = "display: none"><%= t("enter_comment") %></div>
+
+          <div class="form-group inline" id="post-comment" style="margin:23px 0 0 0;">
+            <label for ="comment-text" style="color: #425D78;"> Din Kommentar</label>
+            <%= f.text_area :text, :id => "comment-text", :class => "input-textarea"%>
+            <br/>
+            <div class="input_file" style="margin-left:136px;margin-top:9px;">
+            
+              <%= f.file_field :document , :size=>40, :style => "opacity:0;margin: 2px 2px 2px 80px;", :id => "document"%>
+            </div>
+            <div class="clear" stle="clear:both;"></div>
+          </div>
+          <div class="form-submit inline">
+            <% if current_user && !current_user.active?%>
+              <p class="message info"> Your comment will not be publicly visible until you confirm your account.</p>
+            <% end %>  
+
+            <%= submit_tag "Post Comment", :class => "input-submit comment-submit", :style =>"margin-top:19px;"%>
+          </div>
+
+          <div class="clear" stle="clear:both;"></div>
+        <% end %>
+      </div>
+      </p>
+    </div>
+  </div>
+
+
+  <!--Left Panel Ends -->
+  <!--Right Panel Starts -->
+  <div class="right_panel">
+    <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
+    <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;">All Users</a></div>
+    <!--Display Section Starts -->
+    <div id="ajax-tab">
+
+    </div>
+    <!--Display Section Ends -->
+  </div>
+  <!--Right Panel Ends -->
+</div>
+
+<script type="text/javascript">
+ 
+  function validateComment() {
+    if($('comment-text').value.blank()) {
+      $('comment-missing').style.display = 'block';
+      $('comment-text').focus();
+      return false;
+    } else {
+      return true;
+    };
+  };
+  function editCommentText(id) {
+    $$('#comment_'+id+' .comment-content')[0].hide();
+    $$('#comment_'+id+' .edit-comment-content')[0].show();
+  };
+  function validateCommentUpdate(id) {
+    if($('comment-'+id+'-text').value.blank()) {
+      $('comment-'+id+'-missing').style.display = 'block';
+      $('comment-'+id+'-text').focus();
+      return false;
+    } else {
+      return true;
+    };
+  };
+    
+    
+  function editIdeaText() {
+    $('idea-1').hide();
+    $('edit-idea-1').show();
+  }
+  function cancelEdit() {
+    $('idea-1').show();
+    $('edit-idea-1').hide();
+  }
+  
+</script>
