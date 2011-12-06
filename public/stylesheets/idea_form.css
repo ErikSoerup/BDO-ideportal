@@ -319,7 +319,7 @@ body {
     border-color: #6883a0;
     -moz-border-radius: 5px;
     -webkit-border-radius: 0;
-    width: 440px; }
+    width: 472px; }
   #share .input-textarea {
      }
   #share #idea-tags-group {
@@ -328,7 +328,7 @@ body {
         border:none;
       width: 270px; }
   #share .input-submit {
-    float: right; margin-right: -11px;}
+    float: right; margin-right: -3px;}
   #share .aside > div {
     margin-bottom: 8px;
     padding: 12px 16px 10px;
