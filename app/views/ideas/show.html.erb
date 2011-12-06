@@ -30,7 +30,7 @@
           <% end %>
         </div>
         <div class="fl">
-          <%= link_to "det nuværende", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
+          <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
           <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).blank? %>
             <% form_tag idea_follow_path do%>
               <%= hidden_field_tag :idea_id, @idea.id%>
