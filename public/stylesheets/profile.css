@@ -435,6 +435,15 @@ h3 a:hover {
     text-decoration:none;
     color:#0f645d;
 }
+
+
+h3.subhead {
+	color:#219188;
+	font-size:15px;
+	margin:0 0 5px 0;
+	padding:0;
+	font-weight:normal;	
+}
 .pagination {
     margin:0;
     padding:0;
