@@ -2,7 +2,7 @@
   .main.panel.section
     .plainwrap
       %h2.title Indstillinger for brugerkonto
-    .body.group
+    .bordy.group
       = error_messages_for :user
       - form_for :user, :url => user_path, :html => { :multipart => true, :method => :put, :id => 'edit_user_form' } do |f|
         .form-group.inline
