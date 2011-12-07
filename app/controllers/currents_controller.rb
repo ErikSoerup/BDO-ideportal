@@ -6,7 +6,7 @@ class CurrentsController < ApplicationController
   layout :compute_layout
   
   def compute_layout
-    if action_name == "index"
+    if action_name == "index" || action_name == "show"
       'profile'
     else
       'application'
