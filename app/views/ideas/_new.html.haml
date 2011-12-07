@@ -2,16 +2,16 @@
 
 
 = error_messages_for :idea
-- form_for :idea, :url => ideas_path, :update => 'submit-idea', :has_example_text => true, :html=>{:multipart=>true, :id=>"idea_form"} do |f|
+- form_for :idea, :url => ideas_path, :update => 'submit-idea',  :html=>{:multipart=>true, :id=>"idea_form"} do |f|
   - if defined?(current) && !current.nil?
     =f.hidden_field :current_id, :id => "idea-current-id", :value=>current.id
 
   #idea-title-group.form-group.inline
     = f.label :title, "Idea"
-    = f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text big", :onmouseover => "jQuery(this).val('Overskrift: ”Tænk på en avisoverskrift - Fængende og kort”');", :onclick => "jQuery(this).val('');"
+    = f.text_field :title, :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text big"
   #idea-description-group.form-group.inline
     = f.label :description, "Description"
-    = f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40", :onmouseover => "jQuery(this).val('Det kunne være smart hvis: ”Beskriv kort ideen, så en anden person med kendskab til området kan forstå hvad ideen handler om.”');", :onclick => "jQuery(this).val('');"
+    = f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40"
     .input_file
       = text_field_tag("dddd","", :size=>30 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
       =f.file_field :document , :size=>80
