@@ -8,14 +8,7 @@
     jQuery('input#fakeupload').val(i.value);
   })
 </script>
-<script type="text/javascript">
-  jQuery(function() {
-    var tags=<%= Tag.all.map(&:name).to_json %>;
-    jQuery( "#idea_tag_names" ).autocomplete({
-      source: tags
-    });
-  });
-</script>
+
 
 
 
