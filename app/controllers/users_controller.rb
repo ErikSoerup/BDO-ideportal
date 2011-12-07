@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_filter :populate_user, :except => [:show, :new]
   before_filter :get_user, :only => [:following, :followers]
 
-  layout :compute_layout
+  layout 'profile'
   
   def compute_layout
     if action_name == "index" || action_name == "search_user" || action_name == "edit"
