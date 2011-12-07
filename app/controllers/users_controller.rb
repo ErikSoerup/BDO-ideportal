@@ -139,7 +139,39 @@ class UsersController < ApplicationController
 
   def following
     @show_links = true
-    @users= @user.following.paginate :page => @page , :per_page=>10
+    
+    if params[:val]
+      @users=@user.following(:all, :conditions => ['name like ?', "#{params[:val]}%"])
+      
+    elsif params[:name] == "navn" &&  params[:arrow] =="up"
+      
+      @users=@user.following(:all, :order=>"users.name ASC")
+    elsif params[:name] == "navn" &&  params[:arrow] == "down"
+      @users=@user.following(:all, :order=>"users.name DESC")
+    elsif params[:name] == "afeld" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| x.department.name <=> y.department.name}
+    elsif params[:name] == "afeld" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| y.department.name <=> x.department.name}
+    elsif params[:name] == "score" && params[:arrow] == "up"
+      @users=@user.following(:all, :order => "users.contribution_points DESC")
+    elsif params[:name] == "score" && params[:arrow] == "down"
+      @users=@user.following(:all, :order => "users.contribution_points ASC")
+    elsif params[:name] == "idea" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| x.ideas.size <=> y.ideas.size}
+    elsif params[:name] == "idea" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| y.ideas.size <=> x.ideas.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| x.comments.size <=> y.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| y.comments.size <=> x.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| x.votes.size <=> y.votes.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+    else
+      @users = @user.following.find(:all)
+    end
+    @users= @users.paginate :page => @page , :per_page=>10
   end
 
   def followers
