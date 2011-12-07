@@ -14,10 +14,14 @@
     <!--Tab -->
     <%= javascript_include_tag :defaults%>
     <%= javascript_include_tag 'example_text'%>
+    <%= javascript_include_tag 'placeholder' %>
     <%= javascript_include_tag 'ga', 'global'%>
     <script>
       jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
       
+      jQuery(function() {
+        jQuery('input, textarea').placeholder();
+      });
 
       jQuery(document).ready(function() {
 
@@ -112,7 +116,9 @@
       <div class="plainwrap">
         <%= render :partial => "shared/drop_share_idea" %>
       </div>
-      <%= render :partial => "shared/flash_messages"%>
+      <div style="float: left;width: auto;">
+        <%= render :partial => "shared/flash_messages"%>
+      </div>
       <%= yield %>
 
 

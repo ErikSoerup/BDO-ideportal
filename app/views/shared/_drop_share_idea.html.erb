@@ -23,19 +23,19 @@
   <div class="body">
     <div id="submit-idea">
 
-      <% form_for :idea, :url => ideas_path, :has_example_text => true, :html => { :multipart=>true, :class => 'main' } do |f|%>
+      <% form_for :idea, :url => ideas_path,  :html => { :multipart=>true, :class => 'main' } do |f|%>
         <div id="idea-title-group" class="form-group inline">
           <label for = "idea-title">
             <strong><%=t("idea")%></strong>
             <small><%=t("idea_in_short")%></small></label>
-          <%= f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text", :onmouseover => "jQuery(this).val('Overskrift: ”Tænk på en avisoverskrift - Fængende og kort”');", :onclick => "jQuery(this).val('');"%>
+          <%= f.text_field :title, :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
         </div>
         <div id="idea-description-group" class="form-group inline">
           <label for = "idea-description">
             <strong> <%=t("description")%></strong>
             <small><%=t('breif_explaination')%></small>
           </label>    
-          <%= f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30",  :onmouseover => "jQuery(this).val('Det kunne være smart hvis: ”Beskriv kort ideen, så en anden person med kendskab til området kan forstå hvad ideen handler om.”');",:onmouseout => "jQuery(this).val();", :onclick => "jQuery(this).val('');"%>
+          <%= f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"%>
 
           <div class="input_file">
             <%= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
@@ -61,7 +61,7 @@
   </div>
 
 
-  <% unless current_page?("/") %>
+  <% unless current_page?("/")  || current_page?("/ideas")%>
     <a href="#" class="tab" onclick="jQuery('.body').toggle();changeContain();jQuery('.ui-autocomplete-input').addClass('input-text');"><span class="dn">Del dine Ideer</span> </a>
   <% end %>
 </div>
