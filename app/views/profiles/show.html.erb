@@ -117,17 +117,23 @@
                     <!--Content Head Starts -->
                     <div class="p_content_head">
                       <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%> <strong>dage siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
-                      <div class="fr">
-                        <% unless idea.idea_followers.empty? %>
-                          <%= link_to "Followers(#{idea.idea_followers.collect(&:user).uniq.size})", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
-                          <%= link_to "Unfollow", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
-                        <% end %>
-                        <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank? %>
-                          <% form_tag idea_follow_path do%>
-                            <%= hidden_field_tag :idea_id, idea.id%>
-                            <%= submit_tag "Follow", :class => "idea_submit"%>
+                      <div class="fr" style="width:169px;">
+                        <div class="fl">
+                          <% unless idea.idea_followers.empty? %>
+                            <%= link_to "#{idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+
                           <% end %>
-                        <% end %>
+                        </div>
+                        <div class="fr">
+                          <%= link_to "Stop følg", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
+                          <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank? %>
+                            <% form_tag idea_follow_path do%>
+                              <%= hidden_field_tag :idea_id, idea.id%>
+                              <%= submit_tag "Følg denne", :class => "idea_submit"%>
+                            <% end %>
+                          <% end %>
+                        </div>
+
                       </div>
                     </div>
                     <!--Content Head Ends -->
