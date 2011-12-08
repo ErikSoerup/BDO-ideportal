@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_filter :populate_user, :except => [:show, :new]
   before_filter :get_user, :only => [:following, :followers]
 
-  layout :compute_layout
+  layout 'profile'
   
   def compute_layout
     if action_name == "index" || action_name == "search_user" || action_name == "edit"
@@ -139,10 +139,76 @@ class UsersController < ApplicationController
 
   def following
     @show_links = true
-    @users= @user.following.paginate :page => @page , :per_page=>10
+    
+    if params[:val]
+      @users=@user.following.find_all { |emp| emp.name.first == params[:val].to_s }
+      
+    elsif params[:name] == "navn" &&  params[:arrow] =="up"
+      
+      @users=@user.following(:all, :order=>"users.name ASC")
+    elsif params[:name] == "navn" &&  params[:arrow] == "down"
+      @users=@user.following(:all, :order=>"users.name DESC")
+    elsif params[:name] == "afeld" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| x.department.name <=> y.department.name}
+    elsif params[:name] == "afeld" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| y.department.name <=> x.department.name}
+     elsif params[:name] == "score" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| y.contribution_points <=> x.contribution_points}
+    elsif params[:name] == "score" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| x.contribution_points <=> y.contribution_points}
+    elsif params[:name] == "idea" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| x.ideas.size <=> y.ideas.size}
+    elsif params[:name] == "idea" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| y.ideas.size <=> x.ideas.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| x.comments.size <=> y.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| y.comments.size <=> x.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| x.votes.size <=> y.votes.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@user.following(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+    else
+      @users = @user.following.find(:all)
+    end
+    @users= @users.paginate :page => @page , :per_page=>10
   end
 
   def followers
+    
+    if params[:val]
+      @users=@user.followers.find_all { |emp| emp.name.first == params[:val].to_s }
+      
+    elsif params[:name] == "navn" &&  params[:arrow] =="up"
+      
+      @users=@user.followers(:all, :order=>"users.name ASC")
+    elsif params[:name] == "navn" &&  params[:arrow] == "down"
+      @users=@user.followers(:all, :order=>"users.name DESC")
+    elsif params[:name] == "afeld" && params[:arrow] == "up"
+      @users=@user.followers(:all).sort{|x,y| x.department.name <=> y.department.name}
+    elsif params[:name] == "afeld" && params[:arrow] == "down"
+      @users=@user.followers(:all).sort{|x,y| y.department.name <=> x.department.name}
+    elsif params[:name] == "score" && params[:arrow] == "up"
+      @users=@user.followers(:all).sort{|x,y| y.contribution_points <=> x.contribution_points}
+    elsif params[:name] == "score" && params[:arrow] == "down"
+      @users=@user.followers(:all).sort{|x,y| x.contribution_points <=> y.contribution_points}
+    elsif params[:name] == "idea" && params[:arrow] == "up"
+      @users=@user.followers(:all).sort{|x,y| x.ideas.size <=> y.ideas.size}
+    elsif params[:name] == "idea" && params[:arrow] == "down"
+      @users=@user.followers(:all).sort{|x,y| y.ideas.size <=> x.ideas.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@user.followers(:all).sort{|x,y| x.comments.size <=> y.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@user.followers(:all).sort{|x,y| y.comments.size <=> x.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@user.followers(:all).sort{|x,y| x.votes.size <=> y.votes.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@user.followers(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+    else
+      @users = @user.followers.find(:all)
+    end
+    
+    
     @users = @user.followers.paginate :page=> @page , :per_page=>10
     render :following
   end

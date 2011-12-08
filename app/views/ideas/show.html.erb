@@ -11,15 +11,10 @@
             <%=link_to "Anonymous", "#", :class=> "bold_link" %>
           <% end %>
         </h3>
-        <h3 class="subhead">Ideen har status <strong>new</strong></h3>
+        <h3 class="subhead">Ideen har status <strong><%= @idea.status%></strong></h3>
 
         <div class="plainwrap" style="margin:10px 0;">
-          <!--stem Stuff Starts -->
-
-
-          <%= user_formatted_text @idea.description %>
-
-          <!--stem Stuff Ends -->
+             <%= user_formatted_text @idea.description %>
         </div>
         <div class="plainwrap">
           <div class="fl" style="margin-right:15px">
