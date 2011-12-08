@@ -2,23 +2,9 @@
   <!--Left Panel Starts -->
   <div class="left_panel">
     <!--Profile Top Stuff Starts -->
-    <div class="plainwrap"><div class="fl" style="width:560px;"><h2 style="margin-bottom:8px;float:left;width:auto;"><%= h @idea.title%>  </h2>
+    <div class="plainwrap"><div class="fl" style="width:360px;"><h2 style="margin-bottom:8px;"><%= h @idea.title%>  </h2>
         
-        <div class="fl" style="margin-right:15px;margin-left:217px;">
-            <% unless @idea.idea_followers.empty? %>
-              <%= link_to "#{@idea.idea_followers.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
-
-            <% end %>
-          </div>
-          <div class="fl">
-            <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
-            <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).blank? %>
-              <% form_tag idea_follow_path do%>
-                <%= hidden_field_tag :idea_id, @idea.id%>
-                <%= submit_tag "Følg denne", :class => "idea_submit"%>
-              <% end %>
-            <% end %>
-          </div>
+        
         
        
 
@@ -43,8 +29,25 @@
           </div>
         <% end %>
       </div>
-      <div class="fr">
-        <div class="stem" id="vote-<%= @idea.id %>">
+      <div class="fr" style="width:245px;">
+        <div style="margin-left:82px;">
+        <div class="fl" style="margin-right:15px;">
+            <% unless @idea.idea_followers.empty? %>
+              <%= link_to "#{@idea.idea_followers.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+
+            <% end %>
+          </div>
+          <div class="fl">
+            <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
+            <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).blank? %>
+              <% form_tag idea_follow_path do%>
+                <%= hidden_field_tag :idea_id, @idea.id%>
+                <%= submit_tag "Følg denne", :class => "idea_submit"%>
+              <% end %>
+            <% end %>
+          </div>
+          </div>
+        <div class="stem" id="vote-<%= @idea.id %>" style="float:right;margin-top: 10px;">
 
           <%= h "#{@idea.vote_count}"%>
           <% unless has_voted?(@idea)%>
