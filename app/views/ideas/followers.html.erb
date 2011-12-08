@@ -1,6 +1,6 @@
 <div class="body_wrap">
   <div class="full_wrap">
-    <div class="plainwrap"><h2 class="title">Search BY Character</h2></div>
+    <div class="plainwrap"><h2 class="title">Alfabetisk søgning</h2></div>
     <div class="plainwrap">
       <% letters||=([*'A'..'Z'] + ['Æ', 'Ø','Å']) %>
       <ul class="index">
@@ -12,18 +12,18 @@
 
     
     <div class="b_divider"></div>
-    <div class="plainwrap"><div class="fl"><h3>Search By Name</h3></div>
+    <div class="plainwrap"><div class="fl"><h3>Søg på navn</h3></div>
       <% form_tag "/users/search_user" do %>
         <div class="fl" style="margin-left:15px;"><%= text_field_tag :search%></div>
-        <div class="fl" style="margin-left:5px;"><%= submit_tag "Search", :class => "blank_button"%></div>
+        <div class="fl" style="margin-left:5px;"><%= submit_tag "Søg", :class => "blank_button"%></div>
       <% end %>
     </div>
 
     <div class="plainwrap" style="padding:10px 0;">
       <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1">
         <tr class="uindex_tbg">
-          <td align="left" valign="middle"><h3>Following</h3></td>
-          <td align="left" valign="middle"><h3>Followers</h3>
+          <td align="left" valign="middle"><h3>Følger</h3></td>
+          <td align="left" valign="middle"><h3>Følges af</h3>
 
           </td>
           <td align="center" valign="middle">&nbsp;</td>
