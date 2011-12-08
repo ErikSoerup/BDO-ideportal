@@ -162,7 +162,7 @@ class IdeasController < ApplicationController
     @users=@idea.idea_followers.collect(&:user)
     
     if params[:val]
-      @users=@users.find_all {|user|  user.names == params[:val].to_s}
+      @users=@users.find_all {|user|  user.name.first == params[:val].to_s}
       
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
       
@@ -176,7 +176,7 @@ class IdeasController < ApplicationController
     elsif params[:name] == "score" && params[:arrow] == "up"
       @users=@users.sort{|x,y| x.contribution_points <=> y.contribution_points}
     elsif params[:name] == "score" && params[:arrow] == "down"
-      @users=@users.sort{|x,y| x.contribution_points <=> y.contribution_points}
+      @users=@users.sort{|x,y| y.contribution_points <=> x.contribution_points}
     elsif params[:name] == "idea" && params[:arrow] == "up"
       @users=@users.sort{|x,y| x.ideas.size <=> y.ideas.size}
     elsif params[:name] == "idea" && params[:arrow] == "down"
