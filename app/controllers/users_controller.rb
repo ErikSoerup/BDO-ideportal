@@ -177,7 +177,7 @@ class UsersController < ApplicationController
   def followers
     
     if params[:val]
-      @users=@user.following.find_all { |emp| emp.name.first == params[:val].to_s }
+      @users=@user.followers.find_all { |emp| emp.name.first == params[:val].to_s }
       
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
       

@@ -159,7 +159,7 @@ class IdeasController < ApplicationController
     @body_class='advance'
     page = 1 || params[:page]
     @idea=Idea.find(params[:id])
-    @users=@idea.idea_followers.collect(&:user)
+    @users=@idea.idea_followers.collect(&:user).uniq
     
     if params[:val]
       @users=@users.find_all {|user|  user.name.first == params[:val].to_s}
