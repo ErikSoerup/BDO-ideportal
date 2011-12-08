@@ -166,9 +166,9 @@ class IdeasController < ApplicationController
       
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
       
-      @users=@users.sort{|x,y| x.names.size <=> y.names.size}
+      @users=@users.sort{|x,y| x.name <=> y.name}
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
-      @users=@users.sort{|x,y| y.names.size <=> x.names.size}
+      @users=@users.sort{|x,y| y.name <=> x.name}
     elsif params[:name] == "afeld" && params[:arrow] == "up"
       @users=@users.sort{|x,y| x.department.name <=> y.department.name}
     elsif params[:name] == "afeld" && params[:arrow] == "down"
