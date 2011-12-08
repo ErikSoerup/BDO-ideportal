@@ -162,7 +162,7 @@ class IdeasController < ApplicationController
     @users=@idea.idea_followers.collect(&:user)
     
     if params[:val]
-      @users=@users.find(:all, :conditions => ['name like ?', "#{params[:val]}%"])
+      @users=@users.find_all {|user|  user.names == params[:val].to_s}
       
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
       
