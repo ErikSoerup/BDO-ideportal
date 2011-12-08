@@ -32,10 +32,10 @@
       <div class="fr" style="width:245px;">
         <div style="margin-left:82px;">
         <div class="fl" style="margin-right:15px;">
-            <% unless @idea.idea_followers.empty? %>
+            <%# unless @idea.idea_followers.empty? %>
               <%= link_to "#{@idea.idea_followers.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
 
-            <% end %>
+            <%# end %>
           </div>
           <div class="fl">
             <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
