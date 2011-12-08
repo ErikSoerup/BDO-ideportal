@@ -124,9 +124,11 @@
           <%= render :partial => "shared/drop_share_idea" %>
         </div>
       <% end %>
+      <% unless current_page?("/") %>
       <div class="flash_message">
         <%= render :partial => "shared/flash_messages"%>
       </div>
+      <% end %>
       <%= yield %>
 
 

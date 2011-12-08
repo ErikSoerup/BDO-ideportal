@@ -30,7 +30,7 @@
       <div class="plainwrap" style="margin:10px 0">
         <div class="fl">
           <% unless idea.idea_followers.empty? %>
-            <%= link_to "Followers(#{idea.idea_followers.size})", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+            <%= link_to "Followers(#{idea.idea_followers.collect(&:user).uniq.size})", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
             <%= link_to "Unfollow", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
           <% end %>
           <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank? %>
