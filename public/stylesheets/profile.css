@@ -438,6 +438,8 @@ h3 a:hover {
 
 
 h3.subhead {
+    float:left;
+    width:auto;
     color:#219188;
     font-size:15px;
     margin:0 0 5px 0;
