@@ -141,7 +141,7 @@ class UsersController < ApplicationController
     @show_links = true
     
     if params[:val]
-      @users=@user.following(:all, :conditions => ['name like ?', "#{params[:val]}%"])
+      @users=@user.following.find_all { |emp| emp.name.first == params[:val].to_s }
       
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
       
@@ -177,7 +177,7 @@ class UsersController < ApplicationController
   def followers
     
     if params[:val]
-      @users=@user.followers(:all, :conditions => ['name like ?', "#{params[:val]}%"])
+      @users=@user.following.find_all { |emp| emp.name.first == params[:val].to_s }
       
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
       

@@ -5,7 +5,7 @@
       <% letters||=([*'A'..'Z'] + ['Æ', 'Ø','Å']) %>
       <ul class="index">
         <% letters.each do |letter| %>
-          <li><b><%= link_to letter, "/user/index?val=#{letter}", :style => "margin-left:10px;"%></b></li>
+          <li><b><%= link_to letter, "/users/#{@user.id}/following?val=#{letter}", :style => "margin-left:10px;"%></b></li>
         <% end %>
       </ul>
     </div>
