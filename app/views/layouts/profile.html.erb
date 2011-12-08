@@ -59,64 +59,71 @@
           <div class="logo"><%= link_to image_tag("/images/logo.jpg"), "/"%> </div>
           <!--Logo Ends -->
           <!--Top Nav Starts -->
-          <div class="top_nav">
-            
-            <ul>
-              <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>     
-              <li><%= link_to t('menu.settings'), edit_user_path %></li>     
-              <li><%= link_to t("menu.about"), home_path('about')%></li>
-              <% if current_user.admin? %>
-                <li><%= link_to 'Admin', admin_root_path%></li>
-              <% end %>
-              <li class="last">
-                <% form_tag ideas_path, :method => :get do %>
-                  <div class="fl" style="width: 12px;"><%= submit_tag "Søg", :style=> "color: #FFFFFF;background: none;border: none;text-decoration: none;cursor: pointer;text-weight:bold;" %></div>
+          <% if logged_in? %>
+            <div class="top_nav">
 
-                  <div class="fr"> <%= text_field_tag 'search_text', params[:search_text], :class => "search_input"%></div>
-
+              <ul>
+                <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>     
+                <li><%= link_to t('menu.settings'), edit_user_path %></li>     
+                <li><%= link_to t("menu.about"), home_path('about')%></li>
+                <% if current_user.admin? %>
+                  <li><%= link_to 'Admin', admin_root_path%></li>
                 <% end %>
-              </li>
-            </ul>
-          </div>
+                <li class="last">
+                  <% form_tag ideas_path, :method => :get do %>
+                    <div class="fl" style="width: 12px;"><%= submit_tag "Søg", :style=> "color: #FFFFFF;background: none;border: none;text-decoration: none;cursor: pointer;text-weight:bold;" %></div>
+
+                    <div class="fr"> <%= text_field_tag 'search_text', params[:search_text], :class => "search_input"%></div>
+
+                  <% end %>
+                </li>
+              </ul>
+
+            </div>
+          <% end %>
           <!--Top Nav Ends -->
         </div>
         <!--Header Bottom Section Starts -->
-        <div class="h_btm">
-          <div class="menu_wrap">
-            <!--Left Small Menu Panel Starts -->
-            <div class="menu_container">
-              <ul>
-                <li><%=link_to t("menu.hot"), idea_search_path(:search => 'hot')%></li>  
-                <li>|</li>  
-                <li><%=link_to t("menu.recent"), idea_search_path(:search => 'recent')%></li>  
-                <li>|</li>  
-                <li><%= link_to  t('menu.currents'), currents_path%></li>
-              </ul>
+        <% if logged_in? %>
+          <div class="h_btm">
+            <div class="menu_wrap">
+              <!--Left Small Menu Panel Starts -->
+              <div class="menu_container">
+                <ul>
+                  <li><%=link_to t("menu.hot"), idea_search_path(:search => 'hot')%></li>  
+                  <li>|</li>  
+                  <li><%=link_to t("menu.recent"), idea_search_path(:search => 'recent')%></li>  
+                  <li>|</li>  
+                  <li><%= link_to  t('menu.currents'), currents_path%></li>
+                </ul>
+              </div>
+              <!--Left Small Menu Panel Ends -->
+              <!--Left Menu Panel Starts -->
+              <div class="menu_container">
+                <ul>
+                  <li><%= link_to t("menu.comments"), comments_path%></li>  
+                  <li>|</li>  
+                  <li><%= link_to t("menu.tags"), tags_path%></li>  
+                  <li>|</li>  
+                  <li><%=link_to t("menu.advance_search"), home_advance_path %></li>  
+                </ul>
+              </div>
+              <!--Left Menu Panel Ends -->
             </div>
-            <!--Left Small Menu Panel Ends -->
-            <!--Left Menu Panel Starts -->
-            <div class="menu_container">
-              <ul>
-                <li><%= link_to t("menu.comments"), comments_path%></li>  
-                <li>|</li>  
-                <li><%= link_to t("menu.tags"), tags_path%></li>  
-                <li>|</li>  
-                <li><%=link_to t("menu.advance_search"), home_advance_path %></li>  
-              </ul>
-            </div>
-            <!--Left Menu Panel Ends -->
+            <!--Logud Stuff Starts -->
+            <div class="logud"><%= link_to t('menu.sign_out'), logout_path%></div>
+            <!--Logud Stuff Ends -->
           </div>
-          <!--Logud Stuff Starts -->
-          <div class="logud"><%= link_to t('menu.sign_out'), logout_path%></div>
-          <!--Logud Stuff Ends -->
-        </div>
+        <% end %>
         <!--Header Bottom Section Ends -->
       </div>
       <!--Header Ends -->
       <!--Slider Starts -->
-      <div class="plainwrap">
-        <%= render :partial => "shared/drop_share_idea" %>
-      </div>
+      <% if logged_in? %>
+        <div class="plainwrap">
+          <%= render :partial => "shared/drop_share_idea" %>
+        </div>
+      <% end %>
       <div class="flash_message">
         <%= render :partial => "shared/flash_messages"%>
       </div>
@@ -165,7 +172,7 @@
         })
       </script>
 
-     
+
 
 
 
