@@ -152,10 +152,10 @@ class UsersController < ApplicationController
       @users=@user.following(:all).sort{|x,y| x.department.name <=> y.department.name}
     elsif params[:name] == "afeld" && params[:arrow] == "down"
       @users=@user.following(:all).sort{|x,y| y.department.name <=> x.department.name}
-    elsif params[:name] == "score" && params[:arrow] == "up"
-      @users=@user.following(:all, :order => "users.contribution_points DESC")
+     elsif params[:name] == "score" && params[:arrow] == "up"
+      @users=@user.following(:all).sort{|x,y| y.contribution_points <=> x.contribution_points}
     elsif params[:name] == "score" && params[:arrow] == "down"
-      @users=@user.following(:all, :order => "users.contribution_points ASC")
+      @users=@user.following(:all).sort{|x,y| x.contribution_points <=> y.contribution_points}
     elsif params[:name] == "idea" && params[:arrow] == "up"
       @users=@user.following(:all).sort{|x,y| x.ideas.size <=> y.ideas.size}
     elsif params[:name] == "idea" && params[:arrow] == "down"
@@ -189,9 +189,9 @@ class UsersController < ApplicationController
     elsif params[:name] == "afeld" && params[:arrow] == "down"
       @users=@user.followers(:all).sort{|x,y| y.department.name <=> x.department.name}
     elsif params[:name] == "score" && params[:arrow] == "up"
-      @users=@user.followers(:all, :order => "users.contribution_points DESC")
+      @users=@user.followers(:all).sort{|x,y| y.contribution_points <=> x.contribution_points}
     elsif params[:name] == "score" && params[:arrow] == "down"
-      @users=@user.followers(:all, :order => "users.contribution_points ASC")
+      @users=@user.followers(:all).sort{|x,y| x.contribution_points <=> y.contribution_points}
     elsif params[:name] == "idea" && params[:arrow] == "up"
       @users=@user.followers(:all).sort{|x,y| x.ideas.size <=> y.ideas.size}
     elsif params[:name] == "idea" && params[:arrow] == "down"
