@@ -17,4 +17,4 @@
       
       = render :partial => '/spinner', :locals => { :id => 'search_spinner' }
     
-    = observe_form 'search_form', :method => :get, :frequency => 0.7, :update => 'results', :loading => '$("search_spinner").style.visibility = "visible"', :loaded => '$("search_spinner").style.visibility = "hidden"'
+    = observe_form 'search_form', :method => :get, :frequency => 0.7, :update => 'results', :loading => '$("search_spinner").style.visibility = "hidden"', :loaded => '$("search_spinner").style.visibility = "hidden"'

@@ -4,7 +4,7 @@
       <% form_tag "/home/main_search", :method => :get do  %>
         <table width="100%" border="0" cellspacing="2" cellpadding="0">
           <tr>
-            <td align="left" valign="middle"><h3>Idea</h3></td>
+            <td align="left" valign="middle"><h3>Ide</h3></td>
 
             <td align="left" valign="middle"><h3>Person</h3></td>
 
@@ -33,7 +33,7 @@
             <td align="left" valign="middle"style="width:116px;">
               <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]} )%>
             </td>
-            <td align="left" valign="middle"style="width:116px;"><%= submit_tag "Advance Search", :class=>"blank_button", :id => "button" %> </td>
+            <td align="left" valign="middle"style="width:116px;"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
           </tr>
 
           <tr>
