@@ -51,18 +51,24 @@ end
                 <%=  link_to "Anonymous", "#"%>
               <% end %>
             </div>
-            <div class="fr">
+            <div class="fr" style="width:169px;">
+            <div class="fl">
               <% unless search_idea.idea_followers.empty? %>
-                <%= link_to "Followers(#{search_idea.idea_followers.collect(&:user).uniq.size})", followers_idea_path(search_idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
-                <%= link_to "Unfollow", unfollow_idea_path(search_idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,search_idea.id).nil?%>
+                <%= link_to "#{search_idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(search_idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+                
               <% end %>
+            </div>
+            <div class="fr">
+              <%= link_to "Stop følg", unfollow_idea_path(search_idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,search_idea.id).nil?%>
               <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,search_idea.id).blank? %>
                 <% form_tag idea_follow_path do%>
                   <%= hidden_field_tag :idea_id, search_idea.id%>
-                  <%= submit_tag "Follow", :class => "idea_submit"%>
+                  <%= submit_tag "Følg denne", :class => "idea_submit"%>
                 <% end %>
               <% end %>
             </div>
+
+          </div>
           </div>
           <!--Content Head Ends -->
           <!--Posted Content Starts -->
