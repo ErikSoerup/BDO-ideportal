@@ -9,7 +9,7 @@
         <div class="fl"><h2><%#=link_to @user.name, edit_user_path%><%=@user.name%></h2></div>
         <!--User Name Ends -->
         <!--Follow Link Starts -->
-        <div class="fr" style="margin-top:10px"><%=link_to "Follow #{@user.name}", follow_path(@user), :class => "bold_link"%></div>
+        <div class="fr" style="margin-top:10px"><%=link_to "Følg #{@user.name}", follow_path(@user), :class => "bold_link"%></div>
         <!--Follow Link Ends -->
       </div>
       <!--Breaker Starts -->
@@ -23,10 +23,10 @@
         <!--User Detail Stuff Starts -->
         <div class="user_dwrap"><table width="100%" border="0" cellspacing="1" cellpadding="2">
             <tr>
-              <td width="135" align="left" valign="middle"><strong>Afdelings navn</strong></td>
+              <td width="135" align="left" valign="middle"><strong>Afdeling</strong></td>
               <td align="left" valign="middle">
                 <div class="fl"><%= @user.department.try(:name) %></div>
-                <div class="fr" style="color:#2cafa4"><%= link_to_remote t('menu.ideas_following'),:update => "ajax-tab", :url => {:controller => "users", :action => "current_ideas"},:html => { :class => "bold_link"} %>  |   <%= link_to_remote t('menu.currents_following'), :update => "ajax-tab", :url => {:controller => "users", :action => "current_currents"}, :html => {:class => "bold_link"}%></div>
+                <!--<div class="fr" style="color:#2cafa4"><%#= link_to_remote t('menu.ideas_following'),:update => "ajax-tab", :url => {:controller => "users", :action => "current_ideas"},:html => { :class => "bold_link"} %>  |   <%#= link_to_remote t('menu.currents_following'), :update => "ajax-tab", :url => {:controller => "users", :action => "current_currents"}, :html => {:class => "bold_link"}%></div>-->
               </td>
             </tr>
             <tr>
@@ -51,7 +51,7 @@
             </tr>
             <tr>
               <td width="135" align="left" valign="middle"><strong>Antal point</strong></td>
-              <td align="left" valign="middle"><div class="fl"><%=  @user.recent_contribution_points || 0 %> points</div></td>
+              <td align="left" valign="middle"><div class="fl"><%=  @user.recent_contribution_points || 0 %> point</div></td>
             </tr>
             <tr>
               <td width="135" align="left" valign="middle">&nbsp;</td>
@@ -391,7 +391,7 @@
           <!--Right Panel Starts -->
           <div class="right_panel">
             <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
-            <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;">All Users</a></div>
+            <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;"><%=t("all_users")%></a></div>
             <!--Display Section Starts -->
             <div id="ajax-tab">
 

@@ -3,7 +3,7 @@
 
   - unless @body_class == ''
     .section
-      %h2.header=t("most_popular") + t("menu.tags")
+      %h2.header=t("most_popular") + " "+t("menu.tags")
       .tag-cloud
         = render :partial => 'tags/tag', :collection => Tag.find_top_tags(10)
       %a.btn.gray{ :href => tags_path, :style => "width: 180px; ", :class => "bold_link" }
