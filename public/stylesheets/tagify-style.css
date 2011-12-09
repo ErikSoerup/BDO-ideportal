@@ -193,6 +193,7 @@ Author: Alicia Liu
     border: 1px solid #EEE;
     background-color: #FFEBA1;
     color: #888;
+    font-size: 12px;
 }
 .tagify-container > span > a {
     padding-left: 5px;
