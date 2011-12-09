@@ -31,7 +31,7 @@
             </tr>
             <tr>
               <td width="135" align="left" valign="middle"><strong>Email</strong></td>
-              <td align="left" valign="middle"><div class="fl"><%=@user.email%></div></td>
+              <td align="left" valign="middle"><div class="fl"><%=mail_to @user.email, :class => "bold_link"%></div></td>
             </tr>
             <tr>
               <td width="135" align="left" valign="middle"><strong>Tlf nr</strong></td>
@@ -73,13 +73,15 @@
         <li><a href="#tab1">Ideer</a></li>
         <li><a href="#tab2">Kommentarer</a></li>
         <li><a href="#tab3">Stemmer</a></li>
+        <li><a href="#tab4">Mine favoritter</a></li>
+        <li><a href="#tab5">Følger mig</a></li>
       </ul>
       <div class="tab_container">
         <!--Ideer container Starts -->
         <div id="tab1" class="tab_content">
           <!--Header Portion Starts -->
           <div class="tab_headline">
-            <div class="fl"><strong>These are some of the ideas that <%= @user.name %> created.</strong></div>
+            <div class="fl"><strong>Her er 's ideer</strong></div>
             <!--Pagination Starts -->
             <div class="fr">
               <%= will_paginate @ideas, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
@@ -268,22 +270,133 @@
               <% end %>
 
             </div>
-            <!--Stemmer container Ends -->
-            <!--Tab Ends -->
-          </div>
-        </div>
-        <!--Tab Panel Ends -->
-      </div>
-      <!--Left Panel Ends -->
-      <!--Right Panel Starts -->
-      <div class="right_panel">
-        <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
-        <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;">All Users</a></div>
-        <!--Display Section Starts -->
-        <div id="ajax-tab">
 
+            <div id="tab4" class="tab_content" style="height:auto;">
+              <div class="tab_headline">
+                <div class="fl"><strong>Ideer jeg følger</strong></div>
+              </div>
+
+              <% @my_ideas.each do |idea| %>
+                <% if  idea.status == "new"   %>
+                  <div class="green_wrap" style="height:auto;">
+                  <% elsif idea.status == "under review" %>
+                    <div class="yellow_wrap" style="height:auto;">
+                    <% else %>
+                      <div class="blue_wrap" style="height:auto;">
+                      <% end %>  
+                      <!--stem Stuff Starts -->
+                      <div class="stem" id="vote-<%= idea.id %>">
+
+                        <%= h "#{idea.vote_count}"%>
+                        <% unless has_voted?(idea)%>
+                          <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
+                        <% end %>
+                      </div>
+
+
+
+                      <!--stem Stuff Ends -->
+                      <!--Right Content Starts -->
+                      <div class="p_content">
+                        <!--Content Head Starts -->
+                        <div class="p_content_head">
+                          <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%><strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link" unless idea.inventor.nil?%></div>
+                          <div class="fr" style="width:169px;">
+                            <div class="fl">
+                              <% unless idea.idea_followers.empty? %>
+                                <%= link_to "#{idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+
+                              <% end %>
+                            </div>
+                            <div class="fr">
+                              <%= link_to "Stop følg", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
+                              <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank? %>
+                                <% form_tag idea_follow_path do%>
+                                  <%= hidden_field_tag :idea_id, idea.id%>
+                                  <%= submit_tag "Følg denne", :class => "idea_submit"%>
+                                <% end %>
+                              <% end %>
+                            </div>
+
+                          </div>
+                        </div>
+                        <!--Content Head Ends -->
+                        <!--Posted Content Starts -->
+                        <div class="plainwrap">
+                          <h3><%= link_to h(idea.title), idea_path(idea) unless idea.title.nil?%></h3>
+                          <p><%= h idea.description_excerpt%> </p>
+                        </div>
+                        <!--Posted Content Ends -->
+
+                        <div class="d_panel_commentator_big">
+                          <div class="fl"><img src="/images/comment-icon.gif" alt="" /><%= link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" }", idea_path(idea, :anchor => 'comments', :title_in_url => false)%></div>
+                          <div class="tag_container">
+                            <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
+                            <div class="tag_container_inner">
+                              <% unless idea.tags.empty?%>
+                                <% idea.tags.each_with_index do |tag, ctr|%>
+                                  <%unless ctr == idea.tags.length - 1%>
+                                    <%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %>
+                                  <%  else %>
+                                    <%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %>
+                                  <% end %>
+                                <% end %>
+                              <% end %>
+
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <!--Right Content Ends -->
+                    </div>
+                    <!--Green Panel Ends -->
+                    <!--Breaker Starts -->
+                    <div class="b_divider"></div>
+
+                  <% end %>
+
+
+                  <div class="tab_headline">
+                    <div class="fl"><strong>Hovedveje jeg følger</strong></div>
+                  </div>
+
+                  <%= render :partial => "currents/current", :collection => @my_currents %>
+
+
+                </div>
+
+              </div>
+              <!--Stemmer container Ends -->
+              <!--Tab Ends -->
+
+
+
+
+
+            </div>
+            <!--Tab Panel Ends -->
+            <div id="tab5" class="tab_content" style="height:auto;">
+              <div class="tab_headline">
+                <div class="fl"><strong>Følger mig</strong></div>
+              </div>
+
+              <%= render :partial => "user_lists" %>
+
+            </div>
+
+
+          </div>
+          <!--Left Panel Ends -->
+          <!--Right Panel Starts -->
+          <div class="right_panel">
+            <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
+            <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;">All Users</a></div>
+            <!--Display Section Starts -->
+            <div id="ajax-tab">
+
+            </div>
+            <!--Display Section Ends -->
+          </div>
+          <!--Right Panel Ends -->
         </div>
-        <!--Display Section Ends -->
-      </div>
-      <!--Right Panel Ends -->
-    </div>

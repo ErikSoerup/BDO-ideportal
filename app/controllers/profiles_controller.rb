@@ -13,20 +13,40 @@ class ProfilesController < ApplicationController
     @ideas= @user.ideas.paginate(:page => params[:page], :per_page => 3)
     @comments= @user.comments.paginate(:page => params[:page], :per_page => 3)
     @votes=@user.votes.paginate(:page => params[:page], :per_page => 10)
+    @my_currents = current_user.current_followers.collect(&:current)
+    @my_ideas = current_user.idea_followers.collect(&:idea)
+    @my_followers = current_user.followers
     respond_to do |format|
       format.html
       format.xml
-#      format.js { render :text => render_recent(params) }
+      #      format.js { render :text => render_recent(params) }
     end
   end
+  
+  def current_ideas
+    @ideas = current_user.idea_followers.collect(&:idea)
+    respond_to do |format|
+      format.js { render :layout=>false }
+    end
+
+  end
+  
+  
+  def current_currents
+    @current_ideas = current_user.current_followers.collect(&:current)
+    respond_to do |format|
+      format.js { render :layout=>false }
+    end
+  end
+  
   
   def render_recent(params)
     model = params[:recent]
     collection, partial = case model
-      when 'ideas'    then [@user.ideas,    'ideas/idea']
-      when 'comments' then [@user.comments, 'comments/comment']
-      when 'votes'    then [@user.votes,    'vote']
-      else raise 'Invalid value for "recent" param'
+    when 'ideas'    then [@user.ideas,    'ideas/idea']
+    when 'comments' then [@user.comments, 'comments/comment']
+    when 'votes'    then [@user.votes,    'vote']
+    else raise 'Invalid value for "recent" param'
     end
     
     render_to_string :partial => 'recent', :locals => {
