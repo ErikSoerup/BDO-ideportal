@@ -37,7 +37,7 @@ end
       </div>
       <!--Content Starts -->
       <div class="id_content">
-        <div class="p_content_head">Sendt <%= time_ago_in_words(idea.created_at)%> &nbsp; <strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
+        <div class="p_content_head">Sendt <%= time_ago_in_words(idea.created_at)%> <strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
         <div class="plainwrap"><h3><%= link_to h(idea.title), idea_path(idea), :rel => 'bookmark'%></h3>
         </div>
       </div>

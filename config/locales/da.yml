@@ -286,20 +286,20 @@ da:
         one:   "et minut"
         other: "%{count} minutter"
       about_x_hours:
-        one:   "cirka en time"
-        other: "cirka %{count} timer"
+        one:   "ca en time"
+        other: "ca %{count} timer"
       x_days:
         one:   "en dag"
         other: "%{count} dage"
       about_x_months:
-        one:   "cirka en måned"
-        other: "cirka %{count} måneder"
+        one:   "ca en måned"
+        other: "ca %{count} måneder"
       x_months:
         one:   "en måned"
         other: "%{count} måneder"
       about_x_years:
-        one:   "cirka et år"
-        other: "cirka %{count} år"
+        one:   "ca et år"
+        other: "ca %{count} år"
       over_x_years:
         one:   "mere end et år"
         other: "mere end %{count} år"
