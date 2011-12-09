@@ -95,11 +95,12 @@ da:
   all_time: Helt fra starten
   vote: stem
   votes: stemmer
+  all_users: Alle medarbejdere
   in_response_to: som svar på
   top_contributors: Top bidragydere
   sign_up_for_account: Opret en konto
   you_voted: du har stemt
-  sidebar_text: Ideportalen er et forum, hvor medarbejdere i BDO Public kan dele, stemme på og diskutere ideer. Opret dig nu og bliv en del af idefællesskabet.
+  sidebar_text: Ideportalen er et forum, hvor medarbejdere i BDO Public kan dele, stemme på og diskutere ideer. Deltag i idefællesskabet.
   learn_more: Få mere at vide
   see_more_tags: Se flere emneord
   idea_status: ideen status
