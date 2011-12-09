@@ -1,3 +1,4 @@
+<% if controller.class != "HomeController" && controller.action_name != "show" %>
 <script type='text/javascript'>
   //<![CDATA[
   jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
@@ -9,7 +10,8 @@
   })
 </script>
 
-
+<%= stylesheet_link_tag "tagify-style" %>
+<%= javascript_include_tag "jquery.tagify" %>
 
 
 <div id ="share" class="section">
@@ -40,7 +42,7 @@
             <strong><%=t('menu.tags')%></strong>
             <small> <%=t("seperate_with_coma")%></small>
           </label>
-          <%=  f.text_field :tag_names, :class => "input-text big", :style => "border:none;" %>
+          <%= render :partial => 'ideas/tag_editor', :locals => { :f => f }%>
           <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "width:196px;"%>
         </div>
 
@@ -71,3 +73,24 @@
     }
   }
 </script>
+
+<script type="text/javascript">
+  var tags= <%= Tag.all.map(&:name).to_json  %>;
+  var myTextArea = jQuery('#auto-text').tagify();
+
+  myTextArea.tagify('inputField').autocomplete({
+    source: tags,
+    position: { of: myTextArea.tagify('containerDiv') },
+    close: function(event, ui) { myTextArea.tagify('add'); }
+  });
+
+  jQuery("#idea_form").submit(function(e){
+    var new_values = jQuery(".tagify-container input:first").val();
+    jQuery.each(new_values.split(","),function(i,data){
+      myTextArea.tagify("add",data);
+    });
+    myTextArea.tagify("serialize");
+  });
+  
+</script>
+<% end %>
