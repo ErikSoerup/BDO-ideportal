@@ -165,8 +165,8 @@ Author: Alicia Liu
 }
 
 .tagify-container {
-    width: 480px;
-    height: 30px;
+
+    height: 130px;
     border: none;
     background-color: #FFF;
     border-radius: 2px;
@@ -174,11 +174,11 @@ Author: Alicia Liu
     font-size: 12px;
 
     float: left;
-    width: 315px;
+    width: 200px;
     background-color: #fff;
     border: none;
     font-size: 16px;
-    height: 29px;
+   
     padding: 1px 8px 0;
     border-radius:    8px; /* CSS3 */
     -moz-border-radius:  8px; /* Firefox */

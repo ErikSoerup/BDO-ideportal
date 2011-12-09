@@ -106,6 +106,7 @@
 
 
 <script type="text/javascript">
+  
   var tags= <%= Tag.all.map(&:name).to_json  %>;
   var myTextArea = jQuery('#auto-text').tagify();
 
@@ -124,3 +125,4 @@
   });
   
 </script>
+
