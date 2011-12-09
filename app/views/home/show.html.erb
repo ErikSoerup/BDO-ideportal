@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag "tagify-style" %>
+<%= javascript_include_tag "jquery.tagify" %>
 <div class="body_wrap">
   <div class="full_wrap">
     <!--Top Part Starts -->
@@ -102,3 +103,24 @@
     </div>
   </div>
 </div>
+
+
+<script type="text/javascript">
+  var tags= <%= Tag.all.map(&:name).to_json  %>;
+  var myTextArea = jQuery('#auto-text').tagify();
+
+  myTextArea.tagify('inputField').autocomplete({
+    source: tags,
+    position: { of: myTextArea.tagify('containerDiv') },
+    close: function(event, ui) { myTextArea.tagify('add'); }
+  });
+
+  jQuery("#idea_form").submit(function(e){
+    var new_values = jQuery(".tagify-container input:first").val();
+    jQuery.each(new_values.split(","),function(i,data){
+      myTextArea.tagify("add",data);
+    });
+    myTextArea.tagify("serialize");
+  });
+  
+</script>
