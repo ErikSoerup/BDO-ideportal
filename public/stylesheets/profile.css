@@ -1904,3 +1904,11 @@ ul.index li {
     width: auto;
     z-index: 99999;
 }
+
+.f_list {
+    margin: 0;
+    padding: 0;
+}
+.f_list h3 {
+    font-size: 11px;
+}
