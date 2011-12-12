@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <meta name = 'keywords' content = "#{COMPANY_NAME}, #{SHORT_SITE_NAME}, #{LONG_SITE_NAME}, Idea Exchange, share, vote, rate" />
+ <meta name = 'keywords' content = "#{COMPANY_NAME}, #{SHORT_SITE_NAME}, #{LONG_SITE_NAME}, Idea Exchange, share, vote, rate" />
     <meta name = 'description' content = "#{LONG_SITE_NAME} is a forum for #{COMPANY_NAME} customers to share, rate, and discuss ideas about #{COMPANY_NAME}."/>
 
     <title><%= " #{LONG_SITE_NAME} | #{h(page_title || "Exchange your ideas, vote, and discuss. Let's make it better.")}" %> </title>
@@ -18,7 +17,7 @@
     <%= javascript_include_tag 'ga', 'global'%>
     <script>
       jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
-      
+
       jQuery(function() {
         jQuery('input, textarea').placeholder();
       });
@@ -63,8 +62,8 @@
             <div class="top_nav">
 
               <ul>
-                <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>     
-                <li><%= link_to t('menu.settings'), edit_user_path %></li>     
+                <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>
+                <li><%= link_to t('menu.settings'), edit_user_path %></li>
                 <li><%= link_to t("menu.about"), home_path('about')%></li>
                 <% if current_user.admin? %>
                   <li><%= link_to 'Admin', admin_root_path%></li>
@@ -90,10 +89,10 @@
               <!--Left Small Menu Panel Starts -->
               <div class="menu_container">
                 <ul>
-                  <li><%=link_to t("menu.hot"), idea_search_path(:search => 'hot')%></li>  
-                  <li>|</li>  
-                  <li><%=link_to t("menu.recent"), idea_search_path(:search => 'recent')%></li>  
-                  <li>|</li>  
+                  <li><%=link_to t("menu.hot"), idea_search_path(:search => 'hot')%></li>
+                  <li>|</li>
+                  <li><%=link_to t("menu.recent"), idea_search_path(:search => 'recent')%></li>
+                  <li>|</li>
                   <li><%= link_to  t('menu.currents'), currents_path%></li>
                 </ul>
               </div>
@@ -101,11 +100,11 @@
               <!--Left Menu Panel Starts -->
               <div class="menu_container">
                 <ul>
-                  <li><%= link_to t("menu.comments"), comments_path%></li>  
-                  <li>|</li>  
-                  <li><%= link_to t("menu.tags"), tags_path%></li>  
-                  <li>|</li>  
-                  <li><%=link_to t("menu.advance_search"), home_advance_path %></li>  
+                  <li><%= link_to t("menu.comments"), comments_path%></li>
+                  <li>|</li>
+                  <li><%= link_to t("menu.tags"), tags_path%></li>
+                  <li>|</li>
+                  <li><%=link_to t("menu.advance_search"), home_advance_path %></li>
                 </ul>
               </div>
               <!--Left Menu Panel Ends -->
@@ -152,7 +151,7 @@
       <% end %>
       <%if GOOGLE_ANALYTICS_TRACKING_CODE%>
         <script type="text/javascript">
-       
+
           var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
           document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
         </script>
@@ -185,5 +184,16 @@
       <div class="footer">© BDO Kommunernes Revision, Godkendt revisionsaktieselskab</div>
       <!--Footer Ends -->
     </div>
+
+    <script type="text/javascript" >
+      var tags =<%= Tag.all.map(&:name).to_json %>
+      var tag_auto = jQuery('input#idea_tag_names').tagify();
+      tag_auto.tagify('inputField').autocomplete({
+          source:tags,
+          position: { of: tag_auto.tagify('tagify-container') },
+          close: function(event, ui) { tag_auto.tagify('add'); },
+        });
+    </script>
+
   </body>
 </html>
