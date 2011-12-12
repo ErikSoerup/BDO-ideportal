@@ -273,6 +273,10 @@
                   <%= link_to_remote "Ideer, som #{current_user.name} følger", :update => "ajax-load", :url => {:controller => "profiles", :action => "current_ideas"} %>
                   |
                   <%= link_to_remote "Hovedveje som #{current_user.name} følger", :update => "ajax-load", :url => {:controller => "profiles", :action => "current_currents"}%> 
+                  |
+                  <%= link_to_remote "Kollegaer, som #{current_user.name} følger", :update => "ajax-load", :url => {:controller => "profiles", :action => "my_followers"}%> 
+
+
                 </div>
               </div>
               <div id="ajax-load">

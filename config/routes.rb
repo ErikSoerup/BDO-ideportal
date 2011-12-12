@@ -101,5 +101,6 @@ ActionController::Routing::Routes.draw do |map|
   map.home ':page', :controller => 'home', :action => 'show', :page => /about|contact|rules|privacy-policy|terms-of-use/
   map.profile_ideas '/profiles/current_ideas', :action => 'current_ideas', :controller => 'profiles'
   map.profile_currents '/profiles/current_currents', :action => 'current_currents', :controller => 'profiles'
+  map.profile_followers '/profiles/followers', :action => 'my_followers', :controller => 'profiles'
   # No default routes declared for security & tidiness. (They make all actions in every controller accessible via GET requests.)
 end
