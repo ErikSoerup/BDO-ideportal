@@ -1,2 +1,5 @@
-= f.text_area :tag_names, :class => "input-text big", :id => "auto-text"
+= f.text_area :tag_names, :rows => "1", :col => "10", :class => "input-text big", :id => "auto-text", :onkeyup => "resizeit();"
 -#, :example => t("tag_names")
+:javascript 
+  jQuery('.ui-autocomplete-input').live("click",function(){var w=parseInt(jQuery('.tagify-container').height()); if(jQuery('.tagify-container span').length > 2){jQuery('.tagify-container').width(parseInt(w+10));}});
+  

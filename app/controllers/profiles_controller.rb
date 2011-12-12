@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   
-  before_filter :populate_user
+  before_filter :populate_user, :except => [:current_ideas, :current_currents]
   layout "profile"
   def populate_user
     @body_class = 'profile'
@@ -24,7 +24,7 @@ class ProfilesController < ApplicationController
   end
   
   def current_ideas
-    @ideas = current_user.idea_followers.collect(&:idea)
+    @my_ideas = current_user.idea_followers.collect(&:idea)
     respond_to do |format|
       format.js { render :layout=>false }
     end
@@ -33,7 +33,7 @@ class ProfilesController < ApplicationController
   
   
   def current_currents
-    @current_ideas = current_user.current_followers.collect(&:current)
+    @my_currents = current_user.current_followers.collect(&:current)
     respond_to do |format|
       format.js { render :layout=>false }
     end
