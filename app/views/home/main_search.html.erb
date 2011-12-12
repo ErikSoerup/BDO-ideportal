@@ -19,7 +19,7 @@
           <tr>
            
             <td align="left" valign="middle">
-              <%= select_tag "val1", options_for_select(["alle", "de hotteste ideer", "nye", "under udvikling", "implementeret", "under evaluering","ikke evalueret"]), :id => "select", :class => "select_input"%>
+              <%= select_tag "val1", options_for_select(["alle", ["de hotteste ideer","de hotteste ideer"], ["nye","nye"], ["under udvikling","under udvikling"], ["implementeret","implementeret"], ["under evaluering","under evaluering"],["ikke evalueret","ikke evalueret"]],  params[:val1]), :id => "select", :class => "select_input"%>
             </td>
            
             <td align="left" valign="middle" style="width:116px;">
@@ -27,11 +27,11 @@
             </td>
             
             <td align="left" valign="middle"style="width:116px;">
-              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}),:id => "select", :class => "select_input"%>
+              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, params[:val3].to_i),:id => "select", :class => "select_input"%>
             </td>
            
             <td align="left" valign="middle"style="width:116px;">
-              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]} )%>
+              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, params[:val4].to_s )%>
             </td>
             <td align="left" valign="middle"style="width:116px;"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
           </tr>
