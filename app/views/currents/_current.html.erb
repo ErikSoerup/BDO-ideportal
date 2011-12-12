@@ -2,13 +2,13 @@
   <!--Right Content Starts -->
   <!--Content Head Starts -->
   <div class="p_content_head">
-    <div class="fl">Hovedveje oprettet <strong><%= time_ago_in_words(current.created_at) unless current.nil? %> <%= t('ago') %> siden</strong>  </div>
+    <div class="fl">Oprettet <strong><%= time_ago_in_words(current.created_at) unless current.nil? %> <%= t('ago') %> </strong>  </div>
   </div>
   <!--Content Head Ends -->
   <!--Posted Content Starts -->
   <div class="plainwrap">
     <div>
-    <h3 style="float: left;width:auto;"><%= link_to h(current.title), current_path(current) if current.title%></h3>
+    <h3 style="float: left;width:auto;"><%= link_to h(current.title), current_path(current), :style => "font-size:18px;" if current.title%></h3>
       
       <div class="fr">
         <%  current_ideas = search_ideas(:search => ['current', current.id]) %>
@@ -34,18 +34,19 @@
     <br/>
       <p style="float:left;width:100%;"><%= h current.description unless current.nil?%></p>
       <br />
-      <p style="float:left;width:100%;"><%= link_to t("submit_idea"), params[:action] == "show" ? "#add_idea" : current_path(current, :anchor=>"add_idea") unless current.nil?%></p>
-      <br />
+           
 
     </div>
  
   <!--Posted Content Ends -->
   <!--Bottom Panel Starts -->
   <div class="d_panel_commentator2">
+    <div style="float: left;margin-right: 20px;"><%= link_to t("submit_idea"), params[:action] == "show" ? "#add_idea" : current_path(current, :anchor=>"add_idea"), :class => "bold_link" unless current.nil?%></div>
+
     <div class="fl">
       <% unless current_ideas.empty?%>
         <%= h "#{current_ideas.total_entries}"%>
-        <%= h "ideer #{current_ideas.total_entries == 1 ? '' : 's'}"%>
+        <%= h "ideer #{current_ideas.total_entries == 1 ? '' : ''}"%>
         <%=t("in_current")%>
       <% end %>
 
