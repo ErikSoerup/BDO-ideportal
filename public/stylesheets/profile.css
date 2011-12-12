@@ -1912,3 +1912,10 @@ ul.index li {
 .f_list h3 {
     font-size: 11px;
 }
+.hovedvej_form{
+    -moz-border-radius: 5px 5px 5px 5px;
+    background: none repeat scroll 0 0 #33C5B9;
+    width:656px;
+    margin:0;
+    height: 405px;
+}
