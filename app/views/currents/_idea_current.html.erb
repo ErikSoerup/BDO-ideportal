@@ -22,7 +22,7 @@
           <div class="fr">
             <div class="fl">
               <% unless idea_current.idea_followers.empty? %>
-                <%= link_to "#{idea_current.idea_followers.size} følger ideen", followers_idea_path(idea_current.id), :style => "color:#0f645d; margin-right:8px;"  %>
+                <%= link_to "#{idea_current.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea_current.id), :style => "color:#0f645d; margin-right:8px;"  %>
 
               <% end %>
             </div>

@@ -25,7 +25,7 @@ class ProfilesController < ApplicationController
   
   def my_followers
     @user=current_user
-    @my_followers = current_user.followers
+    @my_followers = current_user.following
     respond_to do |format|
       format.js { render :layout=>false }
     end

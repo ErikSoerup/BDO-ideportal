@@ -33,7 +33,7 @@
         <div style="margin-left:52px;">
         <div class="fl" style="margin-right:34px;">
             <%# unless @idea.idea_followers.empty? %>
-              <%= link_to "#{@idea.idea_followers.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+              <%= link_to "#{@idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
 
             <%# end %>
           </div>
