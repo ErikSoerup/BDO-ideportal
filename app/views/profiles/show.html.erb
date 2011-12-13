@@ -81,7 +81,7 @@
         <div id="tab1" class="tab_content">
           <!--Header Portion Starts -->
           <div class="tab_headline">
-            <div class="fl"><strong>Her er <%= current_user.name %>'s egne ideer</strong></div>
+            <div class="fl"><strong>Her er <%= @user.name %>'s egne ideer</strong></div>
             <!--Pagination Starts -->
             <div class="fr">
               <%= will_paginate @ideas, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
@@ -194,7 +194,7 @@
             <div id="tab2" class="tab_content">
               <!--Header Portion Starts -->
               <div class="tab_headline">
-                <div class="fl"><strong>Her er <%= current_user.name %>'s kommentarer </strong></div>
+                <div class="fl"><strong>Her er <%= @user.name %>'s kommentarer </strong></div>
                 <!--Pagination Starts -->
                 <div class="fr">
                   <ul class="pagination">
@@ -242,7 +242,7 @@
             <div id="tab3" class="tab_content" style="height:538px;">
               <!--Header Portion Starts -->
               <div class="tab_headline">
-                <div class="fl"><strong>Her er <%= current_user.name %>’s stemmer</strong></div>
+                <div class="fl"><strong>Her er <%= @user.name %>’s stemmer</strong></div>
                 <!--Pagination Starts -->
                 <div class="fr">
                   <%= will_paginate @votes %>
@@ -270,18 +270,18 @@
               <div class="tab_headline">
                 
                 <div class="fr" id="headline">
-                  <%= link_to_remote "Ideer, som #{current_user.name} følger", :url => {:controller => "profiles", :action => "current_ideas"}, :html => {:class => ""} %>
+                  <%= link_to_remote "Ideer, som #{@user.name} følger", :url => {:controller => "profiles", :action => "current_ideas"}, :html => {:class => ""} %>
                   |
-                  <%= link_to_remote "Hovedveje som #{current_user.name} følger", :url => {:controller => "profiles", :action => "current_currents"}, :html => {:class=>"bold_link"}%> 
+                  <%= link_to_remote "Hovedveje som #{@user.name} følger", :url => {:controller => "profiles", :action => "current_currents"}, :html => {:class=>"bold_link"}%> 
                   |
-                  <%= link_to_remote "Kollegaer, som #{current_user.name} følger", :url => {:controller => "profiles", :action => "my_followers"}, :html => {:class => "bold_link"}%> 
+                  <%= link_to_remote "Kollegaer, som #{@user.name} følger", :url => {:controller => "profiles", :action => "my_followers"}, :html => {:class => "bold_link"}%> 
 
 
                 </div>
               </div>
               <div id="ajax-load">
                 <div class="tab_headline">
-                  <div class="fl"><strong>Favoritter: Ideer, som <%= current_user.name %> følger</strong></div>
+                  <div class="fl"><strong>Favoritter: Ideer, som <%= @user.name %> følger</strong></div>
                 </div>
 
                 <% @my_ideas.each do |idea| %>
