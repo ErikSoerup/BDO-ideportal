@@ -26,16 +26,18 @@ class ProfilesController < ApplicationController
   def my_followers
     @user=current_user
     @my_followers = current_user.following
-    respond_to do |format|
-      format.js { render :layout=>false }
+     render :update do |page|
+      page["headline"].replace_html render :partial => "follow_link"
+      page["ajax-load"].replace_html render :partial => "my_followers" 
     end
 
   end
   
   def current_ideas
     @my_ideas = current_user.idea_followers.collect(&:idea)
-    respond_to do |format|
-      format.js { render :layout=>false }
+    render :update do |page|
+      page["headline"].replace_html render :partial => "idea_link"
+      page["ajax-load"].replace_html render :partial => "current_ideas" 
     end
 
   end
@@ -43,8 +45,9 @@ class ProfilesController < ApplicationController
   
   def current_currents
     @my_currents = current_user.current_followers.collect(&:current)
-    respond_to do |format|
-      format.js { render :layout=>false }
+    render :update do |page|
+      page["headline"].replace_html render :partial => "current_link"
+      page["ajax-load"].replace_html render :partial => "current_currents" 
     end
   end
   

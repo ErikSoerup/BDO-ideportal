@@ -1,0 +1,5 @@
+<%= link_to_remote "Ideer, som #{current_user.name} følger", :url => {:controller => "profiles", :action => "current_ideas"}, :html => {:class => ""} %>
+|
+<%= link_to_remote "Hovedveje som #{current_user.name} følger", :url => {:controller => "profiles", :action => "current_currents"}, :html => {:class=>"bold_link"}%> 
+|
+<%= link_to_remote "Kollegaer, som #{current_user.name} følger", :url => {:controller => "profiles", :action => "my_followers"}, :html => {:class => "bold_link"}%> 
