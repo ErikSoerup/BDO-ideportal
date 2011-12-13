@@ -1,6 +1,6 @@
 <% if  idea.status == "new"   %>
   <div class="green_wrap" style="height:auto;">
-  <% elsif idea.status == "under review" %>
+  <% elsif idea.status == "under review" || idea.status =="reviewed" %>
     <div class="yellow_wrap" style="height:auto;">
     <% else %>
       <div class="blue_wrap" style="height:auto;">

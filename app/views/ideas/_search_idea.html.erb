@@ -17,13 +17,13 @@ end
 %>
 
 
-<% if  a.include?(search_idea_counter)   %>
-  <div class="green_wrap" style="height: auto;">
-  <% elsif b.include?(search_idea_counter)  %>
-    <div class="yellow_wrap" style="height: auto;">
+<% if  search_idea.status == "new"   %>
+  <div class="green_wrap" style="height:auto;">
+  <% elsif search_idea.status == "under review" || idea.status =="reviewed" %>
+    <div class="yellow_wrap" style="height:auto;">
     <% else %>
-      <div class="blue_wrap" style="height: auto;">
-      <% end %>
+      <div class="blue_wrap" style="height:auto;">
+      <% end %> 
       <div><strong><%= search_idea.current.title unless search_idea.current.nil? %></strong></div>
       <div class="plainwrap">
         <!--stem Stuff Starts -->
