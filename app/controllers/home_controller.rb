@@ -40,9 +40,11 @@ class HomeController < ApplicationController
       end
     elsif params[:val] == "vote"
       if params[:arrow] == "up"
-        @ideas=Idea.paginate(:page => params[:page], :per_page => 10).sort{|x,y| y.vote_count <=> x.vote_count}
+        @ideas=Idea.find(:all).sort{|x,y| y.vote_count <=> x.vote_count}
+        @ideas=@ideas.paginate(:per_page => 10)
       elsif params[:arrow] == "down"
-        @ideas=Idea.paginate(:page => params[:page], :per_page => 10).sort{|x,y| x.vote_count <=> y.vote_count}
+        @ideas=Idea.find(:all).sort{|x,y| x.vote_count <=> y.vote_count}
+        @ideas=@ideas.paginate(:per_page => 10)
       end
     else
       @ideas=Idea.paginate(:page => params[:page], :per_page => 10)
