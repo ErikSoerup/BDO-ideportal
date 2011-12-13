@@ -269,12 +269,12 @@
             <div id="tab4" class="tab_content" style="height:auto;">
               <div class="tab_headline">
                 
-                <div class="fr" id="headline">
-                  <%= link_to_remote "Ideer, som #{@user.name} følger", :url => {:controller => "profiles", :action => "current_ideas", :id => @user.id}, :html => {:class => ""} %>
+                <div class="fl" id="headline">
+                  <%= link_to_remote "Ideer, som #{@user.name} følger", :url => {:controller => "profiles", :action => "current_ideas", :id => @user.id}, :html => {:class => "", :style => "font-size:13px;"} %>
                   |
-                  <%= link_to_remote "Hovedveje som #{@user.name} følger", :url => {:controller => "profiles", :action => "current_currents", :id => @user.id}, :html => {:class=>"bold_link"}%> 
+                  <%= link_to_remote "Hovedveje som #{@user.name} følger", :url => {:controller => "profiles", :action => "current_currents", :id => @user.id}, :html => {:class=>"bold_link", :style => "font-size:13px;"}%> 
                   |
-                  <%= link_to_remote "Kollegaer, som #{@user.name} følger", :url => {:controller => "profiles", :action => "my_followers", :id => @user.id}, :html => {:class => "bold_link"}%> 
+                  <%= link_to_remote "Kollegaer, som #{@user.name} følger", :url => {:controller => "profiles", :action => "my_followers", :id => @user.id}, :html => {:class => "bold_link", :style => "font-size:13px;"}%> 
 
 
                 </div>
