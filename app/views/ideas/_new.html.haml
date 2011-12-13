@@ -21,7 +21,7 @@
     = render :partial => 'ideas/tag_editor', :locals => { :f => f }
     -#= f.text_field :tag_names, :onmouseover => "alert('Emneord: ”Faglig, forretningsmæssig, lovmæssig, politisk eller anden vinkel. Vælg eller skriv gerne flere emneord”');", :onmouseout => "jQuery(this).val('sdsd');"  
     -unless defined?(current) && current.id
-      = f.collection_select :current_id, Current.all, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "margin-left: 36px;"
+      = f.collection_select :current_id, Current.all, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "margin-left: 9px;"
     .same
       = submit_tag 'Share My Idea', :class => "input-submit big", :style => "float:left;margin:22px 0px 0px 30px;" 
   .form-group.inline
