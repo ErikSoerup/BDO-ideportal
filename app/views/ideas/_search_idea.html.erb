@@ -19,7 +19,7 @@ end
 
 <% if  search_idea.status == "new"   %>
   <div class="green_wrap" style="height:auto;">
-  <% elsif search_idea.status == "under review" || idea.status =="reviewed" %>
+  <% elsif search_idea.status == "under review" || search_idea.status =="reviewed" %>
     <div class="yellow_wrap" style="height:auto;">
     <% else %>
       <div class="blue_wrap" style="height:auto;">

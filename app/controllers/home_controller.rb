@@ -103,18 +103,20 @@ class HomeController < ApplicationController
     if params[:val1] == "alle"
       @ideas=Idea.all
 
-    elsif params[:val1] == "de hotteste ideer"
-      @ideas= Idea.populate_comment_counts(search_ideas(params))
+#    elsif params[:val1] == "de hotteste ideer"
+#      @ideas= Idea.populate_comment_counts(search_ideas(params))
     elsif params[:val1] == "nye"
-      @ideas= Idea.populate_comment_counts(search_ideas(params))
-    elsif params[:val1] == "under udvikling"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
+      @ideas= Idea.find(:all, :conditions => ['status=?', 'new'])
+#    elsif params[:val1] == "under udvikling"
+#      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
     elsif params[:val1] == "implementeret"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'reviewed'])
-    elsif params[:val1] == "under evaluering"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'])
-    elsif params[:val1] == "ikke evalueret"
       @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'])
+    elsif params[:val1] == "under evaluering"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
+    elsif params[:val1] == "ikke evalueret"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'reviewed'])
+    elsif params[:val1] == "comming"
+      @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'])
     end
              
     @m_ideas = []
@@ -143,11 +145,11 @@ class HomeController < ApplicationController
     
     @d_ideas=[]
     
-    if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil?
+    if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil? 
       
       @m_ideas.each do |idea|
         unless idea.inventor.nil?
-          if idea.inventor.department == Department.find_by_id(params[:val3])
+          if idea.inventor.department == Department.find_by_id(params[:val3]) || idea.inventor.department.name == "default"
             @d_ideas << idea
           end
         end
