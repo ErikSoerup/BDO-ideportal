@@ -1,12 +1,13 @@
-Hi <%= @user.name %>,
+<html>
+  <head></head>
+  <body>
 
-List of the ideas of that current
-<ul>
-  <% unless @text.nil? %>
-    <% @text.each do |comment| %>
-      <li><%= comment %></li>
-    <% end %>
-  <% end %>
+    <p>Kære <%= @user.name %></p><br/><br/>
 
+    <p>Du følger nu ideen: <%= link_to @idea.title, idea_url(@idea) %></p><br/>
 
-</ul>
+    <p>Ønsker du ikke længere at få besked, når der
+      kommenteres på ideen, skal du blot klikke på "stop følg"-linket på ideen.
+    </p>
+  </body>
+</html>

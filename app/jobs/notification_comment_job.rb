@@ -7,7 +7,7 @@ class NotificationCommentJob
      
     @idea = idea
     @idea= Idea.find(@idea.id)
-    UserMailer.deliver_notification_followers_comments(@user, @idea.comments)
+    UserMailer.deliver_notification_followers_comments(@user, @idea)
   end
 
   def perform

@@ -19,22 +19,13 @@ class UserMailer < ActionMailer::Base
   end
 
   
-  def notification_followers_comments(user, comments)
+  def notification_followers_comments(user, idea)
     set_up_email(user)
     
-    @subject = "All comments of your follower ideas"
+    @subject = "Du følger nu ideen: \"#{strip_funkies(idea.title)}\""
     @body[:user] = user
-    text=[]
-    unless comments.empty?
-    comments.each do |c|
-      text << c.text
-    end
-    end
-    unless comments.empty?
-     
-      @body[:text] = text
-     
-    end
+    @body[:idea] = idea
+    
   end
   
   def password_change_notification(user)
@@ -55,7 +46,7 @@ class UserMailer < ActionMailer::Base
   def notification_followers_ideas(user, ideas)
     set_up_email(user)
     @body[:ideas] = ideas
-    @subject ="All ideas of the current which you follow"
+    @subject ="Du følger nu ideen"
     title=[]
     description=[]
     unless ideas.empty?

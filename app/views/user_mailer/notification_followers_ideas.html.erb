@@ -1,15 +1,27 @@
-Hi <%= @user.name %>,
+<html>
+  <head></head>
+  <body>
+    
+    <p>Kære <%= @user.name %>,</p><br/>
+    <p>
+    Du følger nu ideen: 
+    <ul>
+      <% unless @title.nil? || @desc.nil? %>
+        <% @title.each do |title| %>
+          <li>Title:-<%=   title %></li>
+        <% end %>
+        <% @desc.each do |desc| %>
+          <li>Description:-<%= desc %></li>
+        <% end %>
+      <% end %>
+    </ul>
+    
+    </p><br/>
+    
+    <p>Ønsker du ikke længere at få besked, når der
+kommenteres på ideen, skal du blot klikke på "stop følg"-linket på ideen.</p>
 
-List of the comments of that idea
-<ul>
-  <% unless @title.nil? || @desc.nil? %>
-    <% @title.each do |title| %>
-      <li>Title:-<%= title %></li>
-    <% end %>
-    <% @desc.each do |desc| %>
-      <li>Description:-<%= desc %></li>
-    <% end %>
-  <% end %>
-
-  
-</ul>
+    
+   
+  </body>
+</html>
