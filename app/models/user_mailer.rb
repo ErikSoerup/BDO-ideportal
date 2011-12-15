@@ -83,7 +83,7 @@ class UserMailer < ActionMailer::Base
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
     @body[:unsubscribe_url] = unsubscribe_current_url(idea.current)
-    @subject += "#{user.name} har tilføjet en ny ide til \"#{strip_funkies(idea.current.title)}\""
+    @subject += "#{idea.inventor.name} har tilføjet en ny ide til \"#{strip_funkies(idea.current.title)}\""
   end
 
   def idea_posted_to_followers(user,idea)
