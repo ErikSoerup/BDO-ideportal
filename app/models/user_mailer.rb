@@ -13,7 +13,8 @@ class UserMailer < ActionMailer::Base
 
   def password_reset(user)
     set_up_email(user)
-    @subject += 'Password reset'
+    @subject += 'Nulstilling af kodeord til Ideportalen'
+    @body[:user] = user
     @body[:url] = password_reset_url(:activation_code => user.activation_code)
   end
 
@@ -38,7 +39,7 @@ class UserMailer < ActionMailer::Base
   
   def password_change_notification(user)
     set_up_email(user)
-    @subject += 'Your password was changed'
+    @subject += 'Dit password til Ideportalen er ændret.'
     @body[:url] = home_url('contact')
   end
 

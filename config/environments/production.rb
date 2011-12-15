@@ -21,5 +21,5 @@ config.log_level = :info
 
 # Disable delivery errors, bad email addresses will be ignored
 config.action_mailer.raise_delivery_errors = true
-
+config.action_mailer.default_content_type = "text/html"
 config.action_mailer.default_url_options = { :host => PRODUCTION_HOST }

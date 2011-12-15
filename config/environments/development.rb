@@ -22,4 +22,5 @@ config.action_mailer.raise_delivery_errors = true
 # config.action_mailer.smtp_settings = {
 #   :port => 1025
 # }
+config.action_mailer.default_content_type = "text/html"
 config.action_mailer.default_url_options = { :host => 'localhost', :port => 3000 }
