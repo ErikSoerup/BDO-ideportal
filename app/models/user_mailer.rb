@@ -74,7 +74,7 @@ class UserMailer < ActionMailer::Base
     @body[:url] = idea_url(comment.idea)
     @body[:unsubscribe_url] = unsubscribe_idea_url(comment.idea)
     @owner = (user == comment.idea.inventor)
-    @subject += "#{@owner.name} har kommenteret din idé \"#{strip_funkies(comment.idea.title)}\""
+    @subject = "#{@owner.name} har kommenteret din idé \"#{strip_funkies(comment.idea.title)}\""
   end
 
   def idea_in_current_notification(user, idea)
