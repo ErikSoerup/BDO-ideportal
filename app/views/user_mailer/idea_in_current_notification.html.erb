@@ -1,10 +1,16 @@
-<%= h @idea.inventor.name %> posted a new idea in a current you are watching:
-------------------------------------------------------------------------------
+<html>
+  <head></head>
+  <body>
+    <p>Kære <%= @user.name %></p><br/><br/> 
+  
+    <p> <%= @idea.inventor.name %> har tilføjet denne ide <%= link_to @idea.title, idea_url(@idea) %> til hovedvejen: <%= link_to @idea.current.name, current_url(@idea.current) %>.</p><br/> 
+    <p>Klik på ideen for at se den og
+kommentere på den. 
+    </p><br/>
+    <p>Ønsker du ikke længere at få besked når der kommer nye
+ideer til hovedvejen, skal du blot klikke på "stop følg"-linket på hovedvejen.
+    </p>
+    
+  </body>
+</html>
 
-<%= h @idea.title %>
-
-<%= h @idea.description %>
-
-<%= @url %>
-
-To stop receiving these notifications: <%= @unsubscribe_url %>

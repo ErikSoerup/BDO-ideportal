@@ -78,18 +78,20 @@ class UserMailer < ActionMailer::Base
   def comment_notification(user, comment)
     set_up_email(user)
     @body[:comment] = comment
+    @body[:user] = user
     @body[:url] = idea_url(comment.idea)
     @body[:unsubscribe_url] = unsubscribe_idea_url(comment.idea)
     @owner = (user == comment.idea.inventor)
-    @subject += "New comment on idea \"#{strip_funkies(comment.idea.title)}\""
+    @subject += "#{@owner.name} har kommenteret din idé \"#{strip_funkies(comment.idea.title)}\""
   end
 
   def idea_in_current_notification(user, idea)
     set_up_email(user)
+    @body[:user] = user
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
     @body[:unsubscribe_url] = unsubscribe_current_url(idea.current)
-    @subject += "New idea in current \"#{strip_funkies(idea.current.title)}\""
+    @subject += "#{user.name} har tilføjet en ny ide til \"#{strip_funkies(idea.current.title)}\""
   end
 
   def idea_posted_to_followers(user,idea)
