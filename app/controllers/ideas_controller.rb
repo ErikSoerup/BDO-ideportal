@@ -45,8 +45,11 @@ class IdeasController < ApplicationController
       if @idea.valid? && @idea.inventor
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)
-        if @idea.inventor.present?
-          Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor, @idea)
+        if @idea.current && !@idea.current.current_followers.empty?
+          @idea.current.current_followers.each do |follow|
+            Delayed::Job.enqueue IdeaNotificationJob.new(User.find(follow.user_id), @idea)
+          end
+          #Delayed::Job.enqueue IdeaPostedFollowerJob.new(@idea.inventor, @idea)
         end
 
         if TWITTER_ENABLED && @idea.inventor.linked_to_twitter? && @idea.inventor.tweet_ideas?
@@ -147,7 +150,7 @@ class IdeasController < ApplicationController
       flash[:notice] = "You have successfully followed the idea"
       redirect_to idea_path(@idea)
       Delayed::Job.enqueue NotificationCommentJob.new(current_user, @idea)
-#      UserMailr.deliver_notification_comments()
+      #      UserMailr.deliver_notification_comments()
     rescue
       flash[:notice] = "You have successfully followed the idea"
       redirect_to idea_path(@idea)
@@ -192,7 +195,7 @@ class IdeasController < ApplicationController
     else
       @users = @users
     end
-     @users=@users.paginate :page => page unless @users.nil?
+    @users=@users.paginate :page => page unless @users.nil?
     
   end
   def unfollow

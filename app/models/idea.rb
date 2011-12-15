@@ -210,6 +210,7 @@ class Idea < ActiveRecord::Base
         @contribution_recorded = true  # prevents double-recording when callbacks cause a reentrant save
       end
       notify_subscribers!
+      
     end
 
     def visible?
@@ -245,5 +246,7 @@ class Idea < ActiveRecord::Base
         self.save!
       end
     end
+    
+    
 
   end
