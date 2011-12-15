@@ -7,7 +7,7 @@ class NotificationCurrentJob
      
     @current = current
     @current= Current.find(@current.id)
-    UserMailer.deliver_notification_followers_ideas(@user, @current.ideas)
+    UserMailer.deliver_notification_followers_ideas(@user, @current)
   end
 
   def perform

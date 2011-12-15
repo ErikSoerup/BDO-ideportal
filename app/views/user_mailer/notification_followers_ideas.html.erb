@@ -1,27 +1,22 @@
 <html>
   <head></head>
   <body>
-    
+
     <p>Kære <%= @user.name %>,</p><br/>
     <p>
-    Du følger nu ideen: 
-    <ul>
-      <% unless @title.nil? || @desc.nil? %>
-        <% @title.each do |title| %>
-          <li>Title:-<%=   title %></li>
-        <% end %>
-        <% @desc.each do |desc| %>
-          <li>Description:-<%= desc %></li>
-        <% end %>
-      <% end %>
-    </ul>
-    
+      Du har valgt at følge hovedvejen: 
+      <%= link_to @current.title, current_url(@current) %>
     </p><br/>
-    
-    <p>Ønsker du ikke længere at få besked, når der
-kommenteres på ideen, skal du blot klikke på "stop følg"-linket på ideen.</p>
+    <p>
+      Du får fremover besked
+      når der tilføjes nye ideer til hovedvejen.
+    </p>
+    <br/>
+    <p>
+      Ønsker du ikke længere at få
+      besked, skal du blot klikke på "stop følg"-linket på hovedvejen.
+    </p>
 
-    
-   
+
   </body>
 </html>

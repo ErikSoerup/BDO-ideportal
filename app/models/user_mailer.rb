@@ -43,27 +43,28 @@ class UserMailer < ActionMailer::Base
     @body[:url] = home_url('contact')
   end
 
-  def notification_followers_ideas(user, ideas)
+  def notification_followers_ideas(user, current)
     set_up_email(user)
-    @body[:ideas] = ideas
-    @subject ="Du følger nu ideen"
-    title=[]
-    description=[]
-    unless ideas.empty?
-      ideas.each do |i|
-        title << i.title
-      end
-    
-      ideas.each do |ii|
-        description << ii.description
-      end
-    end
-    
-    unless ideas.empty?
+#    @body[:ideas] = ideas
+    @subject ="Du følger nu hovedvejen: #{current.title}"
+#    title=[]
+#    description=[]
+#    unless ideas.empty?
+#      ideas.each do |i|
+#        title << i.title
+#      end
+#    
+#      ideas.each do |ii|
+#        description << ii.description
+#      end
+#    end
+#    
+#    unless ideas.empty?
+     @body[:current] = current
      
-      @body[:title] = title
-      @body[:desc] = description
-    end
+#      @body[:title] = title
+#      @body[:desc] = description
+#    end
   end
   
   def comment_notification(user, comment)
