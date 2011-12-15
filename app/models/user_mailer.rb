@@ -40,13 +40,15 @@ class UserMailer < ActionMailer::Base
   def password_change_notification(user)
     set_up_email(user)
     @subject += 'Dit password til Ideportalen er ændret.'
+    @body[:user] = user
     @body[:url] = home_url('contact')
   end
 
   def email_change_notification(user, old_email)
     set_up_email(user)
     @recipients  = old_email
-    @subject += 'Your email was changed'
+    @subject += 'Din e-mail adresse er blevet ændret'
+    @body[:user] = user
     @body[:url] = home_url('contact')
   end
 

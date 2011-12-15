@@ -1,5 +1,10 @@
-Your <%= SHORT_SITE_NAME %> email has been changed to <%= @user.email %>.
+<html>
+  <head></head>
+  <body>
+    <p>Kære <%= @user.name %></p><br/><br/> 
 
-If you did not initiate this change, please notify us immediately:
-
-  <%= @url %>
+    <p>Din e-mail til <%= link_to "Ideportalen", "#{PRODUCTION_HOST}"%> er blevet ændret. <br/><br/>
+    Hvis det er en
+    fejl, så send en mail til <%= @user.email %></p>
+  </body>
+</html>
