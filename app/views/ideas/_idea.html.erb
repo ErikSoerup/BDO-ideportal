@@ -7,15 +7,15 @@
       <% end %>  
       <!--stem Stuff Starts -->
       <div class="stem" id="vote-<%= idea.id %>">
-       
-          <%= h "#{idea.vote_count}"%>
+
+        <%= h "#{idea.vote_count}"%>
         <% unless has_voted?(idea)%>
           <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
         <% end %>
       </div>
 
 
-      
+
       <!--stem Stuff Ends -->
       <!--Right Content Starts -->
       <div class="p_content">
@@ -26,7 +26,7 @@
             <div class="fl">
               <% unless idea.idea_followers.empty? %>
                 <%= link_to "#{idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
-                
+
               <% end %>
             </div>
             <div class="fr">
@@ -46,9 +46,15 @@
         <div class="plainwrap">
           <h3><%= link_to h(idea.title), idea_path(idea) unless idea.title.nil?%></h3>
           <p><%= h idea.description_excerpt%> </p>
+          <% if idea.document.url != "/documents/original/missing.png" %>
+          <div>
+            <p> <%=link_to t("download"), idea.document.url, :class => "bold_link"%>
+            </p> 
+          </div>
+          <% end %>
+
         </div>
         <!--Posted Content Ends -->
-
         <div class="d_panel_commentator_big" style="height:auto;">
           <div class="fl"><img src="/images/comment-icon.gif" alt="" /><%= link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" }", idea_path(idea, :anchor => 'comments', :title_in_url => false)%></div>
           <div class="tag_container">
@@ -66,6 +72,8 @@
 
             </div>
           </div>
+
+
         </div>
 
       </div>
