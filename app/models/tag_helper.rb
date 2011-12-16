@@ -10,7 +10,7 @@ module TagHelper
       def self.from_string(tag_names)
         tags = []
         tag_names.strip.split(/,/).each do |tag_name|
-          tags << find_or_create_by_name(tag_name) if !tag_name.blank?
+          tags << find_or_create_by_name(tag_name) if !tag_name.blank? && tag_name != "Emneord"
         end
         tags
       end
