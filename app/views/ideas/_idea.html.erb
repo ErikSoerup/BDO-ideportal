@@ -48,7 +48,7 @@
           <p><%= h idea.description_excerpt%> </p>
           <% if idea.document.url != "/documents/original/missing.png" %>
           <div>
-            <p> <%=link_to t("download"), idea.document.url, :class => "bold_link"%>
+            <p> <%=link_to t("download"), idea.document.url, :class => "bold_link", :target => "_blank"%>
             </p> 
           </div>
           <% end %>

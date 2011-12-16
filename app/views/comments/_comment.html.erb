@@ -12,7 +12,7 @@
                   </div>
           <div>
             <%if comment.document?%>
-              <%=link_to t("download"), comment.document.url%>
+              <%=link_to t("download"), comment.document.url, :class => "bold_link", :target => "_blank"%>
             <% end %>  
           </div>
         </div>

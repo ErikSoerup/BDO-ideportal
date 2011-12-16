@@ -213,7 +213,7 @@
                     <div class="commentator_wrap_green"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
                     <div class="plainwrap">
                       <div class="fl"><%= image_tag profile_picture(comment.author, :small)%></div>
-                      <div class="download_link"><%= link_to t("download"), comment.document.url, :class => "bold_link" %></div>
+                      <div class="download_link"><%= link_to t("download"), comment.document.url, :class => "bold_link", :target => "_blank" %></div>
                     </div>
                   </div>
                   <!--Commentator Ends -->
