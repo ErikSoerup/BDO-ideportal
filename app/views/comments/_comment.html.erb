@@ -10,9 +10,9 @@
           <div class="fl">
                     <%= image_tag profile_picture(comment.author)%>
                   </div>
-          <div class="download">
+          <div>
             <%if comment.document?%>
-              <%=link_to "Download", comment.document.url%>
+              <%=link_to t("download"), comment.document.url%>
             <% end %>  
           </div>
         </div>

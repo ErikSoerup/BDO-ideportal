@@ -62,8 +62,8 @@
 
                     <%= image_tag profile_picture(comment.author, :small)%>
                   </div>
-                  <div class="download">
-                    <%=link_to image_tag("/images/download.png"), comment.document.url%>
+                  <div class="dowmnload_link">
+                    <%=link_to t("download"), comment.document.url, :class => "bold_link"%>
 
                   </div>
                 </div>

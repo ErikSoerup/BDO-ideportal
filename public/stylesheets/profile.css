@@ -1933,3 +1933,8 @@ ul.index li {
 .set_home select{
     margin-left:8px;
 }
+.dowmnload_link{
+    float: left;
+    width:auto;
+    margin-left: 5px;
+}
