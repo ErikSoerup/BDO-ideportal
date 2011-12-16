@@ -149,7 +149,7 @@ class HomeController < ApplicationController
     
     @d_ideas=[]
     
-    if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil? 
+    if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil? || params[:val3] != "1" 
       
       @m_ideas.each do |idea|
         unless idea.inventor.nil?
