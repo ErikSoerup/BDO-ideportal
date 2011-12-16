@@ -122,19 +122,20 @@ class HomeController < ApplicationController
     elsif params[:val1] == "comming"
       @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'])
     end
-             
+     @c_ideas=[]        
     @m_ideas = []
+    @d_ideas=[]
     if params[:val2] == "min egne"
       
       @ideas.each do |idea|
         unless idea.inventor.nil?
           if idea.inventor == current_user
             
-            @m_ideas << idea   
+            @c_ideas << idea  
           end  
         end
       end
-    elsif params[:val] == "top"
+    elsif params[:val2] == "top"
       
       @ideas.each do |idea|
         if User.find_top_contributors.include?(idea.inventor)
@@ -147,7 +148,7 @@ class HomeController < ApplicationController
       end
     end
     
-    @d_ideas=[]
+    
     
     if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil? || params[:val3] != "1" 
       
@@ -163,8 +164,8 @@ class HomeController < ApplicationController
         @d_ideas << idea
       end
     end
-    @c_ideas=[]
-    if Current.all.collect(&:title).include?(params[:val4])
+    
+    if Current.all.collect(&:title).include?(params[:val4]) && params[:val4] != "current"
       @current=Current.find_by_title(params[:val4])
       @d_ideas.each do |idea|
         if @current.ideas.include?(idea)
