@@ -13,7 +13,7 @@
     = f.label :description, "Description"
     = f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40"
     .inp
-      =f.file_field :document , :size=>80, :style => "z-index:9999;width:390px;"
+      =f.file_field :document , :size=>80, :style => "z-index:9999;width:390px;position:relative;top:16px;"
       = image_tag "/images/idea_file_bg.png", :style => "position:relative;bottom:12px;margin-left:10px;"
       
 
