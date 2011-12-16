@@ -19,7 +19,7 @@
           <tr>
            
             <td align="left" valign="middle">
-                <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]]), :id => "select", :class => "select_input"%>
+                <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]], params[:val1]), :id => "select", :class => "select_input"%>
 
              </td>
            
