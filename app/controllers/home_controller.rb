@@ -148,7 +148,7 @@ class HomeController < ApplicationController
       
       @m_ideas.each do |idea|
         unless idea.inventor.nil?
-          if idea.inventor.department == Department.find_by_id(params[:val3]) || idea.inventor.department.name == "default"
+          if idea.inventor.department == Department.find_by_id(params[:val3]) 
             @d_ideas << idea
           end
         end
