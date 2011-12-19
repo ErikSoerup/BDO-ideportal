@@ -13,7 +13,7 @@
     = f.label :description, "Description"
     = f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40"
     .input_file
-      = text_field_tag("dddd","", :size=>30 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
+      = text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
       = f.file_field :document , :size=>50
      
       
