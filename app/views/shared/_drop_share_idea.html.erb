@@ -17,75 +17,40 @@
   <div id ="share" class="section">
     <div class="body">
       <div id="submit-idea">
-        <table>
-          <tbody>
-            <% form_for :idea, :url => ideas_path,  :html => { :multipart=>true, :class => 'main' } do |f|%>
-              <tr id="idea-title-group" class="form-group inline">
-                <td><label for = "idea-title">
-                    <strong><%=t("idea")%></strong>
-                    <small><%=t("idea_in_short")%></small></label>
-                </td>
-                <td>
-                  <%= f.text_field :title, :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
-                </td>
-              </tr>
-              <tr id="idea-description-group" class="form-group inline">
-                <td>
-                  <label for = "idea-description">
-                  <strong> <%=t("description")%></strong>
-                  <small><%=t('breif_explaination')%></small>
-                  </label>
-                </td>
-                <td>
-                  <%= f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"%>
-                </td>
-              <tr>
-                <td>
-                  
-                  <label for = "idea-description" style="display:none;">
-                  <strong> <%=t("description")%></strong>
-                  <small><%=t('breif_explaination')%></small>
-                  </label>
-                </td>
-                <td>
-                  <div class="input_file" style="margin-left:0px;">
-                    <%#= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
-                    <%=  f.file_field :document , :size=>50, :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);
-    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';"%>
-                  </div>
-                </td>
-              </tr>   
-              <tr id="idea-tags-group" class="form-group inline" style="width: 738px;">
-                <td>
 
-                  <label for = "idea-tags">
-                    <strong><%=t('menu.tags')%></strong>
-                    <small> <%=t("seperate_with_coma")%></small>
-                  </label>
-                </td>
-                <td>
-                  <%= render :partial => 'ideas/tag_editor', :locals => { :f => f }%>
-                
-                  <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "width:196px; border: medium none;
-    color: #888888;
-    float: left;
-    font: 12px Helvetica;
-    height: 30px;
-    padding: 5px;
-    width: 225px;margin-left:10px;"%>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <div class="form-group inline">
-                    <%= submit_tag 'Share My Idea', :class => "input-submit"%>
-                  </div>  
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <% form_for :idea, :url => ideas_path,  :html => { :multipart=>true, :class => 'main' } do |f|%>
+          <div id="idea-title-group" class="form-group inline">
+            <label for = "idea-title">
+              <strong><%=t("idea")%></strong>
+              <small><%=t("idea_in_short")%></small></label>
+            <%= f.text_field :title, :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
+          </div>
+          <div id="idea-description-group" class="form-group inline">
+            <label for = "idea-description">
+              <strong> <%=t("description")%></strong>
+              <small><%=t('breif_explaination')%></small>
+            </label>    
+            <%= f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"%>
+
+            <div class="input_file">
+              <%= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
+              <%=f.file_field :document , :size=>80%>
+            </div>
+          </div> 
+          <div id="idea-tags-group" class="form-group inline" style="width: 738px;">
+            <label for = "idea-tags">
+              <strong><%=t('menu.tags')%></strong>
+              <small> <%=t("seperate_with_coma")%></small>
+            </label>
+            <%= render :partial => 'ideas/tag_editor', :locals => { :f => f }%>
+            <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "width:196px;"%>
+          </div>
+
+          <div class="form-group inline">
+            <%= submit_tag 'Share My Idea', :class => "input-submit"%>
+          </div>     
+
+        <% end %>
       </div>
 
     </div>
