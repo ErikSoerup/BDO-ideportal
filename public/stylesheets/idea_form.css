@@ -816,6 +816,7 @@ body.life-cycles .nav li a.life-cycles {
     padding: 4px 0 0 5px;
 }
 .input_file {
+    *background: url(../images/idea_file_bg.png)  no-repeat scroll -46px 0 transparent;
     float: left;
     background: url(../images/idea_file_bg.png)  no-repeat;
     height: 27px;
