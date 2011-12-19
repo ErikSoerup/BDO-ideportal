@@ -131,17 +131,11 @@ class HomeController < ApplicationController
         unless idea.inventor.nil?
           if idea.inventor == current_user
             
-            @c_ideas << idea  
+            @m_ideas << idea  
           end  
         end
       end
-    elsif params[:val2] == "top"
-      
-      @ideas.each do |idea|
-        if User.find_top_contributors.include?(idea.inventor)
-          @m_ideas << idea
-        end
-      end
+
     else
       @ideas.each do |idea|
         @m_ideas << idea
@@ -150,7 +144,7 @@ class HomeController < ApplicationController
     
     
     
-    if  params[:val3] != "select" || !Department.find_by_id(params[:val3]).nil? || params[:val3] != "1" 
+    if  params[:val3] != "1" 
       
       @m_ideas.each do |idea|
         unless idea.inventor.nil?
@@ -165,7 +159,7 @@ class HomeController < ApplicationController
       end
     end
     
-    if Current.all.collect(&:title).include?(params[:val4]) && params[:val4] != "current"
+    if Current.all.collect(&:title).include?(params[:val4]) || params[:val4] != "current"
       @current=Current.find_by_title(params[:val4])
       @d_ideas.each do |idea|
         if @current.ideas.include?(idea)
