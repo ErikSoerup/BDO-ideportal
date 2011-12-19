@@ -799,7 +799,9 @@ body.life-cycles .nav li a.life-cycles {
     padding: 5px; }
 
 #idea-description-group input[type="file"]#idea_document {
-    opacity: 0;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     width: 495px;
 }
 #idea-description-group input[type="text"] {
@@ -810,7 +812,7 @@ body.life-cycles .nav li a.life-cycles {
 }
 .input_file {
     float: left;
-    background: url(../images/idea_file_bg.png) no-repeat;
+    background: url(../images/idea_file_bg.png)  no-repeat;
     height: 27px;
     padding-top: 3px;
     margin-left: 8px;

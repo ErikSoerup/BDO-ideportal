@@ -1223,7 +1223,7 @@ input.blur, input.example, textarea.blur, textarea.example {
 
 .input_file {
     float: left;
-    background: url(../images/idea_file_bg.jpg) no-repeat;
+    background: url(../images/idea_file_bg.jpg) top center no-repeat fixed;
     height: 27px;
     padding-top: 3px;
     margin-left: 8px;
