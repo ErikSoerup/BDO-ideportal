@@ -1,0 +1,46 @@
+<%
+a=[]
+for i in 0..100 do
+  if i % 3 == 0
+    a << i
+
+  end
+end
+c=1
+b=[]
+
+while c<100
+  b << c
+  c=c+3
+end
+
+%>
+
+<% if  idea.status == "new"   %>
+  <div class="id_green">
+  <% elsif idea.status == "under review" %>
+    <div class="id_yellow">
+    <% else %>
+      <div class="id_blue">
+      <% end %>    
+      <div id="stem-<%= idea.id %>"class="id_stem"><p class="num"><%= h "#{idea.vote_count}"%></p>
+
+      <% if has_voted?(idea)%>
+         
+          <p style="display: none;">&nbsp;</p>
+        <% else%>
+          <p> <%= link_to_remote "#{t('vote')}!", :update => "stem-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html => {:class => "stem_button"}%></p>
+        <% end %>
+
+
+
+      </div>
+      <!--Content Starts -->
+      <div class="id_content">
+        <div class="p_content_head">Sendt <%= time_ago_in_words(idea.created_at)%> <strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
+        <div class="plainwrap"><h3><%= link_to h(idea.title), idea_path(idea), :rel => 'bookmark'%></h3>
+        </div>
+      </div>
+      <!--Content Ends -->
+    </div>
+    <div class="b_divider"></div>

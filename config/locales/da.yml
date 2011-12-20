@@ -1,0 +1,367 @@
+# Danish translation file for standard Ruby on Rails internationalization
+# by Lars Hoeg (larshoeg@gmail.com, http://www.lenio.dk/)
+# redigeret af sprogekvilibrist og grammatisk facist Rasmus Malver (rasmus@malver.dk, http://malver.dk)
+
+# Danish translation file for standard Ruby on Rails internationalization
+# by Lars Hoeg (larshoeg@gmail.com, http://www.lenio.dk/)
+
+da:
+  no_comments: Ingen kommentarer endnu. Skrive en!
+  about_this_idea: Om denne idé
+  profile:
+    department_name: Afdelings navn
+  rule:
+   heading1: Ingen ideer er dårlige!
+   para1: Vi vil altid gerne høre din ide. Fortæl os derfor om den også selv om du ikke har gennemtænkt alle detaljer. Vær ikke bekymret for, om det er lovligt, om det er uden for vores normale kompetencefelt, om det er meget dyrt osv. Vi har også brug for de vilde ideer til at udfordre vanetænkningen!Vi vil altid gerne høre d
+   heading2: 180 hjerner er bedre end én
+   para2: Hent værdifuld inspiration fra andre og få inspiration eller input til kvalificering eller realisering af din ide. Andre har måske tænkt noget i samme retning, nogle måske fra en anden vinkel, eller også kan de bruge elementer fra din ide.
+   heading3: Det er sjovere, når resultatet er synligt!
+   para3: Ved at dele din ide med kollegaerne opdager du måske, at andre har samme interesser som dig, at de har en viden, du kan gøre brug af osv. Ideer, der ender med at blive realiseret, får stjernestatus og det bliver synligt, hvem der har bidraget til at udvikle ideen
+   heading4:  Det er helt uforpligtende at bidrage
+   para4: Du bliver ikke stillet til regnskab og du kan sagtens foreslå en ide uden at være forpligtet til at føre den ud i livet.
+   heading5: Der er ingen garantier
+   para5: Du kan ikke regne med, at din ide bliver gennemført, selv om der er stor opbakning til den. Realiseringen af ideen afhænger af flere forhold, herunder hvordan den passer ind i den overordnede strategi for BDO Public.
+   heading6: Vær konstruktiv
+   para6: Ideportalens fokus er at fremme ideer, der understøtter vækststrategien. Det er ikke en brokkasse.
+   
+  menu:
+    following: følgende
+    about: Om ideportalen
+    sign_up: Opret
+    sign_in: Log på
+    search: Søg
+    settings: Indstillinger
+    sign_out: Log ud
+    share: Del!
+    hot: Hotte ideer
+    recent: Seneste
+    currents: Hovedveje
+    nearby: Din afdeling
+    comments: Kommentarer
+    tags: Emneord
+    profile: profil
+    my_profile: Min profil
+    persons: Personer
+    departments: Afdelinger
+    idea_portal: Ideportalen
+    contact_us: Kontakt
+    rule : Spilleregler
+    about_ideax: Om innovation i BDO Public
+    category: Kategori
+    advance_search: Avanceret
+    ideas_following: Ideerne Jeg følger
+    currents_following: De strømme Jeg følger
+    users_following: Brugerne Jeg følger
+    all_users: alle brugere
+    user_more: Flere
+  notice:
+    constructive: Husk vær konstruktiv. Dette er ikke stedet at klage
+  department_ideas: Afdelings Ideer
+  department: Afdeling
+  share_your_idea: Del!
+  it_is_easy: det er virkelig nemt.
+  vote_for_good_ideas: Stem!
+  read_our_feedback: Følg med!
+  discuss_with_others: Byg videre!
+  password: Adgangskode
+  new_password:  Vælg en adgangskode
+  enter_a_comment: Indtast venligst en kommentar.
+  forgot_it: Har du glemt din adgangskode?
+  remember_me: Husk mig?
+  whats_your_idea: Vi følger og tester løbende ideerne. Se, hvor det bærer hen
+  whats_hot: Hotte ideer
+  nearby_ideas: Ideer fra din afdeling
+  more: mere
+  recent_ideas: Seneste ideer
+  my_idea_is: Tænk på en avisoverskrift - Fængende og kort
+  look_around: Se dig omkring
+  get_to_know_us: Lær os at kende
+  great_if: Beskriv kort ideen, så en anden person med kendskab til området kan forstå hvad ideen handler om.
+  tag_names: Kundesegment, forretningsområde, ydelse, proces,..
+  idea: ide
+  here_are_some_ideas: HER ER ET PAR IDEER. Hvad synes du om dem?
+  get_to_know_us: Lær os at kende
+  whats_your_idea_text: Fortæl din ide. Måske kan andre bruge den eller hjælpe den videre.
+  like_an_idea_text: Kan du lide en ide, så stem på den og fortæl andre om den!
+  post_your_comments_text: Kan ideen blive endnu bedre? Brug din viden og erfaring til at hjælpe andre.
+  we_are_posting_text: Følg dine ideer, emner og kollegaer, du kender. Se hvor det bærer hen.
+  posted: Sendt
+  ago: siden
+  by: af
+  flag_as_inappropriate: Marker som upassende
+  here_are_some_idea: HER ER ET PAR IDEER
+  most_popular: MEST POPULÆRE 
+  no_result_found: Ingen søgeresultater fundet. Prøv en anden søgning?
+  lately: Seneste
+  all_time: Helt fra starten
+  vote: stem
+  votes: stemmer
+  download: Hent bilag
+  all_users: Alle medarbejdere
+  in_response_to: som svar på
+  top_contributors: Top bidragydere
+  sign_up_for_account: Opret en konto
+  you_voted: du har stemt
+  sidebar_text: Ideportalen er et forum, hvor medarbejdere i BDO Public kan dele, stemme på og diskutere ideer. Deltag i idefællesskabet.
+  learn_more: Få mere at vide
+  see_more_tags: Se flere emneord
+  idea_status: ideen status
+  idea_current: Fokusområder
+  idea_current_text: Fokusområder er samlinger af ideer med et fælles overordnet tema. Find ud af, hvad du kan bidrage med i dine favoritområder!
+  idea_in_short: OVERSKRIFTEN PÅ DIN IDE
+  description: Beskrivelse
+  edit_idea: Ret din ide
+  breif_explaination: En kort forklaring
+  seperate_with_coma: ADSKIL EMNEORD med kommaer
+  dont_have_account: Har du ikke en konto?
+  email_address: E-mail adresse
+  enter_comment: Indtast venligst en kommentar.
+  your_comment: din kommentar
+  confirm: Bekræft
+  zipcode: postnummer
+  current_created: Fokusområde oprettet
+  submit_ideas: Publicer ideer!
+  submit_idea: Tilføj din ide!
+#  in_current: i det nuværende
+  in_current: i hovedvejen
+  opening: SÅDAN VIRKER DET
+  phone: tlf nr.
+  forgot_pass: Har du glemt dit kodeord?
+  no_worries: Skriv din mail, og vi sender vi et link, så du kan vælge et nyt kodeord
+
+  will_paginate:
+    previous_label: "&#8592; Forrige"
+    next_label: "Næste &#8594;"
+    page_gap: "&hellip;"
+  # active_support
+  date:
+    # See http://sproget.dk/svarbase/SV00000046/ and http://en.wikipedia.org/wiki/Date_formats
+    # either use traditional (2.10.03, 2. oktober 2003): "%e.%m.%y", "%e. %B %Y"
+    # or international ISO 8601 format (2003-10-20): "%Y-%m-%d"
+    # Note: some Windows distributions do not support %e - you may have to use %d instead
+    formats:
+      default: "%d.%m.%Y"
+      short: "%e. %b %Y"
+      long: "%e. %B %Y"
+
+    day_names:
+      - søndag
+      - mandag
+      - tirsdag
+      - onsdag
+      - torsdag
+      - fredag
+      - lørdag
+    abbr_day_names:
+      - søn
+      - man
+      - tir
+      - ons
+      - tor
+      - fre
+      - lør
+    month_names:
+      - ~
+      - januar
+      - februar
+      - marts
+      - april
+      - maj
+      - juni
+      - juli
+      - august
+      - september
+      - oktober
+      - november
+      - december
+    abbr_month_names:
+      - ~
+      - jan
+      - feb
+      - mar
+      - apr
+      - maj
+      - jun
+      - jul
+      - aug
+      - sep
+      - okt
+      - nov
+      - dec
+    order:
+      - :day
+      - :month
+      - :year
+
+  time:
+    formats:
+      default: "%e. %B %Y, %H.%M"
+      short: "%e. %b %Y, %H.%M"
+      long: "%A d. %e. %B %Y, %H.%M"
+    am: ""
+    pm: ""
+
+  support:
+    array:
+      # Rails 2.2
+      #sentence_connector: "og"
+      #skip_last_comma: true
+      # Rails 2.3
+      words_connector: ", "
+      two_words_connector: " og "
+      last_word_connector: " og "
+    select:
+      # default value for :prompt => true in FormOptionsHelper
+      prompt: "Vælg..."
+
+  # action_view
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+
+    currency:
+      format:
+        format: "%u %n"
+        unit: "DKK"
+        separator: ","
+        delimiter: "."
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+
+    percentage:
+      format:
+        delimiter: ""
+
+    precision:
+      format:
+        delimiter: ""
+
+    human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      # Rails 2.2
+      #storage_units: [Bytes, KB, MB, GB, TB]
+      # Rails 2.3
+      storage_units:
+        # Storage units output formatting.
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: Tusind
+          million: Million
+          billion: Milliard
+          trillion: Billion
+          quadrillion: Billiard
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "et halvt minut"
+      less_than_x_seconds:
+        one:   "mindre end et sekund"
+        other: "mindre end %{count} sekunder"
+      x_seconds:
+        one:   "et sekund"
+        other: "%{count} sekunder"
+      less_than_x_minutes:
+        one:   "mindre end et minut"
+        other: "mindre end %{count} minutter"
+      x_minutes:
+        one:   "et minut"
+        other: "%{count} minutter"
+      about_x_hours:
+        one:   "ca en time"
+        other: "ca %{count} timer"
+      x_days:
+        one:   "en dag"
+        other: "%{count} dage"
+      about_x_months:
+        one:   "ca en måned"
+        other: "ca %{count} måneder"
+      x_months:
+        one:   "en måned"
+        other: "%{count} måneder"
+      about_x_years:
+        one:   "ca et år"
+        other: "ca %{count} år"
+      over_x_years:
+        one:   "mere end et år"
+        other: "mere end %{count} år"
+      almost_x_years:
+        one:   "næsten et år"
+        other: "næsten %{count} år"
+    prompts:
+      year:   "År"
+      month:  "Måned"
+      day:    "Dag"
+      hour:   "Time"
+      minute: "Minut"
+      second: "Sekund"
+
+  helpers:
+    select:
+      prompt: "Vælg..."
+
+    submit:
+      create: "Opret %{model}"
+      update: "Opdater %{model}"
+      submit: "Gem %{model}"
+
+  errors:
+    format: "%{attribute} %{message}"
+
+    messages: &errors_messages
+      inclusion: "er ikke på listen"
+      exclusion: "er reserveret"
+      invalid: "er ikke gyldig"
+      confirmation: "stemmer ikke overens med bekræftelse"
+      accepted: "skal accepteres"
+      empty: "må ikke udelades"
+      blank: "skal udfyldes"
+      too_long: "er for lang (højest %{count} tegn)"
+      too_short: "er for kort (mindst %{count} tegn)"
+      wrong_length: "har forkert længde (skulle være %{count} tegn)"
+      not_a_number: "er ikke et tal"
+      not_an_integer: "er ikke et heltal"
+      greater_than: "skal være større end %{count}"
+      greater_than_or_equal_to: "skal være større end, eller lig med, %{count}"
+      equal_to: "skal være %{count}"
+      less_than: "skal være mindre end %{count}"
+      less_than_or_equal_to: "skal være mindre end, eller lig med, %{count}"
+      odd: "skal være et ulige tal"
+      even: "skal være et lige tal"
+
+  activerecord:
+    errors:
+      template:
+        header:
+          one:   "En fejl forhindrede %{model} i at blive gemt"
+          other: "%{count} fejl forhindrede %{model} i at blive gemt"
+        body: "Der var problemer med følgende felter:"
+
+      messages:
+        taken: "er allerede brugt"
+        record_invalid: "Godkendelse gik galt: %{errors}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "%{attribute} %{message}"
+

@@ -1,0 +1,114 @@
+%div.left_panel
+  .main.panel.section
+    .plainwrap
+      %h2.title Indstillinger for brugerkonto
+    .bordy.group
+      = error_messages_for :user
+      - form_for :user, :url => user_path, :html => { :multipart => true, :method => :put, :id => 'edit_user_form' } do |f|
+        .form-group.inline
+          = f.label :name, "Brugernavn<em>*</em>", :class => 'required'
+          = f.text_field :name, :class => "input-text"
+        .form-group.inline
+          = f.label :name, t("department") + "<em>*</em>", :class => 'required', :style => "margin-right:9px !important;"
+          = f.collection_select :department_id,Department.all,:id,:name, :class => "input-text"
+
+        .form-group.inline
+          = f.label :email, "Email<em>*</em>", :class => 'required'
+          = f.text_field :email, :class => "input-text"
+
+        .form-group.inline
+          = f.label :password, t("new_password")
+          = f.password_field :password, :class => "input-text"
+
+        .form-group.inline
+          = f.label :password_confirmation, "Bekræft adgangskode"
+          = f.password_field :password_confirmation, :class => "input-text"
+
+        .form-group.inline
+          = f.label :phone, t('phone')
+          = f.text_field :phone, :class => "input-text"
+
+        .form-group.inline.checkbox
+          = f.check_box :notify_on_comments, :class => "input-checkbox" , :checked=>true
+          = f.label :notify_on_comments, "Send en mail til mig, hvis andre skriver kommentarer til mine ideer"
+        -# ------- STYLE NEEDED ------
+        .form-group.inline
+          %label Billede
+          =image_tag profile_picture(@user, :large), :class=>'profile_pic'
+          = f.file_field :avatar , :size=>20
+        -# ------- /STYLE NEEDED ------
+
+        :javascript
+          change_service_link = function(service, link) {
+            var form = $('edit_user_form')
+            form[(link ? 'link_' : 'unlink_') + service].value = 1
+            form.submit()
+          }
+
+        - if TWITTER_ENABLED
+          -# ------- STYLE NEEDED ------
+          .form-group.inline.checkbox
+            - if @user.linked_to_twitter?
+              %p
+                Linked to Twitter account:
+                %b=h @user.twitter_handle
+                - if @user.twitter_is_only_auth_method?
+                  %p.note To unlink your Twitter account, first enter a password in the form above.
+                - else
+                  %br/
+                  = link_to 'Unlink Twitter account', '#', :onclick => 'return change_service_link("twitter", false)'
+                  = hidden_field_tag :unlink_twitter
+              = f.check_box :tweet_ideas, :class => "input-checkbox"
+              = f.label :tweet_ideas, "Tweet my ideas"
+              %p.note Check this box to automatically Tweet your #{SHORT_SITE_NAME} ideas.
+            - else
+              = link_to 'Link to Twitter account', '#', :onclick => 'return change_service_link("twitter", true)'
+              = hidden_field_tag :link_twitter
+              %p.note
+                Allows you to Tweet your ideas, and log in via Twitter.
+                %br/
+                == Displays your Twitter name in your #{SHORT_SITE_NAME} public profile.
+          -# ------- /STYLE NEEDED ------
+
+        - if FACEBOOK_ENABLED
+          -# ------- STYLE NEEDED ------
+          .form-group.inline.checkbox
+            - if @user.linked_to_facebook?
+              %p
+                Linked to Facebook account:
+                %b=h @user.facebook_name
+                - if @user.facebook_is_only_auth_method?
+                  %p.note To unlink your Facebook account, first enter a password in the form above.
+                - else
+                  %br/
+                  = link_to 'Unlink Facebook account', '#', :onclick => 'return change_service_link("facebook", false)'
+                  = hidden_field_tag :unlink_facebook
+              = f.check_box :facebook_post_ideas, :class => "input-checkbox"
+              = f.label :facebook_post_ideas, "Share my ideas on Facebook"
+              %p.note Check this box to automatically post your #{SHORT_SITE_NAME} ideas on your wall
+            - else
+              = link_to 'Link to Facebook account', '#', :onclick => 'return facebook_auth_and_link(true)'
+              = hidden_field_tag :link_facebook
+              %p.note
+                Allows you to public your ideas to your wall, and log in via Facebook.
+          -# ------- /STYLE NEEDED ------
+
+          :javascript
+            facebook_auth_and_link = function() {
+              facebook_auth(function() {
+                change_service_link('facebook', true)
+              })
+              return false
+            }
+
+        .form-submit.inline
+          = submit_tag 'Update Account', :id => "submit-save-changes", :class => "input-submit"
+    
+.right_panel
+  .plainwrap
+    #sidebar.aside= render :partial => "shared/sidebar"
+  .plainwrap
+    %a.bold_link{:href => "/user/index", :style => " padding-left: 10px;"} All Users
+  / Display Section Starts
+  #ajax-tab
+  / Display Section Ends

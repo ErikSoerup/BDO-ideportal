@@ -1,0 +1,42 @@
+<div class="body_wrap">
+  <!--Left Panel Starts -->
+  <div class="left_panel">
+    <!--Profile Top Stuff Starts -->
+    <div class="profile_wrap">
+      <div class="plainwrap">
+        <!--User Name Starts -->
+        <div class="fl"><h2>Hovedveje</h2>
+        </div>
+        <!--User Name Ends -->
+      </div>
+      <!--Breaker Starts -->
+      <div class="b_divider"></div>
+      <!--Breaker Ends -->
+      <div class="tab_headline"><strong>En hovedvej er en samling af ideer, der baner vejen for at løse en bestemt udfordring for BDO KR. Tilføj din ide og se, hvordan den passer med de andre ideer i den hovedvej. Eller byg videre på de ideer, der allerede er tilføjet. Interesseret i en bestemt hovedvej? Klik på "Følg denne hovedvej", så får du besked via mail, når nye ideer tilføjes. </strong></div>
+    </div>
+    
+    <%= render :partial => "current", :collection => current_objects %>
+    <!--Profile Top Stuff Ends -->
+    <!--Focus1 Panel Starts -->
+    
+    <!--Breaker Ends -->
+    <!--Focus2 Panel Starts -->
+   
+    <!--Focus2 Panel Ends -->
+    <!--Breaker Starts -->
+   
+    <!--Breaker Ends -->
+  </div>
+  <!--Left Panel Ends -->
+  <!--Right Panel Starts -->
+  <div class="right_panel">
+    <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
+    <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;"><%=t("all_users")%></a></div>
+    <!--Display Section Starts -->
+    <div id="ajax-tab">
+
+    </div>
+    <!--Display Section Ends -->
+  </div>
+  <!--Right Panel Ends -->
+</div>

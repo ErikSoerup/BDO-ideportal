@@ -1,0 +1,12 @@
+-#= render :partial => '/admin/search_feedback', :locals => { :model => Department }
+
+.paginate= will_paginate current_objects
+
+%table.admin-table{:cellspacing => 0, :cellpadding => 6, :width => '100%'}
+  %tr
+    %th= sort_by 'New', 'departments.name'
+    %th= sort_by 'Created at', 'departments.created_at'
+  =render :partial => 'index_row', :collection => current_objects
+
+
+.paginate= will_paginate current_objects

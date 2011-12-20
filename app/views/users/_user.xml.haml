@@ -1,0 +1,12 @@
+-include_contributions ||= false
+-user = @user if @user
+
+%id= user.id
+%name=h user.name
+%created-at= user.created_at
+%contribution-points= user.contribution_points.round.to_i
+%recent-contribution-points= user.recent_contribution_points
+%admin= user.admin?
+-if include_contributions
+  %ideas= render :partial => 'ideas/idea', :collection => user.ideas.recent_visible(:limit => 20)
+  %comments= render :partial => 'comments/comment', :collection => user.comments.recent_visible(:limit => 20)

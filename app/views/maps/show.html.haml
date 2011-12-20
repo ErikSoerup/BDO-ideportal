@@ -1,0 +1,29 @@
+%div
+  #nearby-ideas.main.panel.section.hfeed
+    .header
+      %h2.icon.nearby= t("nearby_ideas")
+      %ul.actions
+        %li.input
+          - remote_form_for :search, :url => map_path, :method => :get, :has_example_text => true do |f|
+            %label{ :for => "postal_code" } Your zip code:
+            = f.text_field :postal_code, :example => 'ZIP', :id => "search_postal_code", :class => "input-custom"
+            = submit_tag "Go", :class => "input-submit"
+    .body.inset
+      %div
+        #map.map-big
+          #map-spinner
+            -#--------- STYLE NEEDED ------------
+            %b Trying to determine location...
+            %br/
+            (You can also enter a zip code in the box above.)
+        :javascript
+          document.observe(
+            'dom:loaded',
+            function() {
+              #{@map}
+            }
+          )
+    .footer
+  %hr.hide
+  #sidebar.aside
+    = render :partial => "shared/sidebar"

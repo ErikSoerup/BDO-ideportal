@@ -1,0 +1,32 @@
+-# -cache ['current_search', CGI.escape(params.inspect)], :expires_in => 5.minutes, :unless => logged_in? do
+%div
+  #current.currents-page.panel.section.hfeed
+    .header
+      %h2.icon=t("idea_current")
+      %p=t('idea_current_text')
+      %ul.actions
+      -# = will_paginate current_objects
+    - if current_objects.empty?
+      .body
+        %div.current-meta{ :style => "padding-right: 20px; padding-left: 20px;" }
+          %p= t("no_result_found")
+        %div.group.slate
+          - form_tag currents_path, :method => :get, :id => 'current_search_box' do
+            .form-group.inline
+              %label{ :for => "search_text" }
+                =t("menu.search")
+              = text_field_tag 'search_text', params[:search_text], :class => "input-text"
+            .form-submit.inline
+              = submit_tag 'Search', :class => "input-submit"
+              .clear{:style=>'clear:both'}
+    - else
+      .body.currents-list.inset
+        %div
+          %div
+            =render :partial => 'current', :collection => current_objects
+    .footer
+      -# = will_paginate current_objects
+  %hr.hide
+  #sidebar.aside
+    = render :partial => "shared/sidebar"
+

@@ -1,0 +1,7 @@
+log
+.DS_Store
+tmp/*
+test/fixtures/*/*
+*.tmproj
+db/schema.rb
+*.sw*

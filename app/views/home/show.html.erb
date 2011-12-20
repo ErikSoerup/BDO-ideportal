@@ -1,0 +1,128 @@
+<%= stylesheet_link_tag "tagify-style" %>
+<%= javascript_include_tag "jquery.tagify" %>
+<div class="body_wrap">
+  <div class="full_wrap">
+    <!--Top Part Starts -->
+    <div class="plainwrap">
+      <div class="home_top">
+        <div class="plainwrap">
+          <!--Form Stuff Starts -->
+          <div class="form_wrap">
+            <%= render :partial => "new_idea" %>
+          </div>
+          <!--Form Stuff Ends -->
+          <!--Top Bidragydere Panel Starts -->
+
+
+          <div class="top_bidragydere">
+            <div class="plainwrap"><h3 style="margin-left:15px">Top Bidragydere</h3></div>
+            <div class="top_bid_inner">
+              <%= render :partial => 'shared/home_contributor',
+                :collection => User.find_top_contributors(true, :limit => 10),
+                :locals => { :points_method => :recent_contribution_points }%>
+              <!--Single Row1 Starts -->
+
+
+
+              <!--Single Row5 Ends -->
+            </div>
+            <div class="plainwrap"><a class="flere" href="/user/index">Flere</a></div>
+          </div>
+
+          <!--Top Bidragydere Panel Starts -->
+        </div>
+      </div>
+    </div>
+
+    <div class="tab_headline">
+      <div class="fl"><strong>SÅDAN VIRKER DET </strong><span class="ita">(Se også <a href="#">spilleregler</a>)</span></div>
+    </div>
+    <!--Header Portion Ends -->
+    <div class="plainwrap" style="margin-bottom:20px">
+      <!--Del Panel Starts -->
+      <div class="block">
+        <div class="block_head">Del!</div>
+        <div class="block_content">Fortæl din ide. Måske kan andre bruge den eller hjælpe den videre.</div>
+      </div>
+      <!--Del Panel Ends -->
+      <!--Stem Panel Starts -->
+      <div class="block">
+        <div class="block_head">Stem!</div>
+        <div class="block_content">Kan du lide en ide, så stem på den og fortæl andre om den!</div>
+      </div>
+      <!--Stem Panel Ends -->
+      <!--Byg videre Panel Starts -->
+      <div class="block">
+        <div class="block_head">Byg videre!</div>
+        <div class="block_content">Kan ideen blive endnu bedre? Brug din viden og erfaring til at hjælpe andre.</div>
+      </div>
+      <!--Byg videre Panel Ends -->
+      <!--Følg med Panel Starts -->
+      <div class="block_last">
+        <div class="block_head">Følg med!</div>
+        <div class="block_content">Følg dine ideer, emner og kollegaer, du kender. Se hvor det bærer hen.</div>
+      </div>
+      <!--Følg med Panel Ends -->
+    </div>
+
+    <!--Bottom Panel Starts -->
+    <div class="plainwrap">
+      <!--Header Portion Starts -->
+      <div class="tab_headline">
+        <div class="fl"><strong>HER ER ET PAR IDEER. Hvad synes du om dem?</strong></div>
+      </div>
+      <!--Ideers Panel Starts -->
+      <div class="plainwrap">
+        <!--Hotte ideer Starts -->
+        <div class="btmideer_block">
+          <div class="plainwrap"><h3>Hotte Ideer</h3></div>
+          <div class="ideer_outer">
+            <%= render :partial => 'idea', :collection => search_ideas(:search => 'hot', :page_size => 5) %>
+            <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => "hot"), :class => 'flere'%></div>
+          </div>
+        </div>
+
+        <div class="btmideer_block">
+          <div class="plainwrap"><h3>Seneste Ideer</h3></div>
+          <div class="ideer_outer">
+            <%= render :partial => 'idea', :collection => search_ideas(:search => 'recent', :page_size => 5) %>
+            <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => "recent"), :class => 'flere'%></div>
+          </div>
+        </div>
+
+        <div class="btmideer_block_last">
+          <div class="plainwrap"><h3>Afdelings Ideer</h3></div>
+          <div class="ideer_outer">
+            <%= render :partial => 'idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>5)%>
+
+            <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'flere'%></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  
+  var tags= <%= Tag.all.map(&:name).to_json  %>;
+  var myTextArea = jQuery('#auto-text').tagify();
+
+  myTextArea.tagify('inputField').autocomplete({
+    source: tags,
+    position: { of: myTextArea.tagify('containerDiv') },
+    close: function(event, ui) { myTextArea.tagify('add'); }
+  });
+
+  jQuery("#idea_form").submit(function(e){
+    var new_values = jQuery(".tagify-container input:first").val();
+    jQuery.each(new_values.split(","),function(i,data){
+      myTextArea.tagify("add",data);
+    });
+    myTextArea.tagify("serialize");
+  });
+  
+</script>
+

@@ -1,0 +1,271 @@
+.nav
+  &.site
+    li
+      a
+        :float left
+        :line-height 36px
+
+      &.first a
+        :background-image url(../images/nav-site-first.gif)
+
+      &.last a
+        :background-image url(../images/nav-site-last.gif)
+
+    &.alt
+      li.first a
+        :background-image url(../images/nav-site-first-alt.gif) !important
+
+      &.title-ideas
+        :background-image url(../images/nav-site-title-ideas.gif)
+  
+  &.user li.first a, &.user li.first form
+    :background-image url(../images/nav-user-first.gif)
+  
+  &.user li.search input
+    :margin-top 2px
+
+
+body.home .nav li.first a.home,
+body.admin-home .nav li.first a.admin-home
+  :background-image url(../images/nav-site-first-alt-active.gif)
+body.comments-page .nav li.first a.comments
+  :background-image url(../images/nav-site-first-active.gif)
+body.nearby .nav li.last a.nearby,
+body.tags-page .nav li.last a.tags,
+body.life-cycles .nav li.last a.life-cycles
+  :background-image url(../images/nav-site-last-active.gif)
+
+
+.form-group.inline label
+  :float none
+  :position absolute
+  :left 0
+
+
+#share
+  .input-text, .input-textarea
+    :width 437px
+
+  .footer .tab
+    span
+      &.dn
+        :background-image url(../images/icn/14-arrow-dn.gif)
+
+      &.up
+        :background-image url(../images/icn/14-arrow-up.gif)
+
+    &:hover span
+      &.dn
+        :background-image url(../images/icn/14-arrow-dn-hover.gif)
+
+      &.up
+        :background-image url(../images/icn/14-arrow-up-hover.gif)
+
+    &:active span
+      &.dn
+        :background-image url(../images/icn/14-arrow-dn-active.gif)
+
+      &.up
+        :background-image url(../images/icn/14-arrow-up-active.gif)
+
+
+.panel .header h2
+  :width 450px
+
+.ideas-group
+  :margin-right 11px
+
+
+.actions
+  li
+    :background-image url(../images/header-meta-left.gif)
+
+    a
+      :float left
+      :background-image url(../images/header-meta-right.gif)
+
+  .input-custom
+    :background-image url(../images/header-meta-textbox-sm.gif)
+
+    &.long
+      :background-image url(../images/header-meta-textbox-lg.gif)
+
+
+.idea
+  .entry-meta li
+    :margin-right 20px
+  
+  .vote-count
+    :background-image url(../images/idea-vote-teaser-bg.gif)
+  
+  &.teaser .entry-meta li.tags
+    :width 220px
+
+  &.teaser .vote-for-it
+    a, span
+      :background-image url(../images/idea-vote-teaser-button.gif)
+
+  &.mini
+    .entry-title
+      :width 238px
+    
+    .vote-for-it
+      a, span
+        :background-image url(../images/idea-vote-mini-button.gif)
+
+
+.main
+  .vote
+    :right 25px
+    :top 20px
+  
+  .vote-for-it span
+    :margin 0
+    :margin-left 2px
+    :background-image url(../images/idea-vote-button.gif)
+    :background-position left -78px
+    :height 26px
+    :width 106px
+
+
+.teaser
+  .vote
+    :left 9px
+    :top 8px
+  
+  .vote-for-it span
+    :margin-left 3px
+    :background-image url(../images/idea-vote-teaser-button.gif)
+    :background-position left -75px
+    :height 25px
+    :width 104px
+
+
+.mini
+  .vote
+    :left 5px
+    :top 5px
+  
+  .vote-count
+    :margin-bottom 1px
+    :padding-top 0
+    :background url(../images/idea-vote-mini-bg.gif) left top no-repeat
+    :font-size 18px
+    :height 37px
+    :line-height 37px
+    :width 40px
+    .points
+      :display none !important
+  
+  .vote-for-it span
+    :margin-left 2px
+    :background-image url(../images/idea-vote-mini-button.gif)
+    :background-position left -33px
+    :height 11px
+    :width 36px
+
+
+.input-text
+  :height 19px
+
+
+input.big
+  :height 23px
+
+
+a.admin
+  :background-image url(../images/icn/16-admin.gif)
+
+
+h1#logo a
+  :background-image url(../images/bby-ideax-logo.gif)
+
+
+#intro
+  :background-image url(../images/intro.gif)
+
+  .header h3 a
+    :background-image url(../images/intro-signup.gif)
+
+  #idea-title-group
+    :background-image url(../images/intro-form-icon-bulb.gif)
+
+  #idea-description-group
+    :background-image url(../images/intro-form-icon-pencil.gif)
+
+  #idea-tags-group
+    :background-image url(../images/intro-form-icon-tag.gif)
+
+  .input-submit
+    :background-image url(../images/form-submit-share-my-idea.gif)
+
+  p.note
+    :background-image url(../images/intro-form-note.gif)
+
+
+.instruction
+  &.one h3
+    :background-image url(../images/instruction-1-share.gif)
+
+  &.two h3
+    :background-image url(../images/instruction-2-vote.gif)
+
+  &.three h3
+    :background-image url(../images/instruction-3-discuss.gif)
+
+  &.four h3
+    :background-image url(../images/instruction-4-read.gif)
+
+
+h2.icon
+  &.comments
+    :background-image url(../images/icn/24-comment.gif)
+
+  &.nearby
+    :background-image url(../images/icn/24-pin.gif)
+
+  &.top-rated
+    :background-image url(../images/icn/24-heart.gif)
+
+  &.recent
+    :background-image url(../images/icn/24-clock.gif)
+
+  &.tag
+    :background-image url(../images/icn/24-tag.gif)
+
+  &.user
+    :background-image url(../images/icn/24-user.gif)
+    
+    &.admin
+      :background-image url(../images/icn/24-user-admin.gif)
+
+  &.user-edit
+    :background-image url(../images/icn/24-user-edit.gif)
+
+
+h3.icon, a.icon
+  &.nearby
+    :background-image url(../images/icn/16-pin.gif)
+
+  &.popular
+    :background-image url(../images/icn/16-heart.gif)
+
+  &.recent
+    :background-image url(../images/icn/16-clock.gif)
+
+  &.user
+    :background-image url(../images/icn/16-user.gif)
+
+
+.panel.summary .header .actions li
+  :background none
+
+  a
+    :background none
+
+
+.inset
+  :background-image url(../images/inset-top.gif)
+
+  > div
+    :background-image url(../images/inset-bottom.gif)

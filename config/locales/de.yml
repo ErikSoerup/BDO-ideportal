@@ -1,0 +1,311 @@
+de:
+  menu:
+    about: Om
+    sign_up: Opret
+    sign_in: Log på
+    search: Søg
+    settings: indstillinger
+    sign_out: Log ud
+    share: Del!
+    hot: Hotte emner
+    recent: Seneste
+    currents: Fora
+    nearby: Din afdeling
+    comments: Kommentarer
+    tags: Emneord
+    contact_us: Kontakt os
+    about_ideax: Om innovation i BDO Public
+  notice:
+    constructive: Husk vær konstruktiv. Dette er ikke stedet at klage
+  share_your_idea: Del dine Ideer
+  it_is_easy: det er virkelig nemt.
+  vote_for_good_ideas: Stem på dine favorit ideer
+  read_our_feedback: Få Feedback
+  discuss_with_others: Diskuter med andre
+  password: Adgangskode
+  forgot_it: Har du glemt din adgangskode?
+  remember_me: Husk mig?
+  whats_your_idea: Vi følger og tester løbende ideerne. Se, hvor det bærer hen
+  whats_hot: Hotte ideer
+  nearby_ideas: Ideer fra din afdeling
+  more: mere
+  recent_ideas: Seneste ideer
+  my_idea_is: Min ide er ..
+  look_around: Se dig omkring
+  get_to_know_us: Lær os at kende
+  great_if: det kunne være Greate hvis
+  tag_names: Kundesegment, forretningsområde, ydelse, proces,..
+  idea: ide
+  here_are_some_ideas: HER ER ET PAR IDEER. Hvad synes du om dem?
+  get_to_know_us: Lær os at kende
+  whats_your_idea_text: Hvad er din idé? Stor eller lille. Vi ønsker at høre det. Fremtiden starter her.
+  like_an_idea_text: Kan du lide en ide? Stem på den. Fortæl den til dine kollegaer.
+  post_your_comments_text: Skriv dine kommentarer og byg videre på en ide
+  we_are_posting_text: Vi følger og tester løbende ideerne. Se, hvor det bærer hen
+  posted: Sendt
+  ago: siden
+  by: af
+  flag_as_inappropriate: Marker som upassende
+  here_are_some_idea: HER ER ET PAR IDEER
+  most_popular: Mest populære
+  no_result_found: Ingen søgeresultater fundet. Prøv en anden søgning?
+  lately: Seneste
+  all_time: Helt fra starten
+  vote: stem
+  votes: stemmer
+  in_response_to: som svar på
+  top_contributors: Top bidragydere
+  you_voted: du har stemt
+  sidebar_text: Ideportalen er et forum, hvor medarbejdere i BDO Public kan dele, stemme på og diskutere ideer. Opret dig nu og bliv en del af idefællesskabet.
+  learn_more: Få mere at vide
+  see_more_tags: Se flere emneord
+  idea_status: ideen status
+  idea_current: Fokusområder
+  idea_current_text: Fokusområder er samlinger af ideer med et fælles overordnet tema. Find ud af, hvad du kan bidrage med i dine favoritområder!
+  idea_in_short: din idé i korte
+  description: Beskrivelse
+  breif_explaination: En kort forklaring
+  seperate_with_coma: Separat med kommaer
+  dont_have_account: Har du ikke en konto?
+  email_address: E-mail adresse
+  enter_comment: Indtast venligst en kommentar.
+  your_comment: din kommentar
+  confirm: Bekræft
+  zipcode: postnummer
+  current_created: Fokusområde oprettet
+  submit_ideas: Publicer ideer!
+  in_current: i det nuværende
+
+  will_paginate:
+    previous_label: "&#8592; Forrige"
+    next_label: "Næste &#8594;"
+    page_gap: "&hellip;"
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      short: "%e. %b"
+      long: "%e. %B %Y"
+      only_day: "%e"
+    day_names:
+      - Sonntag
+      - Montag
+      - Dienstag
+      - Mittwoch
+      - Donnerstag
+      - Freitag
+      - Samstag
+    abbr_day_names:
+      - So
+      - Mo
+      - Di
+      - Mi
+      - Do
+      - Fr
+      - Sa
+    month_names:
+      - ~
+      - Januar
+      - Februar
+      - März
+      - April
+      - Mai
+      - Juni
+      - Juli
+      - August
+      - September
+      - Oktober
+      - November
+      - Dezember
+    abbr_month_names:
+      - ~
+      - Jan
+      - Feb
+      - Mär
+      - Apr
+      - Mai
+      - Jun
+      - Jul
+      - Aug
+      - Sep
+      - Okt
+      - Nov
+      - Dez
+    order:
+      - :day
+      - :month
+      - :year
+
+  time:
+    formats:
+      default: "%A, %d. %B %Y, %H:%M Uhr"
+      short: "%d. %B, %H:%M Uhr"
+      long: "%A, %d. %B %Y, %H:%M Uhr"
+      time: "%H:%M"
+
+    am: "vormittags"
+    pm: "nachmittags"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: 'eine halbe Minute'
+      less_than_x_seconds:
+        one: 'weniger als eine Sekunde'
+        other: 'weniger als %{count} Sekunden'
+      x_seconds:
+        one: 'eine Sekunde'
+        other: '%{count} Sekunden'
+      less_than_x_minutes:
+        one: 'weniger als eine Minute'
+        other: 'weniger als %{count} Minuten'
+      x_minutes:
+        one: 'eine Minute'
+        other: '%{count} Minuten'
+      about_x_hours:
+        one: 'etwa eine Stunde'
+        other: 'etwa %{count} Stunden'
+      x_days:
+        one: 'ein Tag'
+        other: '%{count} Tage'
+      about_x_months:
+        one: 'etwa ein Monat'
+        other: 'etwa %{count} Monate'
+      x_months:
+        one: 'ein Monat'
+        other: '%{count} Monate'
+      almost_x_years:
+        one: 'fast ein Jahr'
+        other: 'fast %{count} Jahre'
+      about_x_years:
+        one: 'etwa ein Jahr'
+        other: 'etwa %{count} Jahre'
+      over_x_years:
+        one: 'mehr als ein Jahr'
+        other: 'mehr als %{count} Jahre'
+    prompts:
+      second: "Sekunden"
+      minute: "Minuten"
+      hour: "Stunden"
+      day: "Tag"
+      month: "Monat"
+      year: "Jahr"
+
+  number:
+    format:
+      precision: 2
+      separator: ','
+      delimiter: '.'
+      significant: false
+      strip_insignificant_zeros: false
+    currency:
+      format:
+        unit: '€'
+        format: '%n %u'
+        separator: ","
+        delimiter: "."
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+    percentage:
+      format:
+        delimiter: ""
+    precision:
+      format:
+        delimiter: ""
+    human:
+      format:
+        delimiter: ""
+        precision: 1
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        # Storage units output formatting.
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: Tausend
+          million: Millionen
+          billion:
+            one: Milliarde
+            others: Milliarden
+          trillion: Billionen
+          quadrillion:
+            one: Billiarde
+            others: Billiarden
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " und "
+      last_word_connector: " und "
+    select:
+      prompt: "Bitte wählen:"
+
+  activemodel:
+    errors:
+      template:
+        header:
+          one:    "Konnte %{model} nicht speichern: ein Fehler."
+          other:  "Konnte %{model} nicht speichern: %{count} Fehler."
+        body: "Bitte überprüfen Sie die folgenden Felder:"
+  helpers:
+    select:
+      prompt: "Bitte wählen"
+
+    submit:
+      create: '%{model} erstellen'
+      update: '%{model} aktualisieren'
+      submit: '%{model} speichern'
+
+  errors:
+    format: "%{attribute} %{message}"
+
+    messages: &errors_messages
+      inclusion: "ist kein gültiger Wert"
+      exclusion: "ist nicht verfügbar"
+      invalid: "ist nicht gültig"
+      confirmation: "stimmt nicht mit der Bestätigung überein"
+      accepted: "muss akzeptiert werden"
+      empty: "muss ausgefüllt werden"
+      blank: "muss ausgefüllt werden"
+      too_long: "ist zu lang (nicht mehr als %{count} Zeichen)"
+      too_short: "ist zu kurz (nicht weniger als %{count} Zeichen)"
+      wrong_length: "hat die falsche Länge (muss genau %{count} Zeichen haben)"
+      not_a_number: "ist keine Zahl"
+      greater_than: "muss größer als %{count} sein"
+      greater_than_or_equal_to: "muss größer oder gleich %{count} sein"
+      equal_to: "muss genau %{count} sein"
+      less_than: "muss kleiner als %{count} sein"
+      less_than_or_equal_to: "muss kleiner oder gleich %{count} sein"
+      odd: "muss ungerade sein"
+      even: "muss gerade sein"
+      not_an_integer: "muss ganzzahlig sein"
+      not_saved:
+        one:    "Speichern nicht möglich: ein Fehler."
+        other:  "Speichern nicht möglich: %{count} Fehler."
+
+  activerecord:
+    errors:
+      template:
+        header:
+          one:    "Konnte %{model} nicht speichern: ein Fehler."
+          other:  "Konnte %{model} nicht speichern: %{count} Fehler."
+        body: "Bitte überprüfen Sie die folgenden Felder:"
+
+      messages:
+        taken: "ist bereits vergeben"
+        record_invalid: "Gültigkeitsprüfung ist fehlgeschlagen: %{errors}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "%{attribute} %{message}"

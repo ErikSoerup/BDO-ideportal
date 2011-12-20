@@ -1,0 +1,10 @@
+<html>
+  <head></head>
+  <body>
+    <p>Kære <%= @user.name %></p><br/><br/> 
+
+    <p>Din e-mail til <%= link_to "Ideportalen", "#{PRODUCTION_HOST}"%> er blevet ændret. <br/><br/>
+    Hvis det er en
+    fejl, så send en mail til <%= @user.email %></p>
+  </body>
+</html>

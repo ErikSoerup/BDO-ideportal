@@ -1,0 +1,17 @@
+
+# To enable Twitter integration:
+#
+#   1. Get an API key from http://dev.twitter.com/apps
+#   2. Set TWITTER_ENABLED = true in config/environment_custom.rb
+
+development:
+    key:    YOUR_TWITTER_API_KEY
+    secret: YOUR_TWITTER_API_SECRET
+ 
+test:
+    key:    test
+    secret: test
+
+production:
+    key:    YOUR_TWITTER_API_KEY
+    secret: YOUR_TWITTER_API_SECRET

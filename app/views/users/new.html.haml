@@ -1,0 +1,56 @@
+%div
+  .main.panel.section
+    .header
+      %h2= t("sign_up_for_account")
+    .body
+      .group
+        = error_messages_for :user
+        - form_for :user, :url => user_path do |f|
+          .form-group.inline
+            %label{ :for => "user_email" }= t("email_address")
+            = f.text_field :email, :class => "input-text big"
+            %p.note.hide You'll use this when you log in.
+          .form-group.inline
+            %label{ :for => "user_name" } Screen name
+            = f.text_field :name, :class => "input-text big"
+            %p.note.hide== This is your public name on #{SHORT_SITE_NAME}
+          .form-group.inline
+            %label{ :for => "department" }= Department
+            = f.collection_select :department_id, Department.all ,:id ,:name , :class => "input-text big"
+            %p.note.hide Select one
+          .form-group.inline
+            %label{ :for => "user_password" }= t("password")
+            = f.password_field :password, :class => "input-text big"
+            %p.note.hide Minimum 4 characters.
+          .form-group.inline
+            %label{ :for => "user_password_confirmation" }= t("confirm")
+            = f.password_field :password_confirmation, :class => "input-text big"
+            %p.note.hide Make sure you typed it right.
+          .form-group.inline
+            %label{ :for => "user_zip_code" }= t("phone")
+            = f.text_field :phone, :class => "input-text big "
+          -#.form-group.inline
+            -#%label{ :for => "user_zip_code" }= t("zipcode")
+            -#= f.text_field :zip_code, :class => "input-text big superthin"
+          .form-group.inline.checkbox
+            = f.check_box :terms_of_service, :class => "input-checkbox"
+            %label{ :for => "user_terms_of_service" }
+              I agree to the
+              = link_to 'terms of use', home_path('terms-of-use'), :target => "_blank"
+          .form-submit.inline
+            = submit_tag 'Sign Up', :id => "submit-signup", :class => "input-submit"
+
+      -# ------- STYLE NEEDED ------
+      -if TWITTER_ENABLED || FACEBOOK_ENABLED
+        .group
+          -if TWITTER_ENABLED
+            .login-button= link_to 'Log in with Twitter', twitter_login_path
+          -if FACEBOOK_ENABLED
+            .login-button= link_to 'Log in with Facebook', '#', :onclick => 'facebook_login(); return false'
+      -# ------- /STYLE NEEDED ------
+
+    .footer
+  %hr.hide
+  #sidebar.aside
+    = render :partial => "shared/sidebar"
+

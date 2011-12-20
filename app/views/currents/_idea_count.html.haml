@@ -1,0 +1,6 @@
+- idea_count = @current_ideas.total_entries
+
+= h "#{idea_count}"
+%span.points= h "ideer#{idea_count == 1 ? '' : ''}" 
+i denne hovedvej.
+= link_to 'Tilføj en ide!', params[:action] == "show" ? "#header" : current_path(current, :anchor=>"header"), :class=>"bold_link"

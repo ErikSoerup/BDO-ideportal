@@ -1,0 +1,28 @@
+.sitemap
+  %div
+    %h4=t("idea")
+    %ul.nav.map
+      %li= link_to t("share_your_idea"), root_url
+      %li= link_to t("whats_hot"), idea_search_path(:search => 'hot')
+      %li= link_to t("recent_ideas"), idea_search_path(:search => 'recent')
+      %li= link_to t("nearby_ideas"), map_path
+  %div
+    %h4= t("look_around")
+    %ul.nav.map
+      %li= link_to t("menu.comments"), comments_path
+      %li= link_to t("menu.tags"), tags_path
+  %div
+    %h4=t("get_to_know_us")
+    %ul.nav.map
+      %li= link_to t("menu.about_ideax"), home_path('about')
+      %li= link_to t("menu.contact_us"), home_path('contact')
+%ul.nav.supp
+  %li= link_to "Terms of Use", home_path('terms-of-use')
+%p.credit.hide
+  Powered by
+  = link_to "Best Buy", "http://bestbuy.com", :target => "_blank"
+  and
+  = link_to "Bust Out Solutions", "http://bustoutsolutions.com", :target => "_blank"
+  using
+  = link_to "Ruby on Rails", "http://rubyonrails.org", :target => "_blank"
+  \.

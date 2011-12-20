@@ -1,0 +1,17 @@
+%div
+  .panel.full.section.hfeed
+    .header
+      %h2 Departments Details
+      %h3= link_to '&laquo; Back to departments list', admin_departments_path
+    .body
+      .group
+        = error_messages_for :department
+        - form_for current_object, :url => object_url, :html => { :method => :put } do |f|
+          .form-group.inline
+            = f.label :name, "Text"
+            = f.text_field :name, :class => "input-text"
+          .form-submit.inline
+            = submit_tag 'Save Changes', :id => "submit-save-changes", :class => "input-submit"
+            /= link_to 'Cancel', admin_comments_path, :class => "cancel"
+        = disable_form_unless_editor current_object
+    .footer

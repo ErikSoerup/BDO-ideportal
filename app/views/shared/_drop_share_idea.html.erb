@@ -1,0 +1,96 @@
+<% if controller.class != "HomeController" && controller.action_name != "show" %>
+  <script type='text/javascript'>
+    //<![CDATA[
+    jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
+  
+  
+    jQuery('#idea_document').change(function(){
+      var i=this
+      jQuery('input#fakeupload').val(i.value);
+    })
+  </script>
+
+  <%= stylesheet_link_tag "tagify-style" %>
+  <%= javascript_include_tag "jquery.tagify" %>
+
+
+  <div id ="share" class="section">
+    <div class="body">
+      <div id="submit-idea">
+
+        <% form_for :idea, :url => ideas_path,  :html => { :multipart=>true, :class => 'main' } do |f|%>
+          <div id="idea-title-group" class="form-group inline">
+            <label for = "idea-title">
+              <strong><%=t("idea")%></strong>
+              <small><%=t("idea_in_short")%></small></label>
+            <%= f.text_field :title, :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
+          </div>
+          <div id="idea-description-group" class="form-group inline">
+            <label for = "idea-description">
+              <strong> <%=t("description")%></strong>
+              <small><%=t('breif_explaination')%></small>
+            </label>    
+            <%= f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"%>
+
+            <div class="input_file">
+              <%= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
+              <%=f.file_field :document , :size=>80%>
+            </div>
+          </div> 
+          <div id="idea-tags-group" class="form-group inline" style="width: 738px;">
+            <label for = "idea-tags">
+              <strong><%=t('menu.tags')%></strong>
+              <small> <%=t("seperate_with_coma")%></small>
+            </label>
+            <%= render :partial => 'ideas/tag_editor', :locals => { :f => f }%>
+            <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "width:196px;"%>
+          </div>
+
+          <div class="form-group inline">
+            <%= submit_tag 'Share My Idea', :class => "input-submit"%>
+          </div>     
+
+        <% end %>
+      </div>
+
+    </div>
+
+
+    <% unless current_page?("/")  || current_page?("/ideas")%>
+      <a href="#" class="tab" onclick="jQuery('.body').toggle();changeContain();jQuery('.ui-autocomplete-input').addClass('input-text');"><span class="dn">Del dine Ideer</span> </a>
+    <% end %>
+  </div>
+
+  <script type="text/javascript">
+    function changeContain(){
+      if(jQuery('.body').is(":visible")){
+        jQuery('.dn').html("Luk ideformular");
+      
+      }
+      else{
+        jQuery('.dn').html("Del dine Ideer");
+        jQuery('.ui-autocomplete-input').addClass('input-text');
+      }
+    }
+  </script>
+
+  <script type="text/javascript">
+    var tags= <%= Tag.all.map(&:name).to_json  %>;
+    var myTextArea = jQuery('#auto-text').tagify();
+
+    myTextArea.tagify('inputField').autocomplete({
+      source: tags,
+      position: { of: myTextArea.tagify('containerDiv') },
+      close: function(event, ui) { myTextArea.tagify('add'); }
+    });
+
+    jQuery("#idea_form").submit(function(e){
+      var new_values = jQuery(".tagify-container input:first").val();
+      jQuery.each(new_values.split(","),function(i,data){
+        myTextArea.tagify("add",data);
+      });
+      myTextArea.tagify("serialize");
+    });
+  
+  </script>
+<% end %>

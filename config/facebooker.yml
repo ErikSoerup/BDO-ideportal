@@ -1,0 +1,21 @@
+
+# To enable Facebook integration:
+#
+#   1. Get an API key from http://www.facebook.com/developers
+#   2. Set FACEBOOK_ENABLED = true in config/environment_custom.rb
+
+development:
+  app_id:  YOUR APP ID
+  api_key: YOUR API KEY
+  secret:  YOUR APP SECRET
+
+test:
+  app_id:  test_fb_app_id
+  api_key: test_fb_api_key
+  secret:  test_fb_secret
+
+production:
+  app_id:  YOUR APP ID
+  api_key: YOUR API KEY
+  secret:  YOUR APP SECRET
+

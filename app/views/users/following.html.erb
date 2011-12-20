@@ -1,0 +1,101 @@
+<div class="body_wrap">
+  <div class="full_wrap">
+    <div class="plainwrap"><h2 class="title">Alfabetisk søgning</h2></div>
+    <div class="plainwrap">
+      <% letters||=([*'A'..'Z'] + ['Æ', 'Ø','Å']) %>
+      <ul class="index">
+        <% letters.each do |letter| %>
+          <li><b><%= link_to letter, "/users/#{@user.id}/following?val=#{letter}", :style => "margin-left:10px;"%></b></li>
+        <% end %>
+      </ul>
+    </div>
+
+    
+    <div class="b_divider"></div>
+    <div class="plainwrap"><div class="fl"><h3>Søg på navn</h3></div>
+      <% form_tag "/users/search_user" do %>
+        <div class="fl" style="margin-left:15px;"><%= text_field_tag :search%></div>
+        <div class="fl" style="margin-left:5px;"><%= submit_tag "Søg", :class => "blank_button"%></div>
+      <% end %>
+    </div>
+
+    <div class="plainwrap" style="padding:10px 0;">
+      <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1">
+        <tr class="uindex_tbg">
+          <td align="left" valign="middle"><h3>Følger</h3></td>
+          <td align="left" valign="middle"><h3>Følges af</h3>
+
+          </td>
+          <td align="center" valign="middle">&nbsp;</td>
+          <td align="left" valign="middle"><div class="fl"><h3>Navn</h3></div>
+            <div class="sortarrow_wrap" style="float:right;">
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=navn&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=navn&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+            </div>
+
+          </td>
+          <td align="left" valign="middle"><div class="fl"><h3>Afdeling</h3></div>
+
+            <div class="sortarrow_wrap" style="float:right;">
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=afeld&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=afeld&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+            </div>
+          </td>
+          <td align="left" valign="middle"><div class="fl"><h3>Score</h3></div>
+            <div class="sortarrow_wrap" style="float:right;">
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=score&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=score&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+            </div>
+          </td>
+          <td align="left" valign="middle"><div class="fl"><h3>Antal Ideer</h3></div>
+            <div class="sortarrow_wrap" style="float:right;">
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=idea&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=idea&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+            </div>
+
+          </td>
+          <td align="left" valign="middle"><div class="fl"><h3>Antal Kommentarer</h3></div>
+            <div class="sortarrow_wrap" style="float:right;">
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+            </div>
+          </td>
+          <td align="left" valign="middle"><div class="fl"><h3>Antal Stemmer</h3></div>
+            <div class="sortarrow_wrap" style="float:right;">
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+              <div class="plainwrap"><a href="/users/<%=@user.id%>/following?name=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+            </div>
+
+          </td>
+        </tr>
+        <%  @users.each do |user|%>
+          <tr class="uindex_tbg">
+            <td align="left" valign="middle"><% unless user.followers.empty? %><%= user.followers.length %><% else %>&nbsp;<% end %>   </td>
+            <td align="left" valign="middle"><% unless user.following.empty? %><%= user.following.length %><% else %>&nbsp;<% end %></td>
+            <td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="uindex_img">
+
+                <tr>
+                  <td rowspan="2" align="left" valign="middle"><%= image_tag profile_picture(user, :small), :width=>32,:height=>32 , :class=>'profile_pic large'%></td>
+                  <td align="left" valign="middle"> </td>
+                </tr>
+                <tr>
+                  <td align="left" valign="middle">  <% unless user.followers.include?(current_user) %><%= link_to "Følg", follow_path(user.id)%> <% else %> <%= link_to "Stop følg", unfollow_path(user.id)%><% end %> </td>
+                </tr>
+              </table></td>
+            <td align="left" valign="middle"><%=link_to user.name, profile_path(user)%></td>
+            <td align="left" valign="middle"><%= user.try(:department).try(:name) || "NA"%></td>
+            <td align="left" valign="middle"><strong><%= user.contribution_points.to_i%></strong></td>
+            <td align="left" valign="middle"><% unless user.ideas.empty?  %><%= user.ideas.size %><% else %>&nbsp;<% end %> </td>
+            <td align="left" valign="middle"><% unless user.comments.empty?  %><%= user.comments.size %><% else %>&nbsp;<% end %></td>
+            <td align="left" valign="middle"><% unless user.votes.empty?  %><%=user.votes.size %><% else %>&nbsp;<% end %></td>              
+
+          </tr>
+
+
+        <% end %>
+
+
+      </table>
+    </div>
+  </div>
+</div>

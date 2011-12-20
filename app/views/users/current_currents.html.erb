@@ -1,0 +1,38 @@
+<%  @current_ideas.each do |current| %>
+  <div class="d_panel">
+    <!--Content Head Starts -->
+    <div class="p_content_head">
+      Sendt <%= time_ago_in_words(current.created_at) unless current.nil?%> <%= t("ago")%><strong> siden</strong> af  <%= link_to h(current.inventor.name), profile_path(current.inventor), :class => "bold_link" unless current.nil? || current.inventor.nil?%>
+    </div>
+    <!--Content Head Ends -->
+    <!--Posted Content Starts -->
+    <div class="plainwrap">
+      <h3><%= link_to h(current.title), current_path(current) unless current.nil?%></h3>
+      <p><%= h current.description unless current.nil?%> </p>
+    </div>
+    <!--Posted Content Ends -->
+    <!--Following Stuff Starts -->
+    <div class="plainwrap" style="margin:10px 0">
+      <div class="fl">
+        <% unless current.current_followers.empty? %>
+          <%= link_to "Followers(#{current.current_followers.size})", followers_current_path(current.id), :style => "color:#0f645d; margin-right:8px;"  %>
+
+        <% end %>
+        <%= link_to "Unfollow", unfollow_current_path(current.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless CurrentFollower.find_by_user_id_and_current_id(current_user.id,current.id).nil?%>
+        <% if CurrentFollower.find_by_user_id_and_current_id(current_user.id,current.id).nil? %>
+          <% form_tag current_follow_path do %>
+            <%= hidden_field_tag :current_id, current.id%>
+            <%= submit_tag "Follow", :class => "idea_submit"%>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <!--Following Stuff Ends -->
+    <!--Bottom Panel Starts -->
+    <div class="d_panel_commentator">
+
+      <div class="fl"></div>
+    </div>
+    <!--Bottom Panel Ends -->
+  </div>
+<% end %>

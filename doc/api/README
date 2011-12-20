@@ -1,0 +1,11 @@
+This documentation uses Staticmatic. To install:
+
+  [sudo] gem install staticmatic
+
+To build docs:
+
+  staticmatic build doc/api/
+
+To develop docs:
+
+  staticmatic preview doc/api/

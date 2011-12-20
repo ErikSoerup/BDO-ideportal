@@ -1,0 +1,25 @@
+-# ------------ STYLE NEEDED --------------
+%b Determining location...
+-# ------------ /STYLE NEEDED --------------
+
+:javascript
+  document.observe(
+    'dom:loaded',
+    function() {
+
+      ideax.map.showGeolocatedIdeas(
+        function(params) {
+          new Ajax.Updater(
+            'nearby-idea-results',
+            '#{home_nearby_ideas_path}',
+            {
+              asynchronous: true,
+              evalScripts: true,
+              parameters: params
+            }
+          )
+        }
+      )
+      
+    }
+  )

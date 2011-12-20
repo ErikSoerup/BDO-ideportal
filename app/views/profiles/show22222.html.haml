@@ -1,0 +1,87 @@
+%div
+  .main.panel.section
+    .header
+      /*------- STYLE NEEDED ------*/
+      = image_tag profile_picture(@user, :large),:class=>'profile_pic'
+      /*------- /STYLE NEEDED ------*/
+      %ul.profile_top
+        - if @user.admin?
+          %li.icon.user.admin= link_to @user.name, edit_user_path
+        - else
+          %li.icon.user= link_to @user.name, edit_user_path
+        %li="Afdelings navn : <span>#{@user.department.try(:name)}</span>"
+        %li="Email : <span> #{@user.email}</span>"
+        %li="Tlf nr : <span> #{@user.phone}</span>"
+        %li="Antal ideer : <span>#{@user.ideas.length}</span>"
+        %li="Antal kommentarer : <span>#{@user.ideas.length}</span>"
+        %li="Antal stemmer : <span> #{@user.votes.length}</span>"
+        %li="Antal point : <span>#{ @user.recent_contribution_points || 0 } points</span>"
+        %li= link_to_remote t('menu.ideas_following'),:update => "followers", :url => {:controller => "users", :action => "current_ideas"}
+        %li= link_to_remote t('menu.currents_following'), :update => "followers", :url => {:controller => "users", :action => "current_currents"}
+        %li= link_to_remote t('menu.users_following'), :update => "followers", :url => {:controller => "users", :action => "follow_users"}
+
+        %li.following
+          =link_to "Following : <span>#{@user.following.length }</span>", following_path(@user.id)
+        %li.following.followers
+          =link_to "Followers : <span>#{@user.followers.length }</span>", followers_path(@user.id)
+        -if current_user && (@user.id != current_user.id) && !current_user.following?(@user)
+          %li.follow_me
+            =link_to "Follow #{@user.name}", follow_path(@user)
+
+      - if @user.linked_to_twitter?
+        %p.icon.twitter
+          Follow me on Twitter:
+          = link_to h("@#{@user.twitter_handle}"), "http://twitter.com/#{h @user.twitter_handle}", :target => "_blank"
+    .body
+      .group.slate
+        %h3 Ideer
+        - unless @user.ideas.length == 0
+          %h4
+            These are some of the ideas that
+            =h @user.name
+            created.
+          .ideas-list.inset
+            %div
+              %div
+                = render_recent :recent => 'ideas', :offset => 0, :limit => 5
+   
+        -else
+          %h4
+            =h @user.name
+            hasn't posted any ideas yet.
+      .group.slate
+        %h3 Kommentarer
+        - unless @user.comments.length == 0
+          %h4
+            These are some of the comments that
+            =h @user.name
+            posted.
+          .inset.comments
+            %div
+              %div
+                = render_recent :recent => 'comments', :offset => 0, :limit => 8
+   
+        - else
+          %h4
+            =h @user.name
+            hasn't written any comments yet.
+      #votes.group.slate
+        %h3 Stemmer
+        - unless @user.votes.length == 0
+          %h4
+            These are some of the ideas that
+            =h @user.name
+            voted for.
+          .votes.inset
+            %div
+              %div
+                %ul.voted-for
+                  = render_recent :recent => 'votes', :offset => 0, :limit => 12
+        - else
+          %h4
+            =h @user.name
+            hasn't voted for any ideas yet.
+    .footer
+  %hr.hide
+  #sidebar.aside
+    = render :partial => "shared/sidebar"

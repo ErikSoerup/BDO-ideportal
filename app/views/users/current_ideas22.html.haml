@@ -1,0 +1,10 @@
+%div
+  #popular-ideas.main.panel.section.hfeed
+    .header
+      %h2.icon{ :class => @body_class }
+        - if @ideas && @ideas.blank? && @current_ideas.blank?
+          %h2 Not following any ideas or currents
+        -else
+          %h2= "#{current_user.name} is following"
+
+    = render :partial => '/ideas/idea', :collection => @ideas if @ideas && !@ideas.empty?

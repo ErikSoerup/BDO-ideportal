@@ -1,0 +1,109 @@
+%div
+  #intro.section
+    -#.header
+      -#%h2== Have an idea for #{COMPANY_NAME}?
+      -#%p
+        -#We're constantly looking for new ways to improve our business and are asking you to help us by
+        -#%strong sharing
+        -#your own ideas,
+        -#%strong voting
+        -#for ideas you like, and
+        -#%strong discussing
+        -#them with the rest of the community.
+      -#- if logged_in?
+        -#%h3
+          -#%em Share Ideas Now
+      -#- else
+        -#%h3
+          -#%em Get Started Now
+          -#%small or
+          -#= link_to "Sign Up", signup_url
+    .body#submit-idea
+      = render :partial => 'ideas/new', :locals => { :small => true }
+  %hr.hide
+  #instructions.section
+    %h2.header
+      =t("opening")
+      %em
+        =t("it_is_easy") + "(Se også " +  link_to ("spilleregler",home_path('rules') )  +")"
+    .instruction.one
+      %h3
+        %em=t("share_your_idea")
+      .figure
+        %p.legend=t("whats_your_idea_text")
+    .instruction.two
+      %h3
+        %em=t("vote_for_good_ideas")
+      .figure
+        %p.legend=t("like_an_idea_text")
+    .instruction.three
+      %h3
+        %em=t("discuss_with_others")
+      .figure
+        %p.legend=t("post_your_comments_text")
+    .instruction.four
+      %h3
+        %em=t("read_our_feedback")
+      .figure
+        %p.legend=t("we_are_posting_text")
+  %hr.hide
+
+  #ideas.section
+    %h2.header
+      =t("here_are_some_ideas")
+
+    .ideas-group
+      #popular-ideas.panel.summary.hfeed
+        .header
+          %h3.icon.popular=t("whats_hot")
+          %ul.actions
+            -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
+            -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
+        .body.ideas
+          = render :partial => 'idea', :collection => search_ideas(:search => 'hot', :page_size => 5)
+        .footer
+          .pagination
+            = link_to t('more'), idea_search_path(:search => 'top-rated'), :class => 'next_page'
+
+    .ideas-group
+      #recent-ideas.panel.summary.hfeed
+        .header
+          %h3.icon.recent= t("recent_ideas")
+          %ul.actions
+            -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
+            -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
+        .body.ideas
+          = render :partial => 'idea', :collection => search_ideas(:search => 'recent', :page_size => 5)
+        .footer
+          .pagination
+            = link_to t("more"), idea_search_path(:search => "recent"), :class => 'next_page'
+
+    .ideas-group
+      #recent-ideas.panel.summary.hfeed
+        .header
+          %h3.icon.recent= t("department_ideas")
+          %ul.actions
+            -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
+            -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "/ideas.rss"
+        .body.ideas
+          = render :partial => 'idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>5)
+        .footer
+          .pagination
+            = link_to t("more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'next_page'
+
+    .ideas-group.last
+      #nearby-ideas.panel.summary.hfeed.last
+        .header
+          %h3.icon.nearby=t("top_contributors")
+          %ul.actions
+            -#%li= link_to image_tag("icn/16-sq-map.png", :alt => "Map these ideas"), "#"
+            -#%li= link_to image_tag("icn/16-sq-rss.png", :alt => "Subscribe to these ideas"), "#"
+        #nearby-idea-results.body.ideas
+          = render :partial => 'shared/contributor',
+                   :collection => User.find_top_contributors(true, :limit => 10),
+                   :locals => { :points_method => :recent_contribution_points }
+        .footer
+          .pagination
+            = link_to t("menu.user_more"), index_user_path , :class => "next_page"
+
+

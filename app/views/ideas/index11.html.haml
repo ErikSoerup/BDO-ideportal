@@ -1,0 +1,45 @@
+-# -cache ['idea_search', CGI.escape(params.inspect)], :expires_in => 5.minutes, :unless => logged_in? do
+%div
+  #popular-ideas.main.panel.section.hfeed
+    .header
+      %h2.icon{ :class => @body_class }
+        -if @body_class == 'top-rated'
+          -# ------- STYLE NEEDED ------
+          =t("whats_hot")
+          -if params[:search] == ['hot']
+            =t("lately")
+          -else
+            = link_to t("lately"), idea_search_path(:search => 'hot')
+          |
+          -if params[:search] == ['top-voted']
+            =t("all_time")
+          -else
+            = link_to t("all_time"), idea_search_path(:search => 'top-voted')
+          -# ------- /STYLE NEEDED ------
+        -else
+          -#=h @query_title
+          =t("recent_ideas")
+      = will_paginate current_objects
+    - if current_objects.empty?
+      .body
+        %div.idea-meta{ :style => "padding-right: 20px; padding-left: 20px;" }
+          %p=t("no_result_found")
+        %div.group.slate
+          - form_tag ideas_path, :method => :get, :id => 'idea_search_box' do
+            .form-group.inline
+              %label{ :for => "search_text" }
+                =t("menu.search")
+              = text_field_tag 'search_text', params[:search_text], :class => "input-text"
+            .form-submit.inline
+              = submit_tag 'Search', :class => "input-submit"
+    - else
+      .body.ideas-list.inset
+        %div
+          %div
+            = render :partial => 'idea', :collection => current_objects
+          
+    .footer
+      = will_paginate current_objects
+  %hr.hide
+  #sidebar.aside
+    = render :partial => "shared/sidebar"

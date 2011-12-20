@@ -1,0 +1,169 @@
+-cache 'graph', :expires_in => 5.minutes do
+  %div
+    .graph-box
+      #graph
+      #legend
+      #chronology-bubble
+
+  :javascript
+    (function($) {
+        var timeSeries = function(label, color, data) {
+          return {
+            data: data,
+            color: color,
+            label: label,
+            shadowSize: 0
+          }
+        }
+    
+        var graphElem = $("#graph"),
+            selectionInfo = $("#legend"),
+            chronologyBubble = $('#chronology-bubble')
+    
+        var graph = $.plot(
+          graphElem,
+          [
+            timeSeries('Votes',    '#FFA700', [ #{vote_graph_data} ]),
+            timeSeries('Comments', '#D93740', [ #{comment_graph_data} ]),
+            timeSeries('Ideas',    '#0064BB', [ #{idea_graph_data} ]),
+          ],
+          {
+            xaxis: {
+              mode: 'time',
+              timeformat: '%b %d',
+            },
+            grid: {
+              color: '#333',
+              borderColor: 'white',
+              backgroundColor: 'white',
+              tickColor: '#e0e0e0',
+              hoverable: true,
+              clickable: true,
+              autoHighlight: false
+            },
+            legend: {
+              show: false
+            },
+            crosshair: { mode: "x" },
+            selection: { mode: "x" }
+          }
+        )
+    
+        var selectedRange = null, hoverPos = null
+    
+        var indexForX = function(data, x) {
+          // Fairly stupid linear search. Switch to binary if there are performance issues.
+          var bestI = 0, bestDelta = Infinity
+          for(i = 0; i < data.length; i++) {
+            var delta = Math.abs(data[i][0] - x)
+            if(delta < bestDelta) {
+              bestI = i
+              bestDelta = delta
+            }
+          }
+          return bestI
+        }
+    
+        var sumDataInRange = function(data, i0, i1) {
+          var sum = 0
+          for(var i = i0; i <= i1; i++)
+            sum += data[i][1]
+          return sum
+        }
+        
+        var showChronologyBubble = function(start, end) {
+          // Round start & end to data point to ensure that passed timestamps are correct
+          var dataset = graph.getData()
+          var startI = indexForX(dataset[0].data, start),
+              endI   = indexForX(dataset[0].data, end)
+          start = dataset[0].data[startI][0]
+          end   = dataset[0].data[  endI][0]
+          
+          chronologyRange = { from: start, to: end }
+          chronologyBubble.css({
+            'position': 'absolute',
+            'display': 'block'
+          })
+          var center = (start + end) / 2,
+              centerPx = graph.getAxes().xaxis.p2c(center) + graph.getPlotOffset().left + $(graph.getCanvas()).offset().left
+          chronologyBubble.offset({
+            left: centerPx - chronologyBubble.width() / 2,
+            top:  graphElem.offset().top - chronologyBubble.height() + 16
+          })
+        }
+        
+        var updateSelectionInfo = function() {
+          var start = null, end = null
+          var formatter = graph.getAxes().xaxis.tickFormatter
+          if(selectedRange) {
+            start = selectedRange.xaxis.from
+            end   = selectedRange.xaxis.to
+          } else if(hoverPos) {
+            start = end = hoverPos.x
+          }
+      
+          var dataset = graph.getData()
+          var timeRange = '&nbsp;'
+          if(start) {
+            var startI = indexForX(dataset[0].data, start),
+                endI   = indexForX(dataset[0].data, end)
+        
+            // Round start & end to data point to ensure that displayed date matches displayed counts!
+            start = dataset[0].data[startI][0]
+            end   = dataset[0].data[  endI][0]
+
+            timeRange = formatter(start)
+            if(end != start)
+              timeRange += " &ndash; " + formatter(end) + '</div>'
+          }
+
+          var info = '<div class="time-range">' + timeRange + '</div>'
+          for(var i = dataset.length - 1; i >= 0; i--) {
+            var label = dataset[i].label
+            var count = '&nbsp;'
+            if(start) {
+              count = sumDataInRange(dataset[i].data, startI, endI)
+              if(count == 1)
+                label = label.replace(/s$/, '')
+            }
+            info += '<div class="item" style="color: ' + dataset[i].color + '">'
+            info += '<div class="count">' + count + '</div>'
+            info += '<div class="label">' + label + '</div>'
+            info += '</div>'
+          }
+        
+          selectionInfo.html(info)
+        }
+      
+        var selectionChanged = function(event, ranges) {
+          selectedRange = ranges
+          updateSelectionInfo()
+          if(selectedRange)
+            showChronologyBubble(selectedRange.xaxis.from, selectedRange.xaxis.to)
+        }
+        
+        var hoverChanged = function(event, pos, item) {
+          hoverPos = pos
+          updateSelectionInfo()
+        }
+        
+        var plotClicked = function(event, pos, item) {
+          if(!selectedRange)
+            showChronologyBubble(pos.x, pos.x)
+          updateSelectionInfo()
+        }
+        
+        var showChronology = function() {
+          document.location = '#{admin_chronology_path}?from=' + chronologyRange.from + '&to=' + chronologyRange.to
+        }
+    
+        graphElem.bind("plotselecting",  selectionChanged)
+        graphElem.bind("plotselected",   selectionChanged)
+        graphElem.bind("plotunselected", selectionChanged)
+        graphElem.bind("plotclick",      plotClicked)
+        graphElem.bind("plothover",      hoverChanged)
+        graphElem.bind("mouseleave",     hoverChanged)
+        updateSelectionInfo()
+
+        chronologyBubble.click(showChronology)
+    })(jQuery)

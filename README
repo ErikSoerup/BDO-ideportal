@@ -1,0 +1,40 @@
+To get the app running, you will need to edit the following files to customize everything for your environment:
+
+    config/environment_custom.rb
+    config/database.yml
+    config/newrelic.yml       (if you want performance metrics from NewRelic)
+    config/twitter.yml        (if you want Twitter integration)
+    config/facebooker.yml     (if you want Facebook integration)
+
+To customize the UI, edit / create files in the following directories:
+
+    app/views/custom/
+    public/stylesheets/sass/
+    public/images/
+
+UI elements that pertain to your brand need not be contributed back to the open source project.
+
+==================
+
+To set up the database, if you are using MySQL, you'll need to make sure the user configured in database.yml
+has permission to use the "load data" command:
+
+    grant file on *.* to bbyidx;
+
+To set up the database:
+
+    rake db:create   # if you haven't created it already through your DB admin tool
+    rake db:migrate
+    rake db:seed
+
+You will be prompted to provide an email address and password for the admin user.
+
+Now give your installation a test drive!
+
+    script/server
+    
+To verify your installation:
+
+    rake test
+
+moved repo to BBYOpen. Testing pull into forks. Testing pull again.

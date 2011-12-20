@@ -1,0 +1,45 @@
+- @idea = nil  # This form is always for a new idea; don't populate with other idea being shown
+
+#share.section
+  .body
+    #submit-idea
+      = error_messages_for :idea
+      - form_for :idea, :url => ideas_path, :has_example_text => true, :html => { :multipart=>true, :class => 'main' } do |f|
+        #idea-title-group.form-group.inline
+          %label{ :for => "idea-title" }
+            %strong=t("idea")
+            %small=t("idea_in_short")
+          = f.text_field :title, :example =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"
+        #idea-description-group.form-group.inline
+          %label{ :for => "idea-description" }
+            %strong=t("description")
+            %small=t('breif_explaination')
+          = f.text_area :description, :example => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"
+          .input_file
+            = text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
+            =f.file_field :document , :size=>80
+        #idea-tags-group.form-group.inline
+          %label{ :for => "idea-tags" }
+            %strong=t('menu.tags')
+            %small=t("seperate_with_coma")
+          = f.text_field :tag_names, :class => "input-text"
+          = f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}
+
+        .form-group.inline
+          = submit_tag 'Share My Idea', :class => "input-submit"
+
+
+      .aside
+        %div
+          %h4= t("share_your_idea")
+          %p= t("notice.constructive")
+        - unless logged_in?
+          %div
+            %p
+              Don't have an account?
+              = link_to t("menu.sign_up"), signup_path
+  .footer
+    %div
+      %h4.one Just had an idea? Let us know about it.
+      %a.tab{ :href => "#" }
+        %span.dn= t("share_your_idea")

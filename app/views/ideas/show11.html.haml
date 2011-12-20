@@ -1,0 +1,139 @@
+%div
+  #idea-1.main.panel.section.idea.hentry
+    .header
+      %h2.entry-title= h @idea.title
+      - if @idea.editable_by?(current_user)
+        %div
+          = link_to('edit', '#', :onclick => 'editIdeaText(); return false')
+          == (For the next #{time_ago_in_words(@idea.created_at + 15.minutes)})
+      :javascript
+        function editIdeaText() {
+          $('idea-1').hide();
+          $('edit-idea-1').show();
+        }
+        function cancelEdit() {
+          $('idea-1').show();
+          $('edit-idea-1').hide();
+        }
+      %h4.posted
+        =t("posted")
+        %abbr.published.time-relative== #{time_ago_in_words(@idea.created_at)} ago
+        =t("by")
+        %span.vcard.author
+          -unless @idea.is_anonymous?
+            =link_to @idea.inventor.name, profile_path(@idea.inventor), :class => @idea.inventor.admin? ? 'fn url admin' : 'fn url'
+          -else
+            =link_to "Anonymous", "#"
+        %br
+        - if !@idea.current.nil? && @idea.current.id != Current::DEFAULT_CURRENT_ID
+          Part of:
+          %strong= link_to h(@idea.current.title), current_path(@idea.current)
+          %br
+        =t("idea_status")
+        %strong= @idea.status
+      - unless @idea.duplicate_of
+        %span{:id => "vote_#{@idea.id}"}= render :partial => 'votes/vote', :locals => { :idea => @idea, :dom_id => "vote_#{@idea.id}" }
+      - else
+        %p.info
+          This idea is a duplicate of
+          = link_to @idea.duplicate_of.title, idea_path(@idea.duplicate_of)
+          \. Please visit the original idea to vote.
+    .body
+      .entry-content
+        %p= user_formatted_text @idea.description
+        %br
+        %div
+          - if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?
+            - form_tag idea_follow_path do
+              = hidden_field_tag :idea_id, @idea.id
+              = submit_tag "Follow", :class => "idea_submit"
+
+        %div
+          - unless @idea.idea_followers.empty?
+            = link_to "Followers(#{@idea.idea_followers.size})", followers_idea_path(@idea.id)
+            = link_to "Unfollow", unfollow_idea_path(@idea.id), :method => :delete unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?
+        -if @idea.document?
+          .download.for_idea=link_to "Download", @idea.document.url
+      .idea-meta
+        %div
+          %h3= t("about_this_idea")
+          %ul.entry-meta
+            %li.comments
+              = link_to "Kommentarer #{"(#{@idea.comment_count})" if @idea.comment_count > 0}", "#comments"
+              |
+              = link_to "Kommentar", "#post-comment"
+            -##subscription
+              = render :partial => 'subscription'
+            %li.tags
+              = @idea.tags.map { |tag| link_to h(tag.name), idea_search_path(:search => ['tag', tag.name]) }.join(', ')
+            %li.sharethis= render :partial => 'sharethis'
+            -#%li.flag#xxx= render :partial => 'inappropriate/xxx', :locals => { :model => @idea, :dom_id => 'xxx' }
+        %div.related-ideas
+          -# %h3
+          -#   Related Ideas
+          -#   %p
+          -#     There are no related ideas.
+        - unless @idea.duplicates.visible.empty?
+          %div.related-ideas
+            %h3 Duplicates of this Idea
+            %ul.entry-duplicates
+              - @idea.duplicates.visible.each do |idea|
+                %li= link_to h(idea.title), idea_path(idea)
+      #comments.group.slate
+        - if @idea.comments.visible.empty?
+          %h3= t("no_comments")
+        - else
+          %h3== #{@idea.comment_count} Kommentarer
+          .comments.inset
+            %div
+              %div= render :partial => 'comments/comment',
+                      :collection => @idea.comments.visible,
+                      :controller => 'comments',
+                      :locals => { :show_avatar => true }
+        - form_for :comment, :url => idea_comments_url(@idea), :html => { :multipart => true, :onsubmit => 'return validateComment()' } do |f|
+          #comment-missing.message.error{:style => 'display: none'}
+            =t("enter_comment")
+          .form-group.inline#post-comment
+            %label{ :for => "comment-text" } Din Kommentar
+            = f.text_area :text, :id => "comment-text", :class => "input-textarea"
+            = f.file_field :document , :size=>40
+          .form-submit.inline
+            - if current_user && !current_user.active?
+              %p.message.info Your comment will not be publicly visible until you confirm your account.
+            = submit_tag "Post Comment", :class => "input-submit"
+            .clear{:style=>'clear:both'}
+        :javascript
+          function validateComment() {
+            if($('comment-text').value.blank()) {
+              $('comment-missing').style.display = 'block';
+              $('comment-text').focus();
+              return false;
+            } else {
+              return true;
+            };
+          };
+          function editCommentText(id) {
+            $$('#comment_'+id+' .comment-content')[0].hide();
+            $$('#comment_'+id+' .edit-comment-content')[0].show();
+          };
+          function validateCommentUpdate(id) {
+            if($('comment-'+id+'-text').value.blank()) {
+              $('comment-'+id+'-missing').style.display = 'block';
+              $('comment-'+id+'-text').focus();
+              return false;
+            } else {
+              return true;
+            };
+          };
+    .footer
+  %hr.hide
+  - if @idea.editable_by?(current_user)
+    #edit-idea-1.main.panel.section.idea.hentry{:style => "display:none"}
+      .header
+        %h2.entry-title Ret din ide
+      .body
+        = render :partial => 'edit'
+      .footer
+  #sidebar.aside
+    = render :partial => "shared/sidebar"
+

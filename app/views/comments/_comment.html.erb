@@ -1,0 +1,60 @@
+<div class="tab_container">
+  <!--Kommentarer container Starts -->
+  <div id="tab2" class="tab_content">
+    <!--Comments1 Starts -->
+    <div class="plainwrap">
+      <!--Commentator Starts -->
+      <div class="commentator_panel">
+        <div class="commentator_wrap_green"><%= link_to h(comment.author.name), profile_path(comment.author) %></div>
+        <div class="plainwrap">
+          <div class="fl">
+                    <%= image_tag profile_picture(comment.author)%>
+                  </div>
+          <div>
+            <%if comment.document?%>
+              <%=link_to t("download"), comment.document.url, :class => "bold_link", :target => "_blank"%>
+            <% end %>  
+          </div>
+        </div>
+      </div>
+      <!--Commentator Ends -->
+      <!--Posted Comments Starts -->
+      <div class="comments_wrap_green">
+        <!--Content Head Starts -->
+        <div class="p_content_head">
+          <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(comment.idea.title), idea_path(comment.idea), :class => "bold_link"%></div>
+        </div>
+        <!--Content Head Ends -->
+        <!--Posted Content Starts -->
+        <div class="plainwrap">
+          <p><%= user_formatted_text comment.text%> </p>
+        </div>
+        <!--Posted Content Ends -->
+      </div>
+      <!--Posted Comments Ends -->
+    </div>
+    <!--Breaker Starts -->
+    <div class="b_divider"></div>
+    <!--Breaker Ends -->
+    <!--Comments1 Ends -->
+    <!--Comments2 Starts -->
+
+    <!--Breaker Ends -->
+    <!--Comments2 Ends -->
+    <!--Comments3 Starts -->
+
+    <!--Breaker Starts -->
+    <!--Comments3 Ends -->
+    <!--Comments4 Starts -->
+
+    <!--Breaker Starts -->
+
+    <!--Comments4 Ends -->
+    <!--Comments5 Starts -->
+
+    <!--Breaker Ends -->
+    <!--Comments5 Ends -->
+  </div>
+  <!--Kommentarer container Ends -->
+  <!--Tab Ends -->
+</div>

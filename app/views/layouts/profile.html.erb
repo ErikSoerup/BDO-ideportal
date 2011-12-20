@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name = 'keywords' content = "#{COMPANY_NAME}, #{SHORT_SITE_NAME}, #{LONG_SITE_NAME}, Idea Exchange, share, vote, rate" />
+    <meta name = 'description' content = "#{LONG_SITE_NAME} is a forum for #{COMPANY_NAME} customers to share, rate, and discuss ideas about #{COMPANY_NAME}."/>
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <title><%= " #{LONG_SITE_NAME} | #{h(page_title || "Exchange your ideas, vote, and discuss. Let's make it better.")}" %> </title>
+    <%= stylesheet_link_tag "profile" %>
+    <%= stylesheet_link_tag "idea_form" %>
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js", "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js", "jquery.tagify" %>
+
+    <!--Tab -->
+    <%= javascript_include_tag :defaults%>
+    <%= javascript_include_tag 'example_text'%>
+    <%= javascript_include_tag 'placeholder' %>
+    <%= javascript_include_tag 'ga', 'global'%>
+    <script>
+      jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
+
+      jQuery(function() {
+        jQuery('input, textarea').placeholder();
+      });
+
+      jQuery(document).ready(function() {
+
+        //When page loads...
+        jQuery(".tab_content").hide(); //Hide all content
+        jQuery("ul.tabs li:first").addClass("active").show(); //Activate first tab
+        jQuery(".tab_content:first").show(); //Show first tab content
+
+        //On Click Event
+        jQuery("ul.tabs li").click(function() {
+
+          jQuery("ul.tabs li").removeClass("active"); //Remove any "active" class
+          jQuery(this).addClass("active"); //Add "active" class to selected tab
+          jQuery(".tab_content").hide(); //Hide all tab content
+
+          var activeTab = jQuery(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+          jQuery(activeTab).fadeIn(); //Fade in the active ID content
+          return false;
+        });
+
+      });
+    </script>
+
+
+
+    <!--Tab -->
+  </head>
+
+  <body>
+    <div class="main_wrap">
+      <!--Header Starts -->
+      <div class="header_wrap">
+        <div class="h_top">
+          <!--Logo Starts -->
+          <div class="logo"><%= link_to image_tag("/images/logo.jpg"), "/"%> </div>
+          <!--Logo Ends -->
+          <!--Top Nav Starts -->
+          <% if logged_in? %>
+            <div class="top_nav">
+
+              <ul>
+                <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>
+                <li><%= link_to t('menu.settings'), edit_user_path %></li>
+                <li><%= link_to t("menu.about"), home_path('about')%></li>
+                <% if current_user.admin? %>
+                  <li><%= link_to 'Admin', admin_root_path%></li>
+                <% end %>
+                <li class="last">
+                  <% form_tag ideas_path, :method => :get do %>
+                    <div class="fl" style="width: 12px;"><%= submit_tag "Søg", :style=> "color: #FFFFFF;background: none;border: none;text-decoration: none;cursor: pointer;text-weight:bold;" %></div>
+
+                    <div class="fr"> <%= text_field_tag 'search_text', params[:search_text], :class => "search_input"%></div>
+
+                  <% end %>
+                </li>
+              </ul>
+
+            </div>
+          <% end %>
+          <!--Top Nav Ends -->
+        </div>
+        <!--Header Bottom Section Starts -->
+        <% if logged_in? %>
+          <div class="h_btm">
+            <div class="menu_wrap">
+              <!--Left Small Menu Panel Starts -->
+              <div class="menu_container">
+                <ul>
+                  <li><%=link_to t("menu.hot"), idea_search_path(:search => 'hot')%></li>
+                  <li>|</li>
+                  <li><%=link_to t("menu.recent"), idea_search_path(:search => 'recent')%></li>
+                  <li>|</li>
+                  <li><%= link_to  t('menu.currents'), currents_path%></li>
+                </ul>
+              </div>
+              <!--Left Small Menu Panel Ends -->
+              <!--Left Menu Panel Starts -->
+              <div class="menu_container">
+                <ul>
+                  <li><%= link_to t("menu.comments"), comments_path%></li>
+                  <li>|</li>
+                  <li><%= link_to t("menu.tags"), tags_path%></li>
+                  <li>|</li>
+                  <li><%=link_to t("menu.advance_search"), home_advance_path %></li>
+                </ul>
+              </div>
+              <!--Left Menu Panel Ends -->
+            </div>
+            <!--Logud Stuff Starts -->
+            <div class="logud"><%= link_to t('menu.sign_out'), logout_path%></div>
+            <!--Logud Stuff Ends -->
+          </div>
+        <% end %>
+        <!--Header Bottom Section Ends -->
+      </div>
+      <!--Header Ends -->
+      <!--Slider Starts -->
+      <% if logged_in? %>
+        <div class="plainwrap">
+          <%= render :partial => "shared/drop_share_idea" %>
+        </div>
+      <% end %>
+      <% unless current_page?("/") %>
+      <div class="flash_message">
+        <%= render :partial => "shared/flash_messages"%>
+      </div>
+      <% end %>
+      <%= yield %>
+
+
+      <%if FACEBOOK_ENABLED%>
+        <%= fb_connect_async_js%>
+        <script type="text/javascript">
+          facebook_auth = function(success_callback) {
+            FB.login(
+            function(response) {
+              if(response.session && success_callback)
+                success_callback()
+            },
+            { perms: 'email,publish_stream' })
+          }
+          facebook_login = function(callback_url) {
+            facebook_auth(function() {
+              window.location = callback_url || '#{create_facebook_session_url}'
+            })
+          }
+        </script>
+      <% end %>
+      <%if GOOGLE_ANALYTICS_TRACKING_CODE%>
+        <script type="text/javascript">
+
+          var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+          document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+          try {
+            var pageTracker = _gat._getTracker("#{GOOGLE_ANALYTICS_TRACKING_CODE}");
+            pageTracker._trackPageview();
+          } catch(err) {}
+
+        </script>
+      <% end %>
+
+      <script type='text/javascript'>
+        //<![CDATA[
+        jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
+        jQuery('#idea_document').change(function(){
+          var i=this
+          jQuery('input#fakeupload').val(i.value);
+        })
+      </script>
+
+
+
+
+
+
+
+
+      <!--Footer Starts -->
+      <div class="footer">© BDO Kommunernes Revision, Godkendt revisionsaktieselskab</div>
+      <!--Footer Ends -->
+    </div>
+
+    <script type="text/javascript" >
+      var tags =<%= Tag.all.map(&:name).to_json %>
+      var tag_auto = jQuery('input#idea_tag_names').tagify();
+      tag_auto.tagify('inputField').autocomplete({
+          source:tags,
+          position: { of: tag_auto.tagify('tagify-container') },
+          close: function(event, ui) { tag_auto.tagify('add'); },
+        });
+    </script>
+
+  </body>
+</html>

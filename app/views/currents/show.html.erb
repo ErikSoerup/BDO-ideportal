@@ -1,0 +1,104 @@
+<%= stylesheet_link_tag "idea_form" %>
+<%= stylesheet_link_tag "tagify-style" %>
+<div class="body_wrap">
+  <!--Left Panel Starts -->
+  <div class="left_panel">
+    <!--Profile Top Stuff Starts -->
+    <div class="plainwrap">
+      <h2 class="title">Hovedvej : <%=h "#{@current.title}"%></h2>
+    </div>
+    <!--Profile Top Stuff Ends -->
+    <!--Tag Panel Starts -->
+    <div class="plainwrap">
+      <h3 class="subhead">Oprettet for <strong><%= time_ago_in_words(@current.created_at) %> <%= t("ago") %></strong>  <%=link_to h(@current.inventor.name), profile_path(@current.inventor),:class => "bold_link" unless @current.inventor.nil? %></h3>
+      <h3 class="subhead">Status: <strong>
+
+          <% if @current.closed?%>          
+            closed
+          <% else%>
+            open
+          <% end %>
+        </strong></h3>
+      <p><span style="color:#2cafa4;">Frist for indtastning af ideer:</span>
+        <strong> <%= @current.submission_deadline%></strong></p>
+      <p><%=  user_formatted_text @current.description %></p>
+    </div>
+    
+    
+
+    <div class="plainwrap">
+      <div class="tab_headline">
+        <!--Pagination Starts -->
+        <div class="fr">
+          <% unless @current_ideas.empty? %>
+            <%= will_paginate  @current_ideas%>
+          <% end %>
+        </div>
+        <!--Pagination Ends -->
+      </div>
+
+      <div class="plainwrap"><h2 class="title"><span>
+            <%= render :partial => 'idea_count', :locals => { :current_ideas => @current_ideas }%> 
+            <% if @current_ideas.empty? %>
+              <%= link_to 'Submit an idea!', params[:action] == "show" ? "#header" : current_path(current, :anchor=>"header"), :class=> "bold_link"%>
+              <a name="header" class="bold_link"></a>
+            <% end %>
+          </span></h2></div>
+      <!--Focus1 Panel Starts -->
+
+      <!--Focus1 Panel Ends -->
+      <!--Focus1 Panel Starts -->
+      <%= render :partial => "idea_current", :collection => @current_ideas%>
+      <!--Focus1 Panel Ends -->
+      <!--Breaker Starts -->
+      <div class="b_divider"></div>
+      <!--Breaker Ends -->
+    </div>
+
+    <div id="header"class="plainwrap" style="margin-top:10px">
+      <h2 class="title">TILFØJ ENDNU EN IDE TIL DENNE HOVEDVEJ</h2>
+    </div>
+    <div class="submit_idea_wrap"  >
+      <div class="form_wrap" style=" width:627px;-moz-border-radius: 5px 5px 5px 5px;background-color: #2CAFA4;height: 400px;" class="hovedvej_form">
+        <div id="intro" class="section" style="width:640px;">
+          <div id ="submit-idea" class="hovedvej_tag" style=" ">
+            <%=render :partial=>"ideas/new", :locals=>{:current=>@current}%>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+  <!--Left Panel Ends -->
+  <!--Right Panel Starts -->
+  <div class="right_panel">
+    <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
+    <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;"><%=t("all_users")%></a></div>
+    <!--Display Section Starts -->
+    <div id="ajax-tab">
+
+    </div>
+    <!--Display Section Ends -->
+  </div>
+  <!--Right Panel Ends -->
+</div>
+<script type="text/javascript">
+  
+  var tags= <%= Tag.all.map(&:name).to_json  %>;
+  var myTextArea = jQuery('#auto-text').tagify();
+
+  myTextArea.tagify('inputField').autocomplete({
+    source: tags,
+    position: { of: myTextArea.tagify('containerDiv') },
+    close: function(event, ui) { myTextArea.tagify('add'); }
+  });
+
+  jQuery("#idea_form").submit(function(e){
+    var new_values = jQuery(".tagify-container input:first").val();
+    jQuery.each(new_values.split(","),function(i,data){
+      myTextArea.tagify("add",data);
+    });
+    myTextArea.tagify("serialize");
+  });
+  
+</script>

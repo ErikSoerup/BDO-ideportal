@@ -1,0 +1,25 @@
+Project Name:  BDO_IDEAX
+=======================
+Resources :
+  Alina
+  Erik
+  Rajib
+
+
+Tools:
+  http://heroku.com
+  http://github.com
+  http://pivotaltracker.com
+
+
+Phase1:
+  task 1: Design and Improve looks of IDEAX platform    priority: mideum
+  task 2: Translate the whole IDEAX plaform             priority: high
+
+
+Milestones:
+  Milestone 1: deliver the application for full review for [27/9/2011]
+
+
+Phase2:
+  task 1: Integration of yammer platform
