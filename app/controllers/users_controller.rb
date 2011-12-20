@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "down"
       @users=User.find_top_contributors(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
     else
-      @users = User.find_top_contributors(true)
+      @users = User.find(:all)
     end
     @users=@users.paginate :page => page unless @users.nil?
   end
