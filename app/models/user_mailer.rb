@@ -5,13 +5,7 @@ class UserMailer < ActionMailer::Base
     @body[:url]  = activate_url(:activation_code => user.activation_code)
   end
 
-  def welcome
-    @subject = "test email"
-    @from = EMAIL_FROM_ADDRESS
-    @recipients = ["rajarshi.das@arminus.co.in"]
-    @sent_on     = Time.now
-    
-  end
+  
 
   def activation(user)
     set_up_email(user)
