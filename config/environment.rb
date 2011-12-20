@@ -69,12 +69,12 @@ Rails::Initializer.run do |config|
 
   config.action_mailer.default_charset = "utf-8"
   config.action_mailer.smtp_settings = {
-    :address => "smtp.gmail.com",
+    :address => 'smtp.sendgrid.net',
     :port => 587,
-    :domain => "bdo.heroku.com",
+    :domain => "heroku.com",
     :authentication => :plain,
-    :user_name => "bdorajars",
-    :password => "arminus1234",
+    :user_name => "app2126677@heroku.com",
+    :password => "rteoqrwg",
     :enable_starttls_auto => true
   }
 
