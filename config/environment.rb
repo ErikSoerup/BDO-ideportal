@@ -69,7 +69,7 @@ Rails::Initializer.run do |config|
 
   config.action_mailer.default_charset = "utf-8"
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.sendgrid.net',
+    :address => "smtp.sendgrid.net",
     :port => 587,
     :domain => "heroku.com",
     :authentication => :plain,
