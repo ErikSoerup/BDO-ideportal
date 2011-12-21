@@ -1,5 +1,5 @@
 <div class="top_bid_row">
-  <div class="top_bid_img"><%= image_tag profile_picture(home_contributor) , :width=>32,:height=>32 %></div>
-  <div class="entry_title"><%= link_to h(home_contributor.name), profile_path(home_contributor), :class => 'bold_link'%></div>
-  <div class="entry_point"><strong style="color:#0F645D;"><%= "#{(home_contributor.send(points_method) || 0).round } points" %></strong></div>
+  <div class="top_bid_img"><%= image_tag profile_picture(home_contributor) , :width=>20,:height=>20 %></div>
+  <div class="entry_title"><%= link_to h(home_contributor.name), profile_path(home_contributor), :class => 'bold_link', :style => "font-size:8px;"%></div>
+  <div class="entry_point"><strong style="color:#0F645D;font-size: 8px;"><%= "#{(home_contributor.send(points_method) || 0).round } points" %></strong></div>
 </div>
