@@ -14,9 +14,9 @@
           <!--Top Bidragydere Panel Starts -->
 
 
-          <div class="top_bidragydere">
+          <div class="top_bidragydere" style="height:317px;">
             <div class="plainwrap"><h3 style="margin-left:15px">Top Bidragydere</h3></div>
-            <div class="top_bid_inner">
+            <div class="top_bid_inner" style="height:308px;">
               <%= render :partial => 'shared/home_contributor',
                 :collection => User.find_top_contributors(true, :limit => 10),
                 :locals => { :points_method => :recent_contribution_points }%>
