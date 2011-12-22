@@ -56,10 +56,10 @@ a:hover { text-decoration:underline;}
 
 }
 .top_nav {
-    width:392px;
+    width:454px;
     height:32px;
     padding:0 7px;
-    margin:0 0px 0 136px;
+    margin:0 0px 0 66px;
     float:left;
     border-radius:0 0 5px 5px;
     -moz-border-radius:0 0 5px 5px;
@@ -112,7 +112,7 @@ a:hover { text-decoration:underline;}
     margin:0;
 }
 .menu_wrap {
-    width:575px;
+    width:690px;
     float:left;
     margin:61px 0 0 0;
 }
