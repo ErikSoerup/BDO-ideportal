@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if params[:val]
       @users=User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:val]}%"])
     elsif params[:value] 
-      @users=User.find(:all, :conditions =>"recent_contribution_points is not NULL")
+      @users=User.find(:all, :conditions =>"recent_contribution_points is not NULL", :order => "recent_contribution_points DESC")
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
       
       @users=User.find_top_contributors(:all, :order=>"users.name ASC")
