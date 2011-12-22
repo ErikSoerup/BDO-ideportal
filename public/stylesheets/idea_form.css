@@ -172,7 +172,7 @@ input.blur, input.example, textarea.blur, textarea.example {
 
 #intro .input-submit,
 #current .input-submit {
-    background-image: url(../images/form-submit-share-my-idea.png);
+    background-image: url(../images/form-submit-share-it.gif);
     height: 40px;
     width: 166px; }
 #intro .input-submit:hover,
