@@ -1681,12 +1681,12 @@ ul.index li {
 .top_bid_inner {
     width:223px;
     float:left;
-    margin:5px 0 10px 0;
+    margin:5px 0 0px 0;
     background:#ffe39c;
     border-radius:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
-    padding:10px 0;
+    padding:0px 0px 10px 0;
 }
 .top_bid_row {
     width:100%;
