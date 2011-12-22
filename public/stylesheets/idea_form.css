@@ -177,7 +177,7 @@ input.blur, input.example, textarea.blur, textarea.example {
     width: 166px; }
 #intro .input-submit:hover,
 #current .input-submit:hover {
-    background-position: left -40px; }
+    background-position: left -31px; }
 #intro .input-submit:active,
 #current .input-submit:active {
     background-position: left -80px; }
