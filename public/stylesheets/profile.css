@@ -56,11 +56,11 @@ a:hover { text-decoration:underline;}
 
 }
 .top_nav {
-    width:454px;
+    width:392px;
     height:32px;
     padding:0 7px;
-    margin:0 10px 0 0;
-    float:right;
+    margin:0 0px 0 136px;
+    float:left;
     border-radius:0 0 5px 5px;
     -moz-border-radius:0 0 5px 5px;
     -webkit-border-radius:0 0 5px 5px;
@@ -147,7 +147,7 @@ a:hover { text-decoration:underline;}
     background:url(../images/logout-bg.png) no-repeat;
     width:59px;
     height:84px;
-    float:right;
+    float:left;
     text-align:center;
     color:#fff;
     font-weight:bold;

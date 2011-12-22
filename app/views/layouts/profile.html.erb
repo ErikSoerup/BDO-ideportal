@@ -81,6 +81,7 @@
             </div>
           <% end %>
           <!--Top Nav Ends -->
+          <div class="logud"><%= link_to t('menu.sign_out'), logout_path%></div>
         </div>
         <!--Header Bottom Section Starts -->
         <% if logged_in? %>
@@ -110,7 +111,7 @@
               <!--Left Menu Panel Ends -->
             </div>
             <!--Logud Stuff Starts -->
-            <div class="logud"><%= link_to t('menu.sign_out'), logout_path%></div>
+            
             <!--Logud Stuff Ends -->
           </div>
         <% end %>
