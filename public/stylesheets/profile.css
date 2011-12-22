@@ -1,6 +1,7 @@
 body {
     margin:0;
     background:#eaeaea url(../images/bodybg.gif) repeat-x;
+    background-position: 0px -43px;
     font-family: Helvetica,Arial,sans-serif;
     font-size: 12px;
 }
@@ -32,7 +33,7 @@ a:hover { text-decoration:underline;}
 /*--- Header---*/
 .header_wrap {
     width:945px;
-    height:163px;
+    height:114px;
     float:left;
 }
 .h_top {
@@ -112,9 +113,9 @@ a:hover { text-decoration:underline;}
     margin:0;
 }
 .menu_wrap {
-    width:575px;
+    width:690px;
     float:left;
-    margin:61px 0 0 0;
+    margin:17px 0 0 0;
 }
 .menu_container {
     width:auto;
@@ -169,7 +170,7 @@ a.tab {
     padding:5px 0 0 0;
     width:auto;
     float:left;
-    margin:0 0 0 10px;
+    margin:6px 0 0 10px;
 }
 a.tab:hover {
     color:#000;
@@ -179,7 +180,7 @@ a.tab:hover {
 .body_wrap {
     width:100%;
     float:left;
-    margin:12px 0 20px 0;
+    margin:6px 0 20px 0;
 }
 /*--- Left Panel ---*/
 .left_panel {
@@ -806,7 +807,7 @@ h2.title {
 .full_wrap {
     width:925px;
     float:left;
-    padding:10px;
+    padding:0px 10px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1658,7 +1659,7 @@ ul.index li {
     border-radius:5px;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
-    padding:15px;
+    padding: 5px 15px;
 }
 .form_wrap {
     width:530px;
@@ -1675,17 +1676,17 @@ ul.index li {
     -webkit-border-radius:10px;
     padding:2px 1px;
     float:right;
-    margin:0 15px 0 0;
+    margin:10px 15px 0 0;
 }
 .top_bid_inner {
     width:223px;
     float:left;
-    margin:5px 0 10px 0;
+    margin:5px 0 0px 0;
     background:#ffe39c;
     border-radius:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
-    padding:10px 0;
+    padding:0px 0px 10px 0;
 }
 .top_bid_row {
     width:100%;

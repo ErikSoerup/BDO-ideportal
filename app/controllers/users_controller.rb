@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :get_user, :only => [:following, :followers]
 
   layout 'profile'
-  
+
   def compute_layout
     if action_name == "index" || action_name == "search_user" || action_name == "edit"
       'profile'
@@ -17,12 +17,13 @@ class UsersController < ApplicationController
   def index
     @body_class='advance'
     page = 1 || params[:page]
-    
+
     if params[:val]
       @users=User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:val]}%"])
-      
+    elsif params[:value]
+      @users=User.find(:all, :conditions =>"recent_contribution_points is not NULL and state='active' and (select count(*) from roles_users where roles_users.user_id = users.id) = 0", :order => "recent_contribution_points DESC")
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
-      
+
       @users=User.find_top_contributors(:all, :order=>"users.name ASC")
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
       @users=User.find_top_contributors(:all, :order=>"users.name DESC")
@@ -45,9 +46,9 @@ class UsersController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "up"
       @users=User.find_top_contributors(:all).sort{|x,y| x.votes.size <=> y.votes.size}
     elsif params[:name] == "comment" && params[:arrow] == "down"
-      @users=User.find_top_contributors(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+      @users=User.find_top_contributors(:all).sort{|x,y| y.votes.size <=> x.votes.size}
     else
-      @users = User.find(:all)
+      @users = User.find_top_contributors(true)
     end
     @users=@users.paginate :page => page unless @users.nil?
   end
@@ -75,22 +76,22 @@ class UsersController < ApplicationController
     end
 
   end
-  
-  
+
+
   def current_currents
     @current_ideas = current_user.current_followers.collect(&:current)
     respond_to do |format|
       format.js { render :layout=>false }
     end
   end
-  
+
   def follow_users
     @users=current_user.followers.paginate(:page => params[:page])
     respond_to do |format|
       format.js { render :layout=>false }
     end
   end
-  
+
   def create
     cookies.delete :auth_token
     new_user_from_params
@@ -139,12 +140,12 @@ class UsersController < ApplicationController
 
   def following
     @show_links = true
-    
+
     if params[:val]
       @users=@user.following.find_all { |emp| emp.name.first == params[:val].to_s }
-      
+
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
-      
+
       @users=@user.following(:all, :order=>"users.name ASC")
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
       @users=@user.following(:all, :order=>"users.name DESC")
@@ -167,7 +168,7 @@ class UsersController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "up"
       @users=@user.following(:all).sort{|x,y| x.votes.size <=> y.votes.size}
     elsif params[:name] == "comment" && params[:arrow] == "down"
-      @users=@user.following(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+      @users=@user.following(:all).sort{|x,y| y.votes.size <=> x.votes.size}
     else
       @users = @user.following.find(:all)
     end
@@ -175,12 +176,12 @@ class UsersController < ApplicationController
   end
 
   def followers
-    
+
     if params[:val]
       @users=@user.followers.find_all { |emp| emp.name.first == params[:val].to_s }
-      
+
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
-      
+
       @users=@user.followers(:all, :order=>"users.name ASC")
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
       @users=@user.followers(:all, :order=>"users.name DESC")
@@ -203,12 +204,12 @@ class UsersController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "up"
       @users=@user.followers(:all).sort{|x,y| x.votes.size <=> y.votes.size}
     elsif params[:name] == "comment" && params[:arrow] == "down"
-      @users=@user.followers(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+      @users=@user.followers(:all).sort{|x,y| y.votes.size <=> x.votes.size}
     else
       @users = @user.followers.find(:all)
     end
-    
-    
+
+
     @users = @user.followers.paginate :page=> @page , :per_page=>10
     render :following
   end
