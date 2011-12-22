@@ -241,7 +241,7 @@ class UsersController < ApplicationController
       end
     end
     render :action => 'forgot_password'
-  end
+  end   
 
   def new_password
     if log_in_with_activation_code
