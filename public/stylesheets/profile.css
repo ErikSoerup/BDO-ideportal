@@ -1,7 +1,7 @@
 body {
     margin:0;
     background:#eaeaea url(../images/bodybg.gif) repeat-x;
-    background-position: 0px -35px;
+    background-position: 0px -43px;
     font-family: Helvetica,Arial,sans-serif;
     font-size: 12px;
 }
@@ -33,7 +33,7 @@ a:hover { text-decoration:underline;}
 /*--- Header---*/
 .header_wrap {
     width:945px;
-    height:122px;
+    height:114px;
     float:left;
 }
 .h_top {
@@ -115,7 +115,7 @@ a:hover { text-decoration:underline;}
 .menu_wrap {
     width:690px;
     float:left;
-    margin:26px 0 0 0;
+    margin:17px 0 0 0;
 }
 .menu_container {
     width:auto;
