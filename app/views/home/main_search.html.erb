@@ -24,7 +24,7 @@
             </td>
 
             <td align="left" valign="middle" style="width:116px;">
-              <%= select_tag "val2", options_for_select(User.all.collect{|user| [user.name,user.id]}, params[:val2]), :id => "select", :class => "select_input"%>
+              <%= select_tag "val2", options_for_select(["alle", "All"]+User.all.collect{|user| [user.name,user.name]}, params[:val2]), :id => "select", :class => "select_input"%>
             </td>
 
             <td align="left" valign="middle"style="width:116px;">

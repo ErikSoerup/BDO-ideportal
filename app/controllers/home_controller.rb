@@ -127,21 +127,22 @@ class HomeController < ApplicationController
     @c_ideas=[]
     @m_ideas = []
     @d_ideas=[]
-    if params[:val2] == "min egne"
+    if User.find_by_name(params[:val2])
       
       @ideas.each do |idea|
         unless idea.inventor.nil?
-          if idea.inventor == current_user
+          if idea.inventor == User.find_by_name(params[:val2])
             
             @m_ideas << idea  
-          end  
+          end
+        
         end
       end
-
     else
       @ideas.each do |idea|
         @m_ideas << idea
       end
+    
     end
     
     
