@@ -22,10 +22,10 @@ class HomeController < ApplicationController
     
     if params[:val] == "followers"
       if params[:arrow] == "up"
-        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| y.idea_followers.count <=> x.idea_followers.count}
+        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| y.idea_followers.collect(&:user_id).uniq.count <=> x.idea_followers.collect(&:user_id).uniq.count}
         @ideas=@ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| x.idea_followers.count <=> y.idea_followers.count}
+        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.collect(&:user_id).uniq.count}
         @ideas=@ideas.paginate(:page => params[:page],:per_page => 25)
       end
     elsif params[:val] == "date"
@@ -179,10 +179,10 @@ class HomeController < ApplicationController
     
     if params[:val] == "followers"
       if params[:arrow] == "up"
-        @c_ideas=@c_ideas.sort{|x,y| y.idea_followers.count <=> x.idea_followers.count}
+        @c_ideas=@c_ideas.sort{|x,y| y.idea_followers.collect(&:user_id).uniq.count <=> x.idea_followers.collect(&:user_id).uniq.count}
         @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @c_ideas=@c_ideas.sort{|x,y| x.idea_followers.count <=> y.idea_followers.count}
+        @c_ideas=@c_ideas.sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.idea_followers.collect(&:user_id).uniq.count}
         @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       end
     elsif params[:val] == "date"
