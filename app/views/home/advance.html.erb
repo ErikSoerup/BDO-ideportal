@@ -22,7 +22,7 @@
 
 
             <td align="left" valign="middle">
-              <%= select_tag "val2", options_for_select(["alle",  "min egne"], params[:val2]), :id => "select", :class => "select_input"%>
+              <%= select_tag "val2", options_for_select(User.all.collect{|user| [user.name,user.id]}, params[:val2]), :id => "select", :class => "select_input"%>
             </td>
 
 
@@ -35,60 +35,48 @@
             </td>
             <td align="left" valign="middle"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
           </tr>
-    
+
           <tr>
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/advance?val=person&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/advance?val=person&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="/home/advance?val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="/home/advance?val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
-                <div class="fl">Person</div>
-              </div>
-            </td>
-            <td align="left" valign="middle">
-             <div class="sort">
-                <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/advance?val=person&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/advance?val=person&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
-                </div>
-                <div class="fl">Afdeling</div>
+                <div class="fl">Dato</div>
               </div>
             </td>
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/advance?val=person&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/advance?val=person&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="/home/advance?val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="/home/advance?val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
-                <div class="fl">Hovedvej</div>
+                <div class="fl">Stemmer</div>
               </div>
             </td>
+            <td align="left" valign="middle">
+              <div class="sort" style="width:132px;">
+                <div class="sortarrow_wrap">
+                  <div class="plainwrap"><a href="/home/advance?val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="/home/advance?val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                </div>
+                <div class="fl" style="width:109px;">Antal kommentarer</div>
+              </div>
+
+            </td>
             <td colspan="2" align="left" valign="middle">
-              
+
               <div class="rest_sort" style="width:411px;">
-                <div class="sort">
-                  <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="/home/advance?val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="/home/advance?val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
-                  </div>
-                  <div class="fl">Dato</div>
-                </div>
-                <div class="sort">
-                  <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="/home/advance?val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="/home/advance?val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
-                  </div>
-                  <div class="fl">Stemmer</div>
-                </div>
                 <div class="sort" style="width:132px;">
                   <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="/home/advance?val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="/home/advance?val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap"><a href="/home/advance?val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap"><a href="/home/advance?val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                   </div>
-                  <div class="fl" style="width:109px;">Antal kommentarer</div>
+                  <div class="fl" style="width:109px;">Følger ideen</div>
                 </div>
-              </div></td>
+              </div>
+            </td>
           </tr>
 
 
