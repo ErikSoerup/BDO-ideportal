@@ -43,7 +43,13 @@
                   <div class="plainwrap" id="date-up"><a href="/home/advance?val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
                   <div class="plainwrap" id="date-down" style="display:none;"><a href="/home/advance?val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
-                <div class="fl">Dato</div>
+                <% if params[:val] == "date" && params[:arrow] == "up" %>
+                  <a href="/home/advance?val=date&arrow=down"><div class="fl">Dato</div></a>
+                <% elsif params[:val] == "date" && params[:arrow] == "down" %>
+                  <a href="/home/advance?val=date&arrow=up"><div class="fl">Dato</div></a>
+                <% else %>
+                  <a href="/home/advance?val=date&arrow=up"><div class="fl">Dato</div></a>
+                <% end %>
               </div>
             </td>
             <td align="left" valign="middle">
@@ -52,7 +58,13 @@
                   <div class="plainwrap" id="vote-up"><a href="/home/advance?val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
                   <div class="plainwrap" id="vote-down" style="display:none;"><a href="/home/advance?val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
-                <div class="fl">Stemmer</div>
+                <% if params[:val] == "vote" && params[:arrow] == "up" %>
+                  <a href="/home/advance?val=vote&arrow=down"><div class="fl">Stemmer</div></a>
+                <% elsif params[:val] == "vote" && params[:arrow] == "down" %>
+                  <a href="/home/advance?val=vote&arrow=up"><div class="fl">Stemmer</div></a>
+                <% else %>
+                  <a href="/home/advance?val=vote&arrow=up"><div class="fl">Stemmer</div></a>
+                <% end %>
               </div>
             </td>
             <td align="left" valign="middle">
@@ -61,7 +73,13 @@
                   <div class="plainwrap" id="comment-up"><a href="/home/advance?val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
                   <div class="plainwrap" id="comment-down" style="display:none;"><a href="/home/advance?val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
-                <div class="fl" style="width:109px;">Antal kommentarer</div>
+                <% if params[:val] == "comment" && params[:arrow] == "up" %>
+                  <a href="/home/advance?val=comment&arrow=down"><div class="fl" style="width:109px;">Antal kommentarer</div></a>
+                <% elsif params[:val] == "comment" && params[:arrow] == "down" %>
+                  <a href="/home/advance?val=comment&arrow=up"><div class="fl" style="width:109px;">Antal kommentarer</div></a>
+                <% else %>
+                  <a href="/home/advance?val=comment&arrow=up"><div class="fl" style="width:109px;">Antal kommentarer</div></a>
+                <% end %>
               </div>
 
             </td>
@@ -73,7 +91,13 @@
                     <div class="plainwrap" id="follow-up"><a href="/home/advance?val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
                     <div class="plainwrap" id="follow-down" style="display:none;"><a href="/home/advance?val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                   </div>
-                  <div class="fl" style="width:109px;">Følger ideen</div>
+                  <% if params[:val] == "followers" && params[:arrow] == "up" %>
+                    <a href="/home/advance?val=followers&arrow=down"><div class="fl" style="width:109px;">Følger ideen</div></a>
+                  <% elsif params[:val] == "followers" && params[:arrow] == "down" %>
+                    <a href="/home/advance?val=followers&arrow=up"><div class="fl" style="width:109px;">Følger ideen</div></a>
+                  <% else %>
+                    <a href="/home/advance?val=followers&arrow=up"><div class="fl" style="width:109px;">Følger ideen</div></a>
+                  <% end %>
                 </div>
               </div>
             </td>

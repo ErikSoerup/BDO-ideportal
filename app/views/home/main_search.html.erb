@@ -46,7 +46,13 @@
                   <div class="plainwrap" id="date-up"><a href="<%= request.request_uri %>&val=date&arrow=up" onclick=""><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
                   <div class="plainwrap" style="display:none;" id="date-down"><a href="<%= request.request_uri %>&val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0"  /></a></div>
                 </div>
-                <div class="fl">Dato</div>
+                <% if params[:val] == "date" && params[:arrow] == "up" %>
+                  <div class="fl" style="cursor: pointer;"><a href="<%= request.request_uri %>&val=date&arrow=down" onclick="">Dato</a></div>
+                <% elsif params[:val] == "date" && params[:arrow] == "down" %>
+                  <div class="fl" style="cursor: pointer;"><a href="<%= request.request_uri %>&val=date&arrow=up" onclick="">Dato</a></div>
+                <% else %>
+                  <div class="fl" style="cursor: pointer;"><a href="<%= request.request_uri %>&val=date&arrow=up" onclick="">Dato</a></div>
+                <% end %>
               </div>
             </td>
             <td align="left" valign="middle">
@@ -57,7 +63,13 @@
                   <div class="plainwrap" id="vote-down" style="display:none;"><a href="<%= request.request_uri %>&val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
 
                 </div>
-                <div class="fl">Stemmer</div>
+                <% if params[:val] == "vote" && params[:arrow] == "up" %>
+                  <div class="fl"><a href="<%= request.request_uri %>&val=vote&arrow=down">Stemmer</a></div>
+                <% elsif params[:val] == "vote" && params[:arrow] == "down" %>
+                  <div class="fl"><a href="<%= request.request_uri %>&val=vote&arrow=up">Stemmer</a></div>
+                <% else %>
+                  <div class="fl"><a href="<%= request.request_uri %>&val=vote&arrow=up">Stemmer</a></div>
+                <% end %>
               </div>
             </td>
             <td align="left" valign="middle">
@@ -66,7 +78,13 @@
                   <div class="plainwrap" id="comment-up"><a href="<%= request.request_uri %>&val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
                   <div class="plainwrap" id ="comment-down" style="display:none;"><a href="<%= request.request_uri %>&val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
-                <div class="fl" style="width:103px;">Antal kommentarer</div>
+                <% if params[:val] == "comment" && params[:arrow] == "up" %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=comment&arrow=down">Antal kommentarer</a></div>
+                <% elsif params[:val] == "comment" && params[:arrow] == "down" %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=comment&arrow=up">Antal kommentarer</a></div>
+                <% else %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=comment&arrow=up">Antal kommentarer</a></div>
+                <% end %>
               </div>
             </td>
             <td colspan="2" align="left" valign="middle">
@@ -77,7 +95,13 @@
                     <div class="plainwrap" id="follow-up"><a href="<%= request.request_uri %>&val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
                     <div class="plainwrap" style="display:none;" id="follow-down"><a href="<%= request.request_uri %>&val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0"  /></a></div>
                   </div>
-                  <div class="fl" style="width:103px;">Følger ideen</div>
+                  <% if params[:val] == "followers" && params[:arrow] == "up" %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=down">Følger ideen</a></div>
+                  <% elsif params[:val] == "followers" && params[:arrow] == "down" %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=up">Følger ideen</a></div>
+                  <% else %>
+                    <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=up">Følger ideen</a></div>
+                  <% end %>
                 </div>
 
 
