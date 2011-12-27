@@ -1,6 +1,7 @@
 <div class="body_wrap">
   <div class="full_wrap">
     <div class="plainwrap">
+
       <% form_tag "/home/main_search", :method => :get do  %>
         <table width="100%" border="0" cellspacing="2" cellpadding="0">
           <tr>
@@ -91,6 +92,11 @@
     <div class="b_divider"></div>
 
     <div class="plainwrap">
+      <div>
+        <h3>Total Number of search Ideas:-  <%= @c_ideas.count %></h3>
+        
+
+      </div>
       <!--Header Portion Starts -->
       <div class="tab_headline">
         <!--Pagination Starts -->
