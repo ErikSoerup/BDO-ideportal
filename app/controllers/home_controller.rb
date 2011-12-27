@@ -185,7 +185,7 @@ class HomeController < ApplicationController
       
       end
     end
-    
+    @count=@c_ideas.size
     if params[:val] == "followers"
       if params[:arrow] == "up"
         @c_ideas=@c_ideas.sort{|x,y| y.idea_followers.collect(&:user_id).uniq.count <=> x.idea_followers.collect(&:user_id).uniq.count}

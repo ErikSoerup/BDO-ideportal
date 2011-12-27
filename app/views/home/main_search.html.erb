@@ -38,13 +38,13 @@
             <td align="left" valign="middle"style="width:116px;"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
           </tr>
 
-<%#= request.query_parameters %>
+  <%#= request.query_parameters %>
           <tr>
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="date-up"><a href="<%= request.request_uri %>&val=date&arrow=up" onclick=""><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" style="display:none;" id="date-down"><a href="<%= request.request_uri %>&val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0"  /></a></div>
                 </div>
                 <div class="fl">Dato</div>
               </div>
@@ -52,10 +52,10 @@
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                 
-                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
-                
+
+                  <div class="plainwrap" id="vote-up"><a href="<%= request.request_uri %>&val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="vote-down" style="display:none;"><a href="<%= request.request_uri %>&val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+
                 </div>
                 <div class="fl">Stemmer</div>
               </div>
@@ -63,8 +63,8 @@
             <td align="left" valign="middle">
               <div class="sort" style="width:132px;">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="comment-up"><a href="<%= request.request_uri %>&val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id ="comment-down" style="display:none;"><a href="<%= request.request_uri %>&val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
                 <div class="fl" style="width:103px;">Antal kommentarer</div>
               </div>
@@ -74,8 +74,8 @@
               <div class="rest_sort" style="width:411px;">
                 <div class="sort" style="width:132px;">
                   <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="<%= request.request_uri %>&val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="<%= request.request_uri %>&val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap" id="follow-up"><a href="<%= request.request_uri %>&val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap" style="display:none;" id="follow-down"><a href="<%= request.request_uri %>&val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0"  /></a></div>
                   </div>
                   <div class="fl" style="width:103px;">Følger ideen</div>
                 </div>
@@ -93,8 +93,8 @@
 
     <div class="plainwrap">
       <div>
-        <h3>Total Number of search Ideas:-  <%= @c_ideas.count %></h3>
-        
+        <h3>Total Number of search Ideas:-  <%= @count %></h3>
+
 
       </div>
       <!--Header Portion Starts -->
@@ -110,3 +110,59 @@
       <% else %>
 
       <% end %>
+
+
+      <script type="text/javascript">
+        jQuery(document).ready(function() {
+          var val="<%= params[:val] %>";
+          var arrow="<%= params[:arrow] %>";
+          if( val == "vote" && arrow == "up"){
+            jQuery('#vote-down').show();
+            jQuery('#vote-up').hide();
+          }
+          else if(val == "vote" && arrow == "down"){
+            jQuery('#vote-down').hide();
+            jQuery('#vote-up').show();
+
+          }
+
+          else if(val =="comment" && arrow == "up"){
+            jQuery('#comment-up').hide();
+            jQuery('#comment-down').show();
+
+
+          }
+
+          else if(val =="comment" && arrow == "down"){
+            jQuery('#comment-down').hide();
+            jQuery('#comment-up').show();
+
+
+          }
+
+
+          else if(val =="date" && arrow == "up"){
+            jQuery('#date-up').hide();
+            jQuery('#date-down').show();
+          }
+
+
+          else if(val =="date" && arrow == "down"){
+            jQuery('#date-down').hide();
+            jQuery('#date-up').show();
+          }
+          else if(val == "followers" && arrow=="up"){
+            jQuery('#follow-up').hide();
+            jQuery('#follow-down').show();
+  
+          }
+
+          else if(val == "followers" && arrow=="down"){
+            jQuery('#follow-down').hide();
+            jQuery('#follow-up').show();
+
+          }
+
+        });
+
+      </script>

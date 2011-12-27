@@ -40,8 +40,8 @@
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/advance?val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/advance?val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="date-up"><a href="/home/advance?val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="date-down" style="display:none;"><a href="/home/advance?val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
                 <div class="fl">Dato</div>
               </div>
@@ -49,8 +49,8 @@
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/advance?val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/advance?val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="vote-up"><a href="/home/advance?val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="vote-down" style="display:none;"><a href="/home/advance?val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
                 <div class="fl">Stemmer</div>
               </div>
@@ -58,8 +58,8 @@
             <td align="left" valign="middle">
               <div class="sort" style="width:132px;">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/advance?val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/advance?val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="comment-up"><a href="/home/advance?val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="comment-down" style="display:none;"><a href="/home/advance?val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
                 <div class="fl" style="width:109px;">Antal kommentarer</div>
               </div>
@@ -70,8 +70,8 @@
               <div class="rest_sort" style="width:411px;">
                 <div class="sort" style="width:132px;">
                   <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="/home/advance?val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="/home/advance?val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap" id="follow-up"><a href="/home/advance?val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap" id="follow-down" style="display:none;"><a href="/home/advance?val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                   </div>
                   <div class="fl" style="width:109px;">Følger ideen</div>
                 </div>
@@ -100,3 +100,59 @@
       <% else %>
 
       <% end %>
+
+
+      <script type="text/javascript">
+        jQuery(document).ready(function() {
+          var val="<%= params[:val] %>";
+          var arrow="<%= params[:arrow] %>";
+          if( val == "vote" && arrow == "up"){
+            jQuery('#vote-down').show();
+            jQuery('#vote-up').hide();
+          }
+          else if(val == "vote" && arrow == "down"){
+            jQuery('#vote-down').hide();
+            jQuery('#vote-up').show();
+
+          }
+
+          else if(val =="comment" && arrow == "up"){
+            jQuery('#comment-up').hide();
+            jQuery('#comment-down').show();
+
+
+          }
+
+          else if(val =="comment" && arrow == "down"){
+            jQuery('#comment-down').hide();
+            jQuery('#comment-up').show();
+
+
+          }
+
+
+          else if(val =="date" && arrow == "up"){
+            jQuery('#date-up').hide();
+            jQuery('#date-down').show();
+          }
+
+
+          else if(val =="date" && arrow == "down"){
+            jQuery('#date-down').hide();
+            jQuery('#date-up').show();
+          }
+          else if(val == "followers" && arrow=="up"){
+            jQuery('#follow-up').hide();
+            jQuery('#follow-down').show();
+
+          }
+
+          else if(val == "followers" && arrow=="down"){
+            jQuery('#follow-down').hide();
+            jQuery('#follow-up').show();
+
+          }
+
+        });
+
+      </script>
