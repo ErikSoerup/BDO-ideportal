@@ -17,21 +17,21 @@
           <tr>
 
             <td align="left" valign="middle">
-              <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]]), :id => "select", :class => "select_input"%>
+              <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]], "alle"), :id => "select", :class => "select_input", :multiple => true%>
             </td>
 
 
             <td align="left" valign="middle">
-              <%= select_tag "val2", options_for_select([["alle", "All"]]+User.all.collect{|user| [user.name,user.name]}, params[:val2]), :id => "select", :class => "select_input"%>
+              <%= select_tag "val2", options_for_select([["alle", "All"]]+User.all.collect{|user| [user.name,user.name]}, "All"), :id => "select", :class => "select_input", :multiple => true%>
             </td>
 
 
             <td align="left" valign="middle">
-              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}),:id => "select", :class => "select_input"%>
+              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, Department.first.id),:id => "select", :class => "select_input", :multiple => true%>
             </td>
 
             <td align="left" valign="middle">
-              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]} )%>
+              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, "current" ), :multiple => true%>
             </td>
             <td align="left" valign="middle"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
           </tr>

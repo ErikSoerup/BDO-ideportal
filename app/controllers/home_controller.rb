@@ -105,76 +105,85 @@ class HomeController < ApplicationController
 
 
   def main_search
-    @m_ideas=[]
-    
-    if params[:val1] == "alle"
-      @ideas=Idea.all(:order => "ideas.created_at DESC")
+    @ideas=[]
+    params[:val1].each do |val|
+      if val == "alle"
+        @ideas << Idea.all(:order => "ideas.created_at DESC")
 
-      #    elsif params[:val1] == "de hotteste ideer"
-      #      @ideas= Idea.populate_comment_counts(search_ideas(params))
-    elsif params[:val1] == "nye"
-      @ideas= Idea.find(:all, :conditions => ['status=?', 'new'], :order => "ideas.created_at DESC")
-      #    elsif params[:val1] == "under udvikling"
-      #      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
-    elsif params[:val1] == "implementeret"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'], :order => "ideas.created_at DESC")
-    elsif params[:val1] == "under evaluering"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'], :order => "ideas.created_at DESC")
-    elsif params[:val1] == "ikke evalueret"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'reviewed'], :order => "ideas.created_at DESC")
-    elsif params[:val1] == "comming"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'], :order => "ideas.created_at DESC")
+        #    elsif params[:val1] == "de hotteste ideer"
+        #      @ideas= Idea.populate_comment_counts(search_ideas(params))
+      elsif val == "nye"
+        @ideas <<  Idea.find(:all, :conditions => ['status=?', 'new'], :order => "ideas.created_at DESC")
+        #    elsif params[:val1] == "under udvikling"
+        #      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
+      elsif val == "implementeret"
+        @ideas << Idea.find(:all, :conditions => ['status=?', 'launched'], :order => "ideas.created_at DESC")
+      elsif val == "under evaluering"
+        @ideas << Idea.find(:all, :conditions => ['status=?', 'under review'], :order => "ideas.created_at DESC")
+      elsif val == "ikke evalueret"
+        @ideas << Idea.find(:all, :conditions => ['status=?', 'reviewed'], :order => "ideas.created_at DESC")
+      elsif val == "comming"
+        @ideas << Idea.find(:all, :conditions => ['status=?', 'coming soon'], :order => "ideas.created_at DESC")
+      end
+      
     end
+    @ideas.flatten!
+    puts @ideas.size
     @c_ideas=[]
     @m_ideas = []
     @d_ideas=[]
-    if User.find_by_name(params[:val2])
-      
-      @ideas.each do |idea|
-        unless idea.inventor.nil?
-          if idea.inventor == User.find_by_name(params[:val2])
+
+    params[:val2].each do |val2|
+      if User.find_by_name(val2)
+   
+        @ideas.each do |idea|
+          unless idea.inventor.nil?
+            if idea.inventor == User.find_by_name(val2)
             
-            @m_ideas << idea  
-          end
+              @m_ideas << idea
+            end
         
-        end
-      end
-    else
-      @ideas.each do |idea|
-        @m_ideas << idea
-      end
-    
-    end
-    
-    
-    
-    if  params[:val3] != "1" 
-      
-      @m_ideas.each do |idea|
-        unless idea.inventor.nil?
-          if idea.inventor.department == Department.find_by_id(params[:val3]) 
-            @d_ideas << idea
           end
         end
-      end
-    else
-      @m_ideas.each do | idea|
-        @d_ideas << idea
+
+      else
+        @ideas.each do |idea|
+          @m_ideas << idea
+        end
+    
       end
     end
     
-    if Current.all.collect(&:title).include?(params[:val4]) || params[:val4] != "current"
-      @current=Current.find_by_title(params[:val4])
-      @d_ideas.each do |idea|
-        if @current.ideas.include?(idea)
+    params[:val3].each do |val3|
+      if  val3 != "1"
+      
+        @m_ideas.each do |idea|
+          unless idea.inventor.nil?
+            if idea.inventor.department == Department.find_by_id(val3)
+              @d_ideas << idea
+            end
+          end
+        end
+      else
+        @m_ideas.each do | idea|
+          @d_ideas << idea
+        end
+      end
+    end
+    params[:val4].each do |val4|
+      if Current.all.collect(&:title).include?(val4) || val4 != "current"
+        @current=Current.find_by_title(val4)
+        @d_ideas.each do |idea|
+          if @current.ideas.include?(idea)
+            @c_ideas << idea
+          end
+        end
+      else
+        @d_ideas.each do |idea|
           @c_ideas << idea
         end
-      end
-    else
-      @d_ideas.each do |idea|
-        @c_ideas << idea
-      end
       
+      end
     end
     
     if params[:val] == "followers"
@@ -182,7 +191,7 @@ class HomeController < ApplicationController
         @c_ideas=@c_ideas.sort{|x,y| y.idea_followers.collect(&:user_id).uniq.count <=> x.idea_followers.collect(&:user_id).uniq.count}
         @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @c_ideas=@c_ideas.sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.idea_followers.collect(&:user_id).uniq.count}
+        @c_ideas=@c_ideas.sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.collect(&:user_id).uniq.count}
         @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       end
     elsif params[:val] == "date"
@@ -208,6 +217,7 @@ class HomeController < ApplicationController
         @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       end
     else
+     
       @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 25)
     end
     

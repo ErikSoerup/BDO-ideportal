@@ -19,30 +19,31 @@
           <tr>
 
             <td align="left" valign="middle">
-              <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]], params[:val1]), :id => "select", :class => "select_input"%>
+              <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]], params[:val1]), :id => "select", :class => "select_input", :multiple => true%>
 
             </td>
 
             <td align="left" valign="middle" style="width:116px;">
-              <%= select_tag "val2", options_for_select([["alle", "All"]]+User.all.collect{|user| [user.name,user.name]}, params[:val2]), :id => "select", :class => "select_input"%>
+              <%= select_tag "val2", options_for_select([["alle", "All"]]+User.all.collect{|user| [user.name,user.name]}, params[:val2]), :id => "select", :class => "select_input", :multiple => true%>
             </td>
 
             <td align="left" valign="middle"style="width:116px;">
-              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, params[:val3].to_i),:id => "select", :class => "select_input"%>
+              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, params[:val3].first.to_i),:id => "select", :class => "select_input", :multiple => true%>
             </td>
 
             <td align="left" valign="middle"style="width:116px;">
-              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, params[:val4].to_s )%>
+              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, params[:val4] ), :multiple => true%>
             </td>
             <td align="left" valign="middle"style="width:116px;"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
           </tr>
 
+<%#= request.query_parameters %>
           <tr>
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
                 <div class="fl">Dato</div>
               </div>
@@ -50,8 +51,10 @@
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                 
+                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                
                 </div>
                 <div class="fl">Stemmer</div>
               </div>
@@ -59,8 +62,8 @@
             <td align="left" valign="middle">
               <div class="sort" style="width:132px;">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap"><a href="<%= request.request_uri %>&val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                 </div>
                 <div class="fl" style="width:103px;">Antal kommentarer</div>
               </div>
@@ -70,8 +73,8 @@
               <div class="rest_sort" style="width:411px;">
                 <div class="sort" style="width:132px;">
                   <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap"><a href="<%= request.request_uri %>&val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap"><a href="<%= request.request_uri %>&val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
                   </div>
                   <div class="fl" style="width:103px;">Følger ideen</div>
                 </div>
