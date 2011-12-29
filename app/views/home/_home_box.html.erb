@@ -29,10 +29,10 @@
     <div class="block_last">
       <div class="block_head">Status</div>
       <div class="block_content" style="height:auto;">
-        <p><a href="/ideas?status=new">Nye Ideer</a> (<%= Idea.find(:all,:conditions => ["status = ?", "new"]).size %>)</p>
-        <p><a href="/ideas?status=under review">Under Evaluering</a> (<%= Idea.find(:all,:conditions => ["status = ?", "under review"]).size %>)</p>
-        <p><a href="/ideas?status=coming soon">Kommer Snart</a> (<%= Idea.find(:all,:conditions => ["status = ?", "coming soon"]).size %>)</p>
-        <p><a href="/ideas?status=launched">Implementeret</a> (<%= Idea.find(:all,:conditions => ["status = ?", "launched"]).size %>)</p>
+        <p><a href="/home/main_search?val1[]=nye&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Nye Ideer</a> (<%= Idea.find(:all,:conditions => ["status = ?", "new"]).size %>)</p>
+        <p><a href="/home/main_search?val1[]=under+evaluering&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Under Evaluering</a> (<%= Idea.find(:all,:conditions => ["status = ?", "under review"]).size %>)</p>
+        <p><a href="/home/main_search?val1[]=comming&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Kommer Snart</a> (<%= Idea.find(:all,:conditions => ["status = ?", "coming soon"]).size %>)</p>
+        <p><a href="/home/main_search?val1[]=implementeret&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Implementeret</a> (<%= Idea.find(:all,:conditions => ["status = ?", "launched"]).size %>)</p>
 
       </div>
     </div>
