@@ -115,14 +115,35 @@
     });
 
     //When mouse rolls over
-    jQuery(".block").mouseover(function(){
+    jQuery("#block-1").mouseover(function(){
       jQuery(this).stop().animate({height:'80px'},{queue:false, duration:600, easing: 'easeOutBounce'})
     });
 
+    jQuery("#block-3").mouseover(function(){
+      jQuery(this).stop().animate({height:'80px'},{queue:false, duration:600, easing: 'easeOutBounce'})
+      jQuery("#block-2").animate({height:'30px'});
+    });
+
+    jQuery("#block-4").mouseover(function(){
+      jQuery(this).stop().animate({height:'80px'},{queue:false, duration:600, easing: 'easeOutBounce'})
+      jQuery("#block-3").animate({height:'30px'});
+    });
+  jQuery("#block-2").mouseover(function(){
+      jQuery(this).stop().animate({height:'80px'},{queue:false, duration:600, easing: 'easeOutBounce'})
+      jQuery("#block-3").animate({height:'80px'});
+      jQuery("#block-4").animate({height:'80px'});
+      
+    });
+
+
     //When mouse is removed
-    jQuery(".block").mouseout(function(){
+    jQuery("#block-1").mouseout(function(){
       jQuery(this).stop().animate({height:'30px'},{queue:false, duration:600, easing: 'easeOutBounce'})
     });
+
+    
+
+
 
   });
 
