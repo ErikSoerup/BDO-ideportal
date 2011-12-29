@@ -16,7 +16,7 @@
 
           <div class="top_bidragydere" style="max-height: 365px;">
             <div class="plainwrap"><h3 style="margin-left:15px;float:left;width:auto;font-size: 13px;">Top Bidragydere</h3>
-            <a class="flere" href="/user/index">Flere</a>
+              <a class="flere" href="/user/index">Flere</a>
             </div>
             <div class="top_bid_inner" style="max-height:292px;">
               <%= render :partial => 'shared/home_contributor',
@@ -40,7 +40,7 @@
       <div class="fl" onmouseover="jQuery('#outer-box').fadeToggle('slow', 'linear');"><strong>SÅDAN VIRKER DET </strong><span class="ita">(Se også <a href="#">spilleregler</a>)</span></div>
     </div>
     <!--Header Portion Ends -->
-   
+
 
     <!--Bottom Panel Starts -->
     <div class="plainwrap">
@@ -103,3 +103,29 @@
   
 </script>
 
+
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+
+    //Fix Errors - http://www.learningjquery.com/2009/01/quick-tip-prevent-animation-queue-buildup/
+
+    //Remove outline from links
+    jQuery("a").click(function(){
+      jQuery(this).blur();
+    });
+
+    //When mouse rolls over
+    jQuery(".block").mouseover(function(){
+      jQuery(this).stop().animate({height:'80px'},{queue:false, duration:600, easing: 'easeOutBounce'})
+    });
+
+    //When mouse is removed
+    jQuery(".block").mouseout(function(){
+      jQuery(this).stop().animate({height:'30px'},{queue:false, duration:600, easing: 'easeOutBounce'})
+    });
+
+  });
+
+
+</script>
+<%= javascript_include_tag "easing" %>
