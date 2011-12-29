@@ -143,6 +143,10 @@ class IdeasController < ApplicationController
     redirect_to idea_path(@idea)
   end
 
+  
+ 
+
+
   def follow
     begin
       @idea= Idea.find(params[:idea_id])
@@ -207,18 +211,24 @@ class IdeasController < ApplicationController
   
   
   def index
-    if params[:page_size]
-      page_size = params[:page_size].to_i
-      params[:page_size] = 1 if page_size < 1
-      params[:page_size] = 50 if page_size > 50
-    end
+    unless params[:status].nil?
+      
+        
+      
+      current_objects(params[:status])
+    else
+      if params[:page_size]
+        page_size = params[:page_size].to_i
+        params[:page_size] = 1 if page_size < 1
+        params[:page_size] = 50 if page_size > 50
+      end
 
-    # Call current_objects to populate @body_class. (If the results are cached, we don't need to do this.
-    # We never cache the idea list for a user who is logged in, because we want their votes to show up immediately.)
-    unless !logged_in? && fragment_exist?(['idea_search', CGI.escape(params.inspect)])
-      current_objects
+      # Call current_objects to populate @body_class. (If the results are cached, we don't need to do this.
+      # We never cache the idea list for a user who is logged in, because we want their votes to show up immediately.)
+      unless !logged_in? && fragment_exist?(['idea_search', CGI.escape(params.inspect)])
+        current_objects()
+      end
     end
-
     respond_to do |format|
       format.html
       format.js 
@@ -264,8 +274,12 @@ class IdeasController < ApplicationController
     change_subscription(false)
   end
 
-  def current_objects
-    @currents ||= Idea.populate_comment_counts(search_ideas(params))
+  def current_objects(status = nil)
+    if status.nil?
+      @currents ||= Idea.populate_comment_counts(search_ideas(params))
+    else
+      @currents ||= Idea.paginate(:per_page => 25,:page => params[:page], :conditions =>["status = ?",status])
+    end
   end
 
   def check_visibility

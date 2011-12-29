@@ -21,7 +21,7 @@
       <div class="p_content">
         <!--Content Head Starts -->
         <div class="p_content_head">
-          <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%><strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
+          <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%><strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link" unless idea.inventor.nil? %></div>
           <div class="fr" style="width:169px;">
             <div class="fl">
               <% unless idea.idea_followers.empty? %>
