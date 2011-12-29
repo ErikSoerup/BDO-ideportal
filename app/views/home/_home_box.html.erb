@@ -1,40 +1,48 @@
 
-  <div class="outer_block" id="outer-box" style="display:none;">
-    <div class="plainwrap" style="margin-bottom:5px"><strong>SÅDAN VIRKER DET</strong> <span class="ita">(Se også <a href="#">spilleregler</a>)</span></div>
-    <!--Del Panel Starts -->
-    <div class="block" id="block-1" style="height:55px;">
+<div class="outer_block" id="outer-box" style="display:none;">
+  <div class="plainwrap" style="margin-bottom:5px"><strong>SÅDAN VIRKER DET</strong> <span class="ita">(Se også <a href="#">spilleregler</a>)</span></div>
+  <!--Del Panel Starts -->
+  <div style="width:205px;">
+    <div class="block" id="block-1">
       <div class="block_head">Del!</div>
       <div class="block_content">Fortæl din ide. Måske kan andre bruge den eller hjælpe den videre.</div>
     </div>
-    <!--Del Panel Ends -->
-    <!--Stem Panel Starts -->
-    <div class="block" id="block-2" style="height:55px;">
+  </div>
+  <!--Del Panel Ends -->
+  <!--Stem Panel Starts -->
+  <div style="width:205px;">
+    <div class="block" id="block-2">
       <div class="block_head">Stem!</div>
       <div class="block_content">Kan du lide en ide, så stem på den og fortæl andre om den!</div>
     </div>
-    <!--Stem Panel Ends -->
-    <!--Byg videre Panel Starts -->
-    <div class="block" id="block-3" style="height:55px;">
+  </div>
+  <!--Stem Panel Ends -->
+  <!--Byg videre Panel Starts -->
+  <div style="width:205px;">
+    <div class="block" id="block-3">
       <div class="block_head">Byg videre!</div>
       <div class="block_content" style="height: auto;">Kan ideen blive endnu bedre? Brug din viden og erfaring til at hjælpe andre.</div>
     </div>
-    <!--Byg videre Panel Ends -->
-    <!--Følg med Panel Starts -->
-    <div class="block" id="block-4" style="height:55px;">
+  </div>
+  <!--Byg videre Panel Ends -->
+  <!--Følg med Panel Starts -->
+  <div style="width:205px;">
+    <div class="block" id="block-4">
       <div class="block_head">Følg med!</div>
       <div class="block_content">Følg dine ideer, emner og kollegaer, du kender. Se hvor det bærer hen.</div>
     </div>
-    <!--Følg med Panel Ends -->
-    <!--Status Panel Starts -->
-    <div class="block_last">
-      <div class="block_head">Status</div>
-      <div class="block_content" style="height:auto;">
-        <p><a href="/home/main_search?val1[]=nye&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Nye Ideer</a> (<%= Idea.find(:all,:conditions => ["status = ?", "new"]).size %>)</p>
-        <p><a href="/home/main_search?val1[]=under+evaluering&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Fortæl os mere</a> (<%= Idea.find(:all,:conditions => ["status = ?", "under review"]).size %>)</p>
-        <p><a href="/home/main_search?val1[]=comming&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Kommer Snart</a> (<%= Idea.find(:all,:conditions => ["status = ?", "coming soon"]).size %>)</p>
-        <p><a href="/home/main_search?val1[]=implementeret&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Implementeret</a> (<%= Idea.find(:all,:conditions => ["status = ?", "launched"]).size %>)</p>
-
-      </div>
-    </div>
-    <!--Status med Panel Ends -->
   </div>
+  <!--Følg med Panel Ends -->
+  <!--Status Panel Starts -->
+  <div class="block_last">
+    <div class="block_head">Status</div>
+    <div class="block_content" style="height:auto;">
+      <p><a href="/home/main_search?val1[]=nye&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Nye Ideer</a> (<%= Idea.find(:all,:conditions => ["status = ?", "new"]).size %>)</p>
+      <p><a href="/home/main_search?val1[]=under+evaluering&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Fortæl os mere</a> (<%= Idea.find(:all,:conditions => ["status = ?", "under review"]).size %>)</p>
+      <p><a href="/home/main_search?val1[]=comming&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Kommer Snart</a> (<%= Idea.find(:all,:conditions => ["status = ?", "coming soon"]).size %>)</p>
+      <p><a href="/home/main_search?val1[]=implementeret&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Implementeret</a> (<%= Idea.find(:all,:conditions => ["status = ?", "launched"]).size %>)</p>
+
+    </div>
+  </div>
+  <!--Status med Panel Ends -->
+</div>
