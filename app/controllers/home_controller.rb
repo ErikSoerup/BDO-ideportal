@@ -55,52 +55,7 @@ class HomeController < ApplicationController
       @ideas=@ideas.paginate(:page => params[:page], :per_page => 25)
     end
     
-    #where is the pagination code ???
-    #    @body_class = 'advance'
-    #    if params[:val] == "alle"
-    #      @ideas=Idea.paginate(:page => params[:page], :per_page => 10)
-
-    #    elsif params[:val] == "de hotteste ideer"
-    #      @ideas= Idea.populate_comment_counts(search_ideas(params))
-    #    elsif params[:val] == "nye"
-    #      @ideas= Idea.populate_comment_counts(search_ideas(params))
-    #    elsif params[:val] == "under udvikling"
-    #      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page], :per_page => 10)
-    #    elsif params[:val] == "implementeret"
-    #      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'reviewed'], :page => params[:page])
-    #    elsif params[:val] == "under evaluering"
-    #      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'coming soon'], :page => params[:page])
-    #    elsif params[:val] == "ikke evalueret"
-    #      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'launched'], :page => params[:page])
-    #    elsif params[:val] == "min egne"
-    #      @ideas=current_user.ideas.paginate(:page => params[:page])
-    #    elsif params[:val] == "current"
-    #      @current_ideas = Current.paginate(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}", :page => params[:page])
-    #    elsif params[:val] == "top"
-    #      @users=User.find_top_contributors
-    #      @ideas=[]
-    #      @users.each do |u|
-    #        @ideas << u.ideas unless u.ideas.empty?
-    #      end
-    #      @ideas=@ideas.first.paginate(:page => params[:page])
-    #    elsif Current.all.collect(&:title).include?(params[:val])
-    #      @current=Current.find_by_title(params[:val])
-    #      @ideas=@current.ideas.paginate(:page => params[:page])
-    #      
-    #    elsif params[:val]
-    #      @dep= Department.find_by_id(params[:val])
-    #      val=[]
-    #      unless @dep.users.empty?
-    #        @dep.users.each do |user|
-    #          val << user.ideas unless user.ideas.empty?
-    #          @idea={@dep.id => val} unless val.empty?
-    #        end
-    #        @ideas=@idea.values.first.first.paginate(:page => params[:page]) 
-    #      end
-    #     
-    #      
-    #    else 
-    #    end
+    
   end
 
 
