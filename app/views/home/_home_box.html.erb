@@ -28,7 +28,7 @@
     <!--Status Panel Starts -->
     <div class="block_last">
       <div class="block_head">Status</div>
-      <div class="block_content">
+      <div class="block_content" style="height:auto;">
         <p><a href="/ideas?status=new">Nye Ideer</a> (<%= Idea.find(:all,:conditions => ["status = ?", "new"]).size %>)</p>
         <p><a href="/ideas?status=under review">Under Evaluering</a> (<%= Idea.find(:all,:conditions => ["status = ?", "under review"]).size %>)</p>
         <p><a href="/ideas?status=coming soon">Kommer Snart</a> (<%= Idea.find(:all,:conditions => ["status = ?", "coming soon"]).size %>)</p>
