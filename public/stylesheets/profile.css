@@ -1944,14 +1944,14 @@ ul.index li {
 
 
 .outer_wrap {
-    width:100%;
+    width:1350px;
     margin:0 auto;
     position:relative;
     overflow:hidden;
 }
 
 .outer_block {
-    width:56px;
+    width:200px;
     padding:0;
     left:0;
     top:123px;
@@ -1971,7 +1971,9 @@ ul.index li {
 }
 .outer_block ul li.del {
     opacity: 0.6;
-    margin:0px 0 0px 63px;
+    position:absolute;
+    top:22px;
+    left:105px;
     padding:0;
     background:url(../images/ow-img1.gif) no-repeat;
 }
@@ -1980,7 +1982,7 @@ ul.index li {
     width:224px;
     height:78px;
     position:absolute;
-    top:0;
+    top:22px;
     margin: 0px;
     left:1px;
     background:url(../images/del-block.png) no-repeat;
@@ -1988,10 +1990,10 @@ ul.index li {
 }
 .outer_block ul li.stem_outer {
      opacity: 0.6;
-    margin-left: 63px;
+    
     position:absolute;
-    top:78px;
-    left:0;
+    top:100px;
+    left:105px;
     background:url(../images/ow-img2.gif) no-repeat;
 }
 .outer_block ul li.stem_outer:hover {
@@ -1999,7 +2001,7 @@ ul.index li {
     width:222px;
     height:76px;
     position:absolute;
-    top:78px;
+    top:100px;
     margin:0px;
     left:0;
     left:1px;
@@ -2009,9 +2011,9 @@ ul.index li {
 .outer_block ul li.byg_videre {
      opacity: 0.6;
     position:absolute;
-    margin-left: 63px;
-    top:157px;
-    left:0;
+    
+    top:179px;
+    left:105px;
     background:url(../images/ow-img3.gif) no-repeat;
 }
 .outer_block ul li.byg_videre:hover {
@@ -2019,7 +2021,7 @@ ul.index li {
     width:222px;
     height:76px;
     position:absolute;
-    top:157px;
+    top:179px;
     margin: 0px;
     left:0;
     left:1px;
@@ -2028,10 +2030,10 @@ ul.index li {
 }
 .outer_block ul li.folg_med {
      opacity: 0.6;
-    margin-left: 63px;
+    
     position:absolute;
-    top:236px;
-    left:0;
+    top:258px;
+    left:105px;
     background:url(../images/ow-img4.gif) no-repeat;
 }
 .outer_block ul li.folg_med:hover {
@@ -2040,7 +2042,7 @@ ul.index li {
     height:76px;
     position:absolute;
     margin: 0px;
-    top:236px;
+    top:258px;
     left:0;
     left:1px;
     background:url(../images/flog_med-block.png) no-repeat;
@@ -2050,7 +2052,8 @@ ul.index li {
 .outer_block ul li.last_box{
    
     position: absolute;
-    top: 316px;
+    top: 340px;
+    left:42px;
     z-index: 99999;
 }
 
