@@ -1967,11 +1967,11 @@ ul.index li {
     margin:0;
     display:block;
     height:76px;
-    width:56px;
+    width:176px;
 }
 .outer_block ul li.del {
     opacity: 0.6;
-    margin:0px 0 0px 103px;
+    margin:0px 0 0px 63px;
     padding:0;
     background:url(../images/ow-img1.gif) no-repeat;
 }
@@ -1988,7 +1988,7 @@ ul.index li {
 }
 .outer_block ul li.stem_outer {
      opacity: 0.6;
-    margin-left: 103px;
+    margin-left: 63px;
     position:absolute;
     top:78px;
     left:0;
@@ -2009,7 +2009,7 @@ ul.index li {
 .outer_block ul li.byg_videre {
      opacity: 0.6;
     position:absolute;
-    margin-left: 103px;
+    margin-left: 63px;
     top:157px;
     left:0;
     background:url(../images/ow-img3.gif) no-repeat;
@@ -2028,7 +2028,7 @@ ul.index li {
 }
 .outer_block ul li.folg_med {
      opacity: 0.6;
-    margin-left: 103px;
+    margin-left: 63px;
     position:absolute;
     top:236px;
     left:0;
