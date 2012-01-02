@@ -1944,7 +1944,7 @@ ul.index li {
 
 
 .outer_wrap {
-    width:1188px;
+    width:100%;
     margin:0 auto;
     position:relative;
     overflow:hidden;
@@ -1971,7 +1971,7 @@ ul.index li {
 }
 .outer_block ul li.del {
     opacity: 0.6;
-    margin:0px 0 0px 66px;
+    margin:0px 0 0px 103px;
     padding:0;
     background:url(../images/ow-img1.gif) no-repeat;
 }
@@ -1988,7 +1988,7 @@ ul.index li {
 }
 .outer_block ul li.stem_outer {
      opacity: 0.6;
-    margin-left: 66px;
+    margin-left: 103px;
     position:absolute;
     top:78px;
     left:0;
@@ -2009,7 +2009,7 @@ ul.index li {
 .outer_block ul li.byg_videre {
      opacity: 0.6;
     position:absolute;
-    margin-left: 66px;
+    margin-left: 103px;
     top:157px;
     left:0;
     background:url(../images/ow-img3.gif) no-repeat;
@@ -2028,7 +2028,7 @@ ul.index li {
 }
 .outer_block ul li.folg_med {
      opacity: 0.6;
-    margin-left: 66px;
+    margin-left: 103px;
     position:absolute;
     top:236px;
     left:0;
@@ -2048,7 +2048,7 @@ ul.index li {
 }
 
 .outer_block ul li.last_box{
-    opacity: 0.6;
+   
     position: absolute;
     top: 316px;
     z-index: 99999;
