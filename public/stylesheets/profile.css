@@ -1970,6 +1970,7 @@ ul.index li {
     width:56px;
 }
 .outer_block ul li.del {
+    opacity: 0.6;
     margin:0px 0 0px 66px;
     padding:0;
     background:url(../images/ow-img1.gif) no-repeat;
@@ -1986,6 +1987,7 @@ ul.index li {
     cursor:pointer;
 }
 .outer_block ul li.stem_outer {
+     opacity: 0.6;
     margin-left: 66px;
     position:absolute;
     top:78px;
@@ -2005,6 +2007,7 @@ ul.index li {
     cursor:pointer;
 }
 .outer_block ul li.byg_videre {
+     opacity: 0.6;
     position:absolute;
     margin-left: 66px;
     top:157px;
@@ -2024,6 +2027,7 @@ ul.index li {
     cursor:pointer;
 }
 .outer_block ul li.folg_med {
+     opacity: 0.6;
     margin-left: 66px;
     position:absolute;
     top:236px;
@@ -2044,7 +2048,7 @@ ul.index li {
 }
 
 .outer_block ul li.last_box{
-
+    opacity: 0.6;
     position: absolute;
     top: 316px;
     z-index: 99999;
