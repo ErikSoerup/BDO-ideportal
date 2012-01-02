@@ -439,8 +439,8 @@ h3 a:hover {
 
 
 h3.subhead {
-/*    float:left;*/
-/*    width:auto;*/
+    /*    float:left;*/
+    /*    width:auto;*/
     color:#219188;
     font-size:15px;
     margin:0 0 5px 0;
@@ -1898,7 +1898,7 @@ ul.index li {
 }
 /* flash message */
 .flash_message{
-    
+
     left: 441px;
     position: absolute;
     top: 208px;
@@ -1922,13 +1922,13 @@ ul.index li {
 }
 .hovedvej_tag .tagify-container{
     width:297px;
-    
+
 }
 .set_home .tagify-container{
-    
+
     margin-left: 10px;
     width:242px;
-    
+
 }
 
 .set_home select{
@@ -1942,7 +1942,115 @@ ul.index li {
 
 
 
+
 .outer_wrap {
+    width:1188px;
+    margin:0 auto;
+    position:relative;
+    overflow:hidden;
+}
+
+.outer_block {
+    width:56px;
+    padding:0;
+    left:0;
+    top:123px;
+    display:block;
+    position:absolute;
+}
+.outer_block ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+.outer_block ul li {
+    margin:0;
+    display:block;
+    height:76px;
+    width:56px;
+}
+.outer_block ul li.del {
+    margin:0px 0 0px 66px;
+    padding:0;
+    background:url(../images/ow-img1.gif) no-repeat;
+}
+.outer_block ul li.del:hover{
+    z-index:999;
+    width:224px;
+    height:78px;
+    position:absolute;
+    top:0;
+    margin: 0px;
+    left:1px;
+    background:url(../images/del-block.png) no-repeat;
+    cursor:pointer;
+}
+.outer_block ul li.stem_outer {
+    margin-left: 66px;
+    position:absolute;
+    top:78px;
+    left:0;
+    background:url(../images/ow-img2.gif) no-repeat;
+}
+.outer_block ul li.stem_outer:hover {
+    z-index:999;
+    width:222px;
+    height:76px;
+    position:absolute;
+    top:78px;
+    margin:0px;
+    left:0;
+    left:1px;
+    background:url(../images/stem-block.png) no-repeat;
+    cursor:pointer;
+}
+.outer_block ul li.byg_videre {
+    position:absolute;
+    margin-left: 66px;
+    top:157px;
+    left:0;
+    background:url(../images/ow-img3.gif) no-repeat;
+}
+.outer_block ul li.byg_videre:hover {
+    z-index:999;
+    width:222px;
+    height:76px;
+    position:absolute;
+    top:157px;
+    margin: 0px;
+    left:0;
+    left:1px;
+    background:url(../images/byg_vidre-block.png) no-repeat;
+    cursor:pointer;
+}
+.outer_block ul li.folg_med {
+    margin-left: 66px;
+    position:absolute;
+    top:236px;
+    left:0;
+    background:url(../images/ow-img4.gif) no-repeat;
+}
+.outer_block ul li.folg_med:hover {
+    z-index:999;
+    width:222px;
+    height:76px;
+    position:absolute;
+    margin: 0px;
+    top:236px;
+    left:0;
+    left:1px;
+    background:url(../images/flog_med-block.png) no-repeat;
+    cursor:pointer;
+}
+
+.outer_block ul li.last_box{
+
+    position: absolute;
+    top: 316px;
+    z-index: 99999;
+}
+
+/*.outer_wrap {
 	width:95%;
 	margin:0 auto;
 	position:relative;
@@ -1970,4 +2078,4 @@ ul.index li {
 .outer_block .block_last {
 	margin:0;
 	font-size:12px;
-}
+}*/
