@@ -104,31 +104,21 @@
 </script>
 
 
-<script type="text/javascript">
+<script type='text/javascript'>
   jQuery(document).ready(function(){
 
-    //Fix Errors - http://www.learningjquery.com/2009/01/quick-tip-prevent-animation-queue-buildup/
-
-    //Remove outline from links
-    
-
-    //When mouse rolls over
-    
-
-    jQuery(".block").mouseout(function(){
-      jQuery(this).stop().animate({width:'105px'},{queue:false, duration:600, easing: 'easeOutBounce'})
+    jQuery(".outer_block li").hover(
+    function() {
+      jQuery(this).fadeTo("slow", 1.0);
+    },
+    function() {
+      jQuery(this).fadeTo("slow", 0.6);
     });
-
-   
-
-    jQuery(".block").mouseover(function(){
-      jQuery(this).stop().animate({width:'285px'},{queue:false, duration:600, easing: 'easeOutBounce'})
-    });
-
-  
 
   });
-
-
 </script>
+
+
+
+
 <%= javascript_include_tag "easing" %>
