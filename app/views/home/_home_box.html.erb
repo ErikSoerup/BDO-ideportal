@@ -1,0 +1,21 @@
+<div class="outer_block">
+  <p style="font-size: 9px; text-align: right; margin-bottom: 5px;"><strong>SÅDAN VIRKER DET </strong><span class="ita">(Se også <a href="#">spilleregler</a>)</span></p>
+  <ul>
+    <li class="del"></li>
+    <li class="stem_outer"></li>
+    <li class="byg_videre"></li>
+    <li class="folg_med"></li>
+
+    <li class="last_box">
+      <div class="block_head" style="width:149px;">Status</div>
+      <div class="block_content" style="height:auto;width:139px;">
+        <p><a href="/home/main_search?val1[]=nye&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Nye Ideer</a> (<%= Idea.find(:all,:conditions => ["status = ?", "new"]).size %>)</p>
+        <p><a href="/home/main_search?val1[]=under+evaluering&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Fortæl os mere</a> (<%= Idea.find(:all,:conditions => ["status = ?", "under review"]).size %>)</p>
+        <p><a href="/home/main_search?val1[]=comming&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Kommer Snart</a> (<%= Idea.find(:all,:conditions => ["status = ?", "coming soon"]).size %>)</p>
+        <p><a href="/home/main_search?val1[]=implementeret&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Implementeret</a> (<%= Idea.find(:all,:conditions => ["status = ?", "launched"]).size %>)</p>
+      
+      </div>
+    </li>
+
+  </ul>
+</div>

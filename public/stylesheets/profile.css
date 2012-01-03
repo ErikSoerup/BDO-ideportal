@@ -213,13 +213,13 @@ h2 {
 }
 
 h2 span{
-    color:#2cb0bd;
+    color:#2cb0bd; 
 
 
 }
 
 h2 span a{
-    color:#2cb0bd;
+    color:#2cb0bd; 
 
 }
 a.bold_link {
@@ -323,7 +323,7 @@ ul.tabs li.active a {
     border-top: none;
     overflow: hidden;
     clear: both;
-    float:  left;
+    float:  left; 
     width: 99%;
     border-top:solid 5px #eee;
 }
@@ -439,13 +439,13 @@ h3 a:hover {
 
 
 h3.subhead {
-/*    float:left;*/
-/*    width:auto;*/
+    /*    float:left;*/
+    /*    width:auto;*/
     color:#219188;
     font-size:15px;
     margin:0 0 5px 0;
     padding:0;
-    font-weight:normal;
+    font-weight:normal;	
 }
 .pagination {
     margin:0;
@@ -693,7 +693,7 @@ h3.subhead {
     padding: 0 0 10px 0;
     background: none;
     text-shadow: none;
-    color: #fff;
+    color: #fff; 
     font-size: 13px;
     line-height: 18px;
     text-transform: uppercase;
@@ -852,7 +852,7 @@ ul.index li {
     cursor:pointer;
     padding:2px 3px;
     font-weight:bold;
-    text-decoration:none;
+    text-decoration:none;	
 
 }
 a.blank_button {
@@ -866,7 +866,7 @@ a.blank_button {
     cursor:pointer;
     padding:2px 5px;
     font-weight:bold;
-    text-decoration:none;
+    text-decoration:none;	
 
 }
 
@@ -885,7 +885,7 @@ a.blank_button {
     cursor:pointer;
     padding:2px 3px;
     font-weight:bold;
-    text-decoration:none;
+    text-decoration:none;	
 
 }
 a.blank_button {
@@ -899,7 +899,7 @@ a.blank_button {
     cursor:pointer;
     padding:2px 5px;
     font-weight:bold;
-    text-decoration:none;
+    text-decoration:none;	
 
 }
 .sort {
@@ -1562,7 +1562,7 @@ ul.index li {
     height:61px;
     padding:22px 0 0 0;
     display:block;
-    cursor:pointer;
+    cursor:pointer;	
 }
 
 
@@ -1653,7 +1653,7 @@ ul.index li {
 
 .home_top {
     width:845px;
-    margin:0 auto 25px auto;
+    margin:0 auto 5px auto;
     overflow:hidden;
     background:#33c5b9;
     border-radius:5px;
@@ -1939,3 +1939,150 @@ ul.index li {
     width:auto;
     margin-left: 5px;
 }
+
+
+
+
+.outer_wrap {
+    width:1350px;
+    margin:0 auto;
+    position:relative;
+    overflow:hidden;
+}
+
+.outer_block {
+    width:200px;
+    padding:0;
+    left:0;
+    top:123px;
+    display:block;
+    position:absolute;
+}
+.outer_block ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+.outer_block ul li {
+    margin:0;
+    display:block;
+    height:76px;
+    width:176px;
+}
+.outer_block ul li.del {
+    opacity: 0.6;
+    position:absolute;
+    top:22px;
+    left:105px;
+    padding:0;
+    background:url(../images/ow-img1.gif) no-repeat;
+}
+.outer_block ul li.del:hover{
+    z-index:999;
+    width:224px;
+    height:78px;
+    position:absolute;
+    top:22px;
+    margin: 0px;
+    left:1px;
+    background:url(../images/del-block.png) no-repeat;
+    cursor:pointer;
+}
+.outer_block ul li.stem_outer {
+     opacity: 0.6;
+    
+    position:absolute;
+    top:100px;
+    left:105px;
+    background:url(../images/ow-img2.gif) no-repeat;
+}
+.outer_block ul li.stem_outer:hover {
+    z-index:999;
+    width:222px;
+    height:76px;
+    position:absolute;
+    top:100px;
+    margin:0px;
+    left:0;
+    left:1px;
+    background:url(../images/stem-block.png) no-repeat;
+    cursor:pointer;
+}
+.outer_block ul li.byg_videre {
+     opacity: 0.6;
+    position:absolute;
+    
+    top:179px;
+    left:105px;
+    background:url(../images/ow-img3.gif) no-repeat;
+}
+.outer_block ul li.byg_videre:hover {
+    z-index:999;
+    width:222px;
+    height:76px;
+    position:absolute;
+    top:179px;
+    margin: 0px;
+    left:0;
+    left:1px;
+    background:url(../images/byg_vidre-block.png) no-repeat;
+    cursor:pointer;
+}
+.outer_block ul li.folg_med {
+     opacity: 0.6;
+    
+    position:absolute;
+    top:258px;
+    left:105px;
+    background:url(../images/ow-img4.gif) no-repeat;
+}
+.outer_block ul li.folg_med:hover {
+    z-index:999;
+    width:222px;
+    height:76px;
+    position:absolute;
+    margin: 0px;
+    top:258px;
+    left:0;
+    left:1px;
+    background:url(../images/flog_med-block.png) no-repeat;
+    cursor:pointer;
+}
+
+.outer_block ul li.last_box{
+   
+    position: absolute;
+    top: 340px;
+    left:42px;
+    z-index: 99999;
+}
+
+/*.outer_wrap {
+	width:95%;
+	margin:0 auto;
+	position:relative;
+	overflow:hidden;
+}
+
+.outer_block {
+	width:222px;
+	padding:4px 4px 8px 4px;
+	background:#fff;
+	border-radius:8px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	position:absolute;
+	left:0;
+	top:118px;
+	display:block;
+	z-index:9999;
+	font-size:10px;
+}
+.outer_block .block {
+	margin:0 0 5px 0;
+	font-size:12px;
+}
+.outer_block .block_last {
+	margin:0;
+	font-size:12px;
+}*/

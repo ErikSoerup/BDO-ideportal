@@ -1,6 +1,7 @@
 <div class="body_wrap">
   <div class="full_wrap">
     <div class="plainwrap">
+
       <% form_tag "/home/main_search", :method => :get do  %>
         <table width="100%" border="0" cellspacing="2" cellpadding="0">
           <tr>
@@ -14,81 +15,96 @@
 
             <td align="left" valign="middle">&nbsp; </td>
           </tr>
-          
-          
-          <tr>
-           
-            <td align="left" valign="middle">
-                <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]], params[:val1]), :id => "select", :class => "select_input"%>
 
-             </td>
-           
+
+          <tr>
+
+            <td align="left" valign="middle">
+              <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]], params[:val1]), :id => "select", :class => "select_input", :multiple => true%>
+
+            </td>
+
             <td align="left" valign="middle" style="width:116px;">
-              <%= select_tag "val2", options_for_select(["alle",  "min egne"], params[:val2]), :id => "select", :class => "select_input"%>
+              <%= select_tag "val2", options_for_select([["alle", "All"]]+User.all.collect{|user| [user.name,user.name]}, params[:val2]), :id => "select", :class => "select_input", :multiple => true%>
             </td>
-            
+
             <td align="left" valign="middle"style="width:116px;">
-              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, params[:val3].to_i),:id => "select", :class => "select_input"%>
+              <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, params[:val3].first.to_i),:id => "select", :class => "select_input", :multiple => true%>
             </td>
-           
+
             <td align="left" valign="middle"style="width:116px;">
-              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, params[:val4].to_s )%>
+              <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, params[:val4] ), :multiple => true%>
             </td>
             <td align="left" valign="middle"style="width:116px;"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
           </tr>
 
+  <%#= request.query_parameters %>
           <tr>
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=person&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=person&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="date-up"><a href="<%= request.request_uri %>&val=date&arrow=up" onclick=""><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" style="display:none;" id="date-down"><a href="<%= request.request_uri %>&val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0"  /></a></div>
                 </div>
-                <div class="fl">Person</div>
-              </div>
-            </td>
-            <td align="left" valign="middle">
-             <div class="sort">
-                <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=person&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=person&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
-                </div>
-                <div class="fl">Afdeling</div>
+                <% if params[:val] == "date" && params[:arrow] == "up" %>
+                  <div class="fl" style="cursor: pointer;"><a href="<%= request.request_uri %>&val=date&arrow=down" onclick="">Dato</a></div>
+                <% elsif params[:val] == "date" && params[:arrow] == "down" %>
+                  <div class="fl" style="cursor: pointer;"><a href="<%= request.request_uri %>&val=date&arrow=up" onclick="">Dato</a></div>
+                <% else %>
+                  <div class="fl" style="cursor: pointer;"><a href="<%= request.request_uri %>&val=date&arrow=up" onclick="">Dato</a></div>
+                <% end %>
               </div>
             </td>
             <td align="left" valign="middle">
               <div class="sort">
                 <div class="sortarrow_wrap">
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=person&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                  <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=person&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+
+                  <div class="plainwrap" id="vote-up"><a href="<%= request.request_uri %>&val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id="vote-down" style="display:none;"><a href="<%= request.request_uri %>&val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+
                 </div>
-                <div class="fl">Hovedvej</div>
+                <% if params[:val] == "vote" && params[:arrow] == "up" %>
+                  <div class="fl"><a href="<%= request.request_uri %>&val=vote&arrow=down">Stemmer</a></div>
+                <% elsif params[:val] == "vote" && params[:arrow] == "down" %>
+                  <div class="fl"><a href="<%= request.request_uri %>&val=vote&arrow=up">Stemmer</a></div>
+                <% else %>
+                  <div class="fl"><a href="<%= request.request_uri %>&val=vote&arrow=up">Stemmer</a></div>
+                <% end %>
+              </div>
+            </td>
+            <td align="left" valign="middle">
+              <div class="sort" style="width:132px;">
+                <div class="sortarrow_wrap">
+                  <div class="plainwrap" id="comment-up"><a href="<%= request.request_uri %>&val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                  <div class="plainwrap" id ="comment-down" style="display:none;"><a href="<%= request.request_uri %>&val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                </div>
+                <% if params[:val] == "comment" && params[:arrow] == "up" %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=comment&arrow=down">Antal kommentarer</a></div>
+                <% elsif params[:val] == "comment" && params[:arrow] == "down" %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=comment&arrow=up">Antal kommentarer</a></div>
+                <% else %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=comment&arrow=up">Antal kommentarer</a></div>
+                <% end %>
               </div>
             </td>
             <td colspan="2" align="left" valign="middle">
-              
+
               <div class="rest_sort" style="width:411px;">
-                <div class="sort">
-                  <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=date&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=date&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
-                  </div>
-                  <div class="fl">Dato</div>
-                </div>
-                <div class="sort">
-                  <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=vote&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=vote&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
-                  </div>
-                  <div class="fl">Stemmer</div>
-                </div>
                 <div class="sort" style="width:132px;">
                   <div class="sortarrow_wrap">
-                    <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=comment&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
-                    <div class="plainwrap"><a href="/home/main_search?val1=<%=params[:val1]%>&val2=<%= params[:val2] %>&val3=<%= params[:val3] %>&val4=<%= params[:val4] %>&val=comment&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap" id="follow-up"><a href="<%= request.request_uri %>&val=followers&arrow=up"><img src="/images/sort-arrow_up.png" alt="" border="0" /></a></div>
+                    <div class="plainwrap" style="display:none;" id="follow-down"><a href="<%= request.request_uri %>&val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0"  /></a></div>
                   </div>
-                  <div class="fl" style="width:103px;">Antal kommentarer</div>
+                  <% if params[:val] == "followers" && params[:arrow] == "up" %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=down">Følger ideen</a></div>
+                  <% elsif params[:val] == "followers" && params[:arrow] == "down" %>
+                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=up">Følger ideen</a></div>
+                  <% else %>
+                    <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=up">Følger ideen</a></div>
+                  <% end %>
                 </div>
+
+
               </div></td>
           </tr>
 
@@ -100,6 +116,11 @@
     <div class="b_divider"></div>
 
     <div class="plainwrap">
+      <div>
+        <h3>Total Number of search Ideas:-  <%= @count %></h3>
+
+
+      </div>
       <!--Header Portion Starts -->
       <div class="tab_headline">
         <!--Pagination Starts -->
@@ -113,3 +134,59 @@
       <% else %>
 
       <% end %>
+
+
+      <script type="text/javascript">
+        jQuery(document).ready(function() {
+          var val="<%= params[:val] %>";
+          var arrow="<%= params[:arrow] %>";
+          if( val == "vote" && arrow == "up"){
+            jQuery('#vote-down').show();
+            jQuery('#vote-up').hide();
+          }
+          else if(val == "vote" && arrow == "down"){
+            jQuery('#vote-down').hide();
+            jQuery('#vote-up').show();
+
+          }
+
+          else if(val =="comment" && arrow == "up"){
+            jQuery('#comment-up').hide();
+            jQuery('#comment-down').show();
+
+
+          }
+
+          else if(val =="comment" && arrow == "down"){
+            jQuery('#comment-down').hide();
+            jQuery('#comment-up').show();
+
+
+          }
+
+
+          else if(val =="date" && arrow == "up"){
+            jQuery('#date-up').hide();
+            jQuery('#date-down').show();
+          }
+
+
+          else if(val =="date" && arrow == "down"){
+            jQuery('#date-down').hide();
+            jQuery('#date-up').show();
+          }
+          else if(val == "followers" && arrow=="up"){
+            jQuery('#follow-up').hide();
+            jQuery('#follow-down').show();
+  
+          }
+
+          else if(val == "followers" && arrow=="down"){
+            jQuery('#follow-down').hide();
+            jQuery('#follow-up').show();
+
+          }
+
+        });
+
+      </script>

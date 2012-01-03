@@ -20,185 +20,160 @@ class HomeController < ApplicationController
   
   def advance
     
-    if params[:val] == "person"
+    if params[:val] == "followers"
       if params[:arrow] == "up"
-        @ideas=Idea.paginate(:page => params[:page], :per_page => 10, :order => "ideas.title DESC")
+        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| y.idea_followers.collect(&:user_id).uniq.count <=> x.idea_followers.collect(&:user_id).uniq.count}
+        @ideas=@ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @ideas=Idea.paginate(:page => params[:page], :per_page => 10, :order => "ideas.title ASC")
+        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.collect(&:user_id).uniq.count}
+        @ideas=@ideas.paginate(:page => params[:page],:per_page => 25)
       end
     elsif params[:val] == "date"
       if params[:arrow] == "up"
-        @ideas=Idea.paginate(:page => params[:page], :per_page => 10, :order => "ideas.created_at DESC")
+        @ideas=Idea.paginate(:page => params[:page], :per_page => 25, :order => "ideas.created_at DESC")
       elsif params[:arrow] == "down"
-        @ideas=Idea.paginate(:page => params[:page], :per_page => 10, :order => "ideas.created_at ASC")
+        @ideas=Idea.paginate(:page => params[:page], :per_page => 25, :order => "ideas.created_at ASC")
       end
     elsif params[:val] == "comment"
       if params[:arrow] == "up"
-        @ideas=Idea.find(:all).sort{|x,y| y.comment_count <=> x.comment_count}
-        @ideas=@ideas.paginate(:per_page => 10)
+        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| y.comment_count <=> x.comment_count}
+        @ideas=@ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @ideas=Idea.find(:all).sort{|x,y| x.comment_count <=> y.comment_count}
-        @ideas=@ideas.paginate(:per_page => 10)
+        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| x.comment_count <=> y.comment_count}
+        @ideas=@ideas.paginate(:page => params[:page],:per_page => 25)
       end
     elsif params[:val] == "vote"
       if params[:arrow] == "up"
-        @ideas=Idea.find(:all).sort{|x,y| y.vote_count <=> x.vote_count}
-        @ideas=@ideas.paginate(:per_page => 10)
+        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| y.vote_count <=> x.vote_count}
+        @ideas=@ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @ideas=Idea.find(:all).sort{|x,y| x.vote_count <=> y.vote_count}
-        @ideas=@ideas.paginate(:per_page => 10)
+        @ideas=Idea.find(:all, :order => "ideas.created_at DESC").sort{|x,y| x.vote_count <=> y.vote_count}
+        @ideas=@ideas.paginate(:page => params[:page],:per_page => 25)
       end
     else
-      @ideas=Idea.paginate(:page => params[:page], :per_page => 10)
+      @ideas=Idea.find(:all, :order =>"ideas.created_at DESC")
+      @ideas=@ideas.paginate(:page => params[:page], :per_page => 25)
     end
     
-    #where is the pagination code ???
-    #    @body_class = 'advance'
-    #    if params[:val] == "alle"
-    #      @ideas=Idea.paginate(:page => params[:page], :per_page => 10)
-
-    #    elsif params[:val] == "de hotteste ideer"
-    #      @ideas= Idea.populate_comment_counts(search_ideas(params))
-    #    elsif params[:val] == "nye"
-    #      @ideas= Idea.populate_comment_counts(search_ideas(params))
-    #    elsif params[:val] == "under udvikling"
-    #      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'under review'], :page => params[:page], :per_page => 10)
-    #    elsif params[:val] == "implementeret"
-    #      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'reviewed'], :page => params[:page])
-    #    elsif params[:val] == "under evaluering"
-    #      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'coming soon'], :page => params[:page])
-    #    elsif params[:val] == "ikke evalueret"
-    #      @ideas=Idea.paginate(:all, :conditions => ['status=?', 'launched'], :page => params[:page])
-    #    elsif params[:val] == "min egne"
-    #      @ideas=current_user.ideas.paginate(:page => params[:page])
-    #    elsif params[:val] == "current"
-    #      @current_ideas = Current.paginate(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}", :page => params[:page])
-    #    elsif params[:val] == "top"
-    #      @users=User.find_top_contributors
-    #      @ideas=[]
-    #      @users.each do |u|
-    #        @ideas << u.ideas unless u.ideas.empty?
-    #      end
-    #      @ideas=@ideas.first.paginate(:page => params[:page])
-    #    elsif Current.all.collect(&:title).include?(params[:val])
-    #      @current=Current.find_by_title(params[:val])
-    #      @ideas=@current.ideas.paginate(:page => params[:page])
-    #      
-    #    elsif params[:val]
-    #      @dep= Department.find_by_id(params[:val])
-    #      val=[]
-    #      unless @dep.users.empty?
-    #        @dep.users.each do |user|
-    #          val << user.ideas unless user.ideas.empty?
-    #          @idea={@dep.id => val} unless val.empty?
-    #        end
-    #        @ideas=@idea.values.first.first.paginate(:page => params[:page]) 
-    #      end
-    #     
-    #      
-    #    else 
-    #    end
+    
   end
 
 
   def main_search
-    @m_ideas=[]
-    
-    if params[:val1] == "alle"
-      @ideas=Idea.all
+    @ideas=[]
+    params[:val1].each do |val|
+      if val == "alle"
+        @ideas << Idea.all(:order => "ideas.created_at DESC")
 
-#    elsif params[:val1] == "de hotteste ideer"
-#      @ideas= Idea.populate_comment_counts(search_ideas(params))
-    elsif params[:val1] == "nye"
-      @ideas= Idea.find(:all, :conditions => ['status=?', 'new'])
-#    elsif params[:val1] == "under udvikling"
-#      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
-    elsif params[:val1] == "implementeret"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'launched'])
-    elsif params[:val1] == "under evaluering"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
-    elsif params[:val1] == "ikke evalueret"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'reviewed'])
-    elsif params[:val1] == "comming"
-      @ideas=Idea.find(:all, :conditions => ['status=?', 'coming soon'])
+        #    elsif params[:val1] == "de hotteste ideer"
+        #      @ideas= Idea.populate_comment_counts(search_ideas(params))
+      elsif val == "nye"
+        @ideas <<  Idea.find(:all, :conditions => ['status=?', 'new'], :order => "ideas.created_at DESC")
+        #    elsif params[:val1] == "under udvikling"
+        #      @ideas=Idea.find(:all, :conditions => ['status=?', 'under review'])
+      elsif val == "implementeret"
+        @ideas << Idea.find(:all, :conditions => ['status=?', 'launched'], :order => "ideas.created_at DESC")
+      elsif val == "under evaluering"
+        @ideas << Idea.find(:all, :conditions => ['status=?', 'under review'], :order => "ideas.created_at DESC")
+      elsif val == "ikke evalueret"
+        @ideas << Idea.find(:all, :conditions => ['status=?', 'reviewed'], :order => "ideas.created_at DESC")
+      elsif val == "comming"
+        @ideas << Idea.find(:all, :conditions => ['status=?', 'coming soon'], :order => "ideas.created_at DESC")
+      end
+      
     end
-     @c_ideas=[]        
+    @ideas.flatten!
+    puts @ideas.size
+    @c_ideas=[]
     @m_ideas = []
     @d_ideas=[]
-    if params[:val2] == "min egne"
-      
-      @ideas.each do |idea|
-        unless idea.inventor.nil?
-          if idea.inventor == current_user
-            
-            @m_ideas << idea  
-          end  
-        end
-      end
 
-    else
-      @ideas.each do |idea|
-        @m_ideas << idea
-      end
-    end
-    
-    
-    
-    if  params[:val3] != "1" 
-      
-      @m_ideas.each do |idea|
-        unless idea.inventor.nil?
-          if idea.inventor.department == Department.find_by_id(params[:val3]) 
-            @d_ideas << idea
+    params[:val2].each do |val2|
+      if User.find_by_name(val2)
+   
+        @ideas.each do |idea|
+          unless idea.inventor.nil?
+            if idea.inventor == User.find_by_name(val2)
+            
+              @m_ideas << idea
+            end
+        
           end
         end
-      end
-    else
-      @m_ideas.each do | idea|
-        @d_ideas << idea
+
+      else
+        @ideas.each do |idea|
+          @m_ideas << idea
+        end
+    
       end
     end
     
-    if Current.all.collect(&:title).include?(params[:val4]) || params[:val4] != "current"
-      @current=Current.find_by_title(params[:val4])
-      @d_ideas.each do |idea|
-        if @current.ideas.include?(idea)
-          @c_ideas << idea
+    params[:val3].each do |val3|
+      if  val3 != "1"
+      
+        @m_ideas.each do |idea|
+          unless idea.inventor.nil?
+            if idea.inventor.department == Department.find_by_id(val3)
+              @d_ideas << idea
+            end
+          end
+        end
+      else
+        @m_ideas.each do | idea|
+          @d_ideas << idea
         end
       end
-    else
-      @d_ideas.each do |idea|
-        @c_ideas << idea
-      end
-      
     end
-    
-    if params[:val] == "person"
+    params[:val4].each do |val4|
+      if Current.all.collect(&:title).include?(val4) || val4 != "current"
+        @current=Current.find_by_title(val4)
+        @d_ideas.each do |idea|
+          if @current.ideas.include?(idea)
+            @c_ideas << idea
+          end
+        end
+      else
+        @d_ideas.each do |idea|
+          @c_ideas << idea
+        end
+      
+      end
+    end
+    @count=@c_ideas.size
+    if params[:val] == "followers"
       if params[:arrow] == "up"
-        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10, :order => "ideas.title DESC")
+        @c_ideas=@c_ideas.sort{|x,y| y.idea_followers.collect(&:user_id).uniq.count <=> x.idea_followers.collect(&:user_id).uniq.count}
+        @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10, :order => "ideas.title ASC")
+        @c_ideas=@c_ideas.sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.collect(&:user_id).uniq.count}
+        @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       end
     elsif params[:val] == "date"
       if params[:arrow] == "up"
-        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10, :order => "ideas.created_at DESC")
+        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 25, :order => "ideas.created_at DESC")
       elsif params[:arrow] == "down"
-        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10, :order => "ideas.created_at ASC")
+        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 25, :order => "ideas.created_at ASC")
       end
     elsif params[:val] == "comment"
       if params[:arrow] == "up"
-        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10).sort{|x,y| x.comment_count <=> y.comment_count}
+        @c_ideas=@c_ideas.sort{|x,y| y.comment_count <=> x.comment_count}
+        @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10).sort{|x,y| y.comment_count <=> x.comment_count}
+        @c_ideas=@c_ideas.sort{|x,y| x.comment_count <=> y.comment_count}
+        @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       end
     elsif params[:val] == "vote"
       if params[:arrow] == "up"
-        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10).sort{|x,y| y.vote_count <=> x.vote_count}
+        @c_ideas=@c_ideas.sort{|x,y| y.vote_count <=> x.vote_count}
+        @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       elsif params[:arrow] == "down"
-        @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10).sort{|x,y| x.vote_count <=> y.vote_count}
+        @c_ideas=@c_ideas.sort{|x,y| x.vote_count <=> y.vote_count}
+        @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 25)
       end
     else
-      @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 10)
+     
+      @c_ideas=@c_ideas.paginate(:page => params[:page], :per_page => 25)
     end
     
     

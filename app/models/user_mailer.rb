@@ -5,8 +5,6 @@ class UserMailer < ActionMailer::Base
     @body[:url]  = activate_url(:activation_code => user.activation_code)
   end
 
-  
-
   def activation(user)
     set_up_email(user)
     @subject    += 'Your account has been activated!'
