@@ -69,6 +69,7 @@
         <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
         <div class="tag_container_inner"> <%= @idea.tags.map { |tag| link_to h(tag.name), idea_search_path(:search => ['tag', tag.name]) }.join(', ')%></div>
       </div>
+     
     </div>
 
     <div class="plainwrap" style="margin-top:10px"><h2 class="title"><%= @idea.comment_count %> Kommentarer</h2></div>
