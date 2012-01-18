@@ -3,10 +3,10 @@
   <div class="left_panel">
     <!--Profile Top Stuff Starts -->
     <div class="plainwrap"><div class="fl" style="width:360px;"><h2 style="margin-bottom:8px;"><%= h @idea.title%>  </h2>
-        
-        
-        
-       
+
+
+
+
 
         <h3 class="subhead" style="float:left;width:855px;">Sendt <strong><%= time_ago_in_words(@idea.created_at) %> <%= t("ago") %> </strong> af 
           <%unless @idea.is_anonymous?%>
@@ -16,11 +16,13 @@
           <% end %>
         </h3>
         <h3 class="subhead">Ideen har status <strong><%= @idea.status%></strong></h3>
-         <div class="download_link"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.nil?%></div>
+        <% if @idea.document.url != "/documents/original/missing.png" %>
+          <div class="download_link"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.nil?%></div>
+        <% end %>
         <div class="plainwrap" style="margin:10px 0;">
-             <%= user_formatted_text @idea.description %>
+          <%= user_formatted_text @idea.description %>
         </div>
-        
+
 
         <%if @idea.editable_by?(current_user)%>
           <div>
@@ -31,11 +33,11 @@
       </div>
       <div class="fr" style="width:245px;">
         <div style="margin-left:52px;">
-        <div class="fl" style="margin-right:34px;">
-            <%# unless @idea.idea_followers.empty? %>
-              <%= link_to "#{@idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+          <div class="fl" style="margin-right:34px;">
+<%# unless @idea.idea_followers.empty? %>
+            <%= link_to "#{@idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
 
-            <%# end %>
+<%# end %>
           </div>
           <div class="fl">
             <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
@@ -46,7 +48,7 @@
               <% end %>
             <% end %>
           </div>
-          </div>
+        </div>
         <div class="stem" id="vote-<%= @idea.id %>" style="float:right;margin-top: 10px;">
 
           <%= h "#{@idea.vote_count}"%>
@@ -56,12 +58,12 @@
         </div>
       </div>
     </div>
-    
+
     <!--Profile Top Stuff Ends -->
     <!--Tag Panel Starts -->
-    
 
-    
+
+
     <div class="plainwrap"></div>
     <div class="d_panel_commentator2" style="height:auto;">
       <div class="fl" style="margin-right:15px"><%= link_to "Kommentarer #{"(#{@idea.comment_count})" }", "#comments", :class => "bold_link"%> | <%= link_to "Kommentér", "#post-comment", :class => "bold_link"%></div>
@@ -69,7 +71,7 @@
         <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
         <div class="tag_container_inner"> <%= @idea.tags.map { |tag| link_to h(tag.name), idea_search_path(:search => ['tag', tag.name]) }.join(', ')%></div>
       </div>
-     
+
     </div>
 
     <div class="plainwrap" style="margin-top:10px"><h2 class="title"><%= @idea.comment_count %> Kommentarer</h2></div>
@@ -94,7 +96,7 @@
             <%= f.text_area :text, :id => "comment-text", :class => "input-textarea"%>
             <br/>
             <div style="margin-left:136px;margin-top:9px;">
-              <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
+  <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
               <%= f.file_field :document , :size=>57, :style => "margin-top:15px;", :id => "document"%>
             </div>
             <div class="clear" stle="clear:both;"></div>
@@ -102,7 +104,7 @@
           <div class="form-submit inline">
             <% if current_user && !current_user.active?%>
               <p class="message info"> Your comment will not be publicly visible until you confirm your account.</p>
-            <% end %>  
+            <% end %>
 
             <%= submit_tag "Post Comment", :class => "input-submit comment-submit", :style =>"margin-top:19px;"%>
           </div>
