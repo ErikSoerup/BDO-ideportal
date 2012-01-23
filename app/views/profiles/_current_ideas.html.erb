@@ -3,13 +3,14 @@
 </div>
 
 <% @my_ideas.each do |idea| %>
+<div id="idea-<%= idea.id %>"
   <% if  idea.status == "new"   %>
     <div class="green_wrap" style="height:auto;">
     <% elsif idea.status == "under review" || idea.status == "reviewed" %>
       <div class="yellow_wrap" style="height:auto;">
       <% else %>
         <div class="blue_wrap" style="height:auto;">
-        <% end %>  
+        <% end %>
         <!--stem Stuff Starts -->
         <div class="stem" id="vote-<%= idea.id %>">
 
@@ -33,6 +34,10 @@
                   <%= link_to "#{idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
 
                 <% end %>
+                 <% if  current_user.roles.collect(&:name).include?("admin") %>
+
+                    <%= link_to_remote "Delete Idea", :update => "idea-#{idea.id}", :url => destroy_idea_idea_path(idea), :method => :delete %>
+                  <% end %>
               </div>
               <div class="fr">
                 <%= link_to "Stop følg", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
@@ -57,7 +62,7 @@
           <div class="d_panel_commentator_big" style="height:auto;">
             <div class="fl"><img src="/images/comment-icon.gif" alt="" /><%= link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" }", idea_path(idea, :anchor => 'comments', :title_in_url => false)%></div>
             <div class="tag_container">
-              <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
+              <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div>
               <div class="tag_container_inner">
                 <% unless idea.tags.empty?%>
                   <% idea.tags.each_with_index do |tag, ctr|%>
@@ -79,5 +84,5 @@
       <!--Green Panel Ends -->
       <!--Breaker Starts -->
       <div class="b_divider"></div>
-
+      </div>
     <% end %>
