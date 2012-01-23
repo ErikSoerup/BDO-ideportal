@@ -3,6 +3,7 @@
 </div>
 
 <% @my_ideas.each do |idea| %>
+<div id="idea-<%= idea.id %>"
   <% if  idea.status == "new"   %>
     <div class="green_wrap" style="height:auto;">
     <% elsif idea.status == "under review" || idea.status == "reviewed" %>
@@ -33,6 +34,10 @@
                   <%= link_to "#{idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
 
                 <% end %>
+                 <% if  current_user.roles.collect(&:name).include?("admin") %>
+
+                    <%= link_to_remote "Delete Idea", :update => "idea-#{idea.id}", :url => destroy_idea_idea_path(idea), :method => :delete %>
+                  <% end %>
               </div>
               <div class="fr">
                 <%= link_to "Stop følg", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
@@ -79,5 +84,5 @@
       <!--Green Panel Ends -->
       <!--Breaker Starts -->
       <div class="b_divider"></div>
-
+      </div>
     <% end %>
