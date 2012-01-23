@@ -28,7 +28,7 @@ class IdeasController < ApplicationController
   param_accessible :idea => [:title, :description, :tag_names, :current_id, :document ]
 
   make_resourceful do
-    actions :new, :create, :show, :update
+    actions :new, :create, :show, :update, :destroy
 
     before :create do
       @idea.inventor = current_user
@@ -39,6 +39,8 @@ class IdeasController < ApplicationController
         @idea.tags += params[:tags].values.map{ |tag| Tag.from_string(tag) }.flatten 
       end
     end
+
+   
 
     after :create do
 
@@ -115,6 +117,8 @@ class IdeasController < ApplicationController
       format.xml  { render :template => 'validation_errors' }
     end
 
+    
+
     response_for :update do |format|
       format.html do
         redirect_to idea_path(@idea)
@@ -143,7 +147,13 @@ class IdeasController < ApplicationController
     redirect_to idea_path(@idea)
   end
 
-  
+
+  def destroy_idea
+    @idea=Idea.find(params[:id])
+    @idea.destroy
+    render :layout => false
+  end
+
  
 
 
@@ -158,7 +168,7 @@ class IdeasController < ApplicationController
     rescue
       flash[:notice] = "You have successfully followed the idea"
       redirect_to idea_path(@idea)
-    end  
+    end
   end
   
   
@@ -195,7 +205,7 @@ class IdeasController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "up"
       @users=@users.sort{|x,y| x.votes.size <=> y.votes.size}
     elsif params[:name] == "comment" && params[:arrow] == "down"
-      @users=@users.sort{|x,y| y.votes.size <=> x.votes.size}  
+      @users=@users.sort{|x,y| y.votes.size <=> x.votes.size}
     else
       @users = @users
     end
@@ -204,7 +214,7 @@ class IdeasController < ApplicationController
   end
   def unfollow
     @idea_follow=IdeaFollower.find_by_user_id_and_idea_id(current_user.id,params[:id])
-    @idea_follow.destroy unless @idea_follow.nil? 
+    @idea_follow.destroy unless @idea_follow.nil?
     flash[:notice] = "Your fellowship of this idea has been removed"
     redirect_to ideas_path
   end
@@ -231,7 +241,7 @@ class IdeasController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.js 
+      format.js
       format.rss { render :content_type => 'application/rss+xml'}
       format.xml
     end

@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :ideas, :member => { :assign => :post, :subscribe => :post, :followers => :get, :unsubscribe => [:post, :get], :unfollow => :delete } do |idea|  # unsubscribe supports GET for direct link from e-mail
+  map.resources :ideas, :member => { :destroy_idea => :delete,:assign => :post, :subscribe => :post, :followers => :get, :unsubscribe => [:post, :get], :unfollow => :delete } do |idea|  # unsubscribe supports GET for direct link from e-mail
     idea.resources :comments # for new/create, idea-specific index
     idea.resource :vote
   end
@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tags
   map.resources :profiles
   map.resource :map
-
+map.resources :tests
   map.suggestions         '/suggestions',                        :controller => 'currents',  :action => 'show' , :id=> Current::SUGESSIONS_ID
 
   map.unfollow            '/users/unfollow/:id',                 :controller => 'users',    :action => 'unfollow'
