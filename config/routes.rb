@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :ideas, :member => { :assign => :post, :subscribe => :post, :followers => :get, :unsubscribe => [:post, :get], :unfollow => :delete } do |idea|  # unsubscribe supports GET for direct link from e-mail
+  map.resources :ideas, :member => { :destroy_idea => :delete,:assign => :post, :subscribe => :post, :followers => :get, :unsubscribe => [:post, :get], :unfollow => :delete } do |idea|  # unsubscribe supports GET for direct link from e-mail
     idea.resources :comments # for new/create, idea-specific index
     idea.resource :vote
   end
@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tags
   map.resources :profiles
   map.resource :map
-
+map.resources :tests
   map.suggestions         '/suggestions',                        :controller => 'currents',  :action => 'show' , :id=> Current::SUGESSIONS_ID
 
   map.unfollow            '/users/unfollow/:id',                 :controller => 'users',    :action => 'unfollow'
@@ -28,11 +28,11 @@ ActionController::Routing::Routes.draw do |map|
   map.logout              '/logout',                             :controller => 'sessions', :action => 'destroy'
   map.signup              '/signup',                             :controller => 'users', :action => 'new'
   map.idea_search         '/ideas/search/*search',               :controller => 'ideas', :action => 'index'
-  map.idea_follow         '/ideas/follow',                    :controller => 'ideas', :action => 'follow', :conditions => {:method => :post}   
+  map.idea_follow         '/ideas/follow',                    :controller => 'ideas', :action => 'follow', :conditions => {:method => :post}
   #  map.idea_unfollow       '/ideas/unfollow', :controller => "ideas", :action => "unfollow", :conditions => {:method => :delete}
   #  map.idea_followers      '/ideas/followes', :controller => 'ideas', :action => 'followers', :conditions => {:method => :get}
   map.current_follow         '/currents/follow', :controller => 'currents', :action => 'follow', :conditions => {:method => :post}
-  
+
   map.send_activation     '/user/send_activation',               :controller => 'users', :action => 'send_activation'
   map.activate            '/user/activate/:activation_code',     :controller => 'users', :action => 'activate'
   map.forgot_password     '/user/password/forgot',               :controller => 'users', :action => 'forgot_password',     :conditions => { :method => :get }

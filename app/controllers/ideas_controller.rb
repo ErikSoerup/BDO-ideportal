@@ -16,7 +16,7 @@ class IdeasController < ApplicationController
   before_filter :add_search_feed, :only => :index
   before_filter :add_comments_feed, :only => [:show, :update]
   layout 'profile'
-  
+
   def compute_layout
     if action_name == "index" && !params[:search].nil? || action_name == "show" || action_name == "new"
       'profile'
@@ -28,7 +28,7 @@ class IdeasController < ApplicationController
   param_accessible :idea => [:title, :description, :tag_names, :current_id, :document ]
 
   make_resourceful do
-    actions :new, :create, :show, :update
+    actions :new, :create, :show, :update, :destroy
 
     before :create do
       @idea.inventor = current_user
@@ -36,16 +36,18 @@ class IdeasController < ApplicationController
       @idea.user_agent = request.user_agent
       if params[:tags]
         # User can enter tags as free-form text, or using client-side JS. We need to merge tags from the two sources.
-        @idea.tags += params[:tags].values.map{ |tag| Tag.from_string(tag) }.flatten 
+        @idea.tags += params[:tags].values.map{ |tag| Tag.from_string(tag) }.flatten
       end
     end
+
+
 
     after :create do
 
       if @idea.valid? && @idea.inventor
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)
-        if @idea.current && !@idea.current.current_followers.empty? 
+        if @idea.current && !@idea.current.current_followers.empty?
           @idea.current.current_followers.each do |follow|
             Delayed::Job.enqueue IdeaNotificationJob.new(User.find(follow.user_id), @idea) unless User.find(follow.user_id) == current_user
           end
@@ -115,6 +117,8 @@ class IdeasController < ApplicationController
       format.xml  { render :template => 'validation_errors' }
     end
 
+
+
     response_for :update do |format|
       format.html do
         redirect_to idea_path(@idea)
@@ -143,8 +147,14 @@ class IdeasController < ApplicationController
     redirect_to idea_path(@idea)
   end
 
-  
- 
+
+  def destroy_idea
+    @idea=Idea.find(params[:id])
+    @idea.destroy
+    render :layout => false
+  end
+
+
 
 
   def follow
@@ -158,21 +168,21 @@ class IdeasController < ApplicationController
     rescue
       flash[:notice] = "You have successfully followed the idea"
       redirect_to idea_path(@idea)
-    end  
+    end
   end
-  
-  
+
+
   def followers
     @body_class='advance'
     page = 1 || params[:page]
     @idea=Idea.find(params[:id])
     @users=@idea.idea_followers.collect(&:user).uniq
-    
+
     if params[:val]
       @users=@users.find_all {|user|  user.name.first == params[:val].to_s}
-      
+
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
-      
+
       @users=@users.sort{|x,y| x.name <=> y.name}
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
       @users=@users.sort{|x,y| y.name <=> x.name}
@@ -195,26 +205,26 @@ class IdeasController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "up"
       @users=@users.sort{|x,y| x.votes.size <=> y.votes.size}
     elsif params[:name] == "comment" && params[:arrow] == "down"
-      @users=@users.sort{|x,y| y.votes.size <=> x.votes.size}  
+      @users=@users.sort{|x,y| y.votes.size <=> x.votes.size}
     else
       @users = @users
     end
     @users=@users.paginate :page => page unless @users.nil?
-    
+
   end
   def unfollow
     @idea_follow=IdeaFollower.find_by_user_id_and_idea_id(current_user.id,params[:id])
-    @idea_follow.destroy unless @idea_follow.nil? 
+    @idea_follow.destroy unless @idea_follow.nil?
     flash[:notice] = "Your fellowship of this idea has been removed"
     redirect_to ideas_path
   end
-  
-  
+
+
   def index
     unless params[:status].nil?
-      
-        
-      
+
+
+
       current_objects(params[:status])
     else
       if params[:page_size]
@@ -231,7 +241,7 @@ class IdeasController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.js 
+      format.js
       format.rss { render :content_type => 'application/rss+xml'}
       format.xml
     end
