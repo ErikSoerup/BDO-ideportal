@@ -1,12 +1,8 @@
 - if @message
-  %div
-    .message.info=h @message
+  .message.info=h @message
 - if flash[:info]
-  %div
-    .message.info= flash[:info]
+  .message.info= flash[:info]
 - elsif flash[:error]
-  %div
-    .message.error= flash[:error]
+  .message.error= flash[:error]
 - elsif flash[:notice]
-  %div
-    .message.info= flash[:notice]
+  .message.info= flash[:notice]

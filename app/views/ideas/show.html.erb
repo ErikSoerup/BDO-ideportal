@@ -1,6 +1,22 @@
 <div class="body_wrap">
   <!--Left Panel Starts -->
   <div class="left_panel">
+    <% nt_idea=next_idea(@idea)
+    pv_idea=prev_idea(@idea)
+  %>
+    <div class="plainwrap">
+      <% unless pv_idea.nil?  %>
+        <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea), :style =>"color: #0B3597; text-decoration: none;" %></div>
+      <% else %>
+        <div class="fl"><span>&laquo; Forrige </span></div>
+      <% end %>
+      <% unless nt_idea.nil? %>
+        <div class="fr"><%= link_to "Næste", idea_url(nt_idea), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
+      <% else %>
+        <div class="fr"><span>Næste &raquo;</span></div>
+      <% end %>
+    
+    </div>
     <!--Profile Top Stuff Starts -->
     <div class="plainwrap"><div class="fl" style="width:360px;"><h2 style="margin-bottom:8px;"><%= h @idea.title%>  </h2>
 
@@ -9,50 +25,50 @@
 
 
         <h3 class="subhead" style="float:left;width:855px;">Sendt <strong><%= time_ago_in_words(@idea.created_at) %> <%= t("ago") %> </strong> af 
-          <%unless @idea.is_anonymous?%>
-            <%=link_to @idea.inventor.name, profile_path(@idea.inventor), :class => "bold_link"%>
-          <%else%>
-            <%=link_to "Anonymous", "#", :class=> "bold_link" %>
-          <% end %>
+        <%unless @idea.is_anonymous?%>
+          <%=link_to @idea.inventor.name, profile_path(@idea.inventor), :class => "bold_link"%>
+        <%else%>
+          <%=link_to "Anonymous", "#", :class=> "bold_link" %>
+        <% end %>
         </h3>
         <h3 class="subhead">Ideen har status <strong><%= @idea.status%></strong></h3>
         <div class="download_link"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.nil?%></div>
         <div class="plainwrap" style="margin:10px 0;">
-          <%= user_formatted_text @idea.description %>
+        <%= user_formatted_text @idea.description %>
         </div>
 
 
-        <%if @idea.editable_by?(current_user)%>
-          <div>
-            <%= link_to('edit', '#', :onclick => 'editIdeaText(); return false')%>
-            <%= ("For the next #{time_ago_in_words(@idea.created_at + 15.minutes)}")%>
-          </div>
-        <% end %>
+      <%if @idea.editable_by?(current_user)%>
+        <div>
+          <%= link_to('edit', '#', :onclick => 'editIdeaText(); return false')%>
+          <%= ("For the next #{time_ago_in_words(@idea.created_at + 15.minutes)}")%>
+        </div>
+      <% end %>
       </div>
       <div class="fr" style="width:245px;">
         <div style="margin-left:52px;">
           <div class="fl" style="margin-right:34px;">
 <%# unless @idea.idea_followers.empty? %>
-            <%= link_to "#{@idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+          <%= link_to "#{@idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
 
 <%# end %>
           </div>
           <div class="fl">
-            <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
-            <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).blank? %>
-              <% form_tag idea_follow_path do%>
-                <%= hidden_field_tag :idea_id, @idea.id%>
-                <%= submit_tag "Følg denne", :class => "idea_submit"%>
-              <% end %>
+          <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
+          <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).blank? %>
+            <% form_tag idea_follow_path do%>
+              <%= hidden_field_tag :idea_id, @idea.id%>
+              <%= submit_tag "Følg denne", :class => "idea_submit"%>
             <% end %>
+          <% end %>
           </div>
         </div>
         <div class="stem" id="vote-<%= @idea.id %>" style="float:right;margin-top: 10px;">
 
-          <%= h "#{@idea.vote_count}"%>
-          <% unless has_voted?(@idea)%>
-            <%= link_to_remote "#{t('vote')}!", :update => "vote-#{@idea.id}", :url => idea_vote_path(@idea.id), :complete => visual_effect(:highlight, "vote-#{@idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
-          <% end %>
+        <%= h "#{@idea.vote_count}"%>
+        <% unless has_voted?(@idea)%>
+          <%= link_to_remote "#{t('vote')}!", :update => "vote-#{@idea.id}", :url => idea_vote_path(@idea.id), :complete => visual_effect(:highlight, "vote-#{@idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
+        <% end %>
         </div>
       </div>
     </div>
@@ -74,10 +90,10 @@
     <div class="plainwrap" style="margin-top:10px"><h2 class="title"><%= @idea.comment_count %> Kommentarer</h2></div>
     <div class="plainwrap" id="comments">
       <!--Comments1 Starts -->
-      <%= render :partial => 'idea_comment',
-        :collection => @idea.comments.visible,
-        :controller => 'comments',
-        :locals => { :show_avatar => true }%>
+    <%= render :partial => 'idea_comment',
+      :collection => @idea.comments.visible,
+      :controller => 'comments',
+      :locals => { :show_avatar => true }%>
       <!--Breaker Ends -->
       <!--Comments3 Ends -->
     </div>
@@ -85,29 +101,29 @@
     <div class="submit_idea_wrap" id="comments">
       <div class="plainwrap"style="background-color: #6AE5DB;" id="post-comment">
         <p align="center">
-          <% form_for :comment, :url => idea_comments_url(@idea), :html => { :multipart => true, :onsubmit => 'return validateComment()' } do |f|%>
-          <div id ="comment-missing" class="message error" style = "display: none"><%= t("enter_comment") %></div>
+        <% form_for :comment, :url => idea_comments_url(@idea), :html => { :multipart => true, :onsubmit => 'return validateComment()' } do |f|%>
+        <div id ="comment-missing" class="message error" style = "display: none"><%= t("enter_comment") %></div>
 
-          <div class="form-group inline" id="post-comment" style="margin:23px 0 0 0;">
-            <label for ="comment-text" style="color: #425D78;"> Din Kommentar</label>
-            <%= f.text_area :text, :id => "comment-text", :class => "input-textarea"%>
-            <br/>
-            <div style="margin-left:136px;margin-top:9px;">
-  <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
-              <%= f.file_field :document , :size=>57, :style => "margin-top:15px;", :id => "document"%>
-            </div>
-            <div class="clear" stle="clear:both;"></div>
+        <div class="form-group inline" id="post-comment" style="margin:23px 0 0 0;">
+          <label for ="comment-text" style="color: #425D78;"> Din Kommentar</label>
+          <%= f.text_area :text, :id => "comment-text", :class => "input-textarea"%>
+          <br/>
+          <div style="margin-left:136px;margin-top:9px;">
+<%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
+            <%= f.file_field :document , :size=>57, :style => "margin-top:15px;", :id => "document"%>
           </div>
-          <div class="form-submit inline">
-            <% if current_user && !current_user.active?%>
-              <p class="message info"> Your comment will not be publicly visible until you confirm your account.</p>
-            <% end %>
-
-            <%= submit_tag "Post Comment", :class => "input-submit comment-submit", :style =>"margin-top:19px;"%>
-          </div>
-
           <div class="clear" stle="clear:both;"></div>
-        <% end %>
+        </div>
+        <div class="form-submit inline">
+          <% if current_user && !current_user.active?%>
+            <p class="message info"> Your comment will not be publicly visible until you confirm your account.</p>
+          <% end %>
+
+          <%= submit_tag "Post Comment", :class => "input-submit comment-submit", :style =>"margin-top:19px;"%>
+        </div>
+
+        <div class="clear" stle="clear:both;"></div>
+      <% end %>
       </div>
       </p>
     </div>
