@@ -1899,9 +1899,9 @@ ul.index li {
 /* flash message */
 .flash_message{
 
-    left: 441px;
+    left: 195px;
     position: absolute;
-    top: 208px;
+    top: 161px;
     width: auto;
     z-index: 99999;
 }
