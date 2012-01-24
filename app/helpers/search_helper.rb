@@ -64,6 +64,7 @@ module SearchHelper
         if department_id
           query_opts[:conditions][0] += ' and users.department_id = ?'
           query_opts[:conditions] << department_id
+          query_opts[:order] = 'ideas.created_at DESC'
           @query_title = "Departments " + @query_title
         else
           raise "Unknown search parameter \"#{param}\""
