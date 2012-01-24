@@ -22,7 +22,7 @@ module SearchHelper
   def search_ideas_sql(params)
     query_opts = {
       :page => params[:page] || 1,
-      :per_page => params[:page_size] || 20,
+      :per_page => params[:page_size] || 8,
       :include => [{:inventor => :postal_code}, :tags],
       :conditions => ['users.state = ? and ideas.hidden = ?', 'active', false] }
     @query_title = "Ideas"
