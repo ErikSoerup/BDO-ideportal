@@ -1,6 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+
   include SearchHelper
   include ActionView::Helpers::JavaScriptHelper
 
@@ -9,9 +10,23 @@ module ApplicationHelper
   end
   def url_field(val)
     "/home/advance?val="+val
-  end 
-  
- 
+  end
+
+
+  def next_idea(idea)
+    ideas=Idea.all.select { |idea| idea.visible? }.collect(&:id)
+
+    index=ideas.find_index(idea.id) if idea.visible?
+    Idea.find(ideas[index-1])
+
+
+
+  end
+
+  def prev_idea(idea)
+    Idea.find(:last, :conditions => ["id < ?", idea.id])
+  end
+
   def user_formatted_text(text)
     # Handles free-form text for ideas and comments.
     # We could drop in some more elaborate formatting rules here if we want to,
