@@ -124,7 +124,13 @@
       <% else %>
 
       <% end %>
-
+      <div class="tab_headline">
+        <!--Pagination Starts -->
+        <div class="fr">
+          <%= will_paginate @ideas, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+        </div>
+        <!--Pagination Ends -->
+      </div>
 
       <script type="text/javascript">
         jQuery(document).ready(function() {

@@ -96,9 +96,9 @@
                     <div class="plainwrap" style="display:none;" id="follow-down"><a href="<%= request.request_uri %>&val=followers&arrow=down"><img src="/images/sort-arrow_down.png" alt="" border="0"  /></a></div>
                   </div>
                   <% if params[:val] == "followers" && params[:arrow] == "up" %>
-                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=down">Følger ideen</a></div>
+                    <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=down">Følger ideen</a></div>
                   <% elsif params[:val] == "followers" && params[:arrow] == "down" %>
-                  <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=up">Følger ideen</a></div>
+                    <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=up">Følger ideen</a></div>
                   <% else %>
                     <div class="fl" style="width:103px;"><a href="<%= request.request_uri %>&val=followers&arrow=up">Følger ideen</a></div>
                   <% end %>
@@ -134,7 +134,13 @@
       <% else %>
 
       <% end %>
-
+      <div class="tab_headline">
+        <!--Pagination Starts -->
+        <div class="fr">
+          <%= will_paginate @c_ideas, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige"%>
+        </div>
+        <!--Pagination Ends -->
+      </div>
 
       <script type="text/javascript">
         jQuery(document).ready(function() {
