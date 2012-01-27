@@ -266,7 +266,7 @@
                     <div class="vote_check"></div>
                     <div class="vote_panel">
                       <div class="fl"><%=  link_to h(truncate(vote.idea.title, :length => 50, :separator => ' ')), idea_path(vote.idea), :class => "bold_link"%></div>
-                      <div class="fr">Posted <%=time_ago_in_words(vote.idea.created_at)%> dage ago</div>
+                      <div class="fr">Posted <%=time_ago_in_words(vote.idea.created_at)%> dage <%=t("ago")%></div>
                     </div>
                   </div>
                   <!--Breaker Starts -->
