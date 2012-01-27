@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    
+
     <!--Header Portion Ends -->
 
 
@@ -81,7 +81,7 @@
 
 
 <script type="text/javascript">
-  
+
   var tags= <%= Tag.all.map(&:name).to_json  %>;
   var myTextArea = jQuery('#auto-text').tagify();
 
@@ -98,7 +98,7 @@
     });
     myTextArea.tagify("serialize");
   });
-  
+
 </script>
 
 
