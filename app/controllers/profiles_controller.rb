@@ -10,7 +10,7 @@ class ProfilesController < ApplicationController
   end
   
   def show
-    @ideas= @user.ideas.paginate(:page => params[:page], :per_page => 3)
+    @ideas= @user.ideas.paginate(:page => params[:page], :per_page => 3, :order => "created_at DESC")
     @comments= @user.comments.paginate(:page => params[:page], :per_page => 3)
     @votes=@user.votes.paginate(:page => params[:page], :per_page => 10)
     @my_currents = @user.current_followers.collect(&:current)
