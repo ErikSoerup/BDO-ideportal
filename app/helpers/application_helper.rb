@@ -14,23 +14,18 @@ module ApplicationHelper
 
 
   def next_idea(idea)
-    ideas=Idea.all.select { |idea| idea.visible? }.collect(&:id)
-
-    index=ideas.find_index(idea.id) if idea.visible?
-    Idea.find(ideas[index-1])
-
-
-
+    Idea.active.find(:last, :conditions => ["ideas.id > ?", idea.id], :order => "ideas.id DESC")
   end
 
   def prev_idea(idea)
-    Idea.find(:last, :conditions => ["id < ?", idea.id])
+    Idea.active.find(:first, :conditions => ["ideas.id < ?", idea.id])
   end
 
   def user_formatted_text(text)
     # Handles free-form text for ideas and comments.
     # We could drop in some more elaborate formatting rules here if we want to,
     # but be careful about XSS attacks!
+    
     auto_link(h(text).strip.gsub(/(\n|\r\n|\r)/, '<br/>'), :urls, {:rel => 'nofollow'})
   end
 
