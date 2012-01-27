@@ -69,6 +69,13 @@ class CommentsController < ApplicationController
       format.rss { render :content_type => 'application/rss+xml'}
     end
   end
+  
+  def destroy_comment
+    @comment=Comment.find(params[:id])
+    @comment.destroy
+    render :layout => false
+  end
+
 
   def current_objects
     @comments ||= begin
