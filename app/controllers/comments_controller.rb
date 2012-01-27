@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
     @comments ||= begin
       query_opts = {
         :page => params[:page],
-        :per_page => 20,
+        :per_page => 8,
         :order => 'comments.created_at DESC',
         :include => [:author, :idea],
         :conditions => { 'users.state' => 'active', 'comments.hidden' => false, 'ideas.hidden' => false }}
