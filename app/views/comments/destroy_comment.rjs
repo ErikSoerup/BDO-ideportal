@@ -1,2 +1,7 @@
 page.remove "comment-#{@comment.id}"
 page.remove "divider-#{@comment.id}"
+
+unless @idea.nil?
+  page.replace_html "comment-count", "(#{@idea.comments.size})"
+  page.replace_html "comment-count-idea", "#{@idea.comments.size}"
+end

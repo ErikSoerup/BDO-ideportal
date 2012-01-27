@@ -1,35 +1,40 @@
 <div class="plainwrap">
-  <!--Commentator Starts -->
-  <div class="commentator_panel">
-    <div class="commentator_wrap_green"> <%= link_to h(idea_comment.author.name), profile_path(idea_comment.author), :class=> "bold_link"%></div>
-    <div class="plainwrap">
-      <div class="fl">
-        <%if show_avatar%>
-          <div class="avatar">
-            <%= image_tag profile_picture(idea_comment.author, :small)%>
-          </div>
+  <div id="comment-<%=idea_comment.id%>">
+    <!--Commentator Starts -->
+    <div class="commentator_panel">
+      <div class="commentator_wrap_green"> <%= link_to h(idea_comment.author.name), profile_path(idea_comment.author), :class=> "bold_link"%></div>
+      <div class="plainwrap">
+        <div class="fl">
+          <%if show_avatar%>
+            <div class="avatar">
+              <%= image_tag profile_picture(idea_comment.author, :small)%>
+            </div>
+          <% end %>
+        </div>
+        <div class="download">
+          <%=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url %>
+        </div>
+      </div>
+    </div>
+    <!--Commentator Ends -->
+    <!--Posted Comments Starts -->
+    <div class="comments_wrap_green" style="width:500px;">
+      <!--Content Head Starts -->
+      <div class="p_content_head">
+        <div class="fl">Sendt <strong><%="#{time_ago_in_words(idea_comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(idea_comment.idea.title), idea_path(idea_comment.idea), :class => "bold_link"%></div>
+        <% if current_user.roles.collect(&:name).include?("admin") %>
+          <div class="fr"> <%= link_to_remote "Delete Kommentar", :update => "comment-#{idea_comment.id}", :url => destroy_comment_comment_path(idea_comment.id, :value => idea.id), :method => :delete %></div>
         <% end %>
       </div>
-      <div class="download">
-        <%=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url %>
+      <!--Content Head Ends -->
+      <!--Posted Content Starts -->
+      <div class="plainwrap">
+        <p><%= user_formatted_text idea_comment.text%> </p>
       </div>
+      <!--Posted Content Ends -->
     </div>
+    <!--Posted Comments Ends -->
   </div>
-  <!--Commentator Ends -->
-  <!--Posted Comments Starts -->
-  <div class="comments_wrap_green" style="width:500px;">
-    <!--Content Head Starts -->
-    <div class="p_content_head">
-      <div class="fl">Sendt <strong><%="#{time_ago_in_words(idea_comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(idea_comment.idea.title), idea_path(idea_comment.idea), :class => "bold_link"%></div>
-    </div>
-    <!--Content Head Ends -->
-    <!--Posted Content Starts -->
-    <div class="plainwrap">
-      <p><%= user_formatted_text idea_comment.text%> </p>
-    </div>
-    <!--Posted Content Ends -->
-  </div>
-  <!--Posted Comments Ends -->
 </div>
 <!--Breaker Starts -->
-<div class="b_divider"></div>
+<div class="b_divider" id="divider-<%= idea_comment.id %>"></div>

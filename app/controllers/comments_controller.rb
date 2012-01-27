@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   param_accessible :comment => [:text, :document]
 
   layout :compute_layout
-  
+
   def compute_layout
     if action_name == "index"
       'profile'
@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
       'application'
     end
   end
-  
+
   make_resourceful do
     actions :new, :create, :update
     belongs_to :idea
@@ -69,19 +69,19 @@ class CommentsController < ApplicationController
       format.rss { render :content_type => 'application/rss+xml'}
     end
   end
-  
+
+
   def destroy_comment
+    @idea=Idea.find(params[:value])
     @comment=Comment.find(params[:id])
     @comment.destroy
     render :layout => false
   end
-
-
   def current_objects
     @comments ||= begin
       query_opts = {
         :page => params[:page],
-        :per_page => 6,
+        :per_page => 8,
         :order => 'comments.created_at DESC',
         :include => [:author, :idea],
         :conditions => { 'users.state' => 'active', 'comments.hidden' => false, 'ideas.hidden' => false }}
