@@ -288,7 +288,7 @@ class IdeasController < ApplicationController
     if status.nil?
       @currents ||= Idea.populate_comment_counts(search_ideas(params))
     else
-      @currents ||= Idea.paginate(:per_page => 8,:page => params[:page], :conditions =>["status = ?",status])
+      @currents ||= Idea.paginate(:per_page => 6,:page => params[:page], :conditions =>["status = ?",status])
     end
   end
 
