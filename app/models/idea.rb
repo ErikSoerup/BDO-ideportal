@@ -41,7 +41,7 @@ class Idea < ActiveRecord::Base
     end
     has_many :idea_followers
     has_and_belongs_to_many :subscribers, :join_table => 'ideas_subscribers', :class_name => 'User'
-
+    named_scope :active, :conditions => {:hidden => false, 'users.state' => 'active' }, :include => :inventor
 
 
     validates_presence_of :title, :description
