@@ -10,6 +10,8 @@
             <h2><span>Hotte ideer: Seneste | </span><a href="/ideas/search/hot">Helt fra starten</a></h2>
           <% elsif params[:search] == ["recent"] %>
             <h2>Seneste ideer</h2>
+           <% elsif params[:search].include?("department") %>
+            <h2>Afdelings ideer</h2>
           <% end %>
         </div>
         <!--User Name Ends -->
