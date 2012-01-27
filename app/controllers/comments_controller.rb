@@ -72,6 +72,7 @@ class CommentsController < ApplicationController
 
 
   def destroy_comment
+    @idea=Idea.find(params[:value])
     @comment=Comment.find(params[:id])
     @comment.destroy
     render :layout => false

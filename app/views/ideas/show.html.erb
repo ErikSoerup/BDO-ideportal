@@ -82,20 +82,20 @@
 
       <div class="plainwrap"></div>
       <div class="d_panel_commentator2" style="height:auto;">
-        <div class="fl" style="margin-right:15px"><%= link_to "Kommentarer #{"(#{@idea.comment_count})" }", "#comments", :class => "bold_link"%> | <%= link_to "Kommentér", "#post-comment", :class => "bold_link"%></div>
+        <div class="fl" style="margin-right:15px"><%= link_to "Kommentarer ", "#comments", :class => "bold_link"%> <span id="comment-count" class="bold_link">(<%=@idea.comment_count%>)</span>| <%= link_to "Kommentér", "#post-comment", :class => "bold_link"%></div>
         <div class="tag_container" style="width:450px;">
           <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div>
           <div class="tag_container_inner"> <%= @idea.tags.map { |tag| link_to h(tag.name), idea_search_path(:search => ['tag', tag.name]) }.join(', ')%></div>
         </div>
       </div>
 
-      <div class="plainwrap" style="margin-top:10px"><h2 class="title"><%= @idea.comment_count %> Kommentarer</h2></div>
+      <div class="plainwrap" style="margin-top:10px"><h2 class="title"><span id="comment-count-idea"> <%= @idea.comment_count %></span> Kommentarer</h2></div>
       <div class="plainwrap" id="comments">
         <!--Comments1 Starts -->
         <%= render :partial => 'idea_comment',
           :collection => @idea.comments.visible,
           :controller => 'comments',
-          :locals => { :show_avatar => true }%>
+          :locals => { :show_avatar => true, :idea => @idea }%>
         <!--Breaker Ends -->
         <!--Comments3 Ends -->
       </div>
