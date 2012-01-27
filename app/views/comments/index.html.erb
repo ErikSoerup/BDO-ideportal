@@ -86,7 +86,7 @@
                     <!--Content Head Ends -->
                     <!--Posted Content Starts -->
                     <div class="plainwrap">
-                      <p><%= user_formatted_text comment.text%> </p>
+                      <p><%= user_formatted_text truncate(comment.text,500)%> </p>
                     </div>
                     <!--Posted Content Ends -->
                   </div>
