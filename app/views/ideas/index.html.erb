@@ -8,9 +8,9 @@
         <div class="fl">
           <% if params[:search] == ["hot"] %>
             <h2><span>Hotte ideer: Seneste | </span><a href="/ideas/search/hot">Helt fra starten</a></h2>
-         <% elsif params[:search] == ["recent"] %>
+          <% elsif params[:search] == ["recent"] %>
             <h2>Seneste ideer</h2>
-         <% end %>
+          <% end %>
         </div>
         <!--User Name Ends -->
         <!--Pagination Starts -->
@@ -30,6 +30,10 @@
 
       <%=render :partial => 'idea', :collection => current_objects %>
 
+    </div>
+
+    <div class="fr" style="margin-top:8px;">
+      <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
     </div>
     <!--Tab Panel Ends -->
   </div>

@@ -107,6 +107,14 @@
           </div>
 <%#= render :collection => current_objects, :partial => 'comment', :locals => { :idea_link => true, :show_avatar => true } %>
         </div>
+
+
+         <div class="fr">
+          <ul class="pagination" style="margin-top:8px;">
+            <!--<li><a href="#">«</a></li> -->
+            <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige"%>
+          </ul>
+        </div>
         <!--Tab Panel Ends -->
       </div>
       <!--Left Panel Ends -->
