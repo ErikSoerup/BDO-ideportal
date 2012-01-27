@@ -1367,7 +1367,7 @@ body.search .group.slate .form-submit.inline {
     background-color: #ffe39c;
     border-bottom: 1px solid #888; }
 .idea.mini.contributor {
-    min-height: 30px; }
+    min-height: 20px; }
 .idea.mini .title {
     display: table-cell;
     font-weight: normal;
@@ -1377,7 +1377,7 @@ body.search .group.slate .form-submit.inline {
     vertical-align: middle; }
 .idea.mini.contributor .title {
     display: block;
-    padding-top: 9px; }
+    padding-top: 3px; }
 
 .idea.mini.contributor span {
     margin: 0 0 0 10px;
