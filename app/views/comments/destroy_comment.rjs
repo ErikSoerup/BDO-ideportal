@@ -1,1 +1,2 @@
 page.remove "comment-#{@comment.id}"
+page.remove "divider-#{@comment.id}"
