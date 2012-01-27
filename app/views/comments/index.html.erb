@@ -47,7 +47,8 @@
 
 
 
-            <div class="plainwrap">
+            <div class="plainwrap" >
+              <div id="comment-<%= comment.id %>">
               <!--Commentator Starts -->
               <div class="commentator_panel">
                 <% if a.include?(i) %>
@@ -82,6 +83,7 @@
                     <div class="p_content_head">
                       
                       <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(comment.idea.title), idea_path(comment.idea), :class => "bold_link"%></div>
+                      <div class ="fr"><%= link_to_remote "Delete Kommentar", :update => "comment-#{comment.id}", :url => destroy_comment_comment_path(comment), :method => :delete %>
                     </div>
                     <!--Content Head Ends -->
                     <!--Posted Content Starts -->
@@ -93,6 +95,7 @@
                   <!--Posted Comments Ends -->
                 </div>
                 <div class="b_divider"></div>
+                </div>
               <% end %>
               <!--Breaker Starts -->
 

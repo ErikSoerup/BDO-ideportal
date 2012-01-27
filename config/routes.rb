@@ -12,7 +12,7 @@ ActionController::Routing::Routes.draw do |map|
     :create_twitter => :get,
     :create_facebook => :get
   }
-  map.resources :comments # for global comment list
+  map.resources :comments, :member => {:destroy_comment => :delete} # for global comment list
   map.resources :tags
   map.resources :profiles
   map.resource :map

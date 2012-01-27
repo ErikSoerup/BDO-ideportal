@@ -70,6 +70,12 @@ class CommentsController < ApplicationController
     end
   end
 
+
+  def destroy_comment
+    @comment=Comment.find(params[:id])
+    @comment.destroy
+    render :layout => false
+  end
   def current_objects
     @comments ||= begin
       query_opts = {
