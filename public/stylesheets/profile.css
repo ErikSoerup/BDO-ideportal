@@ -1479,7 +1479,8 @@ ul.index li {
     -moz-border-radius:0 5px 5px 5px;
     -webkit-border-radius:0 5px 5px 5px;
     padding:7px 10px;
-    height:100px;
+    height:auto;
+    min-height: 100px;
 }
 
 .comments_wrap_blue {
@@ -1490,7 +1491,8 @@ ul.index li {
     -moz-border-radius:0 5px 5px 5px;
     -webkit-border-radius:0 5px 5px 5px;
     padding:7px 10px;
-    height:100px;
+    height:auto;
+    min-height: 100px;
 }
 
 
