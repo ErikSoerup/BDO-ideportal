@@ -43,7 +43,7 @@
           <%if @idea.editable_by?(current_user)%>
             <div>
               <%= link_to('edit', '#', :onclick => 'editIdeaText(); return false')%>
-              <%= ("For the next #{time_ago_in_words(@idea.created_at + 10.minutes)}")%>
+              <%= ("Du kan ændre din ide ind for de næste  #{time_ago_in_words(@idea.created_at + 10.minutes)}")%>
             </div>
           <% end %>
         </div>
