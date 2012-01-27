@@ -15,13 +15,11 @@ module ApplicationHelper
 
   def next_idea(idea)
     Idea.active.find(:last, :conditions => ["ideas.id > ?", idea.id], :order => "ideas.id DESC")
-    
-    
-    
+   
   end
 
   def prev_idea(idea)
-    Idea.active.find(:first, :conditions => ["ideas.id < ?", idea.id])
+    Idea.active.find(:first, :conditions => ["ideas.id < ?", idea.id], :order => "ideas.id DESC")
   end
  
   def user_formatted_text(text)
