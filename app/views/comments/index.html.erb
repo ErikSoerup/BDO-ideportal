@@ -10,7 +10,7 @@
         <!--Pagination Starts -->
         <div class="fr">
           <ul class="pagination" style="margin-top:8px;">
-            <!--<li><a href="#">«</a></li> --> 
+            <!--<li><a href="#">«</a></li> -->
             <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige"%>
           </ul>
         </div>
@@ -80,13 +80,13 @@
 
                     <!--Content Head Starts -->
                     <div class="p_content_head">
-                      
+
                       <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(comment.idea.title), idea_path(comment.idea), :class => "bold_link"%></div>
                     </div>
                     <!--Content Head Ends -->
                     <!--Posted Content Starts -->
                     <div class="plainwrap">
-                      <p><%= user_formatted_text comment.text%> </p>
+                      <p><%= user_formatted_text truncate(comment.text,500)%> </p>
                     </div>
                     <!--Posted Content Ends -->
                   </div>

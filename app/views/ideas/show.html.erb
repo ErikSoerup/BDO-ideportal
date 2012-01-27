@@ -1,3 +1,4 @@
+<%= javascript_include_tag "editjs" %>
 <div class="body_wrap">
   <!--Left Panel Starts -->
   <div class="left_panel">
@@ -106,7 +107,8 @@
 
         <div class="form-group inline" id="post-comment" style="margin:23px 0 0 0;">
           <label for ="comment-text" style="color: #425D78;"> Din Kommentar</label>
-          <%= f.text_area :text, :id => "comment-text", :class => "input-textarea"%>
+          <%= f.text_area :text, :id => "comment-text", :class => "input-textarea", :maxlength => "550"%>
+          <p class="charsRemaining"></p>
           <br/>
           <div style="margin-left:136px;margin-top:9px;">
 <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
@@ -143,6 +145,61 @@
   </div>
   <!--Right Panel Ends -->
 </div>
+
+
+
+<script type="text/javascript">
+jQuery.fn.limitMaxlength = function(options){
+
+  var settings = jQuery.extend({
+    attribute: "maxlength",
+    onLimit: function(){},
+    onEdit: function(){}
+  }, options);
+
+  // Event handler to limit the textarea
+  var onEdit = function(){
+    var textarea = jQuery(this);
+    var maxlength = parseInt(textarea.attr(settings.attribute));
+
+    if(textarea.val().length > maxlength){
+      textarea.val(textarea.val().substr(0, maxlength));
+
+      // Call the onlimit handler within the scope of the textarea
+      jQuery.proxy(settings.onLimit, this)();
+    }
+
+    // Call the onEdit handler within the scope of the textarea
+    jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
+  }
+
+  this.each(onEdit);
+
+  return this.keyup(onEdit)
+        .keydown(onEdit)
+        .focus(onEdit);
+}
+
+jQuery(document).ready(function(){
+
+  var onEditCallback = function(remaining){
+    jQuery(this).siblings('.charsRemaining').text("Characters remaining: " + remaining);
+
+    if(remaining > 0){
+      jQuery(this).css('background-color', 'white');
+    }
+  }
+
+  var onLimitCallback = function(){
+    jQuery(this).css('background-color', 'red');
+  }
+
+  jQuery('textarea[maxlength]').limitMaxlength({
+    onEdit: onEditCallback,
+    onLimit: onLimitCallback
+  });
+});
+</script>
 
 <script type="text/javascript">
 
