@@ -26,7 +26,7 @@
             <% unless  current_user.roles.collect(&:name).include?("admin") %>
               <div class="fr" style="width:169px;">
               <% else %>
-                <div class="fr" style="width:221px;">
+                <div class="fr" style="width:214px;">
                 <% end %>
                 <div class="fl">
                   <% unless idea.idea_followers.empty? %>
@@ -55,7 +55,16 @@
             <!--Content Head Ends -->
             <!--Posted Content Starts -->
             <div class="plainwrap">
-              <h3><%= link_to h(idea.title), idea_path(idea) unless idea.title.nil?%></h3>
+              <h3>
+                <% if current_page?("/ideas/search/hot") %>
+                  <%= link_to h(idea.title), idea_path(idea, :val => "hot") unless idea.title.nil?%>
+                <% elsif current_page?("/ideas/search/recent") %>
+                  <%= link_to h(idea.title), idea_path(idea, :val => "recent") unless idea.title.nil?%>
+                <% else %>
+                  <%= link_to h(idea.title), idea_path(idea) unless idea.title.nil?%>
+                <% end %>
+
+              </h3>
               <p><%= h idea.description_excerpt%> </p>
               <% if idea.document.url != "/documents/original/missing.png" %>
                 <div>

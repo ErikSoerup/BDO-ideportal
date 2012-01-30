@@ -2,18 +2,33 @@
 <div class="body_wrap">
   <!--Left Panel Starts -->
   <div class="left_panel">
-    <% nt_idea=next_idea(@idea)
-    pv_idea=prev_idea(@idea)
+
+    <%
+    if params[:val] == "hot" || params[:val] == "recent"
+      nt_idea=next_idea(@idea,params[:val])
+      pv_idea=prev_idea(@idea,params[:val])
+    else
+      nt_idea=next_idea(@idea,"")
+      pv_idea=prev_idea(@idea, "")
+    end
   %>
     <div id="idea-1">
       <div class="plainwrap">
         <% unless pv_idea.nil?  %>
-          <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea), :style =>"color: #0B3597; text-decoration: none;" %></div>
+          <% if params[:val] == "hot" || params[:val] == "recent" %>
+            <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea, :val => params[:val]), :style =>"color: #0B3597; text-decoration: none;" %></div>
+          <% else %>
+            <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea), :style =>"color: #0B3597; text-decoration: none;" %></div>
+          <% end %>
         <% else %>
           <div class="fl"><span>&laquo; Forrige </span></div>
         <% end %>
         <% unless nt_idea.nil? %>
-          <div class="fr"><%= link_to "Næste", idea_url(nt_idea), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
+          <% if params[:val] || params[:val] == "recent" %>
+            <div class="fr"><%= link_to "Næste", idea_url(nt_idea, :val => params[:val]), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
+          <% else %>
+            <div class="fr"><%= link_to "Næste", idea_url(nt_idea), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
+          <% end %>
         <% else %>
           <div class="fr"><span>Næste &raquo;</span></div>
         <% end %>
@@ -34,7 +49,7 @@
             <% end %>
           </h3>
           <h3 class="subhead">Ideen har status <strong><%= @idea.status%></strong></h3>
-          <div class="download_link"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.nil? &&  @idea.doument.url == "/documents/original/missing.png"%></div>
+          <div class="download_link"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.nil? && @idea.doument.url == "/documents/original/missing.png"%></div>
           <div class="plainwrap" style="margin:10px 0;">
             <%= user_formatted_text @idea.description %>
           </div>
