@@ -1,6 +1,5 @@
 -# This partial shared by /ideas/new, home page, and drop-down.
-
-
+= javascript_include_tag "edit.js"
 = error_messages_for :idea
 - form_for :idea, :url => ideas_path, :update => 'submit-idea',  :html=>{:multipart=>true, :id=>"idea_form"} do |f|
   - if defined?(current) && !current.nil?
@@ -11,25 +10,77 @@
     = f.text_field :title, :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text big"
   #idea-description-group.form-group.inline
     = f.label :description, "Description"
-    = f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40"
+    = f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40", :maxlength => "600"
+    %p.charsRemaining
     .input_file
       = text_field_tag("dddd","", :size=>66, :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
-      = f.file_field :document , :size=>66
-     
-      
+      = f.file_field :document, :size=>66
+
+
 
   #idea-tags-group.form-group.inline
     %label{:for => "tags"} Tags
     = render :partial => 'ideas/tag_editor', :locals => { :f => f }
-    -#= f.text_field :tag_names, :onmouseover => "alert('Emneord: ”Faglig, forretningsmæssig, lovmæssig, politisk eller anden vinkel. Vælg eller skriv gerne flere emneord”');", :onmouseout => "jQuery(this).val('sdsd');"  
+    -#= f.text_field :tag_names, :onmouseover => "alert('Emneord: ”Faglig, forretningsmæssig, lovmæssig, politisk eller anden vinkel. Vælg eller skriv gerne flere emneord”');", :onmouseout => "jQuery(this).val('sdsd');"
     -unless defined?(current) && current.id
       = f.collection_select :current_id, Current.all, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "margin-left: 9px;"
     .same
       = submit_tag 'Share My Idea', :class => "input-submit big", :style => "float:left;margin:6px 0px 0px 30px;width:166px;height:31px;"
   .form-group.inline
-    
+
 
   %p.note>
     =t("notice.constructive")
 
-  
+:javascript
+  jQuery.fn.limitMaxlength = function(options){
+
+    var settings = jQuery.extend({
+      attribute: "maxlength",
+      onLimit: function(){},
+      onEdit: function(){}
+    }, options);
+
+    // Event handler to limit the textarea
+    var onEdit = function(){
+      var textarea = jQuery(this);
+      var maxlength = parseInt(textarea.attr(settings.attribute));
+
+      if(textarea.val().length > maxlength){
+        textarea.val(textarea.val().substr(0, maxlength));
+
+        // Call the onlimit handler within the scope of the textarea
+        jQuery.proxy(settings.onLimit, this)();
+      }
+
+      // Call the onEdit handler within the scope of the textarea
+      jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
+    }
+
+    this.each(onEdit);
+
+    return this.keyup(onEdit)
+    .keydown(onEdit)
+    .focus(onEdit);
+  }
+
+  jQuery(document).ready(function(){
+
+    var onEditCallback = function(remaining){
+      jQuery(this).siblings('.charsRemaining').text("Charders remaining 600: " + remaining + " tegn");
+
+      if(remaining > 0){
+        jQuery(this).css('background-color', 'white');
+      }
+    }
+
+    var onLimitCallback = function(){
+      alert("you exceed the limit of  character");
+      jQuery(this).css('background-color', 'white');
+    }
+
+    jQuery('textarea[maxlength]').limitMaxlength({
+      onEdit: onEditCallback,
+      onLimit: onLimitCallback
+    });
+  });
