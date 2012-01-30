@@ -38,6 +38,21 @@ module ApplicationHelper
 
   end
 
+  def idea_text(idea)
+    if idea.status == "new"
+      "Nye"
+    elsif idea.status == "under review"
+      "Fortæl os mere"
+    elsif idea.status == "coming soon"
+      "Kommer snart"
+    elsif idea.status == "launched"
+      "Implementeret"
+    else
+      idea.status.to_s
+    end
+
+  end
+
   def user_formatted_text(text)
     # Handles free-form text for ideas and comments.
     # We could drop in some more elaborate formatting rules here if we want to,
