@@ -19,7 +19,7 @@
       %span.vcard.author
         = link_to h(contributor.name), profile_path(contributor), :class => 'fn url'
     - unless points_method.nil?
-      %h4.entry-point== #{(contributor.send(points_method) || 0).round } points
-      %h4.entry-title= link_to h(contributor.name), profile_path(contributor), :rel => 'bookmark'
+      %h4.entry-point{:style => "font-size:10px;"}== #{(contributor.send(points_method) || 0).round } points
+      %h4.entry-title{:style => "font-size:10px;"}= link_to h(contributor.name), profile_path(contributor), :rel => 'bookmark'
   %span{:id => "contributor_#{contributor.id}"}
-    = image_tag profile_picture(contributor) , :width=>32,:height=>32 , :class=>'profile_pic small'
+    = image_tag profile_picture(contributor) , :width=>20,:height=>20, :class=>'profile_pic small'

@@ -34,7 +34,7 @@
             <% end %>
           </h3>
           <h3 class="subhead">Ideen har status <strong><%= @idea.status%></strong></h3>
-          <div class="download_link"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.nil?%></div>
+          <div class="download_link"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.nil? && @idea.doument.url == "/documents/original/missing.png"%></div>
           <div class="plainwrap" style="margin:10px 0;">
             <%= user_formatted_text @idea.description %>
           </div>
