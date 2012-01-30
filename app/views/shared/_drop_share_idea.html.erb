@@ -1,3 +1,4 @@
+<%= javascript_include_tag "edit.js"%>
 <% if controller.class != "HomeController" && controller.action_name != "show" %>
   <script type='text/javascript'>
     //<![CDATA[
@@ -30,9 +31,9 @@
               <strong> <%=t("description")%></strong>
               <small><%=t('breif_explaination')%></small>
             </label>    
-            <%= f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30"%>
-
-            <div class="input_file">
+            <%= f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30", :maxlength => "550"%>
+            <p class="charsRemaining" style="padding-left: 144px;color:black;"></p>
+            <div clas s="input_file">
               <%= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
               <%=f.file_field :document , :size=>80%>
             </div>
@@ -93,4 +94,59 @@
     });
   
   </script>
+
+
+<script type="text/javascript">
+  jQuery.fn.limitMaxlength = function(options){
+
+    var settings = jQuery.extend({
+      attribute: "maxlength",
+      onLimit: function(){},
+      onEdit: function(){}
+    }, options);
+
+    // Event handler to limit the textarea
+    var onEdit = function(){
+      var textarea = jQuery(this);
+      var maxlength = parseInt(textarea.attr(settings.attribute));
+
+      if(textarea.val().length > maxlength){
+        textarea.val(textarea.val().substr(0, maxlength));
+
+        // Call the onlimit handler within the scope of the textarea
+        jQuery.proxy(settings.onLimit, this)();
+      }
+
+      // Call the onEdit handler within the scope of the textarea
+      jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
+    }
+
+    this.each(onEdit);
+
+    return this.keyup(onEdit)
+    .keydown(onEdit)
+    .focus(onEdit);
+  }
+
+  jQuery(document).ready(function(){
+
+    var onEditCallback = function(remaining){
+      jQuery(this).siblings('.charsRemaining').text("Charders remaining 550: " + remaining + " tegn");
+
+      if(remaining > 0){
+        jQuery(this).css('background-color', 'white');
+      }
+    }
+
+    var onLimitCallback = function(){
+      alert("you exceed the limit of  character");
+      jQuery(this).css('background-color', 'white');
+    }
+
+    jQuery('textarea[maxlength]').limitMaxlength({
+      onEdit: onEditCallback,
+      onLimit: onLimitCallback
+    });
+  });
+</script>
 <% end %>
