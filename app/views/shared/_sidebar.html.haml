@@ -31,7 +31,9 @@
         |
         %b= t("all_time")
         /*------- /STYLE NEEDED ------*/
-        = render :partial => 'shared/all_contributor'
+        = render :partial => 'shared/all_contributor',
+          :collection => User.find_top_contributors(true, :limit => 10),
+          :locals => { :points_method => :contribution_points }
                  
 
       :javascript
