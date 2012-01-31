@@ -54,7 +54,7 @@
               <%= link_to "Edit Status", edit_admin_idea_path(@idea), :class => "bold_link", :style => "padding-left:7px;font-size:15px;" %>
             <% end %>
           </div>
-          <div class="download_link plainwrap"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.doument.url == "/documents/original/missing.png"%></div>
+          <div class="download_link plainwrap"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.url == "/documents/original/missing.png"%></div>
           <div class="plainwrap" style="margin:10px 0;">
             <%= user_formatted_text @idea.description %>
           </div>
