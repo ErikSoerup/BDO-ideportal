@@ -35,7 +35,7 @@
                   <% end %>
                   <% if  current_user.roles.collect(&:name).include?("admin") %>
 
-                    <%= link_to_remote "Delete Idea", :update => "idea-#{idea.id}", :url => destroy_idea_idea_path(idea), :method => :delete %>
+                    <%= link_to_remote "Delete Idea", :update => "idea-#{idea.id}", :url => destroy_idea_idea_path(idea), :method => :delete, :confirm => "Ønsker du at slette ?" %>
                   <% end %>
                 </div>
                 <div class="fr">
