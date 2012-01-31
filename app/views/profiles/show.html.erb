@@ -274,7 +274,9 @@
                 <!--Breaker Starts -->
                 <div class="b_divider"></div>
               <% end %>
-
+              <div class="fr">
+                <%= will_paginate @votes, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+              </div>
             </div>
 
             <div id="tab4" class="tab_content" style="height:auto;">
