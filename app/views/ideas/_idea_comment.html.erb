@@ -12,7 +12,7 @@
           <% end %>
         </div>
         <div class="download">
-          <%=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url %>
+          <%=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url  if idea_comment.document.url != "/documents/original/missing.png" %>
         </div>
       </div>
     </div>
