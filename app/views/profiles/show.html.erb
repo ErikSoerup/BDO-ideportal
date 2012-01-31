@@ -246,16 +246,11 @@
                 <!--Breaker Starts -->
                 <div class="b_divider"></div>
               <% end %>
-              <div class="fr">
-                <ul class="pagination">
-                  <!--<li><a href="#">«</a></li> -->
-                  <%= will_paginate @comments, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
-                </ul>
-              </div>
+
             </div>
             <!--Kommentarer container Ends -->
             <!--Stemmer container Starts -->
-            <div id="tab3" class="tab_content" style="height:538px;">
+            <div id="tab3" class="tab_content" style="height:550px;">
               <!--Header Portion Starts -->
               <div class="tab_headline">
                 <div class="fl"><strong>Her er <%= @user.name %>’s stemmer</strong></div>
@@ -280,9 +275,6 @@
                 <div class="b_divider"></div>
               <% end %>
 
-              <div class="fr">
-                <%= will_paginate @votes, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
-              </div>
             </div>
 
             <div id="tab4" class="tab_content" style="height:auto;">
