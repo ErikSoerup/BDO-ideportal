@@ -22,10 +22,10 @@ class HomeController < ApplicationController
 
     if params[:val] == "followers"
       if params[:arrow] == "up"
-        @ideas=Idea.active(:all, :order => "ideas.created_at DESC").sort{|x,y| y.idea_followers.collect(&:user_id).uniq.count <=> x.idea_followers.collect(&:user_id).uniq.count}
+        @ideas=Idea.active.find(:all, :order => "ideas.created_at DESC").sort{|x,y| y.idea_followers.collect(&:user_id).uniq.count <=> x.idea_followers.collect(&:user_id).uniq.count}
         @ideas=@ideas.paginate(:page => params[:page],:per_page => 5)
       elsif params[:arrow] == "down"
-        @ideas=Idea.active(:all, :order => "ideas.created_at DESC").sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.collect(&:user_id).uniq.count}
+        @ideas=Idea.active.find(:all, :order => "ideas.created_at DESC").sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.collect(&:user_id).uniq.count}
         @ideas=@ideas.paginate(:page => params[:page],:per_page => 5)
       end
     elsif params[:val] == "date"
@@ -36,22 +36,22 @@ class HomeController < ApplicationController
       end
     elsif params[:val] == "comment"
       if params[:arrow] == "up"
-        @ideas=Idea.active(:all, :order => "ideas.created_at DESC").sort{|x,y| y.comment_count <=> x.comment_count}
+        @ideas=Idea.active.find(:all, :order => "ideas.created_at DESC").sort{|x,y| y.comment_count <=> x.comment_count}
         @ideas=@ideas.active.paginate(:page => params[:page],:per_page => 5)
       elsif params[:arrow] == "down"
-        @ideas=Idea.active(:all, :order => "ideas.created_at DESC").sort{|x,y| x.comment_count <=> y.comment_count}
+        @ideas=Idea.active.find(:all, :order => "ideas.created_at DESC").sort{|x,y| x.comment_count <=> y.comment_count}
         @ideas=@ideas.active.paginate(:page => params[:page],:per_page => 5)
       end
     elsif params[:val] == "vote"
       if params[:arrow] == "up"
-        @ideas=Idea.active(:all, :order => "ideas.created_at DESC").sort{|x,y| y.vote_count <=> x.vote_count}
+        @ideas=Idea.active.find(:all, :order => "ideas.created_at DESC").sort{|x,y| y.vote_count <=> x.vote_count}
         @ideas=@ideas.active.paginate(:page => params[:page],:per_page => 5)
       elsif params[:arrow] == "down"
-        @ideas=Idea.active(:all, :order => "ideas.created_at DESC").sort{|x,y| x.vote_count <=> y.vote_count}
+        @ideas=Idea.active.find(:all, :order => "ideas.created_at DESC").sort{|x,y| x.vote_count <=> y.vote_count}
         @ideas=@ideas.active.paginate(:page => params[:page],:per_page => 5)
       end
     else
-      @ideas=Idea.active(:all, :order =>"ideas.created_at DESC")
+      @ideas=Idea.active.find(:all, :order =>"ideas.created_at DESC")
       @ideas=@ideas.active.paginate(:page => params[:page], :per_page => 5)
     end
 
