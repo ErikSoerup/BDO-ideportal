@@ -1,5 +1,6 @@
 <%= javascript_include_tag "edit.js"%>
-<% if controller.class != "HomeController" && controller.action_name != "show" %>
+
+<% unless current_page?("/")  || current_page?("/ideas") %>
   <script type='text/javascript'>
     //<![CDATA[
     jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
