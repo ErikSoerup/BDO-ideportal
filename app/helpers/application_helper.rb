@@ -13,24 +13,32 @@ module ApplicationHelper
   end
 
 
-  def next_idea(idea,val=nil)
-    if val == "hot"
+  def next_idea(idea,val=nil,arr=nil)
+    if val == "hot" && arr.nil?
       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.rating DESC, ideas.created_at DESC'))
       ideas[ideas.index(idea) + 1]
-    elsif val == "recent"
+    elsif val == "recent" && arr.nil?
       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.created_at DESC'))
+      ideas[ideas.index(idea) + 1]
+    elsif arr && val.nil?
+      
+      ideas= arr
       ideas[ideas.index(idea) + 1]
     else
       Idea.active.find(:last, :conditions => ["ideas.id > ?", idea.id], :order => "ideas.id DESC")
     end
   end
 
-  def prev_idea(idea,val)
+  def prev_idea(idea,val=nil,arr=nil)
     if val == "hot"
        ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.rating DESC, ideas.created_at DESC'))
       ideas[ideas.index(idea) - 1]
     elsif val == "recent"
       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.created_at DESC'))
+      ideas[ideas.index(idea) - 1]
+    elsif arr && val.nil?
+
+      ideas= arr
       ideas[ideas.index(idea) - 1]
     else
       Idea.active.find(:first, :conditions => ["ideas.id < ?", idea.id], :order => "ideas.id DESC")

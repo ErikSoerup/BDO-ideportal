@@ -73,7 +73,7 @@ end
           <!--Content Head Ends -->
           <!--Posted Content Starts -->
           <div class="plainwrap">
-            <h3><%= link_to h(search_idea.title), idea_path(search_idea) unless search_idea.title.nil?%></h3>
+            <h3><%= link_to h(search_idea.title), idea_path(search_idea,:ideas => ideas) unless search_idea.title.nil?%></h3>
             <p><%= h search_idea.description_excerpt%> </p>
           </div>
           <!--Posted Content Ends -->

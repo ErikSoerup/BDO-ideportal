@@ -130,7 +130,7 @@
         <!--Pagination Ends -->
       </div>
       <%  if @ideas || @current_ideas%>
-        <%= render :partial => '/ideas/search_idea', :collection => @c_ideas if @c_ideas && !@c_ideas.empty? %>
+        <%= render :partial => '/ideas/search_idea', :collection => @c_ideas, :locals => {:ideas => @total_ideas} if @c_ideas && !@c_ideas.empty? %>
       <% else %>
 
       <% end %>

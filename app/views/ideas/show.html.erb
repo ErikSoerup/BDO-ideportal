@@ -5,11 +5,18 @@
 
     <%
     if params[:val] == "hot" || params[:val] == "recent"
-      nt_idea=next_idea(@idea,params[:val])
-      pv_idea=prev_idea(@idea,params[:val])
+      nt_idea=next_idea(@idea,params[:val],nil)
+      pv_idea=prev_idea(@idea,params[:val],nil)
+    elsif params[:ideas]
+      @ideas = Array.new
+      params[:ideas].each do |idea|
+        @ideas << Idea.find(idea)
+      end
+      nt_idea=next_idea(@idea,nil,@ideas.to_a)
+      pv_idea=prev_idea(@idea,nil, @ideas.to_a)
     else
-      nt_idea=next_idea(@idea,"")
-      pv_idea=prev_idea(@idea, "")
+      nt_idea=next_idea(@idea,nil,nil)
+      pv_idea=prev_idea(@idea, nil,nil)
     end
   %>
     <div id="idea-1">
@@ -17,6 +24,9 @@
         <% unless pv_idea.nil?  %>
           <% if params[:val] == "hot" || params[:val] == "recent" %>
             <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea, :val => params[:val]), :style =>"color: #0B3597; text-decoration: none;" %></div>
+          <% elsif params[:ideas]%>
+            <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea, :ideas => params[:ideas]), :style =>"color: #0B3597; text-decoration: none;" %></div>
+
           <% else %>
             <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea), :style =>"color: #0B3597; text-decoration: none;" %></div>
           <% end %>
@@ -26,7 +36,10 @@
         <% unless nt_idea.nil? %>
           <% if params[:val] || params[:val] == "recent" %>
             <div class="fr"><%= link_to "Næste", idea_url(nt_idea, :val => params[:val]), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
-          <% else %>
+         <% elsif params[:ideas]%>
+            <div class="fr"><%= link_to "Næste", idea_url(pv_idea, :ideas => params[:ideas]), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
+
+         <% else %>
             <div class="fr"><%= link_to "Næste", idea_url(nt_idea), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
           <% end %>
         <% else %>
@@ -128,9 +141,9 @@
 
             <div class="form-group inline" id="post-comment" style="margin:23px 0 0 0;">
               <label for ="comment-text" style="color: #425D78;"> Din Kommentar  <span class="charsRemaining" style="color:black;font-size: 12px;"></span></label>
-              
+
               <%= f.text_area :text, :id => "comment-text", :class => "input-textarea", :maxlength => "550"%>
-              
+
               <br/>
               <div style="margin-left:136px;margin-top:9px;">
   <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
