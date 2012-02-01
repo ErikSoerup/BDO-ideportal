@@ -241,8 +241,8 @@
     }
 
     var onLimitCallback = function(){
-      alert("you exceed the limit of  character");
-      jQuery(this).css('background-color', 'white');
+      
+      jQuery(this).css('background-color', 'red');
     }
 
     jQuery('textarea[maxlength]').limitMaxlength({
