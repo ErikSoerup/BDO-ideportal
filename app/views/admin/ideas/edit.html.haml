@@ -23,7 +23,7 @@
             = f.select :current_id, Current.find(:all).map{|x|[x.title,x.id]}
           .form-group.inline
             = f.label :status, "Status"
-            = f.select :status, [["Nye","new"],["Fortæl os mere", "under review"],["Kommer snart","coming soon"],["Implementeret","lanched"]]
+            = f.select :status, [["Nye","new"],["Fortæl os mere", "under review"],["Kommer snart","coming soon"],["Implementeret","launched"]]
           #show-idea-text
             -if editor?
               .edit
