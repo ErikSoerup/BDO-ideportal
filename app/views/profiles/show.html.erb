@@ -1,4 +1,4 @@
-a<%#= stylesheet_link_tag "master" %>
+<%#= stylesheet_link_tag "master" %>
 <div class="body_wrap">
   <!--Left Panel Starts -->
   <div class="left_panel">
@@ -9,7 +9,9 @@ a<%#= stylesheet_link_tag "master" %>
         <div class="fl"><h2><%#=link_to @user.name, edit_user_path%><%=@user.name%></h2></div>
         <!--User Name Ends -->
         <!--Follow Link Starts -->
-        <div class="fr" style="margin-top:10px"><%=link_to "Følg #{@user.name}", follow_path(@user), :class => "bold_link"%></div>
+        <%  if @user.id != current_user.id %>
+          <div class="fr" style="margin-top:10px"><%=link_to "Følg #{@user.name}", follow_path(@user), :class => "bold_link"%></div>
+        <% end %>
         <!--Follow Link Ends -->
       </div>
       <!--Breaker Starts -->

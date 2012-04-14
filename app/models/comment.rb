@@ -39,11 +39,9 @@ class Comment < ActiveRecord::Base
   def after_create
     author.record_contribution! :comment
     send_later :check_spam!  # also notifies subscribers
+    send_later :notify_subscribers!
   end
 
-  def after_save
-    notify_subscribers!
-  end
 
   def editing_expired?
     created_at < 15.minutes.ago
@@ -62,6 +60,7 @@ class Comment < ActiveRecord::Base
   end
 
   def notify_subscribers!
+
     if !notifications_sent? && should_notify_subscribers?
       subscribers = idea.subscribers.dup
       inventor = idea.inventor
