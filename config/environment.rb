@@ -31,8 +31,8 @@ Rails::Initializer.run do |config|
   #  config.frameworks -=[:action_mailer]
 
   config.autoload_paths += %W(#{Rails.root}/app/jobs)
-  
-  # Only load the plugins named here, in the order given. By default, all plugins 
+
+  # Only load the plugins named here, in the order given. By default, all plugins
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -50,7 +50,7 @@ Rails::Initializer.run do |config|
   config.time_zone = 'UTC'
 
   # SESSION_KEY and SESSION_SECRET are specified in config/environment_custom.rb
-  
+
   if !SESSION_SECRET && SHORT_SITE_NAME == 'BBYIDX'
     # Allow development against BBYIDX code base, but require custom session ID if user
     # is doing a custom deployment of the project.
@@ -60,21 +60,22 @@ Rails::Initializer.run do |config|
     :key    => SESSION_KEY,
     :secret => SESSION_SECRET
   }
-  
-  
-  
+
+
+
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.default_charset = "utf-8"
+
   config.action_mailer.smtp_settings = {
-    :address => "smtp.gmail.com",
+    :address => "smtp.sendgrid.net",
     :port => 587,
     :domain => "bdo.heroku.com",
     :authentication => :plain,
-    :user_name => "bdorajars",
-    :password => "arminus1234",
+    :user_name => "app451471@heroku.com",
+    :password => "1a2b3c!!",
     :enable_starttls_auto => true
   }
 
@@ -91,7 +92,7 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
   config.active_record.observers = :user_observer, :idea_observer
-  
+
   # disable forgery proction so that facebook works (we might be able to disble this only for the facebook controller)
   # config.action_controller.allow_forgery_protection = false
 end
