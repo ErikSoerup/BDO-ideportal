@@ -5,3 +5,8 @@ test/fixtures/*/*
 *.tmproj
 db/schema.rb
 *.sw*
+nbproject*
+tmp/*
+log/*
+log/test.log
+database.yml

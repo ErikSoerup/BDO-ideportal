@@ -19,13 +19,52 @@ class UserMailer < ActionMailer::Base
   end
 
   
-  def notification_followers_comments(user, idea)
+  def idea_followers_notification(user, idea)
     set_up_email(user)
-    
+
     @subject = "Du følger nu ideen: \"#{strip_funkies(idea.title)}\""
     @body[:user] = user
     @body[:idea] = idea
-    
+  end
+
+  def idea_followed_notification(user, idea)
+    set_up_email(idea.inventor)
+
+    @subject = " \"#{strip_funkies(user.name)}\" følger nu din idé: \"#{strip_funkies(idea.title)}\""
+    @body[:user] = user
+    @body[:idea] = idea
+  end
+
+  def notification_user_follows(follower, followed)
+    set_up_email(follower)
+
+    @subject = "Du følger nu : \"#{strip_funkies(followed.name)}\""
+    @body[:follower] = follower
+    @body[:followed] = followed
+  end
+
+  def notification_user_followed(follower, followed)
+    set_up_email(followed)
+
+    @subject = "\"#{strip_funkies(follower.name)}\" følger dig på ideportalen"
+    @body[:follower] = follower
+    @body[:followed] = followed
+  end
+
+  def notification_followers_comments(user, idea)
+    set_up_email(user)
+
+    @subject = "You have commented on Idea: \"#{strip_funkies(idea.title)}\""
+    @body[:user] = user
+    @body[:idea] = idea
+  end
+
+  def notification_followed_comments(user, idea)
+    set_up_email(idea.inventor)
+
+    @subject = " \"#{strip_funkies(user.name)}\" har kommenteret din idé: \"#{strip_funkies(idea.title)}\""
+    @body[:user] = user
+    @body[:idea] = idea
   end
   
   def password_change_notification(user)
@@ -45,26 +84,26 @@ class UserMailer < ActionMailer::Base
 
   def notification_followers_ideas(user, current)
     set_up_email(user)
-#    @body[:ideas] = ideas
+    #    @body[:ideas] = ideas
     @subject ="Du følger nu hovedvejen: #{current.title}"
-#    title=[]
-#    description=[]
-#    unless ideas.empty?
-#      ideas.each do |i|
-#        title << i.title
-#      end
-#    
-#      ideas.each do |ii|
-#        description << ii.description
-#      end
-#    end
-#    
-#    unless ideas.empty?
-     @body[:current] = current
+    #    title=[]
+    #    description=[]
+    #    unless ideas.empty?
+    #      ideas.each do |i|
+    #        title << i.title
+    #      end
+    #
+    #      ideas.each do |ii|
+    #        description << ii.description
+    #      end
+    #    end
+    #
+    #    unless ideas.empty?
+    @body[:current] = current
      
-#      @body[:title] = title
-#      @body[:desc] = description
-#    end
+    #      @body[:title] = title
+    #      @body[:desc] = description
+    #    end
   end
   
   def comment_notification(user, comment)

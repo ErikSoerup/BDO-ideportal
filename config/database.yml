@@ -12,9 +12,9 @@ production:
 
 development:
   adapter: postgresql
-  database: bdo_dev
+  database: bdo_development
   username: postgres
-  password: solaiman
+  password: pgsql
   encoding: unicode
   pool: 5
   #template: template1  # fixes database encoding errors in newer versions of PostgreSQL

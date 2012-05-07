@@ -121,10 +121,17 @@ class UsersController < ApplicationController
   end
 
   def follow
-    @following = User.find(params[:id])
-    if @following
-      current_user.follow!(@following)
-      flash[:info] = "You are now following #{@following.name}"
+    begin
+      @following = User.find(params[:id])
+      if @following
+        current_user.follow!(@following)
+        flash[:info] = "You are now following #{@following.name}"
+        redirect_to profile_url(@following)
+      end
+      Delayed::Job.enqueue UserFollowerNotificationJob.new(current_user, @following)
+      #      UserMailr.deliver_notification_comments()
+    rescue Exception => e
+      flash[:notice] = "You have successfully followed the idea"
       redirect_to profile_url(@following)
     end
   end
@@ -153,7 +160,7 @@ class UsersController < ApplicationController
       @users=@user.following(:all).sort{|x,y| x.department.name <=> y.department.name}
     elsif params[:name] == "afeld" && params[:arrow] == "down"
       @users=@user.following(:all).sort{|x,y| y.department.name <=> x.department.name}
-     elsif params[:name] == "score" && params[:arrow] == "up"
+    elsif params[:name] == "score" && params[:arrow] == "up"
       @users=@user.following(:all).sort{|x,y| y.contribution_points <=> x.contribution_points}
     elsif params[:name] == "score" && params[:arrow] == "down"
       @users=@user.following(:all).sort{|x,y| x.contribution_points <=> y.contribution_points}
