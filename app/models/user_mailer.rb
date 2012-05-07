@@ -51,13 +51,13 @@ class UserMailer < ActionMailer::Base
     @body[:followed] = followed
   end
 
-  def notification_followers_comments(user, idea)
-    set_up_email(user)
-
-    @subject = "You have commented on Idea: \"#{strip_funkies(idea.title)}\""
-    @body[:user] = user
-    @body[:idea] = idea
-  end
+#  def notification_followers_comments(user, idea)
+#    set_up_email(user)
+#
+#    @subject = "You have commented on Idea: \"#{strip_funkies(idea.title)}\""
+#    @body[:user] = user
+#    @body[:idea] = idea
+#  end
 
   def notification_followed_comments(user, idea)
     set_up_email(idea.inventor)
