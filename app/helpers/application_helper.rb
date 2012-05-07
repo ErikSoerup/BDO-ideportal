@@ -31,7 +31,7 @@ module ApplicationHelper
 
   def prev_idea(idea,val=nil,arr=nil)
     if val == "hot"
-       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.rating DESC, ideas.created_at DESC'))
+      ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.rating DESC, ideas.created_at DESC'))
       ideas[ideas.index(idea) - 1]
     elsif val == "recent"
       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.created_at DESC'))
@@ -137,6 +137,9 @@ module ApplicationHelper
       'total-count' => p.total_entries }
   end
 
+  def has_relationship_with user
+    current_user.relationships.include?(Relationship.find_by_followed_id(user.id))
+  end
   private
 
   def flagged_as_inappropriate_session_key(model)
