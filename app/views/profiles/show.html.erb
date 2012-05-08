@@ -10,11 +10,12 @@
         <!--User Name Ends -->
         <!--Follow Link Starts -->
         <div class="fr" style="margin-top:10px">
-          <%if !(current_user.has_relationship_with(@user))%>
+          <%if !(current_user_has_relationship_with(@user))%>
             <%=link_to "Følg #{@user.name}", follow_path(@user), :class => "bold_link"%>
           <%else%>
-            <%= link_to "Stop følg #{@user.name}", "" %>
+            <%= link_to "Stop følg #{@user.name}", unfollow_path(@user) %>
           <%end%>
+
         </div>
         <!--Follow Link Ends -->
       </div>

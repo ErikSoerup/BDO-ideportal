@@ -137,7 +137,7 @@ module ApplicationHelper
       'total-count' => p.total_entries }
   end
 
-  def has_relationship_with user
+  def current_user_has_relationship_with user
     current_user.relationships.include?(Relationship.find_by_followed_id(user.id))
   end
   private

@@ -141,7 +141,7 @@ class UsersController < ApplicationController
     if @unfollow
       current_user.unfollow!(@unfollow)
       flash[:info] = "You are now unfollowing #{@unfollow.name}"
-      redirect_to profile_url(current_user)
+      redirect_to profile_url(@unfollow)
     end
   end
 
