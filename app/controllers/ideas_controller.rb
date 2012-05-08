@@ -43,8 +43,12 @@ class IdeasController < ApplicationController
 
 
     after :create do
-
       if @idea.valid? && @idea.inventor
+        if @idea.inventor.followers
+          @idea.inventor.followers.each do |follower|
+            Delayed::Job.enqueue IdeaCreationNotificationJob.new(current_user, follower, @idea)
+          end
+        end
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)
         if @idea.current && !@idea.current.current_followers.empty?

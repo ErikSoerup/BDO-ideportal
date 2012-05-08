@@ -51,6 +51,15 @@ class UserMailer < ActionMailer::Base
     @body[:followed] = followed
   end
 
+  def idea_creation_notification(current_user, follower, idea)
+    set_up_email(follower)
+
+    @subject = "\"#{strip_funkies(current_user.name)}\" created an Idea: \"#{strip_funkies(idea.title)}\""
+    @body[:follower] = follower
+    @body[:user] = current_user
+    @body[:idea] = idea
+  end
+
   #  def notification_followers_comments(user, idea)
   #    set_up_email(user)
   #
