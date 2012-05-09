@@ -4,7 +4,7 @@
 
     <p>Kære <%= @follower.name %></p><br/><br/>
 
-    <p>Du følger nu: <%= link_to @followed.name, profile_url(@followed) %></p><br/>
+    <p>Du følger nu: <%= link_to @followed.name, @followed_url %></p><br/>
     <p>Klik på linket og derefter på følg <%= @followed.name %>, hvis du ønsker at følge <%= @followed.name%></p>
   </body>
 </html>

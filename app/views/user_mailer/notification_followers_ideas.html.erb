@@ -5,7 +5,7 @@
     <p>Kære <%= @user.name %>,</p><br/>
     <p>
       Du har valgt at følge hovedvejen: 
-      <%= link_to @current.title, current_url(@current) %>
+      <%= link_to @current.title, @current_url %>
     </p><br/>
     <p>
       Du får fremover besked
