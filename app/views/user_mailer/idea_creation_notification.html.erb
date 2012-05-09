@@ -1,11 +1,20 @@
 <html>
   <head></head>
   <body>
-    <p>Kære <%= @follower.name %></p><br/><br/>
+    <%if @current%>
+      <p>Kære <%= @follower.name %></p><br/><br/>
 
-    <p><%= @user.name %> har tilføjet denne ide: <%= link_to @idea.title, idea_url(@idea) %></p><br/>
-    <p>Klik på ideen for at se den og kommentere på den.</p><br/>
-    <p>Ønsker du ikke længere at få besked når <%= @user.name %> tilføjer en ide, skal du blot klikke på "stop følg"-linket på <%= @user.name %>’s profil.</p><br/>
+      <p><%= @user.name %> har tilføjet denne ide <%= link_to @idea.title, idea_url(@idea) %> til hovedvejen: <%= link_to @current.title, current_url(@current) %></p><br/>
+      <p>Klik på ideen for at se den og kommentere på den.</p><br/>
+      <p>Ønsker du ikke længere at få besked når der kommer nye ideer til hovedvejen, skal du blot klikke på "stop følg"-linket på hovedvejen.</p><br/>
+      <p>Hvis du ønsker at få besked, når andre kommenterer på denne ide, skal du klikke på idelinket og derefter på ”følg”.</p><br/>
+    <%else%>
+      <p>Kære <%= @follower.name %></p><br/><br/>
+
+      <p><%= @user.name %> har tilføjet denne ide: <%= link_to @idea.title, idea_url(@idea) %></p><br/>
+      <p>Klik på ideen for at se den og kommentere på den.</p><br/>
+      <p>Ønsker du ikke længere at få besked når <%= @user.name %> tilføjer en ide, skal du blot klikke på "stop følg"-linket på <%= @user.name %>’s profil.</p><br/>
+    <%end%>
   </body>
 </html>
 

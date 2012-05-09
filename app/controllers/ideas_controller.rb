@@ -45,9 +45,10 @@ class IdeasController < ApplicationController
     after :create do
       if @idea.valid? && @idea.inventor
         if @idea.inventor.followers
+          @current = Current.find(params[:idea][:current_id]) if !params[:idea][:current_id].blank?
           @idea.inventor.followers.each do |follower|
             if follower != current_user
-              Delayed::Job.enqueue IdeaCreationNotificationJob.new(current_user, follower, @idea)
+              Delayed::Job.enqueue IdeaCreationNotificationJob.new(current_user, follower, @idea, @current)
             end
           end
         end
