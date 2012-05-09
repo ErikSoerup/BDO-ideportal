@@ -46,7 +46,9 @@ class IdeasController < ApplicationController
       if @idea.valid? && @idea.inventor
         if @idea.inventor.followers
           @idea.inventor.followers.each do |follower|
-            Delayed::Job.enqueue IdeaCreationNotificationJob.new(current_user, follower, @idea)
+            if follower != current_user
+              Delayed::Job.enqueue IdeaCreationNotificationJob.new(current_user, follower, @idea)
+            end
           end
         end
         # Users automatically vote for their own ideas:
