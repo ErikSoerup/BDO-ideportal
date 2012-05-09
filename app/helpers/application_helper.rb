@@ -138,8 +138,9 @@ module ApplicationHelper
   end
 
   def current_user_has_relationship_with user
-    current_user.relationships.include?(Relationship.find_by_followed_id(user.id))
+    current_user.relationships.include?(Relationship.find_by_follower_id_and_followed_id(current_user.id, user.id))
   end
+  
   private
 
   def flagged_as_inappropriate_session_key(model)

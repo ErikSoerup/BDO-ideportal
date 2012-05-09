@@ -1,0 +1,11 @@
+<html>
+  <head></head>
+  <body>
+    <p>Kære <%= @follower.name %></p><br/><br/>
+
+    <p><%= @user.name %> har tilføjet denne ide: <%= link_to @idea.title, idea_url(@idea) %></p><br/>
+    <p>Klik på ideen for at se den og kommentere på den.</p><br/>
+    <p>Ønsker du ikke længere at få besked når <%= @user.name %> tilføjer en ide, skal du blot klikke på "stop følg"-linket på <%= @user.name %>’s profil.</p><br/>
+  </body>
+</html>
+

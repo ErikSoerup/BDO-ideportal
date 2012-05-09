@@ -53,8 +53,8 @@ class UserMailer < ActionMailer::Base
 
   def idea_creation_notification(current_user, follower, idea)
     set_up_email(follower)
-
-    @subject = "\"#{strip_funkies(current_user.name)}\" created an Idea: \"#{strip_funkies(idea.title)}\""
+    
+    @subject = "\"#{strip_funkies(current_user.name)}\" har tilføjet en ny ide: \"#{strip_funkies(idea.title)}\""
     @body[:follower] = follower
     @body[:user] = current_user
     @body[:idea] = idea

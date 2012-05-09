@@ -13,7 +13,7 @@
           <%if !(current_user_has_relationship_with(@user))%>
             <%=link_to "Følg #{@user.name}", follow_path(@user), :class => "bold_link"%>
           <%else%>
-            <%= link_to "Stop følg #{@user.name}", unfollow_path(@user) %>
+            <%= link_to "Stop følg #{@user.name}", unfollow_path(@user), :class => "bold_link" %>
           <%end%>
 
         </div>
