@@ -6,7 +6,7 @@ class CurrentsController < ApplicationController
   layout :compute_layout
   
   def compute_layout
-    if action_name == "index" || action_name == "show"
+    if action_name == "index" || action_name == "show" || action_name == "followers"
       'profile'
     else
       'application'
@@ -76,13 +76,47 @@ class CurrentsController < ApplicationController
   
   
   def followers
-    @current=Current.find(params[:id])
+    @current = Current.find(params[:id])
     @followers=@current.current_followers
     @users=[]
     @followers.each do |f|
       @users << f.user
     end
+    page = 1 || params[:page]
+    if params[:val]
+      @users=@users.find_all {|user|  user.name.first == params[:val].to_s}
+
+    elsif params[:name] == "navn" &&  params[:arrow] =="up"
+
+      @users=@users.sort{|x,y| x.name <=> y.name}
+    elsif params[:name] == "navn" &&  params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.name <=> x.name}
+    elsif params[:name] == "afeld" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.department.name <=> y.department.name}
+    elsif params[:name] == "afeld" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.department.name <=> x.department.name}
+    elsif params[:name] == "score" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.contribution_points <=> y.contribution_points}
+    elsif params[:name] == "score" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.contribution_points <=> x.contribution_points}
+    elsif params[:name] == "idea" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.ideas.size <=> y.ideas.size}
+    elsif params[:name] == "idea" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.ideas.size <=> x.ideas.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.comments.size <=> y.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.comments.size <=> x.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.votes.size <=> y.votes.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.votes.size <=> x.votes.size}
+    else
+      @users = @users
+    end
+    @users=@users.paginate :page => page unless @users.nil?
   end
+
   def unfollow
     @current_follow=CurrentFollower.find_by_user_id_and_current_id(current_user.id,params[:id])
     @current_follow.destroy unless @current_follow.nil? 
