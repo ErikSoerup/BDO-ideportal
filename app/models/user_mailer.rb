@@ -142,8 +142,8 @@ class UserMailer < ActionMailer::Base
     @body[:url] = idea_url(comment.idea)
     @body[:unsubscribe_url] = unsubscribe_idea_url(comment.idea)
     @owner = (user == comment.idea.inventor)
-    @subject = "#{@owner.name} har kommenteret din idé \"#{strip_funkies(comment.idea.title)}\""
-    body[:author_url] = profile_url(@comment.author)
+    @subject = "#{owner.name} har kommenteret din idé \"#{strip_funkies(comment.idea.title)}\""
+    body[:author_url] = profile_url(comment.author)
   end
 
   def idea_in_current_notification(user, idea)
@@ -153,8 +153,8 @@ class UserMailer < ActionMailer::Base
     @body[:url] = idea_url(idea)
     @body[:unsubscribe_url] = unsubscribe_current_url(idea.current)
     @subject += "#{idea.inventor.name} har tilføjet en ny ide til \"#{strip_funkies(idea.current.title)}\""
-    @body[:idea_url] = idea_url(@idea)
-    @body[:current_url] = current_url(@idea.current)
+    @body[:idea_url] = idea_url(idea)
+    @body[:current_url] = current_url(idea.current)
   end
 
   def idea_posted_to_followers(user,idea)
