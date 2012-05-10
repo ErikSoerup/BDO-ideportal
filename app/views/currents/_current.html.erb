@@ -8,14 +8,18 @@
   <!--Posted Content Starts -->
   <div class="plainwrap">
     <div>
-    <h3 style="float: left;width:auto;"><%= link_to h(current.title), current_path(current), :style => "font-size:18px;" if current.title%></h3>
-      
+      <h3 style="float: left;width:auto;"><%= link_to h(current.title), current_path(current), :style => "font-size:18px;" if current.title%></h3>
+
       <div class="fr">
         <%  current_ideas = search_ideas(:search => ['current', current.id]) %>
         <div class="fl">
-          
+
           <% unless current.current_followers.empty? %>
-            <%= link_to "(#{current.current_followers.size}) følger hovedvejen", followers_current_path(current.id), :style => "color:#0f645d; margin-right:8px;"  %>
+            <%followers = []%>
+            <%current.current_followers.each do |cf|
+              followers << cf.user if !followers.include?(cf.user)
+            end%>
+            <%= link_to "(#{followers.uniq.size}) følger hovedvejen", followers_current_path(current.id), :style => "color:#0f645d; margin-right:8px;"  %>
 
           <% end %>
         </div>
@@ -32,12 +36,12 @@
       </div>
     </div>
     <br/>
-      <p style="float:left;width:100%;"><%= h current.description unless current.nil?%></p>
-      <br />
-           
+    <p style="float:left;width:100%;"><%= h current.description unless current.nil?%></p>
+    <br />
 
-    </div>
- 
+
+  </div>
+
   <!--Posted Content Ends -->
   <!--Bottom Panel Starts -->
   <div class="d_panel_commentator2">

@@ -80,7 +80,7 @@ class CurrentsController < ApplicationController
     @followers=@current.current_followers
     @users=[]
     @followers.each do |f|
-      @users << f.user
+      @users << f.user if !@users.include?(f.user)
     end
     page = 1 || params[:page]
     if params[:val]
