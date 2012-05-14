@@ -87,11 +87,11 @@
   var tags= <%= Tag.all.map(&:name).to_json  %>;
   var myTextArea = jQuery('#auto-text').tagify();
 
-  myTextArea.tagify('inputField').autocomplete({
-    source: tags,
-    position: { of: myTextArea.tagify('containerDiv') },
-    close: function(event, ui) { myTextArea.tagify('add'); }
-  });
+  <%#*myTextArea.tagify('inputField').autocomplete({%>
+    <%#*source: tags,%>
+    <%#*position: { of: myTextArea.tagify('containerDiv') },%>
+    <%#*close: function(event, ui) { myTextArea.tagify('add'); }%>
+  <%#*});%>
 
   jQuery("#idea_form").submit(function(e){
     var new_values = jQuery(".tagify-container input:first").val();
