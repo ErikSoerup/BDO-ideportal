@@ -2,41 +2,6 @@
 <%= javascript_include_tag "jquery.tagify" %>
 <div class="body_wrap">
   <div class="full_wrap">
-    <!--Top Part Starts -->
-    <div class="plainwrap">
-      <div class="home_top">
-        <div class="plainwrap">
-          <!--Form Stuff Starts -->
-          <div class="form_wrap">
-            <%= render :partial => "new_idea" %>
-          </div>
-          <!--Form Stuff Ends -->
-          <!--Top Bidragydere Panel Starts -->
-
-
-          <div class="top_bidragydere" style="max-height: 365px;">
-            <div class="plainwrap"><h3 style="margin-left:15px;float:left;width:auto;font-size: 13px;">Top Bidragydere</h3>
-              <a class="flere" href="/user/index">Flere</a>
-            </div>
-            <div class="top_bid_inner" style="max-height:292px;">
-              <%= render :partial => 'shared/home_contributor',
-                :collection => User.find_top_contributors(true, :limit => 10),
-                :locals => { :points_method => :recent_contribution_points }%>
-              <!--Single Row1 Starts -->
-
-
-
-              <!--Single Row5 Ends -->
-            </div>
-            <div class="plainwrap"></div>
-          </div>
-
-          <!--Top Bidragydere Panel Starts -->
-        </div>
-      </div>
-    </div>
-
-
     <!--Header Portion Ends -->
 
 
@@ -76,6 +41,41 @@
 
       </div>
     </div>
+
+    <!--Top Part Starts -->
+    <div class="plainwrap">
+      <div class="home_top">
+        <div class="plainwrap">
+          <!--Form Stuff Starts -->
+          <div class="form_wrap">
+            <%= render :partial => "new_idea" %>
+          </div>
+          <!--Form Stuff Ends -->
+          <!--Top Bidragydere Panel Starts -->
+
+
+          <div class="top_bidragydere" style="max-height: 365px;">
+            <div class="plainwrap"><h3 style="margin-left:15px;float:left;width:auto;font-size: 13px;">Top Bidragydere</h3>
+              <a class="flere" href="/user/index">Flere</a>
+            </div>
+            <div class="top_bid_inner" style="max-height:292px;">
+              <%= render :partial => 'shared/home_contributor',
+                :collection => User.find_top_contributors(true, :limit => 10),
+                :locals => { :points_method => :recent_contribution_points }%>
+              <!--Single Row1 Starts -->
+
+
+
+              <!--Single Row5 Ends -->
+            </div>
+            <div class="plainwrap"></div>
+          </div>
+
+          <!--Top Bidragydere Panel Starts -->
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -86,16 +86,16 @@
   var myTextArea = jQuery('#auto-text').tagify({delimiters: [13]});
 
   myTextArea.tagify('inputField').autocomplete({
-    source: tags,
-    position: { of: myTextArea.tagify('containerDiv') }
+  source: tags,
+  position: { of: myTextArea.tagify('containerDiv') }
   });
 
   jQuery("#idea_form").submit(function(e){
-    var new_values = jQuery(".tagify-container input:first").val();
-    jQuery.each(new_values.split(","),function(i,data){
-      myTextArea.tagify("add",data);
-    });
-    myTextArea.tagify("serialize");
+  var new_values = jQuery(".tagify-container input:first").val();
+  jQuery.each(new_values.split(","),function(i,data){
+  myTextArea.tagify("add",data);
+  });
+  myTextArea.tagify("serialize");
   });
 
 </script>
@@ -104,13 +104,13 @@
 <script type='text/javascript'>
   jQuery(document).ready(function(){
 
-    jQuery(".outer_block li").hover(
-    function() {
-      jQuery(this).fadeTo("slow", 1.0);
-    },
-    function() {
-      jQuery(this).fadeTo("slow", 0.6);
-    });
+  jQuery(".outer_block li").hover(
+  function() {
+  jQuery(this).fadeTo("slow", 1.0);
+  },
+  function() {
+  jQuery(this).fadeTo("slow", 0.6);
+  });
 
   });
 </script>
