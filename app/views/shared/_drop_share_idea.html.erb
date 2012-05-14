@@ -7,8 +7,8 @@
 
 
     jQuery('#idea_document').change(function(){
-      var i=this
-      jQuery('input#fakeupload').val(i.value);
+    var i=this
+    jQuery('input#fakeupload').val(i.value);
     })
   </script>
 
@@ -65,33 +65,37 @@
 
   <script type="text/javascript">
     function changeContain(){
-      if(jQuery('.body').is(":visible")){
-        jQuery('.dn').html("Luk ideformular");
+    if(jQuery('.body').is(":visible")){
+    jQuery('.dn').html("Luk ideformular");
 
-      }
-      else{
-        jQuery('.dn').html("Fortæl os din ide");
-        jQuery('.ui-autocomplete-input').addClass('input-text');
-      }
+    }
+    else{
+    jQuery('.dn').html("Fortæl os din ide");
+    jQuery('.ui-autocomplete-input').addClass('input-text');
+    }
     }
   </script>
 
   <script type="text/javascript">
     var tags= <%= Tag.all.map(&:name).to_json  %>;
-    var myTextArea = jQuery('#auto-text').tagify();
+    var myTextArea = jQuery('#auto-text').tagify({delimiters: [13]});
 
-    <%#*myTextArea.tagify('inputField').autocomplete({%>
-      <%#*source: tags,%>
-      <%#*position: { of: myTextArea.tagify('containerDiv') },%>
-      <%#*close: function(event, ui) { myTextArea.tagify('add'); }%>
-    <%#*});%>
+  <%#*myTextArea.tagify('inputField').autocomplete({%>
+  <%#*source: tags,%>
+  <%#*position: { of: myTextArea.tagify('containerDiv') },%>
+  <%#*close: function(event, ui) { myTextArea.tagify('add'); }%>
+  <%#*});%>
+    myTextArea.tagify('inputField').autocomplete({
+    source: tags,
+    position: { of: myTextArea.tagify('containerDiv') }
+    });
 
     jQuery("#idea_form").submit(function(e){
-      var new_values = jQuery(".tagify-container input:first").val();
-      jQuery.each(new_values.split(","),function(i,data){
-        myTextArea.tagify("add",data);
-      });
-      myTextArea.tagify("serialize");
+    var new_values = jQuery(".tagify-container input:first").val();
+    jQuery.each(new_values.split(","),function(i,data){
+    myTextArea.tagify("add",data);
+    });
+    myTextArea.tagify("serialize");
     });
 
   </script>
@@ -100,58 +104,58 @@
   <script type="text/javascript">
     jQuery.fn.limitMaxlength = function(options){
 
-      var settings = jQuery.extend({
-        attribute: "maxlength",
-        onLimit: function(){},
-        onEdit: function(){}
-      }, options);
+    var settings = jQuery.extend({
+    attribute: "maxlength",
+    onLimit: function(){},
+    onEdit: function(){}
+    }, options);
 
-      // Event handler to limit the textarea
-      var onEdit = function(){
-        var textarea = jQuery(this);
-        var maxlength = parseInt(textarea.attr(settings.attribute));
+    // Event handler to limit the textarea
+    var onEdit = function(){
+    var textarea = jQuery(this);
+    var maxlength = parseInt(textarea.attr(settings.attribute));
 
-        if(textarea.val().length > maxlength){
-          textarea.val(textarea.val().substr(0, maxlength));
+    if(textarea.val().length > maxlength){
+    textarea.val(textarea.val().substr(0, maxlength));
 
-          // Call the onlimit handler within the scope of the textarea
-          jQuery.proxy(settings.onLimit, this)();
-        }
+    // Call the onlimit handler within the scope of the textarea
+    jQuery.proxy(settings.onLimit, this)();
+    }
 
-        // Call the onEdit handler within the scope of the textarea
-        jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
-      }
+    // Call the onEdit handler within the scope of the textarea
+    jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
+    }
 
-      this.each(onEdit);
+    this.each(onEdit);
 
-      return this.keyup(onEdit)
-      .keydown(onEdit)
-      .focus(onEdit);
+    return this.keyup(onEdit)
+    .keydown(onEdit)
+    .focus(onEdit);
     }
 
     jQuery(document).ready(function(){
 
-      var onEditCallback = function(remaining){
-        jQuery(this).siblings('.charsRemaining').text("Skriv kort. Du har kun: " + remaining + " tegn");
+    var onEditCallback = function(remaining){
+    jQuery(this).siblings('.charsRemaining').text("Skriv kort. Du har kun: " + remaining + " tegn");
 
-        if(remaining > 0){
-          jQuery(this).css('background-color', 'white');
-        }
-      }
+    if(remaining > 0){
+    jQuery(this).css('background-color', 'white');
+    }
+    }
 
-      var onLimitCallback = function(){
-        
-        jQuery(this).css('background-color', 'red');
-      }
+    var onLimitCallback = function(){
 
-      jQuery('textarea[maxlength]').limitMaxlength({
-        onEdit: onEditCallback,
-        onLimit: onLimitCallback
-      });
+    jQuery(this).css('background-color', 'red');
+    }
+
+    jQuery('textarea[maxlength]').limitMaxlength({
+    onEdit: onEditCallback,
+    onLimit: onLimitCallback
+    });
     });
 
     jQuery(window).load(function(){
-      jQuery('.charsRemaining').text("Skriv kort. Du har kun :-" + 600 + " tegn");
+    jQuery('.charsRemaining').text("Skriv kort. Du har kun :-" + 600 + " tegn");
     });
   </script>
 <% end %>
