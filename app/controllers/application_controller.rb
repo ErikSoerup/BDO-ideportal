@@ -34,9 +34,9 @@ class ApplicationController < ActionController::Base
 
 
   def check_ip
-    p "check_ip-----------"
+    logger.info "check_ip-----------"
     @ip_addr = request.env['REMOTE_ADDR']
-    p @ip_addr
+    logger.info @ip_addr
   end
 
 protected
