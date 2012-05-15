@@ -10,7 +10,7 @@
       </ul>
     </div>
 
-    
+
     <div class="b_divider"></div>
     <div class="plainwrap"><div class="fl"><h3>Søg på navn</h3></div>
       <% form_tag "/users/search_user" do %>
@@ -79,7 +79,15 @@
                   <td align="left" valign="middle"> </td>
                 </tr>
                 <tr>
-                  <td align="left" valign="middle">  <% unless user.followers.include?(current_user) %><%= link_to "Følg", follow_path(user.id)%> <% else %> <%= link_to "Stop følg", unfollow_path(user.id)%><% end %> </td>
+                  <td align="left" valign="middle">
+                    <%if !(current_user == user)%>
+                      <% unless user.followers.include?(current_user) %>
+                        <%= link_to "Følg", follow_path(user.id)%>
+                      <% else %>
+                        <%= link_to "Stop følg", unfollow_path(user.id)%>
+                      <% end %>
+                    <% end %>
+                  </td>
                 </tr>
               </table></td>
             <td align="left" valign="middle"><%=link_to user.name, profile_path(user)%></td>
@@ -87,7 +95,7 @@
             <td align="left" valign="middle"><strong><%= user.contribution_points.to_i%></strong></td>
             <td align="left" valign="middle"><% unless user.ideas.empty?  %><%= user.ideas.size %><% else %>&nbsp;<% end %> </td>
             <td align="left" valign="middle"><% unless user.comments.empty?  %><%= user.comments.size %><% else %>&nbsp;<% end %></td>
-            <td align="left" valign="middle"><% unless user.votes.empty?  %><%= user.votes.size %><% else %>&nbsp;<% end %></td>              
+            <td align="left" valign="middle"><% unless user.votes.empty?  %><%= user.votes.size %><% else %>&nbsp;<% end %></td>
 
           </tr>
 
