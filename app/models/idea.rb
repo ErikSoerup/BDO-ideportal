@@ -17,7 +17,7 @@ class Idea < ActiveRecord::Base
     end
   end
 
-  named_scope :active, :conditions => {:hidden => false, 'users.state' => 'active' }, :include => :inventor
+  named_scope :active, :conditions => {:hidden => false, 'users.state' => 'active' }, :include => :inventor, :order => "ideas.created_at DESC"
   
   has_many :admin_comments, :order => 'admin_comments.created_at', :dependent => :destroy
 

@@ -63,7 +63,7 @@ class HomeController < ApplicationController
     @ideas=[]
     params[:val1].each do |val|
       if val == "alle"
-        @ideas << Idea.active.find(:order => "ideas.created_at DESC")
+        @ideas << Idea.active.find(:all, :order => "ideas.created_at DESC")
 
         #    elsif params[:val1] == "de hotteste ideer"
         #      @ideas= Idea.populate_comment_counts(search_ideas(params))
@@ -148,7 +148,7 @@ class HomeController < ApplicationController
         @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 5)
       elsif params[:arrow] == "down"
         @c_ideas=@c_ideas.sort{|x,y| x.idea_followers.collect(&:user_id).uniq.count <=> y.idea_followers.collect(&:user_id).uniq.count}
-       @total_ideas=@c_ideas
+        @total_ideas=@c_ideas
         @c_ideas=@c_ideas.paginate(:page => params[:page],:per_page => 5)
       end
     elsif params[:val] == "date"
