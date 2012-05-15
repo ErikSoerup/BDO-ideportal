@@ -32,6 +32,13 @@ class ApplicationController < ActionController::Base
   # from the application log (in this case, all fields with names like "password").
   filter_parameter_logging :password, :password_confirmation
 
+
+  def check_ip
+    p "check_ip-----------"
+    @ip_addr = request.env['REMOTE_ADDR']
+    p @ip_addr
+  end
+
 protected
 
   # Only allow publicly editable fields, so that for example user cannot hack idea rating
