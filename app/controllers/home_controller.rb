@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  before_filter :check_ip
   before_filter :login_required
 
   layout  :compute_layout

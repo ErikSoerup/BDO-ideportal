@@ -18,39 +18,45 @@
         = stylesheet_link_tag 'ie6'
         = javascript_include_tag 'IE7'
   %body{ :class => @body_class }
-    %div
-      .main.panel.section
+    - @ip_addr = request.ip == "127.0.0.1" || request.ip == "14.97.183.187" ? "83.151.150.86" : request.ip
+    -if @ip_addr != "83.151.150.86"
+      %div
         .header
-          %h2 Log ind på ideportalen
-        .body
-          .group
-            -if flash[:error].present?
-              .error=flash[:error]
-              %br
-
-            - form_tag session_path do
-              .form-group.inline
-                %label{ :for => "email" }=t('email_address')
-                = text_field_tag 'email', params[:email], :class => "input-text big", :tabindex => 1
-              .form-group.inline
-                %label{ :for => "password" }
-                  =t("password")
-                = password_field_tag 'password', nil, :class => "input-text big", :tabindex => 2
-              .form-group.inline.checkbox
-                %input#remember-me.input-checkbox{ :name => "remember_me", :type => "checkbox", :value => "1", :tabindex => 3 }
-                %label{ :for => "remember-me" }= t('remember_me')
-              .form-submit.inline
-                = submit_tag t("menu.sign_in"), :class => "input-submit", :id => "submit-login", :tabindex => 4
-                %br
-              .form-group.inline.checkbox
-                = link_to t("forgot_it"), forgot_password_path
-          -# ------- STYLE NEEDED ------
-          -if TWITTER_ENABLED || FACEBOOK_ENABLED
+          %h2 Unauthorized access
+    -else
+      %div
+        .main.panel.section
+          .header
+            %h2 Log ind på ideportalen
+          .body
             .group
-              -if TWITTER_ENABLED
-                .login-button= link_to 'Log in with Twitter', twitter_login_path
-              -if FACEBOOK_ENABLED
-                .login-button= link_to 'Log in with Facebook', '#', :onclick => 'facebook_login(); return false'
-          -# ------- /STYLE NEEDED ------
+              -if flash[:error].present?
+                .error=flash[:error]
+                %br
 
-        .footer
+              - form_tag session_path do
+                .form-group.inline
+                  %label{ :for => "email" }=t('email_address')
+                  = text_field_tag 'email', params[:email], :class => "input-text big", :tabindex => 1
+                .form-group.inline
+                  %label{ :for => "password" }
+                    =t("password")
+                  = password_field_tag 'password', nil, :class => "input-text big", :tabindex => 2
+                .form-group.inline.checkbox
+                  %input#remember-me.input-checkbox{ :name => "remember_me", :type => "checkbox", :value => "1", :tabindex => 3 }
+                  %label{ :for => "remember-me" }= t('remember_me')
+                .form-submit.inline
+                  = submit_tag t("menu.sign_in"), :class => "input-submit", :id => "submit-login", :tabindex => 4
+                  %br
+                .form-group.inline.checkbox
+                  = link_to t("forgot_it"), forgot_password_path
+            -# ------- STYLE NEEDED ------
+            -if TWITTER_ENABLED || FACEBOOK_ENABLED
+              .group
+                -if TWITTER_ENABLED
+                  .login-button= link_to 'Log in with Twitter', twitter_login_path
+                -if FACEBOOK_ENABLED
+                  .login-button= link_to 'Log in with Facebook', '#', :onclick => 'facebook_login(); return false'
+            -# ------- /STYLE NEEDED ------
+
+          .footer
