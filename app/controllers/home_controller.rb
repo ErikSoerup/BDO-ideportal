@@ -17,7 +17,6 @@ class HomeController < ApplicationController
     # render the landing page
   end
 
-
   def advance
 
     if params[:val] == "followers"
@@ -57,7 +56,6 @@ class HomeController < ApplicationController
 
 
   end
-
 
   def main_search
     @ideas=[]
@@ -188,11 +186,10 @@ class HomeController < ApplicationController
     #    end
   end
 
-
-
   def current_objects
     @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
+
   def show
     @body_class = params[:page].nil? ? 'home' : params[:page]
     render :action => params[:page] || 'show'

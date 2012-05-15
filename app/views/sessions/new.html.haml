@@ -18,11 +18,11 @@
         = stylesheet_link_tag 'ie6'
         = javascript_include_tag 'IE7'
   %body{ :class => @body_class }
-    - @ip_addr = request.ip == "127.0.0.1" || request.ip == "14.97.183.187" ? "83.151.150.86" : request.ip
-    -if @ip_addr != "83.151.150.86"
+    -if !@authorized_access
       %div
         .header
-          %h2 Unauthorized access
+          .error
+            = @message
     -else
       %div
         .main.panel.section

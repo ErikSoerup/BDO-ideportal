@@ -14,9 +14,18 @@ class SessionsController < ApplicationController
       'profile'
     end
   end
+  
   def new
     flash.clear
     @body_class = 'login'
+    #@ip_addr = request.ip
+    @ip_addr = request.ip == "127.0.0.1" || request.ip == "14.97.183.187" ? "83.151.150.86" : request.ip
+    if @ip_addr != "83.151.150.86"
+      @message = "Du kan kun logge ind via det interne netværk. Log først på VPN og derefter på ideportalen."
+      @authorized_access = false
+    else
+      @authorized_access = true
+    end
     render :new , :layout=>false
   end
 
@@ -103,16 +112,16 @@ class SessionsController < ApplicationController
     redirect_back_or_default('/')
   end
 
-private
+  private
 
   def response_for_successful_login
     redirect_back_or_default do
       #if current_user.active?
-        #redirect_to '/'
+      #redirect_to '/'
       #else
-        #render :action => 'inactive'
+      #render :action => 'inactive'
       #end
-        redirect_to '/'
+      redirect_to '/'
     end
   end
 

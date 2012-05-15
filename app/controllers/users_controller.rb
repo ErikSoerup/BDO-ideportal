@@ -14,6 +14,7 @@ class UsersController < ApplicationController
       'application'
     end
   end
+  
   def index
     @body_class='advance'
     page = 1 || params[:page]
