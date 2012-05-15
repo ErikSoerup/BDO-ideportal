@@ -79,8 +79,13 @@
                   <td align="left" valign="middle"> </td>
                 </tr>
                 <tr>
-                  <td align="left" valign="middle">  <% unless user.followers.include?(current_user)%>
-                      <%= link_to "Følg", follow_path(user.id)%> <% else %> <%= link_to "Stop følg", unfollow_path(user.id)%>
+                  <td align="left" valign="middle">
+                    <%if !(current_user == user)%>
+                      <% unless user.followers.include?(current_user)%>
+                        <%= link_to "Følg", follow_path(user.id)%>
+                      <% else %>
+                        <%= link_to "Stop følg", unfollow_path(user.id)%>
+                      <% end %>
                     <% end %>
                   </td>
                 </tr>
