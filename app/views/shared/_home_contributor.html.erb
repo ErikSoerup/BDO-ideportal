@@ -1,5 +1,20 @@
-<div class="top_bid_row">
-  <div class="top_bid_img"><%= image_tag profile_picture(home_contributor) , :width=>20,:height=>20 %></div>
-  <div class="entry_title"><%= link_to h(home_contributor.name), profile_path(home_contributor), :class => 'bold_link', :style => "font-size:10px;"%></div>
-  <div class="entry_point"><strong style="color:#0F645D;font-size: 10px;"><%= "#{(home_contributor.send(points_method) || 0).round } points" %></strong></div>
+
+<div class="idea mini hentry contributor">
+  <div class="title">
+<%#*<h5 class="posted">%>
+<%#*Sendt%>
+<%#*<abbr class="published time-relative"> 5 måneder siden </abbr>%>
+<%#*af%>
+<%#*<span class="vcard author">%>
+<%#*<a class="fn url" href="/profiles/21/leon-kj-r-rasmussen">Leon Kjær Rasmussen </a>%>
+<%#*</span>%>
+<%#*</h5>%>
+    <h4 class="entry-point" style="font-size:10px;"><%= "#{(home_contributor.send(points_method) || 0).round } points" %></h4>
+    <h4 class="entry-title" style="font-size:10px;">
+      <%= link_to h(home_contributor.name), profile_path(home_contributor), :class => 'bold_link', :style => "font-size:10px;"%>
+    </h4>
+  </div>
+  <span id="contributor_21">
+    <%= image_tag profile_picture(home_contributor) , :width=>20,:height=>20 %>
+  </span>
 </div>
