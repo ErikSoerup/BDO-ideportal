@@ -3,11 +3,18 @@ class HomeController < ApplicationController
 
   layout  :compute_layout
 
+
+  def static_layout
+    
+  end
+
+  
   def compute_layout
 
     if  action_name == "advance" || action_name == "main_search" || action_name == "show"
       'profile'
-
+    elsif action_name == "static_layout"
+      nil
     else
       'application'
     end

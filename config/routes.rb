@@ -12,11 +12,11 @@ ActionController::Routing::Routes.draw do |map|
     :create_twitter => :get,
     :create_facebook => :get
   }
-   map.resources :comments, :member => {:destroy_comment => :delete} # for global comment list
+  map.resources :comments, :member => {:destroy_comment => :delete} # for global comment list
   map.resources :tags
   map.resources :profiles
   map.resource :map
-map.resources :tests
+  map.resources :tests
   map.suggestions         '/suggestions',                        :controller => 'currents',  :action => 'show' , :id=> Current::SUGESSIONS_ID
 
   map.unfollow            '/users/unfollow/:id',                 :controller => 'users',    :action => 'unfollow'
@@ -102,5 +102,6 @@ map.resources :tests
   map.profile_ideas '/profiles/current_ideas', :action => 'current_ideas', :controller => 'profiles'
   map.profile_currents '/profiles/current_currents', :action => 'current_currents', :controller => 'profiles'
   map.profile_followers '/profiles/followers', :action => 'my_followers', :controller => 'profiles'
+  map.static_layout '/static_layout', :action => 'static_layout', :controller => 'home'
   # No default routes declared for security & tidiness. (They make all actions in every controller accessible via GET requests.)
 end
