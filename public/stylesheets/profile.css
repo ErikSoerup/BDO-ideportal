@@ -65,7 +65,7 @@ a:hover { text-decoration:underline;}
     border-radius:0 0 5px 5px;
     -moz-border-radius:0 0 5px 5px;
     -webkit-border-radius:0 0 5px 5px;
-    background:#33c5b9;
+    background:#35CEC1;
     color:#fff;
     line-height:32px;
     font-weight:bold;
@@ -335,13 +335,13 @@ ul.tabs li.active a {
 .tab_headline {
     width:100%;
     float:left;
-    border-bottom:dashed 1px #000;
+/*    border-bottom:dashed 1px #000;*/
     margin: 0px 0 11px;
     padding-bottom:6px;
 }
 /*-- Ideer --*/
 .green_wrap {
-    background:#6ae5db;
+    background:#35CEC1;
     width:637px;
     height:127px;
     padding:7px 10px;
@@ -539,7 +539,7 @@ h3.subhead {
 .comments_wrap_green {
     width:493px;
     float:right;
-    background:#6ae5db;
+    background:#35CEC1;
     border-radius:0 5px 5px 5px;
     -moz-border-radius:0 5px 5px 5px;
     -webkit-border-radius:0 5px 5px 5px;
@@ -807,7 +807,7 @@ h2.title {
 .full_wrap {
     width:925px;
     float:left;
-    padding:0px 10px;
+    padding:10px 10px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -842,7 +842,7 @@ ul.index li {
     width:110px;
 }
 .blank_button {
-    background:#33c5b9;
+    background:#35CEC1;
     border:solid 1px #259188;
     border-radius:5px;
     -moz-border-radius:5px;
@@ -856,7 +856,7 @@ ul.index li {
 
 }
 a.blank_button {
-    background:#33c5b9;
+    background:#35CEC1;
     border:solid 1px #259188;
     border-radius:5px;
     -moz-border-radius:5px;
@@ -875,7 +875,7 @@ a.blank_button {
     width:110px;
 }
 .blank_button {
-    background:#33c5b9;
+    background:#35CEC1;
     border:solid 1px #259188;
     border-radius:5px;
     -moz-border-radius:5px;
@@ -889,7 +889,7 @@ a.blank_button {
 
 }
 a.blank_button {
-    background:#33c5b9;
+    background:#35CEC1;
     border:solid 1px #259188;
     border-radius:5px;
     -moz-border-radius:5px;
@@ -1463,7 +1463,7 @@ ul.index li {
 .comments_wrap_green {
     width:493px;
     float:right;
-    background:#6ae5db;
+    background:#35CEC1;
     border-radius:0 5px 5px 5px;
     -moz-border-radius:0 5px 5px 5px;
     -webkit-border-radius:0 5px 5px 5px;
@@ -1497,7 +1497,7 @@ ul.index li {
 
 
 .green_wrap {
-    background:#6ae5db;
+    background:#35CEC1;
     width:637px;
     height:122px;
     padding:7px 10px;
@@ -1655,14 +1655,14 @@ ul.index li {
 
 
 .home_top {
-    width:845px;
-    margin:0 auto 5px auto;
+    width:900px;
+    margin:auto;
     overflow:hidden;
-    background:#33c5b9;
+    background:#35CEC1;
     border-radius:5px;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
-    padding: 5px 15px;
+    padding: 10px;
 }
 .form_wrap {
     width:530px;
@@ -1678,8 +1678,8 @@ ul.index li {
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
     padding:2px 1px;
-    float:right;
-    margin:10px 15px 0 0;
+    float: left;
+    margin: 8px 15px 0 40px;
 }
 .top_bid_inner {
     width:223px;
@@ -1780,6 +1780,16 @@ ul.index li {
     float:left;
 }
 
+.form_outer {
+    width:915px;
+    border:solid 1px #ccc5c1;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    padding:6px 4px 10px 4px;
+    float:left;
+}
+
 .ideer_outer .b_divider {
     margin:0 0 4px 0;
 }
@@ -1796,7 +1806,7 @@ ul.index li {
     padding:5px;
     height:55px;
     margin-bottom:4px;
-    background:#6ae5db;
+    background:#35CEC1;
 }
 .id_yellow {
     width:285px;
@@ -1918,7 +1928,7 @@ ul.index li {
 }
 .hovedvej_form{
     -moz-border-radius: 5px 5px 5px 5px;
-    background: none repeat scroll 0 0 #33C5B9;
+    background: none repeat scroll 0 0 #35CEC1;
     width:656px;
     margin:0;
     height: 405px;
