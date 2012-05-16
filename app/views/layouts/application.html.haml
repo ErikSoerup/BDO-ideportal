@@ -1,7 +1,10 @@
 !!! Strict
 %html{ :xmlns => "http://www.w3.org/1999/xhtml" }
   %head{ :profile => "http://gmpg.org/xfn/1" }
-    %title== #{LONG_SITE_NAME} | #{h(page_title || "Exchange your ideas, vote, and discuss. Let's make it better.")}
+    -if controller_name == "ideas" && params[:search] && params[:search].include?("hot")
+      %title== #{SITE_TITLE} | #{h(page_title || "Hotte ideer!")}
+    -else
+      %title== #{SITE_TITLE} | #{h(page_title || "Del dine ideer, stem og diskuter muligheder. Vi kan gøre det endnu bedre!")}
     = stylesheet_link_tag 'master','tagify-style'
 
     -#-cache 'header' do

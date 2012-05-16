@@ -6,7 +6,33 @@
     <meta name = 'keywords' content = "#{COMPANY_NAME}, #{SHORT_SITE_NAME}, #{LONG_SITE_NAME}, Idea Exchange, share, vote, rate" />
     <meta name = 'description' content = "#{LONG_SITE_NAME} is a forum for #{COMPANY_NAME} customers to share, rate, and discuss ideas about #{COMPANY_NAME}."/>
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
-    <title><%= " #{LONG_SITE_NAME} | #{h(page_title || "Exchange your ideas, vote, and discuss. Let's make it better.")}" %> </title>
+    <title>
+      <%if controller_name == "ideas" && params[:search] && params[:search].include?("hot")%>
+        <%= "#{SITE_TITLE} | #{h("Hotte ideer!")}" %>
+      <%elsif controller_name == "ideas" && params[:search] && params[:search].include?("recent")%>
+        <%= "#{SITE_TITLE} | #{h("Seneste ideer!")}" %>
+      <%elsif controller_name == "currents"%>
+        <%= "#{SITE_TITLE} | #{h("Hovedveje!")}" %>
+      <%elsif controller_name == "comments"%>
+        <%= "#{SITE_TITLE} | #{h("Kommentarer!")}" %>
+      <%elsif controller_name == "tags"%>
+        <%= "#{SITE_TITLE} | #{h("Emneord!")}" %>
+      <%elsif controller_name == "home" && action_name == "advance"%>
+        <%= "#{SITE_TITLE} | #{h("Avanceret!")}" %>
+      <%elsif controller_name == "home" && action_name == "show" && params[:page] && params[:page] == "about"%>
+        <%= "#{SITE_TITLE} | #{h("Om ideportalen!")}" %>
+      <%elsif controller_name == "profiles" && action_name == "show"%>
+        <%if params[:id] == current_user.id%>
+          <%= "#{SITE_TITLE} | #{h("Min profil!")}" %>
+        <%else%>
+          <%= "#{SITE_TITLE} | #{h("#{@user.name.capitalize}!")}" %>
+        <%end%>
+      <%elsif controller_name == "users" && action_name == "edit"%>
+        <%= "#{SITE_TITLE} | #{h("Indstillinger!")}" %>
+      <%else%>
+        <%= "#{SITE_TITLE} | #{h(page_title || "Del dine ideer, stem og diskuter muligheder. Vi kan gøre det endnu bedre!")}" %>
+      <%end%>
+    </title>
     <%= stylesheet_link_tag "profile" %>
     <%= stylesheet_link_tag "idea_form" %>
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js", "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js", "jquery.tagify" %>

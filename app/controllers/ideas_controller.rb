@@ -154,15 +154,11 @@ class IdeasController < ApplicationController
     redirect_to idea_path(@idea)
   end
 
-
   def destroy_idea
     @idea=Idea.find(params[:id])
     @idea.destroy
     render :layout => false
   end
-
-
-
 
   def follow
     begin
@@ -177,7 +173,6 @@ class IdeasController < ApplicationController
       redirect_to idea_path(@idea)
     end
   end
-
 
   def followers
     @body_class='advance'
@@ -219,6 +214,7 @@ class IdeasController < ApplicationController
     @users=@users.paginate :page => page unless @users.nil?
 
   end
+
   def unfollow
     @idea_follow=IdeaFollower.find_by_user_id_and_idea_id(current_user.id,params[:id])
     @idea_follow.destroy unless @idea_follow.nil?
@@ -226,12 +222,8 @@ class IdeasController < ApplicationController
     redirect_to ideas_path
   end
 
-
   def index
     unless params[:status].nil?
-
-
-
       current_objects(params[:status])
     else
       if params[:page_size]

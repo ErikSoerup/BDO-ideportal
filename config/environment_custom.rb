@@ -6,6 +6,7 @@
 COMPANY_NAME = 'BDO'
 SHORT_SITE_NAME = 'Idea'
 LONG_SITE_NAME = "#{COMPANY_NAME} #{SHORT_SITE_NAME}"
+SITE_TITLE = "BDO's ideportal"
 
 # Set these to the hostnames of the machines where you'll be doing your deploys.
 PRODUCTION_HOST = 'bdotest.heroku.com'
