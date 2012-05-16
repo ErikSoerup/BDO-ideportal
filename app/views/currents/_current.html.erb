@@ -28,6 +28,7 @@
           <% if CurrentFollower.find_by_user_id_and_current_id(current_user.id,current.id).nil? %>
             <% form_tag current_follow_path do %>
               <%= hidden_field_tag :current_id, current.id%>
+              <%= hidden_field_tag :index, true%>
               <%= submit_tag "Følg denne hovedvej", :class => "idea_submit"%>
             <% end %>
           <% end %>

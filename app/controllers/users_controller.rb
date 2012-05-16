@@ -78,7 +78,6 @@ class UsersController < ApplicationController
 
   end
   
-  
   def current_currents
     @current_ideas = current_user.current_followers.collect(&:current)
     respond_to do |format|
@@ -127,13 +126,13 @@ class UsersController < ApplicationController
       if @following
         current_user.follow!(@following)
         flash[:info] = "You are now following #{@following.name}"
-        redirect_to profile_url(@following)
+        redirect_to params[:index] ? :back : profile_url(@following)
       end
       Delayed::Job.enqueue UserFollowerNotificationJob.new(current_user, @following)
       #      UserMailr.deliver_notification_comments()
     rescue Exception => e
       flash[:notice] = "You have successfully followed the idea"
-      redirect_to profile_url(@following)
+      redirect_to params[:index] ? :back : profile_url(@following)
     end
   end
 
@@ -142,7 +141,7 @@ class UsersController < ApplicationController
     if @unfollow
       current_user.unfollow!(@unfollow)
       flash[:info] = "You are now unfollowing #{@unfollow.name}"
-      redirect_to profile_url(@unfollow)
+      redirect_to params[:index] ? :back : profile_url(@unfollow)
     end
   end
 

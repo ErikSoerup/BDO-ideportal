@@ -65,12 +65,12 @@ class CurrentsController < ApplicationController
       @current= Current.find(params[:current_id])
       CurrentFollower.create!(:user_id => current_user.id, :current_id => @current.id)
       flash[:notice] = "You have successfully followed the idea"
-      redirect_to current_path(@current)
+      redirect_to params[:index] ? :back : current_path(@current)
       Delayed::Job.enqueue NotificationCurrentJob.new(current_user, @current)
    
     rescue
       flash[:notice] = "You have successfully followed the idea"
-      redirect_to current_path(@current)
+      redirect_to params[:index] ? :back : current_path(@current)
     end  
   end
   

@@ -82,9 +82,9 @@
                   <td align="left" valign="middle">
                     <%if !(current_user == user)%>
                       <% unless user.followers.include?(current_user)%>
-                        <%= link_to "Følg", follow_path(user.id)%>
+                        <%= link_to "Følg", follow_path(user.id, :index => true)%>
                       <% else %>
-                        <%= link_to "Stop følg", unfollow_path(user.id)%>
+                        <%= link_to "Stop følg", unfollow_path(user.id, :index => true)%>
                       <% end %>
                     <% end %>
                   </td>
