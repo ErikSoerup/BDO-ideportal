@@ -124,7 +124,7 @@ module TsearchMixin
           
           #add tsearch_rank to fields returned
           if is_postgresql_83?
-            tsearch_rank_function = "ts_rank_cd(#{table_name}.#{tsearch_options[:vector]},tsearch_query#{','+tsearch_options[:normalization].to_s if tsearch_options[:normalization]})"
+            tsearch_rank_function = "ts_rank_cd(to_tsvector(#{table_name}.#{tsearch_options[:vector]}),tsearch_query#{','+tsearch_options[:normalization].to_s if tsearch_options[:normalization]})"
           else
             tsearch_rank_function = "rank_cd(#{table_name}.#{tsearch_options[:vector]},tsearch_query#{','+tsearch_options[:normalization].to_s if tsearch_options[:normalization]})"
           end

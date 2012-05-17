@@ -235,7 +235,7 @@ class IdeasController < ApplicationController
       # Call current_objects to populate @body_class. (If the results are cached, we don't need to do this.
       # We never cache the idea list for a user who is logged in, because we want their votes to show up immediately.)
       unless !logged_in? && fragment_exist?(['idea_search', CGI.escape(params.inspect)])
-        current_objects()
+        current_objects
       end
     end
     respond_to do |format|
@@ -287,6 +287,7 @@ class IdeasController < ApplicationController
     if status.nil?
       @currents ||= Idea.populate_comment_counts(search_ideas(params))
     else
+      @status = status
       @currents ||= Idea.paginate(:per_page => 5,:page => params[:page], :conditions =>["status = ?",status])
     end
   end

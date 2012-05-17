@@ -5,19 +5,21 @@
     <div class="profile_wrap">
       <div class="plainwrap">
         <!--User Name Starts -->
-       <div class="fl">
+        <div class="fl">
           <% if params[:search] == ["hot"] %>
             <h2><span>Hotte ideer: Seneste | </span><a href="/ideas/search/hot">Helt fra starten</a></h2>
           <% elsif params[:search] == ["recent"] %>
             <h2>Seneste ideer</h2>
-           <% elsif params[:search].include?("department") %>
+          <% elsif params[:search] && params[:search].include?("department") %>
             <h2>Afdelings ideer</h2>
           <% end %>
         </div>
         <!--User Name Ends -->
         <!--Pagination Starts -->
         <div class="fr" style="margin-top:8px;">
-          <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+          <%if @status%>
+            <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+          <%end%>
         </div>
         <!--Pagination Ends -->
       </div>
@@ -35,7 +37,9 @@
     </div>
 
     <div class="fr" style="margin-top:8px;">
-      <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+      <%if @status%>
+        <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+      <%end%>
     </div>
     <!--Tab Panel Ends -->
   </div>
