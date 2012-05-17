@@ -57,11 +57,11 @@ a:hover { text-decoration:underline;}
 
 }
 .top_nav {
-    width:330px;
+    width:380px;
     height:32px;
     padding:0 7px;
     margin:0 0px 0 140px;
-    float:left;
+    float:right;
     border-radius:0 0 5px 5px;
     -moz-border-radius:0 0 5px 5px;
     -webkit-border-radius:0 0 5px 5px;
@@ -108,7 +108,7 @@ a:hover { text-decoration:underline;}
     width: 105px;
 }
 .h_btm {
-    width:60%;
+    width:100%;
     float:left;
     margin:0;
 }
@@ -145,15 +145,16 @@ a:hover { text-decoration:underline;}
     text-decoration:underline;
 }
 .logud {
-/*    background:url(../images/logout-bg.png) no-repeat;*/
+    /*    background:url(../images/logout-bg.png) no-repeat;*/
     width:80px;
-    height:84px;
-    float:left;
+    /*    height:84px;*/
+    float:right;
     text-align:center;
     color:#fff;
     font-weight:bold;
-    padding:5px 0 0 0;
-    margin:0 12px 0 0;
+    padding:0 0 5px 0;
+    /*    margin:0 12px 0 0;*/
+    margin-top: -30px;
 }
 .logud a {
     text-decoration:none;
@@ -335,7 +336,7 @@ ul.tabs li.active a {
 .tab_headline {
     width:100%;
     float:left;
-/*    border-bottom:dashed 1px #000;*/
+    /*    border-bottom:dashed 1px #000;*/
     margin: 0px 0 11px;
     padding-bottom:6px;
 }
@@ -2003,8 +2004,8 @@ ul.index li {
     cursor:pointer;
 }
 .outer_block ul li.stem_outer {
-     opacity: 0.6;
-    
+    opacity: 0.6;
+
     position:absolute;
     top:100px;
     left:105px;
@@ -2023,9 +2024,9 @@ ul.index li {
     cursor:pointer;
 }
 .outer_block ul li.byg_videre {
-     opacity: 0.6;
+    opacity: 0.6;
     position:absolute;
-    
+
     top:179px;
     left:105px;
     background:url(../images/ow-img3.gif) no-repeat;
@@ -2043,8 +2044,8 @@ ul.index li {
     cursor:pointer;
 }
 .outer_block ul li.folg_med {
-     opacity: 0.6;
-    
+    opacity: 0.6;
+
     position:absolute;
     top:258px;
     left:105px;
@@ -2064,7 +2065,7 @@ ul.index li {
 }
 
 .outer_block ul li.last_box{
-   
+
     position: absolute;
     top: 340px;
     left:42px;

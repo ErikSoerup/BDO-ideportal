@@ -92,7 +92,7 @@
             <% if logged_in? %>
               <div class="top_nav">
 
-                <ul>
+                <ul style="padding: 0 5px 0 5px;">
                   <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>
                   <li><%= link_to t('menu.settings'), edit_user_path %></li>
   <%#*<li>%>
@@ -109,14 +109,13 @@
 
                     <% end %>
                   </li>
+                  <li> &nbsp; &nbsp;<%= link_to t('menu.sign_out'), logout_path%></li>
                 </ul>
 
               </div>
             <% end %>
             <!--Top Nav Ends -->
-            <div class="logud"><%= link_to t('menu.sign_out'), logout_path%>
-              <%= link_to image_tag("header.jpg", :size => "80x80", :style => "padding:14px 0 0 2px;"), home_path('about'), :style => "height: 100px;"  %>
-            </div>
+
           </div>
           <!--Header Bottom Section Starts -->
           <% if logged_in? %>
@@ -150,6 +149,9 @@
               <!--Logud Stuff Starts -->
 
               <!--Logud Stuff Ends -->
+              <div class="logud">
+                <%= link_to image_tag("header.jpg", :size => "80x80"), home_path('about') %>
+              </div>
             </div>
           <% end %>
           <!--Header Bottom Section Ends -->
