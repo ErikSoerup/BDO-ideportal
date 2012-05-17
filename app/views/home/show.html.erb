@@ -8,9 +8,9 @@
     <!--Bottom Panel Starts -->
     <div class="plainwrap">
       <!--Header Portion Starts -->
-      <%#*<div class="tab_headline" style="margin-bottom:6px;">%>
-        <%#*<div class="fl"><strong>HER ER ET PAR IDEER. Hvad synes du om dem?</strong></div>%>
-      <%#*</div>%>
+<%#*<div class="tab_headline" style="margin-bottom:6px;">%>
+<%#*<div class="fl"><strong>HER ER ET PAR IDEER. Hvad synes du om dem?</strong></div>%>
+<%#*</div>%>
       <!--Ideers Panel Starts -->
       <div class="plainwrap">
         <!--Hotte ideer Starts -->
@@ -49,37 +49,43 @@
         <%= image_tag("arro1.jpeg", :size => "40x40") %>
       </div>
 
-      <%#*Add very broad and low arrow under text pointing to idea form%>
+<%#*Add very broad and low arrow under text pointing to idea form%>
     </div>
     <div class="plainwrap">
       <div class="home_top">
         <div class="plainwrap">
-          <!--Form Stuff Starts -->
-          <div class="form_wrap">
-            <%= render :partial => "new_idea" %>
-          </div>
-          <!--Form Stuff Ends -->
-          <!--Top Bidragydere Panel Starts -->
-
-
-          <div class="top_bidragydere" style="max-height: 365px;">
-            <div class="plainwrap"><h3 style="margin-left:15px;float:left;width:auto;font-size: 13px;">Top Bidragydere</h3>
-              <a class="flere" href="/user/index">Flere</a>
+          <div style="width: 60%; float: left;">
+            <!--Form Stuff Starts -->
+            <div class="form_wrap">
+              <%= render :partial => "new_idea" %>
             </div>
-            <div class="top_bid_inner" style="max-height:325px;">
-              <%= render :partial => 'shared/home_contributor',
-                :collection => User.find_top_contributors(true, :limit => 10),
-                :locals => { :points_method => :recent_contribution_points }%>
-              <!--Single Row1 Starts -->
-
-
-
-              <!--Single Row5 Ends -->
-            </div>
-            <div class="plainwrap"></div>
+            <!--Form Stuff Ends -->
           </div>
 
-          <!--Top Bidragydere Panel Starts -->
+          <div style="width: 40%;  float: left;">
+            <!--Top Bidragydere Panel Starts -->
+            <div class="top_bidragydere" style="max-height: 365px;">
+              <div class="plainwrap"><h3 style="margin-left:15px;float:left;width:auto;font-size: 13px;">Top Bidragydere</h3>
+                <a class="flere" href="/user/index">Flere</a>
+              </div>
+              <div class="top_bid_inner" style="max-height:325px;">
+                <%= render :partial => 'shared/home_contributor',
+                  :collection => User.find_top_contributors(true, :limit => 5),
+                  :locals => { :points_method => :recent_contribution_points }%>
+                <!--Single Row1 Starts -->
+
+                <!--Single Row5 Ends -->
+              </div>
+              <div class="plainwrap"></div>
+            </div>
+            <!--Top Bidragydere Panel ends -->
+            <div class="same" style="margin-left: 10px; text-align: center;">
+<%#= "Share My Idea" %>
+              <%= submit_tag 'Share My Idea', :class => "input-submit big", :onclick => "$('idea_form_submit').click();",
+                :style => "background-image: url('../images/form-submit-share-it.gif');float:left;margin:6px 0px 0px 30px;width:166px;height:31px;"%>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

@@ -57,10 +57,10 @@ a:hover { text-decoration:underline;}
 
 }
 .top_nav {
-    width:454px;
+    width:330px;
     height:32px;
     padding:0 7px;
-    margin:0 0px 0 66px;
+    margin:0 0px 0 140px;
     float:left;
     border-radius:0 0 5px 5px;
     -moz-border-radius:0 0 5px 5px;
@@ -108,7 +108,7 @@ a:hover { text-decoration:underline;}
     width: 105px;
 }
 .h_btm {
-    width:100%;
+    width:60%;
     float:left;
     margin:0;
 }
@@ -145,8 +145,8 @@ a:hover { text-decoration:underline;}
     text-decoration:underline;
 }
 .logud {
-    background:url(../images/logout-bg.png) no-repeat;
-    width:59px;
+/*    background:url(../images/logout-bg.png) no-repeat;*/
+    width:80px;
     height:84px;
     float:left;
     text-align:center;
@@ -1941,7 +1941,7 @@ ul.index li {
 .set_home .tagify-container{
 
     margin-left: 10px;
-    width:242px;
+    width:480px;
 
 }
 

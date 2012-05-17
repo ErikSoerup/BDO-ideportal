@@ -1,6 +1,9 @@
 <div class="outer_block">
-  <p style="font-size: 9px; text-align: right; margin-bottom: 5px;"><strong>SÅDAN VIRKER DET </strong><span class="ita">(Se også <a href="<%= home_path('about')+"#spilleregler"%>">spilleregler</a>)</span></p>
-  <ul>
+  <p style="font-size: 12px; text-align: left; margin-bottom: 15px;">
+    <strong>SÅDAN VIRKER DET </strong>
+    <span class="ita">(Se også <a href="<%= home_path('about')+"#spilleregler"%>">spilleregler</a>)</span>
+  </p>
+  <ul style="margin-top: 10px;">
     <li class="del"></li>
     <li class="stem_outer"></li>
     <li class="byg_videre"></li>
@@ -13,7 +16,7 @@
         <p><a href="/home/main_search?val1[]=under+evaluering&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Behandlet</a> (<%= Idea.find(:all,:conditions => ["status = ?", "under review"]).size %>)</p>
         <p><a href="/home/main_search?val1[]=comming&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Kommer Snart</a> (<%= Idea.find(:all,:conditions => ["status = ?", "coming soon"]).size %>)</p>
         <p><a href="/home/main_search?val1[]=implementeret&val2[]=All&val3[]=1&val4[]=current&commit=Søg">Implementeret</a> (<%= Idea.find(:all,:conditions => ["status = ?", "launched"]).size %>)</p>
-      
+
       </div>
     </li>
 

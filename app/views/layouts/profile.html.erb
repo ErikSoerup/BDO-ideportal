@@ -95,7 +95,9 @@
                 <ul>
                   <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>
                   <li><%= link_to t('menu.settings'), edit_user_path %></li>
-                  <li><%= link_to t("menu.about"), home_path('about')%></li>
+  <%#*<li>%>
+  <%#= link_to t("menu.about"), home_path('about')%>
+  <%#*</li>%>
                   <% if current_user.admin? %>
                     <li><%= link_to 'Admin', admin_root_path%></li>
                   <% end %>
@@ -112,7 +114,9 @@
               </div>
             <% end %>
             <!--Top Nav Ends -->
-            <div class="logud"><%= link_to t('menu.sign_out'), logout_path%></div>
+            <div class="logud"><%= link_to t('menu.sign_out'), logout_path%>
+              <%= link_to image_tag("header.jpg", :size => "80x80", :style => "padding:14px 0 0 2px;"), home_path('about'), :style => "height: 100px;"  %>
+            </div>
           </div>
           <!--Header Bottom Section Starts -->
           <% if logged_in? %>
