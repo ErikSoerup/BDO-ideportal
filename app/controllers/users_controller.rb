@@ -59,7 +59,7 @@ class UsersController < ApplicationController
   end
 
   def search_user
-    @users= User.find(:all, :conditions => ['name like ?', "#{params[:search]}%"])
+    @users= User.find(:all, :conditions => ['name like ? and state = ?', "#{params[:search]}%", "active"])
     @users = @users.paginate :page => params[:page] unless @users.nil?
   end
 
