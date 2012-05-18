@@ -79,23 +79,13 @@
     <!--Tab Panel Starts -->
     <div class="tab_wrap">
       <!--Tab Starts -->
-      <!--
       <ul class="tabs">
-        <div style="display: none;" id="active_tabs">#tab1</div>
-        <li><%= link_to_remote "Ideer", :url => profile_path(@user, :tab => 'tab1') %></li>
-        <li><%= link_to_remote "Kommentarer", :url => profile_path(@user, :tab => 'tab2') %></li>
-        <li><%= link_to_remote "Stemmer", :url => profile_path(@user, :tab => 'tab3') %></li>
-        <li><%= link_to_remote "Favoritter", :url => profile_path(@user, :tab => 'tab4') %></li>
-        <li><%= link_to_remote "Følger mig", :url => profile_path(@user, :tab => 'tab5') %></li>
-      </ul>
-      -->
-      <ul class="tabs">
-        <div style="display: none;" id="active_tabs">#tab1</div>
-        <li><a href="#tab1" onclick="$('active_tabs').innerHTML = '#tab1';">Ideer</a></li>
-        <li><a href="#tab2" onclick="$('active_tabs').innerHTML = '#tab2';">Kommentarer</a></li>
-        <li><a href="#tab3" onclick="$('active_tabs').innerHTML = '#tab3';">Stemmer</a></li>
-        <li><a href="#tab4" onclick="$('active_tabs').innerHTML = '#tab4';">Favoritter</a></li>
-        <li><a href="#tab5" onclick="$('active_tabs').innerHTML = '#tab5';">Følger mig</a></li>
+        <div style="display: none;" id="active_tabs">tab1</div>
+        <li><a href="#tab1" onclick="$('active_tabs').innerHTML = 'tab1';" id="link_tab1">Ideer</a></li>
+        <li><a href="#tab2" onclick="$('active_tabs').innerHTML = 'tab2';" id="link_tab2">Kommentarer</a></li>
+        <li><a href="#tab3" onclick="$('active_tabs').innerHTML = 'tab3';" id="link_tab3">Stemmer</a></li>
+        <li><a href="#tab4" onclick="$('active_tabs').innerHTML = 'tab4';" id="link_tab4">Favoritter</a></li>
+        <li><a href="#tab5" onclick="$('active_tabs').innerHTML = 'tab5';" id="link_tab5">Følger mig</a></li>
       </ul>
 
       <div class="tab_container">

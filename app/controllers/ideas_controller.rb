@@ -211,6 +211,10 @@ class IdeasController < ApplicationController
     else
       @users = @users
     end
+    begin
+      @users.delete(User.find(1)) if @users.include?(User.find(1))
+    rescue Exception => e
+    end
     @users=@users.paginate :page => page unless @users.nil?
 
   end

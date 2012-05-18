@@ -51,12 +51,16 @@ class UsersController < ApplicationController
     else
       @users = User.find_top_contributors(true)
     end
-    @users=@users.paginate :page => page unless @users.nil?
+    begin
+      @users.delete(User.find(1)) if @users.include?(User.find(1))
+    rescue Exception => e
+    end
+    @users = @users.paginate :page => page unless @users.nil?
   end
 
   def search_user
     @users= User.find(:all, :conditions => ['name like ?', "#{params[:search]}%"])
-    @users=@users.paginate :page => params[:page] unless @users.nil?
+    @users = @users.paginate :page => params[:page] unless @users.nil?
   end
 
   def new
