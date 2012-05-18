@@ -14,7 +14,7 @@ class CurrentsController < ApplicationController
   end
   
   make_resourceful do
-    actions :show, :index
+    actions :show#, :index
 
     before :show do
       @current_ideas = search_ideas(params.merge(:search => ['current', current_object.id]))
@@ -30,7 +30,6 @@ class CurrentsController < ApplicationController
   def current_objects
     @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
-
 
   def page_title
     if @current
@@ -73,7 +72,6 @@ class CurrentsController < ApplicationController
       redirect_to params[:index] ? :back : current_path(@current)
     end  
   end
-  
   
   def followers
     @current = Current.find(params[:id])
@@ -127,7 +125,6 @@ class CurrentsController < ApplicationController
     flash[:notice] = "Your fellowship of this idea has been removed"
     redirect_to currents_path
   end
-  
   
   def subscribe
     change_subscription(true)
