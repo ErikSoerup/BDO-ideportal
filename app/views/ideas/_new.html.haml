@@ -1,5 +1,5 @@
 -# This partial shared by /ideas/new, home page, and drop-down.
-= javascript_include_tag "edit.js"
+#= javascript_include_tag "edit.js"
 = error_messages_for :idea
 - form_for :idea, :url => ideas_path, :update => 'submit-idea',  :html=>{:multipart=>true, :id=>"idea_form"} do |f|
   - if defined?(current) && !current.nil?
