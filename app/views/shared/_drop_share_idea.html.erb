@@ -25,14 +25,14 @@
             <label for = "idea-title">
               <strong><%=t("idea")%></strong>
               <small><%=t("idea_in_short")%></small></label>
-            <%= f.text_field :title, :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
+            <%= f.text_field :title, :value => @idea ? t("my_idea_is") : "", :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
           </div>
           <div id="idea-description-group" class="form-group inline">
             <label for = "idea-description">
               <strong> <%=t("description")%></strong>
               <small><%=t('breif_explaination')%></small>
             </label>
-            <%= f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30", :maxlength => "600"%>
+            <%= f.text_area :description, :value => @idea ? t("great_if") : "", :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30", :maxlength => "600"%>
             <p class="charsRemaining" style="padding-left: 144px;color:black;"></p>
             <div class="input_file">
               <%= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
@@ -45,7 +45,9 @@
               <small> <%=t("seperate_with_coma")%></small>
             </label>
             <%= render :partial => 'ideas/tag_editor', :locals => { :f => f }%>
-            <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "width:196px;"%>
+            <%@idea.current_id = nil if @idea%>
+            <%= f.collection_select :current_id, Current.all_except_default, :id, :title ,
+              {:include_blank=>"Hovedveje ..."}, :style => "width:196px;"%>
           </div>
 
           <div class="form-group inline">
