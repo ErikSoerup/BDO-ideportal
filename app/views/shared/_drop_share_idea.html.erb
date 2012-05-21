@@ -61,7 +61,7 @@
     <% unless current_page?("/")  || current_page?("/ideas")%>
       <a href="#" class="tab" onclick="jQuery('.body').toggle();changeContain();jQuery('.ui-autocomplete-input').addClass('input-text');">
         <span class="dn">Fortæl os din ide <br/>
-          <%= image_tag("up_arro2.png", :size => "40x40") %> <br/>
+          <%= image_tag("up_arro2.png", :size => "40x40", :style => "border:0;") %> <br/>
           <h3>Fik du lige en god ide?</h3></span> </a>
     <% end %>
   </div>

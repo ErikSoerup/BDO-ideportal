@@ -14,7 +14,7 @@ class CurrentsController < ApplicationController
   end
   
   make_resourceful do
-    actions :show#, :index
+    actions :show, :index
 
     before :show do
       @current_ideas = search_ideas(params.merge(:search => ['current', current_object.id]))
@@ -28,7 +28,9 @@ class CurrentsController < ApplicationController
   end
 
   def current_objects
-    @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
+    p "def current_objects"
+    @currrents ||= Current.all_except_default
+    #    @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
 
   def page_title

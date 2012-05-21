@@ -18,7 +18,7 @@
       = f.file_field :document, :size=>66
   .form-group.inline
     -unless defined?(current) && current.id
-      = f.collection_select :current_id, Current.all, :id, :title , {:include_blank=>'Hovedvej...'}, :style => "margin-left: 9px;border:medium none;border-radius:8px 8px 8px 8px;color:#888888;float:left;font:12px Helvetica;height:30px;padding:5px;width:225px;"
+      = f.collection_select :current_id, Current.active, :id, :title , {:include_blank=>'Hovedvej...'}, :style => "margin-left: 9px;border:medium none;border-radius:8px 8px 8px 8px;color:#888888;float:left;font:12px Helvetica;height:30px;padding:5px;width:225px;"
   #idea-tags-group.form-group.inline
     %label{:for => "tags"} Tags
     = render :partial => 'ideas/tag_editor', :locals => { :f => f }
