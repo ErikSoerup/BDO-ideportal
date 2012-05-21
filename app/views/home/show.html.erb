@@ -79,10 +79,14 @@
               <div class="plainwrap"></div>
             </div>
             <!--Top Bidragydere Panel ends -->
-            <div class="same" style="margin-left: 10px; text-align: center;">
+            <div style="clear:both"></div>
+            <div style="margin-left: 50px;">
 <%#= "Share My Idea" %>
-              <%= submit_tag 'Share My Idea', :class => "input-submit big", :onclick => "$('idea_form_submit').click();",
-                :style => "background-image: url('../images/form-submit-share-it.gif');float:left;margin:6px 0px 0px 30px;width:166px;height:31px;"%>
+              <br/>
+              <%= image_tag("de_original_230.png", :style => "border:0;", :size => "200x40", :onclick => "$('idea_form_submit').click();") %><br/>
+<%#= submit_tag 'Share My Idea', :class => "input-submit big",
+:onclick => "$('idea_form_submit').click();",
+:style => "background-image: url('../images/form-submit-share-it.gif');float:left;margin:6px 0px 0px 30px;width:166px;height:31px;"%>
             </div>
           </div>
 
