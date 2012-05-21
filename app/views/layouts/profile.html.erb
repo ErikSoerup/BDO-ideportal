@@ -73,7 +73,7 @@
 
     <!--Tab -->
   </head>
-  <body>
+  <body onload="<%if controller_name == 'profiles' and action_name == 'show'%> checkTabs() <%end%>">
     <div class="outer_wrap">
       <% if current_page?("/") %>
         <%= render :partial => "/home/home_box" %>
