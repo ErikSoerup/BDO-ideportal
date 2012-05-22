@@ -81,6 +81,10 @@
       <!--Tab Starts -->
       <ul class="tabs">
         <div style="display: none;" id="active_tabs">tab1</div>
+        <!--
+        <a href="#tab1" onclick="$('active_tabs').innerHTML = 'tab1';" id="link_tab1" style="display: none;">Ideer</a>
+        <li><%= link_to_remote "Ideer", :url => "#", :onclick => 'document.getElementById("link_tab1").click();' %></li>
+        -->
         <li><a href="#tab1" onclick="$('active_tabs').innerHTML = 'tab1';" id="link_tab1">Ideer</a></li>
         <li><a href="#tab2" onclick="$('active_tabs').innerHTML = 'tab2';" id="link_tab2">Kommentarer</a></li>
         <li><a href="#tab3" onclick="$('active_tabs').innerHTML = 'tab3';" id="link_tab3">Stemmer</a></li>
