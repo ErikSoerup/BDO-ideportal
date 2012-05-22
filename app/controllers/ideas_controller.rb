@@ -45,6 +45,7 @@ class IdeasController < ApplicationController
 
 
     after :create do
+      @body_class = params[:page].nil? ? 'home' : params[:page]
       if @idea.valid? && @idea.inventor
         if @idea.inventor.followers
           @current = Current.find(params[:idea][:current_id]) if !params[:idea][:current_id].blank?
@@ -100,6 +101,7 @@ class IdeasController < ApplicationController
     end
 
     response_for :create do |format|
+
       format.html do
         if @idea.inventor
           redirect_to idea_path(@idea)
@@ -121,7 +123,7 @@ class IdeasController < ApplicationController
     end
 
     response_for :create_fails do |format|
-      format.html { render :template => 'ideas/new' }
+      format.html { render :template => 'home/show' }
       format.js   { render :partial => 'new' }
       format.xml  { render :template => 'validation_errors' }
     end

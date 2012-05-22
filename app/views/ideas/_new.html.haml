@@ -65,15 +65,11 @@
 
     var onEditCallback = function(remaining){
       jQuery(this).siblings('.charsRemaining').text("Skriv kort. Du har kun :-" + remaining + " tegn");
-
-      if(remaining > 0){
-        jQuery(this).css('background-color', 'white');
-      }
     }
 
     var onLimitCallback = function(){
       alert("you exceed the limit of  character");
-      jQuery(this).css('background-color', 'white');
+      jQuery(this).css('background-color', '#FBE3E4');
     }
     
     jQuery('textarea[maxlength]').limitMaxlength({

@@ -8,16 +8,13 @@
     <!--Bottom Panel Starts -->
     <div class="plainwrap">
       <!--Header Portion Starts -->
-<%#*<div class="tab_headline" style="margin-bottom:6px;">%>
-<%#*<div class="fl"><strong>HER ER ET PAR IDEER. Hvad synes du om dem?</strong></div>%>
-<%#*</div>%>
       <!--Ideers Panel Starts -->
       <div class="plainwrap">
         <!--Hotte ideer Starts -->
         <div class="btmideer_block">
           <div class="plainwrap"><h2>Hotte Ideer</h2></div>
           <div class="ideer_outer">
-            <%= render :partial => 'idea', :collection => search_ideas(:search => 'hot', :page_size => 5) %>
+            <%= render :partial => 'home/idea', :collection => search_ideas(:search => 'hot', :page_size => 5) %>
             <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => "hot"), :class => 'flere'%></div>
           </div>
         </div>
@@ -25,7 +22,7 @@
         <div class="btmideer_block">
           <div class="plainwrap"><h2>Seneste Ideer</h2></div>
           <div class="ideer_outer">
-            <%= render :partial => 'idea', :collection => search_ideas(:search => 'recent', :page_size => 5) %>
+            <%= render :partial => 'home/idea', :collection => search_ideas(:search => 'recent', :page_size => 5) %>
             <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => "recent"), :class => 'flere'%></div>
           </div>
         </div>
@@ -33,7 +30,7 @@
         <div class="btmideer_block_last">
           <div class="plainwrap"><h2>Afdelings Ideer</h2></div>
           <div class="ideer_outer">
-            <%= render :partial => 'idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>5)%>
+            <%= render :partial => 'home/idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>5)%>
 
             <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'flere'%></div>
           </div>
@@ -56,7 +53,7 @@
           <div style="width: 60%; float: left;">
             <!--Form Stuff Starts -->
             <div class="form_wrap">
-              <%= render :partial => "new_idea" %>
+              <%= render :partial => "home/new_idea" %>
             </div>
             <!--Form Stuff Ends -->
           </div>
@@ -80,12 +77,8 @@
             <!--Top Bidragydere Panel ends -->
             <div style="clear:both"></div>
             <div style="margin-left: 52px;">
-<%#= "Share My Idea" %>
               <br/>
               <%= image_tag("de_original_230.png", :style => "border:0;cursor: pointer;", :size => "200x35", :onclick => "$('idea_form_submit').click();") %><br/>
-<%#= submit_tag 'Share My Idea', :class => "input-submit big",
-:onclick => "$('idea_form_submit').click();",
-:style => "background-image: url('../images/form-submit-share-it.gif');float:left;margin:6px 0px 0px 30px;width:166px;height:31px;"%>
             </div>
           </div>
 

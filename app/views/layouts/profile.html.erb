@@ -73,10 +73,11 @@
 
     <!--Tab -->
   </head>
-  <body onload="<%if controller_name == 'profiles' and action_name == 'show'%> checkTabs() <%end%>">
+ <!-- <body onload="<%if controller_name == 'profiles' and action_name == 'show'%> checkTabs() <%end%>">-->
+  <body>
     <div class="outer_wrap">
-      <% if current_page?("/") %>
-        <%= render :partial => "/home/home_box" %>
+      <% if current_page?("/") || current_page?("/ideas") %>
+        <%= render :partial => "home/home_box" %>
       <% end %>
       <div class="main_wrap">
         <!--Header Starts -->
