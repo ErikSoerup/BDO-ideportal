@@ -225,7 +225,7 @@ class IdeasController < ApplicationController
     @idea_follow=IdeaFollower.find_by_user_id_and_idea_id(current_user.id,params[:id])
     @idea_follow.destroy unless @idea_follow.nil?
     flash[:notice] = "Your fellowship of this idea has been removed"
-    redirect_to ideas_path
+    redirect_to :back
   end
 
   def index
