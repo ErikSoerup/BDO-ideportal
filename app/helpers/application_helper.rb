@@ -50,7 +50,7 @@ module ApplicationHelper
     if idea.status == "new"
       "Nye"
     elsif idea.status == "under review"
-      "Fortæl os mere"
+      "Behandlet"
     elsif idea.status == "coming soon"
       "Kommer snart"
     elsif idea.status == "launched"

@@ -28,7 +28,6 @@ class CurrentsController < ApplicationController
   end
 
   def current_objects
-    p "def current_objects"
     @currrents ||= Current.all_except_default
     #    @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
@@ -68,7 +67,6 @@ class CurrentsController < ApplicationController
       flash[:notice] = "You have successfully followed the idea"
       redirect_to params[:index] ? :back : current_path(@current)
       Delayed::Job.enqueue NotificationCurrentJob.new(current_user, @current)
-   
     rescue
       flash[:notice] = "You have successfully followed the idea"
       redirect_to params[:index] ? :back : current_path(@current)
