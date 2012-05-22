@@ -168,11 +168,12 @@ class IdeasController < ApplicationController
       IdeaFollower.create!(:user_id => current_user.id, :idea_id => @idea.id)
       flash[:notice] = "You have successfully followed the idea"
       Delayed::Job.enqueue IdeaFollowerNotificationJob.new(current_user, @idea)
-      redirect_to idea_path(@idea)
+      redirect_to :back
       #      UserMailr.deliver_notification_comments()
     rescue Exception => e
       flash[:notice] = "You have successfully followed the idea"
-      redirect_to idea_path(@idea)
+      #      redirect_to idea_path(@idea)
+      redirect_to :back
     end
   end
 

@@ -21,6 +21,9 @@
 
     <div class="plainwrap" style="padding:10px 0;">
       <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1">
+        <tr><td colspan="7"></td><td colspan="2">
+            <%= will_paginate @users, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+          </td></tr>
         <tr class="uindex_tbg">
           <td align="left" valign="middle"><h3>Følger</h3></td>
           <td align="left" valign="middle"><h3>Følges af</h3>
@@ -98,10 +101,10 @@
             <td align="left" valign="middle"><% unless user.votes.empty?  %><%= user.votes.size %><% else %>&nbsp;<% end %></td>
 
           </tr>
-
-
         <% end %>
-
+        <tr><td colspan="7"></td><td colspan="2">
+            <%= will_paginate @users, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+          </td></tr>
 
       </table>
     </div>

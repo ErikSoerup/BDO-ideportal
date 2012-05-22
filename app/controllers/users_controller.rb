@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   
   def index
     @body_class='advance'
-    page = 1 || params[:page]
+    page = params[:page] ? params[:page] : 1
     
     if params[:val]
       @users=User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:val]}%"])
