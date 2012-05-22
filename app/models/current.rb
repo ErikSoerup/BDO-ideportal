@@ -28,7 +28,11 @@ class Current < ActiveRecord::Base
   end
 
   def self.active
-    Current.find(:all, :conditions => ["active = ?", true])
+    currs = Current.find(:all, :conditions => ["active = ?", true], :order => "id DESC")
+    c = currs.pop
+    currs = currs.reverse
+    currs << c
+    return currs
   end
 
   def closed_or_expired?
