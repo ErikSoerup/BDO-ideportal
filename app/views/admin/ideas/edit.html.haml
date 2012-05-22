@@ -20,7 +20,8 @@
               .warning.info Because the user did not complete the login process, this idea will be permanently hidden.
           .form-group.inline
             = f.label :current_id, "Current"
-            = f.select :current_id, Current.find(:all).map{|x|[x.title,x.id]}
+            = f.collection_select :current_id, Current.all, :id, :title , {:include_blank=>@idea.current_id == -1 ? "ikke specificeret" : 'Hovedvej...'}
+            /= f.select :current_id, Current.find(:all).map{|x|[x.title,x.id]}
           .form-group.inline
             = f.label :status, "Status"
             = f.select :status, [["Nye","new"],["Fortæl os mere", "under review"],["Kommer snart","coming soon"],["Implementeret","launched"]]

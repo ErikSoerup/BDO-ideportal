@@ -2,7 +2,7 @@ module Admin
   class IdeasController < AdminController
     before_filter :set_body_class
     after_filter :expire_cloud_cache, :only => [:update, :create, :destroy]
-    
+    param_accessible :idea => [:title, :description, :tag_names, :current_id, :document ]
     make_resourceful do
       actions :index, :edit, :update
       
@@ -25,6 +25,13 @@ module Admin
         if !params[:admin_comment].blank? && !params[:admin_comment][:text].blank?
           @admin_comment = @idea.admin_comments.build(params[:admin_comment])
           @admin_comment.author = current_user
+        end
+      end
+
+      after :update do
+        if params[:idea][:current_id] == ""
+          @idea.current_id = "-1"
+          @idea.save
         end
       end
     
@@ -78,7 +85,7 @@ module Admin
     include ResourceAdmin
     include BucketHelper
     
-  protected
+    protected
 
     def default_sort
       if search_pending_moderation?
@@ -122,7 +129,7 @@ module Admin
       @body_class = 'ideas'
     end
     
-  private
+    private
     
     def expire_cloud_cache
       expire_fragment :fragment => 'idea_cloud', :controller => '/home', :action => 'show'
