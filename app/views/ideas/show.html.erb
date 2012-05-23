@@ -149,7 +149,7 @@
   <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
                 <%= file_field_tag "comment_documents[document#{1}]", :size=>57, :style => "margin-top:15px;"%>
               </div>
-              <span onclick="add_a_file_field()">Add more documents</span>
+              <span onclick="add_a_file_field()" style="cursor: pointer;">Add more documents</span>
               <div class="clear" stle="clear:both;"></div>
             </div>
             <div class="form-submit inline">

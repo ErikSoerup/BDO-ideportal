@@ -242,7 +242,7 @@
                       <div class="fl"><%= image_tag profile_picture(comment.author, :small)%></div>
                       <div class="download_link">
 
-                        <span style="color: #0F645D;font-weight: bold; cursor: pointer;"
+                        <span style="<%= !comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; cursor: pointer;' : 'color: #0F645D;font-weight: bold;'%>"
                               onclick="<%if !comment.comment_documents.empty?%>
                                 if($('details_<%=comment.id%>').style.display == 'none'){
                                 $('attachments_<%=comment.id%>').style.display = 'none';
