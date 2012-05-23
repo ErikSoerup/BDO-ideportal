@@ -240,12 +240,33 @@
                     <div class="commentator_wrap_green"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
                     <div class="plainwrap">
                       <div class="fl"><%= image_tag profile_picture(comment.author, :small)%></div>
-                      <div class="download_link"><%= link_to t("download"), comment.document.url, :class => "bold_link", :target => "_blank" %></div>
+                      <div class="download_link">
+
+                        <span style="color: #0F645D;font-weight: bold; cursor: pointer;"
+                              onclick="<%if !comment.comment_documents.empty?%>
+                                if($('details_<%=comment.id%>').style.display == 'none'){
+                                $('attachments_<%=comment.id%>').style.display = 'none';
+                                $('details_<%=comment.id%>').style.display = 'block';}
+                                else{
+                                $('details_<%=comment.id%>').style.display = 'none';
+                                $('attachments_<%=comment.id%>').style.display = 'block';}<%end%> ">
+                          <%= t("download") %>(<%=comment.comment_documents.size%>)</span>
+                      </div>
                     </div>
                   </div>
                   <!--Commentator Ends -->
                   <!--Posted Comments Starts -->
-                  <div class="comments_wrap_green">
+                  <div class="comments_wrap_green" id="<%= 'attachments_'+comment.id.to_s %>" style="display: none;">
+                    <%if !comment.comment_documents.empty?%>
+                      <% comment.comment_documents.each do |cd|%>
+      <%#= link_to t("download")+"(#{comment.comment_documents.size})", "#",
+      :class => "bold_link", :target => "_blank" %>
+                        <li style="width: 30%; float:left; list-style-type: none;"><%= cd.document_file_name%> &nbsp;
+                          <%= link_to image_tag("download.png", :border => "0"), cd.document.url  if cd.document.url != "/documents/original/missing.png" %></li>
+                      <%end%>
+                    <%end%>
+                  </div>
+                  <div class="comments_wrap_green" id="<%= 'details_'+comment.id.to_s %>">
                     <!--Content Head Starts -->
                     <div class="p_content_head">
                       <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}"%> <%= t("ago")%> </strong> som svar på <%= link_to h(comment.idea.title), idea_path(comment.idea)%></div>

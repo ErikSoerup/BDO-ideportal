@@ -42,8 +42,6 @@ class IdeasController < ApplicationController
       end
     end
 
-
-
     after :create do
       @body_class = params[:page].nil? ? 'home' : params[:page]
       if @idea.valid? && @idea.inventor
@@ -157,7 +155,7 @@ class IdeasController < ApplicationController
   end
 
   def destroy_idea
-    @idea=Idea.find(params[:id])
+    @idea = Idea.find(params[:id])
     @idea.destroy
     render :layout => false
   end

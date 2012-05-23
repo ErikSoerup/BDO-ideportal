@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 
   before_filter :owner_required, :only => :update
 
-  param_accessible :comment => [:text, :document]
+  param_accessible :comment => [:text, :document], :comment_document => [:document]
 
   layout :compute_layout
 
@@ -22,9 +22,19 @@ class CommentsController < ApplicationController
     belongs_to :idea
 
     before :create do
+      @comment_documents = []
       @comment.author = current_user
       @comment.ip = request.remote_ip
       @comment.user_agent = request.user_agent
+      params[:comment_documents].each do |cd|
+        params[:comment_document] = {}
+        params[:comment_document][:document] = []
+        params[:comment_document][:document] = cd[1]
+        comment_doc = CommentDocument.new(params[:comment_document])
+        comment_doc.save
+        @comment_documents << comment_doc
+      end
+      @comment.comment_documents = @comment_documents
     end
 
     response_for :create do |format|
@@ -71,13 +81,13 @@ class CommentsController < ApplicationController
     end
   end
 
-
   def destroy_comment
     @idea=Idea.find(params[:value])
     @comment=Comment.find(params[:id])
     @comment.destroy
     render :layout => false
   end
+
   def current_objects
     @comments ||= begin
       query_opts = {

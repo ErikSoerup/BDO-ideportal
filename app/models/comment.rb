@@ -1,11 +1,11 @@
 class Comment < ActiveRecord::Base
   acts_as_authorizable
 
-  has_attached_file :document,
-      :storage => :s3,
-      :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-      :path => ":attachment/comment/:id/:style.:extension"
-
+#  has_attached_file :document,
+#    :storage => :s3,
+#    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+#    :path => ":attachment/comment/:id/:style.:extension"
+  has_many :comment_documents
   belongs_to :idea
   belongs_to :author, :class_name => 'User'
   def comment_type

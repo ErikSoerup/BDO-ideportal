@@ -12,29 +12,30 @@
           <% end %>
         </div>
         <div class="download">
-          <%=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url  if idea_comment.document.url != "/documents/original/missing.png" %>
+          <%#=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url
+          if idea_comment.document.url != "/documents/original/missing.png" %>
+          </div>
         </div>
       </div>
-    </div>
-    <!--Commentator Ends -->
-    <!--Posted Comments Starts -->
-    <div class="comments_wrap_green" style="width:500px;">
-      <!--Content Head Starts -->
-      <div class="p_content_head">
-        <div class="fl">Sendt <strong><%="#{time_ago_in_words(idea_comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(idea_comment.idea.title), idea_path(idea_comment.idea), :class => "bold_link"%></div>
-        <% if current_user.roles.collect(&:name).include?("admin") %>
-          <div class="fr"> <%= link_to_remote "Delete Kommentar", :update => "comment-#{idea_comment.id}", :url => destroy_comment_comment_path(idea_comment.id, :value => idea.id), :method => :delete %></div>
-        <% end %>
+      <!--Commentator Ends -->
+      <!--Posted Comments Starts -->
+      <div class="comments_wrap_green" style="width:500px;">
+        <!--Content Head Starts -->
+        <div class="p_content_head">
+          <div class="fl">Sendt <strong><%="#{time_ago_in_words(idea_comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(idea_comment.idea.title), idea_path(idea_comment.idea), :class => "bold_link"%></div>
+          <% if current_user.roles.collect(&:name).include?("admin") %>
+            <div class="fr"> <%= link_to_remote "Delete Kommentar", :update => "comment-#{idea_comment.id}", :url => destroy_comment_comment_path(idea_comment.id, :value => idea.id), :method => :delete %></div>
+          <% end %>
+        </div>
+        <!--Content Head Ends -->
+        <!--Posted Content Starts -->
+        <div class="plainwrap">
+          <p><%= user_formatted_text idea_comment.text%> </p>
+        </div>
+        <!--Posted Content Ends -->
       </div>
-      <!--Content Head Ends -->
-      <!--Posted Content Starts -->
-      <div class="plainwrap">
-        <p><%= user_formatted_text idea_comment.text%> </p>
-      </div>
-      <!--Posted Content Ends -->
+      <!--Posted Comments Ends -->
     </div>
-    <!--Posted Comments Ends -->
   </div>
-</div>
-<!--Breaker Starts -->
-<div class="b_divider" id="divider-<%= idea_comment.id %>"></div>
+  <!--Breaker Starts -->
+  <div class="b_divider" id="divider-<%= idea_comment.id %>"></div>
