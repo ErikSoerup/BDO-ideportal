@@ -2,7 +2,7 @@
   <div id="comment-<%=idea_comment.id%>">
     <!--Commentator Starts -->
     <div class="commentator_panel">
-      <div class="commentator_wrap_green"> <%= link_to h(idea_comment.author.name), profile_path(idea_comment.author), :class=> "bold_link"%></div>
+      <div class="commentator_wrap_green"><%= link_to h(idea_comment.author.name), profile_path(idea_comment.author), :class=> "bold_link"%></div>
       <div class="plainwrap">
         <div class="fl">
           <%if show_avatar%>
@@ -11,31 +11,47 @@
             </div>
           <% end %>
         </div>
-        <div class="download">
-          <%#=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url
-          if idea_comment.document.url != "/documents/original/missing.png" %>
-          </div>
-        </div>
+<%#*<div class="download">%>
+
+<%#=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url
+if idea_comment.document.url != "/documents/original/missing.png" %>
+<%#*</div>%>
       </div>
-      <!--Commentator Ends -->
-      <!--Posted Comments Starts -->
-      <div class="comments_wrap_green" style="width:500px;">
-        <!--Content Head Starts -->
-        <div class="p_content_head">
-          <div class="fl">Sendt <strong><%="#{time_ago_in_words(idea_comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(idea_comment.idea.title), idea_path(idea_comment.idea), :class => "bold_link"%></div>
-          <% if current_user.roles.collect(&:name).include?("admin") %>
-            <div class="fr"> <%= link_to_remote "Delete Kommentar", :update => "comment-#{idea_comment.id}", :url => destroy_comment_comment_path(idea_comment.id, :value => idea.id), :method => :delete %></div>
-          <% end %>
-        </div>
-        <!--Content Head Ends -->
-        <!--Posted Content Starts -->
-        <div class="plainwrap">
-          <p><%= user_formatted_text idea_comment.text%> </p>
-        </div>
-        <!--Posted Content Ends -->
-      </div>
-      <!--Posted Comments Ends -->
     </div>
+    <!--Commentator Ends -->
+    <!--Posted Comments Starts -->
+    <div class="comments_wrap_green" style="width:500px;">
+      <!--Content Head Starts -->
+      <div class="p_content_head">
+        <div class="fl">Sendt <strong><%="#{time_ago_in_words(idea_comment.created_at)}  #{t("ago")}"%></strong> som svar på <%= link_to h(idea_comment.idea.title), idea_path(idea_comment.idea), :class => "bold_link"%></div>
+        <% if current_user.roles.collect(&:name).include?("admin") %>
+          <div class="fr"> <%= link_to_remote "Delete Kommentar", :update => "comment-#{idea_comment.id}", :url => destroy_comment_comment_path(idea_comment.id, :value => idea.id), :method => :delete %></div>
+        <% end %>
+      </div>
+      <!--Content Head Ends -->
+      <!--Posted Content Starts -->
+      <div class="plainwrap" style="min-height:50px; margin-bottom:10px;">
+        <p><%= user_formatted_text idea_comment.text%> </p>
+      </div>
+      <!--Posted Content Ends -->
+      <%= "Vedhæftninger" %>(<%= idea_comment.comment_documents.size%>)<span style="<%= !idea_comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
+                                                       onclick="<%if !idea_comment.comment_documents.empty?%>
+                                                         if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+                                                         if($('attachments_<%=idea_comment.id%>').style.display == 'none'){
+                                                         $('attachments_<%=idea_comment.id%>').style.display = 'block';}
+                                                         else{
+                                                         $('attachments_<%=idea_comment.id%>').style.display = 'none';}<%end%> "><%if !idea_comment.comment_documents.empty?%>Vis<%end%></span>
+      <div id="<%= 'attachments_'+idea_comment.id.to_s %>" style="display: none; padding:5px;">
+        <%if !idea_comment.comment_documents.empty?%>
+          <% idea_comment.comment_documents.each do |cd|%>
+            <li style="width: 30%; float:left; list-style-type: none;"><%= cd.document_file_name%> &nbsp;
+              <%= link_to image_tag("download.png", :border => "0"), cd.document.url  if cd.document.url != "/documents/original/missing.png" %></li>
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+    <!--Posted Comments Ends -->
   </div>
-  <!--Breaker Starts -->
-  <div class="b_divider" id="divider-<%= idea_comment.id %>"></div>
+</div>
+<!--Breaker Starts -->
+<div class="b_divider" id="divider-<%= idea_comment.id %>"></div>
