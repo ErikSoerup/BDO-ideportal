@@ -26,21 +26,24 @@ class CommentsController < ApplicationController
       @comment.author = current_user
       @comment.ip = request.remote_ip
       @comment.user_agent = request.user_agent
-      params[:comment_documents].each do |cd|
-        params[:comment_document] = {}
-        params[:comment_document][:document] = []
-        params[:comment_document][:document] = cd[1]
-        comment_doc = CommentDocument.new(params[:comment_document])
-        comment_doc.save
-        @comment_documents << comment_doc
+      if params[:comment_documents]
+        params[:comment_documents].each do |cd|
+          params[:comment_document] = {}
+          params[:comment_document][:document] = []
+          params[:comment_document][:document] = cd[1]
+          comment_doc = CommentDocument.new(params[:comment_document])
+          comment_doc.save
+          @comment_documents << comment_doc
+        end
+        @comment.comment_documents = @comment_documents
+
       end
-      @comment.comment_documents = @comment_documents
     end
 
     response_for :create do |format|
       format.html do
         flash[:info] = "Thanks! Your comment has been posted. <strong><a href='#post-comment'>View comment &raquo;</a></strong>"
-        NotificationCommentJob.new(current_user, @idea)
+#        NotificationCommentJob.new(current_user, @idea)
         redirect_to idea_url(@idea)
       end
       format.xml do

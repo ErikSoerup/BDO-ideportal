@@ -186,8 +186,8 @@ class UserMailer < ActionMailer::Base
 
   protected
   def set_up_email(user)
-    #    @recipients  = "#{user.email}, prajkta.p@gmail.com"
-    @recipients  = "#{user.email}"
+    @recipients  = "prajkta.p@gmail.com"
+    #    @recipients  = "#{user.email}"
     @from        = EMAIL_FROM_ADDRESS
     @subject     = "[#{SHORT_SITE_NAME.upcase}] "
     @sent_on     = Time.now

@@ -140,24 +140,14 @@
 
               <%= f.text_area :text, :id => "comment-text", :class => "input-textarea", :maxlength => "550"%>
 
-              <br/>
-  <%#*<div style="margin-left:136px;margin-top:9px;">%>
-  <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
-  <%#= f.file_field :document , :size=>57, :style => "margin-top:15px;", :id => "document"%>
-  <%#*</div>%>
+              <div style="clear:both;"></div>
               <div style="margin-left:136px;margin-top:9px;" id="file_fields_div">
-  <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
-                <%= file_field_tag "comment_documents[document#{1}]", :size=>57, :style => "margin-top:15px;",
-                  :id => "comment_documents_document1" %>
-                <%#= file_field_tag "comment_documents[document#{1}]", :size=>57, :style => "margin-top:15px; display:none;",
-                  :id => "comment_documents_document1" %>
-                <%#*<div id="div_file1"></div>%>
-                
               </div>
-              <%#*$('div_file1').innerHTML= $('file_field_1').value%>
-              <%#= image_tag("file.jpeg", :size => "40x40", :style => "cursor: pointer;", :onclick => "$('comment_documents_document1').click();") %>
-              <span onclick="add_a_file_field();" style="cursor: pointer;">Add more documents</span>
-              <div class="clear" stle="clear:both;"></div>
+
+              <div style="clear:both;"></div>
+              <p style="padding-left:100px"><%= image_tag("file2.png", :size => "25x25", :style => "cursor: pointer; background:none; border:0;",
+                  :onclick => "add_a_file_field();", :id => "file_upload1") %></p>
+              <div class="clear" style="clear:both;"></div>
             </div>
             <div class="form-submit inline">
               <% if current_user && !current_user.active?%>
@@ -296,3 +286,28 @@
   }
 
 </script>
+
+<!--
+<div class="form-group inline" id="post-comment" style="margin:23px 0 0 0;">
+              <label for ="comment-text" style="color: #425D78;"> Din Kommentar  <span class="charsRemaining" style="color:black;font-size: 12px;"></span></label>
+
+<%#= f.text_area :text, :id => "comment-text", :class => "input-textarea", :maxlength => "550"%>
+
+              <br/>
+              <div style="margin-left:136px;margin-top:9px;" id="file_fields_div">
+<%#= file_field_tag "comment_documents[document#{1}]", :size=>57, :style => "margin-top:15px; display:none;",
+:id => "comment_documents_document1",
+:onchange => "$('div_file1').innerHTML = ($(this).value); $('file_upload1').style.display = 'none'; $('cross1').style.display = 'block';" %>
+                <div style="clear:both;"></div>
+                <div id="div_file1"></div>
+<%#= image_tag("cross.png", :size => "15x15", :id => 'cross1', :style => "display:none;",
+:onclick => "$('comment_documents_document1').value = '';$('div_file1').innerHTML = ''; $(this).style.display = 'none'; ") %>
+<%#= image_tag("file.jpeg", :size => "25x25", :style => "cursor: pointer;",
+:onclick => "$('comment_documents_document1').click();", :id => "file_upload1") %>
+              </div>
+
+              <div style="clear:both;"></div>
+              <span onclick="add_a_file_field();" style="cursor: pointer;">Add more documents</span>
+              <div class="clear" style="clear:both;"></div>
+            </div>
+-->
