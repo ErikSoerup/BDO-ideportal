@@ -96,17 +96,17 @@
                       </div>
                       <!--Posted Content Ends -->
                       <%= "Vedhæftninger" %>(<%= comment.comment_documents.size%>)<span style="<%= !comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
-                                                                       onclick="<%if !comment.comment_documents.empty?%>
-                                                                         if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
-                                                                         if($('attachments_<%=comment.id%>').style.display == 'none'){
-                                                                         $('attachments_<%=comment.id%>').style.display = 'block';}
-                                                                         else{
-                                                                         $('attachments_<%=comment.id%>').style.display = 'none';}<%end%> "><%if !comment.comment_documents.empty?%>Vis<%end%></span>
+                                                                  onclick="<%if !comment.comment_documents.empty?%>
+                                                                    if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+                                                                    if($('attachments_<%=comment.id%>').style.display == 'none'){
+                                                                    $('attachments_<%=comment.id%>').style.display = 'block';}
+                                                                    else{
+                                                                    $('attachments_<%=comment.id%>').style.display = 'none';}<%end%> "><%if !comment.comment_documents.empty?%>Vis<%end%></span>
                       <div id="<%= 'attachments_'+comment.id.to_s %>" style="display: none; padding:5px;">
                         <%if !comment.comment_documents.empty?%>
                           <% comment.comment_documents.each do |cd|%>
-                            <li style="width: 30%; float:left; list-style-type: none;"><%= cd.document_file_name%> &nbsp;
-                              <%= link_to image_tag("download.png", :border => "0"), cd.document.url  if cd.document.url != "/documents/original/missing.png" %></li>
+                            <li style="width: 30%; float:left; list-style-type: none;">
+                              <%= link_to cd.document_file_name, cd.document.url if cd.document.url != "/documents/original/missing.png"%></li>
                           <%end%>
                         <%end%>
                       </div>

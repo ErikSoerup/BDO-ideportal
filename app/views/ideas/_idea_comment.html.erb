@@ -44,8 +44,8 @@ if idea_comment.document.url != "/documents/original/missing.png" %>
       <div id="<%= 'attachments_'+idea_comment.id.to_s %>" style="display: none; padding:5px;">
         <%if !idea_comment.comment_documents.empty?%>
           <% idea_comment.comment_documents.each do |cd|%>
-            <li style="width: 30%; float:left; list-style-type: none;"><%= cd.document_file_name%> &nbsp;
-              <%= link_to image_tag("download.png", :border => "0"), cd.document.url  if cd.document.url != "/documents/original/missing.png" %></li>
+            <li style="width: 30%; float:left; list-style-type: none;">
+                            <%= link_to cd.document_file_name, cd.document.url if cd.document.url != "/documents/original/missing.png"%></li>
           <%end%>
         <%end%>
       </div>
