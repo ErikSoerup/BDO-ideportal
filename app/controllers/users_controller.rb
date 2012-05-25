@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :get_user, :only => [:following, :followers]
 
   layout 'profile'
-  
+
   def compute_layout
     if action_name == "index" || action_name == "search_user" || action_name == "edit"
       'profile'
@@ -14,16 +14,17 @@ class UsersController < ApplicationController
       'application'
     end
   end
+
   def index
     @body_class='advance'
-    page = 1 || params[:page]
-    
+    page = params[:page] ? params[:page] : 1
+
     if params[:val]
       @users=User.find_top_contributors(:all, :conditions => ['name like ?', "#{params[:val]}%"])
-    elsif params[:value] 
+    elsif params[:value]
       @users=User.find(:all, :conditions =>"recent_contribution_points is not NULL and state='active' and (select count(*) from roles_users where roles_users.user_id = users.id) = 0", :order => "recent_contribution_points DESC")
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
-      
+
       @users=User.find_top_contributors(:all, :order=>"users.name ASC")
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
       @users=User.find_top_contributors(:all, :order=>"users.name DESC")
@@ -46,16 +47,20 @@ class UsersController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "up"
       @users=User.find_top_contributors(:all).sort{|x,y| x.votes.size <=> y.votes.size}
     elsif params[:name] == "comment" && params[:arrow] == "down"
-      @users=User.find_top_contributors(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+      @users=User.find_top_contributors(:all).sort{|x,y| y.votes.size <=> x.votes.size}
     else
       @users = User.find_top_contributors(true)
     end
-    @users=@users.paginate :page => page unless @users.nil?
+    begin
+      @users.delete(User.find(1)) if @users.include?(User.find(1))
+    rescue Exception => e
+    end
+    @users = @users.paginate :page => page unless @users.nil?
   end
 
   def search_user
-    @users= User.find(:all, :conditions => ['name like ?', "#{params[:search]}%"])
-    @users=@users.paginate :page => params[:page] unless @users.nil?
+    @users= User.find(:all, :conditions => ['LOWER(name) like ? and state = ?', "#{params[:search].downcase}%", "active"])
+    @users = @users.paginate :page => params[:page] unless @users.nil?
   end
 
   def new
@@ -76,22 +81,21 @@ class UsersController < ApplicationController
     end
 
   end
-  
-  
+
   def current_currents
     @current_ideas = current_user.current_followers.collect(&:current)
     respond_to do |format|
       format.js { render :layout=>false }
     end
   end
-  
+
   def follow_users
     @users=current_user.followers.paginate(:page => params[:page])
     respond_to do |format|
       format.js { render :layout=>false }
     end
   end
-  
+
   def create
     cookies.delete :auth_token
     new_user_from_params
@@ -121,11 +125,18 @@ class UsersController < ApplicationController
   end
 
   def follow
-    @following = User.find(params[:id])
-    if @following
-      current_user.follow!(@following)
-      flash[:info] = "You are now following #{@following.name}"
-      redirect_to profile_url(@following)
+    begin
+      @following = User.find(params[:id])
+      if @following
+        current_user.follow!(@following)
+        flash[:info] = "You are now following #{@following.name}"
+        redirect_to params[:index] ? :back : profile_url(@following)
+      end
+      Delayed::Job.enqueue UserFollowerNotificationJob.new(current_user, @following)
+      #      UserMailr.deliver_notification_comments()
+    rescue Exception => e
+      flash[:notice] = "You have successfully followed the idea"
+      redirect_to params[:index] ? :back : profile_url(@following)
     end
   end
 
@@ -134,18 +145,18 @@ class UsersController < ApplicationController
     if @unfollow
       current_user.unfollow!(@unfollow)
       flash[:info] = "You are now unfollowing #{@unfollow.name}"
-      redirect_to profile_url(current_user)
+      redirect_to params[:index] ? :back : profile_url(@unfollow)
     end
   end
 
   def following
     @show_links = true
-    
+
     if params[:val]
       @users=@user.following.find_all { |emp| emp.name.first == params[:val].to_s }
-      
+
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
-      
+
       @users=@user.following(:all, :order=>"users.name ASC")
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
       @users=@user.following(:all, :order=>"users.name DESC")
@@ -153,7 +164,7 @@ class UsersController < ApplicationController
       @users=@user.following(:all).sort{|x,y| x.department.name <=> y.department.name}
     elsif params[:name] == "afeld" && params[:arrow] == "down"
       @users=@user.following(:all).sort{|x,y| y.department.name <=> x.department.name}
-     elsif params[:name] == "score" && params[:arrow] == "up"
+    elsif params[:name] == "score" && params[:arrow] == "up"
       @users=@user.following(:all).sort{|x,y| y.contribution_points <=> x.contribution_points}
     elsif params[:name] == "score" && params[:arrow] == "down"
       @users=@user.following(:all).sort{|x,y| x.contribution_points <=> y.contribution_points}
@@ -168,7 +179,7 @@ class UsersController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "up"
       @users=@user.following(:all).sort{|x,y| x.votes.size <=> y.votes.size}
     elsif params[:name] == "comment" && params[:arrow] == "down"
-      @users=@user.following(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+      @users=@user.following(:all).sort{|x,y| y.votes.size <=> x.votes.size}
     else
       @users = @user.following.find(:all)
     end
@@ -176,12 +187,12 @@ class UsersController < ApplicationController
   end
 
   def followers
-    
+
     if params[:val]
       @users=@user.followers.find_all { |emp| emp.name.first == params[:val].to_s }
-      
+
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
-      
+
       @users=@user.followers(:all, :order=>"users.name ASC")
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
       @users=@user.followers(:all, :order=>"users.name DESC")
@@ -204,12 +215,12 @@ class UsersController < ApplicationController
     elsif params[:name] == "comment" && params[:arrow] == "up"
       @users=@user.followers(:all).sort{|x,y| x.votes.size <=> y.votes.size}
     elsif params[:name] == "comment" && params[:arrow] == "down"
-      @users=@user.followers(:all).sort{|x,y| y.votes.size <=> x.votes.size}  
+      @users=@user.followers(:all).sort{|x,y| y.votes.size <=> x.votes.size}
     else
       @users = @user.followers.find(:all)
     end
-    
-    
+
+
     @users = @user.followers.paginate :page=> @page , :per_page=>10
     render :following
   end
@@ -241,7 +252,7 @@ class UsersController < ApplicationController
       end
     end
     render :action => 'forgot_password'
-  end   
+  end
 
   def new_password
     if log_in_with_activation_code

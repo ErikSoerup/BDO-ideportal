@@ -10,7 +10,7 @@
       <div class="yellow_wrap" style="height:auto;">
       <% else %>
         <div class="blue_wrap" style="height:auto;">
-        <% end %>  
+        <% end %>
         <!--stem Stuff Starts -->
         <div class="stem" id="vote-<%= idea.id %>">
 
@@ -62,7 +62,7 @@
           <div class="d_panel_commentator_big" style="height:auto;">
             <div class="fl"><img src="/images/comment-icon.gif" alt="" /><%= link_to "#{t('menu.comments')} #{"(#{idea.comment_count})" }", idea_path(idea, :anchor => 'comments', :title_in_url => false)%></div>
             <div class="tag_container">
-              <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
+              <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div>
               <div class="tag_container_inner">
                 <% unless idea.tags.empty?%>
                   <% idea.tags.each_with_index do |tag, ctr|%>

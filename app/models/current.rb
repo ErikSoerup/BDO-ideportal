@@ -22,11 +22,26 @@ class Current < ActiveRecord::Base
   SUGESSIONS_ID = 6 #depends on the DB record id
 
   def self.all_except_default
+<<<<<<< HEAD
     self.all.select do |current|
+=======
+    self.active.select do |current|
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
       current.id != DEFAULT_CURRENT_ID
     end
   end
 
+<<<<<<< HEAD
+=======
+  def self.active
+    currs = Current.find(:all, :conditions => ["active = ?", true], :order => "id DESC")
+    c = currs.pop
+    currs = currs.reverse
+    currs << c
+    return currs
+  end
+
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
   def closed_or_expired?
     if closed? || expired?
       self.closed = true

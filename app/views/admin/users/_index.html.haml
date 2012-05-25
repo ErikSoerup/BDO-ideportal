@@ -21,7 +21,7 @@
 
       %td
         -if user.department_id?
-          =h(user.department.try(:name))
+          =h(user.department.name)
         -else
           Not set
       %td

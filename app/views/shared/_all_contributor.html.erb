@@ -1,16 +1,4 @@
-<div class="top_bidragydere" style="max-height: 365px;">
-  <div class="plainwrap"><h3 style="margin-left:15px;float:left;width:auto;font-size: 13px;">Top Bidragydere</h3>
-    <a class="flere" href="/user/index">Flere</a>
-  </div>
-  <div class="top_bid_inner" style="max-height:292px;">
-    <%= render :partial => 'shared/home_contributor',
-      :collection => User.find_top_contributors(true, :limit => 10),
-      :locals => { :points_method => :recent_contribution_points }%>
-    <!--Single Row1 Starts -->
-
-
-
-    <!--Single Row5 Ends -->
-  </div>
-  <div class="plainwrap"></div>
-</div>
+<%= render :partial => 'shared/home_contributor',
+  :collection => User.find_top_contributors(true, :limit => 10),
+  :locals => { :points_method => :recent_contribution_points }%>
+<div class="plainwrap"></div>

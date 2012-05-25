@@ -17,7 +17,11 @@ class Idea < ActiveRecord::Base
     end
   end
 
+<<<<<<< HEAD
   
+=======
+  named_scope :active, :conditions => {:hidden => false, 'users.state' => 'active' }, :include => :inventor, :order => "ideas.created_at DESC"
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
   
   has_many :admin_comments, :order => 'admin_comments.created_at', :dependent => :destroy
 
@@ -41,7 +45,11 @@ class Idea < ActiveRecord::Base
     end
     has_many :idea_followers
     has_and_belongs_to_many :subscribers, :join_table => 'ideas_subscribers', :class_name => 'User'
+<<<<<<< HEAD
     named_scope :active, :conditions => {:hidden => false, 'users.state' => 'active' }, :include => :inventor
+=======
+
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
 
 
     validates_presence_of :title, :description

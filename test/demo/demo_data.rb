@@ -40,7 +40,11 @@ def create_idea(factor, title, desc)
     :title => title,
     :description => desc,
     :rating => (factor / (rand ** 2.5 * 100 + 1)).round + 1,
+<<<<<<< HEAD
     :ip => 'bdo.heroku.com',
+=======
+    :ip => 'localhost',
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
     :user_agent => 'demo data loader',
     :tags => tags)
 end

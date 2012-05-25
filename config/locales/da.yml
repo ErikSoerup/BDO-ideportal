@@ -23,7 +23,11 @@ da:
    para5: Du kan ikke regne med, at din ide bliver gennemført, selv om der er stor opbakning til den. Realiseringen af ideen afhænger af flere forhold, herunder hvordan den passer ind i den overordnede strategi for BDO Public.
    heading6: Vær konstruktiv
    para6: Ideportalens fokus er at fremme ideer, der understøtter vækststrategien. Det er ikke en brokkasse.
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
   menu:
     following: følgende
     about: Om ideportalen
@@ -91,7 +95,11 @@ da:
   by: af
   flag_as_inappropriate: Marker som upassende
   here_are_some_idea: HER ER ET PAR IDEER
+<<<<<<< HEAD
   most_popular: MEST POPULÆRE 
+=======
+  most_popular: MEST POPULÆRE
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
   no_result_found: Ingen søgeresultater fundet. Prøv en anden søgning?
   lately: Seneste
   all_time: Helt fra starten

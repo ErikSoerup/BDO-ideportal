@@ -2,7 +2,7 @@
   <div id="comment-<%=idea_comment.id%>">
     <!--Commentator Starts -->
     <div class="commentator_panel">
-      <div class="commentator_wrap_green"> <%= link_to h(idea_comment.author.name), profile_path(idea_comment.author), :class=> "bold_link"%></div>
+      <div class="commentator_wrap_green"><%= link_to h(idea_comment.author.name), profile_path(idea_comment.author), :class=> "bold_link"%></div>
       <div class="plainwrap">
         <div class="fl">
           <%if show_avatar%>
@@ -11,9 +11,11 @@
             </div>
           <% end %>
         </div>
-        <div class="download">
-          <%=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url %>
-        </div>
+<%#*<div class="download">%>
+
+<%#=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url
+if idea_comment.document.url != "/documents/original/missing.png" %>
+<%#*</div>%>
       </div>
     </div>
     <!--Commentator Ends -->
@@ -28,10 +30,25 @@
       </div>
       <!--Content Head Ends -->
       <!--Posted Content Starts -->
-      <div class="plainwrap">
+      <div class="plainwrap" style="min-height:50px; margin-bottom:10px;">
         <p><%= user_formatted_text idea_comment.text%> </p>
       </div>
       <!--Posted Content Ends -->
+      <%= "Vedhæftninger" %>(<%= idea_comment.comment_documents.size%>)<span style="<%= !idea_comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
+                                                       onclick="<%if !idea_comment.comment_documents.empty?%>
+                                                         if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+                                                         if($('attachments_<%=idea_comment.id%>').style.display == 'none'){
+                                                         $('attachments_<%=idea_comment.id%>').style.display = 'block';}
+                                                         else{
+                                                         $('attachments_<%=idea_comment.id%>').style.display = 'none';}<%end%> "><%if !idea_comment.comment_documents.empty?%>Vis<%end%></span>
+      <div id="<%= 'attachments_'+idea_comment.id.to_s %>" style="display: none; padding:5px;">
+        <%if !idea_comment.comment_documents.empty?%>
+          <% idea_comment.comment_documents.each do |cd|%>
+            <li style="width: 30%; float:left; list-style-type: none;">
+                            <%= link_to cd.document_file_name, cd.document.url if cd.document.url != "/documents/original/missing.png"%></li>
+          <%end%>
+        <%end%>
+      </div>
     </div>
     <!--Posted Comments Ends -->
   </div>

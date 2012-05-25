@@ -1,11 +1,19 @@
 class Comment < ActiveRecord::Base
   acts_as_authorizable
 
+<<<<<<< HEAD
   has_attached_file :document,
       :storage => :s3,
       :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
       :path => ":attachment/comment/:id/:style.:extension"
 
+=======
+#  has_attached_file :document,
+#    :storage => :s3,
+#    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+#    :path => ":attachment/comment/:id/:style.:extension"
+  has_many :comment_documents
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
   belongs_to :idea
   belongs_to :author, :class_name => 'User'
   def comment_type
@@ -39,9 +47,17 @@ class Comment < ActiveRecord::Base
   def after_create
     author.record_contribution! :comment
     send_later :check_spam!  # also notifies subscribers
+<<<<<<< HEAD
     send_later :notify_subscribers!
   end
 
+=======
+  end
+
+  def after_save
+    notify_subscribers!
+  end
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
 
   def editing_expired?
     created_at < 15.minutes.ago
@@ -60,7 +76,10 @@ class Comment < ActiveRecord::Base
   end
 
   def notify_subscribers!
+<<<<<<< HEAD
 
+=======
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
     if !notifications_sent? && should_notify_subscribers?
       subscribers = idea.subscribers.dup
       inventor = idea.inventor

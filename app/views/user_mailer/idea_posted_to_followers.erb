@@ -5,6 +5,6 @@
 
 <%= h @idea.description %>
 
-<%= @url %>
+<%= link_to @idea.title, @url %>
 
-To stop receiving these notifications: <%= @unsubscribe_url %>
+To stop receiving these notifications: <%= link_to @idea.inventor.name, @unsubscribe_url %>

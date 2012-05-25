@@ -5,10 +5,10 @@ class CommentsController < ApplicationController
 
   before_filter :owner_required, :only => :update
 
-  param_accessible :comment => [:text, :document]
+  param_accessible :comment => [:text, :document], :comment_document => [:document]
 
   layout :compute_layout
-  
+
   def compute_layout
     if action_name == "index"
       'profile'
@@ -16,20 +16,34 @@ class CommentsController < ApplicationController
       'application'
     end
   end
-  
+
   make_resourceful do
     actions :new, :create, :update
     belongs_to :idea
 
     before :create do
+      @comment_documents = []
       @comment.author = current_user
       @comment.ip = request.remote_ip
       @comment.user_agent = request.user_agent
+      if params[:comment_documents]
+        params[:comment_documents].each do |cd|
+          params[:comment_document] = {}
+          params[:comment_document][:document] = []
+          params[:comment_document][:document] = cd[1]
+          comment_doc = CommentDocument.new(params[:comment_document])
+          comment_doc.save
+          @comment_documents << comment_doc
+        end
+        @comment.comment_documents = @comment_documents
+
+      end
     end
 
     response_for :create do |format|
       format.html do
         flash[:info] = "Thanks! Your comment has been posted. <strong><a href='#post-comment'>View comment &raquo;</a></strong>"
+        NotificationCommentJob.new(current_user, @idea)
         redirect_to idea_url(@idea)
       end
       format.xml do
@@ -70,18 +84,18 @@ class CommentsController < ApplicationController
     end
   end
 
-
   def destroy_comment
     @idea=Idea.find(params[:value])
     @comment=Comment.find(params[:id])
     @comment.destroy
     render :layout => false
   end
+
   def current_objects
     @comments ||= begin
       query_opts = {
         :page => params[:page],
-        :per_page => 8,
+        :per_page => 5,
         :order => 'comments.created_at DESC',
         :include => [:author, :idea],
         :conditions => { 'users.state' => 'active', 'comments.hidden' => false, 'ideas.hidden' => false }}

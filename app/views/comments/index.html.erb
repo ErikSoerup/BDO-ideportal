@@ -63,11 +63,11 @@
 
                       <%= image_tag profile_picture(comment.author, :small)%>
                     </div>
-                    <div class="dowmnload_link">
-                      <% if comment.document.url != "/documents/original/missing.png" %>
-                        <%=link_to t("download"), comment.document.url, :class => "bold_link"%>
-                      <% end %>
-                    </div>
+  <%#*<div class="dowmnload_link">%>
+  <%# if comment.document.url != "/documents/original/missing.png" %>
+  <%#=link_to t("download"), comment.document.url, :class => "bold_link"%>
+  <%# end %>
+  <%#*</div>%>
                   </div>
                 </div>
                 <!--Commentator Ends -->
@@ -91,10 +91,25 @@
                       </div>
                       <!--Content Head Ends -->
                       <!--Posted Content Starts -->
-                      <div class="plainwrap">
+                      <div class="plainwrap" style="min-height:50px; margin-bottom:10px;">
                         <p><%= user_formatted_text truncate(comment.text,500)%> </p>
                       </div>
                       <!--Posted Content Ends -->
+                      <%= "Vedhæftninger" %>(<%= comment.comment_documents.size%>)<span style="<%= !comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
+                                                                  onclick="<%if !comment.comment_documents.empty?%>
+                                                                    if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+                                                                    if($('attachments_<%=comment.id%>').style.display == 'none'){
+                                                                    $('attachments_<%=comment.id%>').style.display = 'block';}
+                                                                    else{
+                                                                    $('attachments_<%=comment.id%>').style.display = 'none';}<%end%> "><%if !comment.comment_documents.empty?%>Vis<%end%></span>
+                      <div id="<%= 'attachments_'+comment.id.to_s %>" style="display: none; padding:5px;">
+                        <%if !comment.comment_documents.empty?%>
+                          <% comment.comment_documents.each do |cd|%>
+                            <li style="width: 30%; float:left; list-style-type: none;">
+                              <%= link_to cd.document_file_name, cd.document.url if cd.document.url != "/documents/original/missing.png"%></li>
+                          <%end%>
+                        <%end%>
+                      </div>
                     </div>
                     <!--Posted Comments Ends -->
                   </div>
@@ -109,7 +124,7 @@
         </div>
 
 
-         <div class="fr">
+        <div class="fr">
           <ul class="pagination" style="margin-top:8px;">
             <!--<li><a href="#">«</a></li> -->
             <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige"%>

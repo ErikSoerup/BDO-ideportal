@@ -5,3 +5,11 @@ test/fixtures/*/*
 *.tmproj
 db/schema.rb
 *.sw*
+<<<<<<< HEAD
+=======
+nbproject*
+tmp/*
+log/*
+log/test.log
+database.yml
+>>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d

@@ -6,10 +6,11 @@
 COMPANY_NAME = 'BDO'
 SHORT_SITE_NAME = 'Idea'
 LONG_SITE_NAME = "#{COMPANY_NAME} #{SHORT_SITE_NAME}"
+SITE_TITLE = "BDO's ideportal"
 
 # Set these to the hostnames of the machines where you'll be doing your deploys.
-PRODUCTION_HOST = 'bdo.heroku.com'
-STAGING_HOST = 'bdo.heroku.com'
+PRODUCTION_HOST = 'bdotest.heroku.com'
+STAGING_HOST = 'bdotest.heroku.com'
 EMAIL_FROM_ADDRESS = "#{LONG_SITE_NAME} <noreply@#{PRODUCTION_HOST}>"
 
 # Specify a long random string for SESSION_SECRET to secure user sessions

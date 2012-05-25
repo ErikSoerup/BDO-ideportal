@@ -25,6 +25,9 @@
           .form-group.inline
             =f.label :invitees, "Invitees"
             =render :partial => "invitees"
+          .form-group.inline
+            =f.label :closed, "Fjern hovedvej fra ideformular og hovedvej-siden"
+            = f.check_box :active
           #show-current-text
             -if editor?
               .edit

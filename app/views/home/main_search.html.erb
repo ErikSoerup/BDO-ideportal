@@ -18,24 +18,22 @@
 
 
           <tr>
-
             <td align="left" valign="middle">
-              <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Under evaluering","under evaluering"],["Evalueret","ikke evalueret"], ["Kommer snart", "comming"],["Implementeret","implementeret"]], params[:val1]), :id => "select", :class => "select_input", :multiple => true%>
-
+              <%= select_tag "val1", options_for_select([["Alle","alle"], ["Nye","nye"],  ["Behandlet","under evaluering"], ["Kommer snart", "comming"],["Implementeret","implementeret"]], params[:val1]), :id => "select", :class => "select_input", :multiple => true%>
             </td>
 
-            <td align="left" valign="middle" style="width:116px;">
+            <td align="left" valign="middle">
               <%= select_tag "val2", options_for_select([["alle", "All"]]+User.all.collect{|user| [user.name,user.name]}, params[:val2]), :id => "select", :class => "select_input", :multiple => true%>
             </td>
 
-            <td align="left" valign="middle"style="width:116px;">
+            <td align="left" valign="middle">
               <%= select_tag "val3", options_for_select(Department.all.collect{ |dep| [dep.name,dep.id]}, params[:val3].first.to_i),:id => "select", :class => "select_input", :multiple => true%>
             </td>
 
-            <td align="left" valign="middle"style="width:116px;">
+            <td align="left" valign="middle">
               <%= select_tag "val4", options_for_select([["alle", "current"]]+Current.all.collect{ |current| [current.title]}, params[:val4] ), :multiple => true%>
             </td>
-            <td align="left" valign="middle"style="width:116px;"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
+            <td align="left" valign="middle"><%= submit_tag "Søg", :class=>"blank_button", :id => "button" %> </td>
           </tr>
 
   <%#= request.query_parameters %>
@@ -130,7 +128,7 @@
         <!--Pagination Ends -->
       </div>
       <%  if @ideas || @current_ideas%>
-        <%= render :partial => '/ideas/search_idea', :collection => @c_ideas if @c_ideas && !@c_ideas.empty? %>
+        <%= render :partial => '/ideas/search_idea', :collection => @c_ideas, :locals => {:ideas => @total_ideas} if @c_ideas && !@c_ideas.empty? %>
       <% else %>
 
       <% end %>
@@ -144,54 +142,54 @@
 
       <script type="text/javascript">
         jQuery(document).ready(function() {
-          var val="<%= params[:val] %>";
-          var arrow="<%= params[:arrow] %>";
-          if( val == "vote" && arrow == "up"){
-            jQuery('#vote-down').show();
-            jQuery('#vote-up').hide();
-          }
-          else if(val == "vote" && arrow == "down"){
-            jQuery('#vote-down').hide();
-            jQuery('#vote-up').show();
+        var val="<%= params[:val] %>";
+        var arrow="<%= params[:arrow] %>";
+        if( val == "vote" && arrow == "up"){
+        jQuery('#vote-down').show();
+        jQuery('#vote-up').hide();
+        }
+        else if(val == "vote" && arrow == "down"){
+        jQuery('#vote-down').hide();
+        jQuery('#vote-up').show();
 
-          }
+        }
 
-          else if(val =="comment" && arrow == "up"){
-            jQuery('#comment-up').hide();
-            jQuery('#comment-down').show();
-
-
-          }
-
-          else if(val =="comment" && arrow == "down"){
-            jQuery('#comment-down').hide();
-            jQuery('#comment-up').show();
+        else if(val =="comment" && arrow == "up"){
+        jQuery('#comment-up').hide();
+        jQuery('#comment-down').show();
 
 
-          }
+        }
+
+        else if(val =="comment" && arrow == "down"){
+        jQuery('#comment-down').hide();
+        jQuery('#comment-up').show();
 
 
-          else if(val =="date" && arrow == "up"){
-            jQuery('#date-up').hide();
-            jQuery('#date-down').show();
-          }
+        }
 
 
-          else if(val =="date" && arrow == "down"){
-            jQuery('#date-down').hide();
-            jQuery('#date-up').show();
-          }
-          else if(val == "followers" && arrow=="up"){
-            jQuery('#follow-up').hide();
-            jQuery('#follow-down').show();
-  
-          }
+        else if(val =="date" && arrow == "up"){
+        jQuery('#date-up').hide();
+        jQuery('#date-down').show();
+        }
 
-          else if(val == "followers" && arrow=="down"){
-            jQuery('#follow-down').hide();
-            jQuery('#follow-up').show();
 
-          }
+        else if(val =="date" && arrow == "down"){
+        jQuery('#date-down').hide();
+        jQuery('#date-up').show();
+        }
+        else if(val == "followers" && arrow=="up"){
+        jQuery('#follow-up').hide();
+        jQuery('#follow-down').show();
+
+        }
+
+        else if(val == "followers" && arrow=="down"){
+        jQuery('#follow-down').hide();
+        jQuery('#follow-up').show();
+
+        }
 
         });
 

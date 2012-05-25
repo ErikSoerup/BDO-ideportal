@@ -11,7 +11,7 @@
                     <%= image_tag profile_picture(comment.author)%>
                   </div>
           <div>
-            <%if comment.document? && commnt.dcoumnt.url != "/documents/original/missing.png"%>
+            <%if comment.document?%>
               <%=link_to t("download"), comment.document.url, :class => "bold_link", :target => "_blank"%>
             <% end %>  
           </div>

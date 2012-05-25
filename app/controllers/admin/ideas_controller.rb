@@ -2,16 +2,16 @@ module Admin
   class IdeasController < AdminController
     before_filter :set_body_class
     after_filter :expire_cloud_cache, :only => [:update, :create, :destroy]
-    
+    param_accessible :idea => [:title, :description, :tag_names, :current_id, :document ]
     make_resourceful do
       actions :index, :edit, :update
-      
+
       before :index do
         Idea.populate_comment_counts current_objects
         Tag.load_tags current_objects
         AdminTag.load_tags current_objects
       end
-    
+
       before :edit do
         unless @idea.viewed
           @idea.viewed = true
@@ -19,7 +19,7 @@ module Admin
         end
         @life_cycle_handler = LifeCycleHandler.new(@idea)
       end
-      
+
       before :update do
         @idea.duplicate_of.remove_duplicate!(@idea) if params[:clear_duplicate]
         if !params[:admin_comment].blank? && !params[:admin_comment][:text].blank?
@@ -27,12 +27,19 @@ module Admin
           @admin_comment.author = current_user
         end
       end
-    
+
+      after :update do
+        if params[:idea][:current_id] == ""
+          @idea.current_id = "-1"
+          @idea.save
+        end
+      end
+
       response_for :index do |format|
         format.html { render :action => 'index' }
         format.js   { render :partial => 'index' }
       end
-    
+
       response_for :update do |format|
         format.html do
           flash[:info] = 'Changes saved.'
@@ -43,11 +50,11 @@ module Admin
         end
       end
     end
-    
+
     def has_search?
       super || search_life_cycle_step
     end
-    
+
     def search_life_cycle_step
       @search_life_cycle_step ||= if params[:life_cycle_step].blank?
         nil
@@ -56,29 +63,29 @@ module Admin
       end
     end
     helper_method :search_life_cycle_step
-    
+
     def compare_duplicates
       @dup_drag = Idea.find(params[:other_id])
       @dup_drop = current_object
       @dup_ideas = [@dup_drag, @dup_drop].sort_by { |i| i.created_at }
       update_bucket :add => @dup_ideas
     end
-    
+
     def link_duplicates
       Idea.transaction do
         parent, child = current_object, Idea.find(params[:other_id])
-        
+
         parent.add_duplicate! child
-      
+
         update_bucket :add => parent, :remove => child
         redirect_to edit_admin_idea_path(parent)
       end
     end
-    
+
     include ResourceAdmin
     include BucketHelper
-    
-  protected
+
+    protected
 
     def default_sort
       if search_pending_moderation?
@@ -87,12 +94,12 @@ module Admin
         ['ideas.created_at', true]
       end
     end
-    
+
     def index_query_options
       conditions = search_life_cycle_step ? {:life_cycle_step_id => params[:life_cycle_step]} : {}
       conditions.merge!({:marked_spam => false}) unless params[:marked_spam] == "true"
       { :conditions => conditions }
-      
+
       # The following allows sorting by comment count, but will_paginate doesn't know what to
       # do with the group clause, so it's disabled for now:
 
@@ -104,9 +111,9 @@ module Admin
       #   :joins => 'LEFT JOIN comments ON comments.idea_id = ideas.id',
       #   :group => "#{cols}" }
     end
-    
+
     def filter_search_results(results)
-      # This is a brute-force, but effective, way of filtering spam.  
+      # This is a brute-force, but effective, way of filtering spam.
       # We could alternatively rely on in-query filtering within search_xapian method.
       if params[:marked_spam] != "true"
         results = results.select { |result| !result.marked_spam? }
@@ -117,22 +124,22 @@ module Admin
         results
       end
     end
-    
+
     def set_body_class
       @body_class = 'ideas'
     end
-    
-  private
-    
+
+    private
+
     def expire_cloud_cache
       expire_fragment :fragment => 'idea_cloud', :controller => '/home', :action => 'show'
     end
-    
+
     # Facade to present the current life cycle step in terms of the UI's drop-down & check boxes.
     # This is only used to populate the UI; javascript responds to changes in the UI to update a hidden field.
     class LifeCycleHandler
       attr_accessor :idea, :life_cycle, :steps_completed
-      
+
       def initialize(idea)
         @idea = idea
         @life_cycle = idea.life_cycle ? idea.life_cycle.id : nil
@@ -144,7 +151,7 @@ module Admin
           end
         end
       end
-      
+
       def method_missing(method, *args)
         if method.to_s =~ /^step_(\d+)/
           @steps_completed[$1.to_i]
@@ -152,8 +159,8 @@ module Admin
           super
         end
       end
-      
+
     end
-    
+
   end
 end

@@ -5,11 +5,18 @@
 
     <%
     if params[:val] == "hot" || params[:val] == "recent"
-      nt_idea=next_idea(@idea,params[:val])
-      pv_idea=prev_idea(@idea,params[:val])
+      nt_idea=next_idea(@idea,params[:val],nil)
+      pv_idea=prev_idea(@idea,params[:val],nil)
+    elsif params[:ideas]
+      @ideas = Array.new
+      params[:ideas].each do |idea|
+        @ideas << Idea.find(idea)
+      end
+      nt_idea=next_idea(@idea,nil,@ideas.to_a)
+      pv_idea=prev_idea(@idea,nil, @ideas.to_a)
     else
-      nt_idea=next_idea(@idea,"")
-      pv_idea=prev_idea(@idea, "")
+      nt_idea=next_idea(@idea,nil,nil)
+      pv_idea=prev_idea(@idea, nil,nil)
     end
   %>
     <div id="idea-1">
@@ -17,6 +24,9 @@
         <% unless pv_idea.nil?  %>
           <% if params[:val] == "hot" || params[:val] == "recent" %>
             <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea, :val => params[:val]), :style =>"color: #0B3597; text-decoration: none;" %></div>
+          <% elsif params[:ideas]%>
+            <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea, :ideas => params[:ideas]), :style =>"color: #0B3597; text-decoration: none;" %></div>
+
           <% else %>
             <div class="fl">&laquo; <%= link_to "Forrige", idea_url(pv_idea), :style =>"color: #0B3597; text-decoration: none;" %></div>
           <% end %>
@@ -26,6 +36,9 @@
         <% unless nt_idea.nil? %>
           <% if params[:val] || params[:val] == "recent" %>
             <div class="fr"><%= link_to "Næste", idea_url(nt_idea, :val => params[:val]), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
+          <% elsif params[:ideas]%>
+            <div class="fr"><%= link_to "Næste", idea_url(pv_idea, :ideas => params[:ideas]), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
+
           <% else %>
             <div class="fr"><%= link_to "Næste", idea_url(nt_idea), :style =>"color: #0B3597; text-decoration: none;" %> &raquo;</div>
           <% end %>
@@ -37,10 +50,6 @@
       <!--Profile Top Stuff Starts -->
       <div class="plainwrap"><div class="fl" style="width:360px;"><h2 style="margin-bottom:8px;"><%= h @idea.title%>  </h2>
 
-
-
-
-
           <h3 class="subhead" style="float:left;width:855px;">Sendt <strong><%= time_ago_in_words(@idea.created_at) %> <%= t("ago") %> </strong> af
             <%unless @idea.is_anonymous?%>
               <%=link_to @idea.inventor.name, profile_path(@idea.inventor), :class => "bold_link"%>
@@ -48,8 +57,13 @@
               <%=link_to "Anonymous", "#", :class=> "bold_link" %>
             <% end %>
           </h3>
-          <h3 class="subhead">Ideen har status <strong><%= @idea.status%></strong></h3>
-          <div class="download_link"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.nil? && @idea.doument.url == "/documents/original/missing.png"%></div>
+          <div>
+            <h3 class="subhead fl">Ideen har status <strong><%= idea_text(@idea) %></strong></h3>
+            <% if current_user.roles.collect(&:name).include?("admin") %>
+              <%= link_to "Edit Status", edit_admin_idea_path(@idea), :class => "bold_link", :style => "padding-left:7px;font-size:15px;" %>
+            <% end %>
+          </div>
+          <div class="download_link plainwrap"><%= link_to t("download"), @idea.document.url, :class => "bold_link", :target => "_blank" unless @idea.document.url == "/documents/original/missing.png"%></div>
           <div class="plainwrap" style="margin:10px 0;">
             <%= user_formatted_text @idea.description %>
           </div>
@@ -122,15 +136,18 @@
             <div id ="comment-missing" class="message error" style = "display: none"><%= t("enter_comment") %></div>
 
             <div class="form-group inline" id="post-comment" style="margin:23px 0 0 0;">
-              <label for ="comment-text" style="color: #425D78;"> Din Kommentar</label>
+              <label for ="comment-text" style="color: #425D78;"> Din Kommentar  <span class="charsRemaining" style="color:black;font-size: 12px;"></span></label>
+
               <%= f.text_area :text, :id => "comment-text", :class => "input-textarea", :maxlength => "550"%>
-              <p class="charsRemaining"></p>
-              <br/>
-              <div style="margin-left:136px;margin-top:9px;">
-  <%#= text_field_tag("dddd","", :size=>80 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;", :style => "cursor: default;-moz-opacity: 0;opacity: 0.00;filter: alpha(opacity=0);-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';")%>
-                <%= f.file_field :document , :size=>57, :style => "margin-top:15px;", :id => "document"%>
+
+              <div style="clear:both;"></div>
+              <div style="margin-left:136px;margin-top:9px;" id="file_fields_div">
               </div>
-              <div class="clear" stle="clear:both;"></div>
+
+              <div style="clear:both;"></div>
+              <p style="padding-left:100px"><%= image_tag("black_attachment.png", :size => "25x25", :style => "cursor: pointer; background:none; border:0;",
+                  :onclick => "add_a_file_field();", :id => "file_upload1") %></p>
+              <div class="clear" style="clear:both;"></div>
             </div>
             <div class="form-submit inline">
               <% if current_user && !current_user.active?%>
@@ -182,90 +199,115 @@
 <script type="text/javascript">
   jQuery.fn.limitMaxlength = function(options){
 
-    var settings = jQuery.extend({
-      attribute: "maxlength",
-      onLimit: function(){},
-      onEdit: function(){}
-    }, options);
+  var settings = jQuery.extend({
+  attribute: "maxlength",
+  onLimit: function(){},
+  onEdit: function(){}
+  }, options);
 
-    // Event handler to limit the textarea
-    var onEdit = function(){
-      var textarea = jQuery(this);
-      var maxlength = parseInt(textarea.attr(settings.attribute));
+  // Event handler to limit the textarea
+  var onEdit = function(){
+  var textarea = jQuery(this);
+  var maxlength = parseInt(textarea.attr(settings.attribute));
 
-      if(textarea.val().length > maxlength){
-        textarea.val(textarea.val().substr(0, maxlength));
+  if(textarea.val().length > maxlength){
+  textarea.val(textarea.val().substr(0, maxlength));
 
-        // Call the onlimit handler within the scope of the textarea
-        jQuery.proxy(settings.onLimit, this)();
-      }
+  // Call the onlimit handler within the scope of the textarea
+  jQuery.proxy(settings.onLimit, this)();
+  }
 
-      // Call the onEdit handler within the scope of the textarea
-      jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
-    }
+  // Call the onEdit handler within the scope of the textarea
+  jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
+  }
 
-    this.each(onEdit);
+  this.each(onEdit);
 
-    return this.keyup(onEdit)
-    .keydown(onEdit)
-    .focus(onEdit);
+  return this.keyup(onEdit)
+  .keydown(onEdit)
+  .focus(onEdit);
   }
 
   jQuery(document).ready(function(){
 
-    var onEditCallback = function(remaining){
-      jQuery(this).siblings('.charsRemaining').text("Charders remaining 550: " + remaining + " tegn");
+  var onEditCallback = function(remaining){
+  jQuery('.charsRemaining').text("Skriv kort. Du har kun: " + remaining + " tegn");
 
-      if(remaining > 0){
-        jQuery(this).css('background-color', 'white');
-      }
-    }
+  if(remaining > 0){
+  jQuery(this).css('background-color', 'white');
+  }
+  }
 
-    var onLimitCallback = function(){
-      alert("you exceed the limit of  character");
-      jQuery(this).css('background-color', 'white');
-    }
+  var onLimitCallback = function(){
 
-    jQuery('textarea[maxlength]').limitMaxlength({
-      onEdit: onEditCallback,
-      onLimit: onLimitCallback
-    });
+  jQuery(this).css('background-color', 'red');
+  }
+
+  jQuery('textarea[maxlength]').limitMaxlength({
+  onEdit: onEditCallback,
+  onLimit: onLimitCallback
+  });
   });
 </script>
 
 <script type="text/javascript">
- 
+
   function validateComment() {
-    if($('comment-text').value.blank()) {
-      $('comment-missing').style.display = 'block';
-      $('comment-text').focus();
-      return false;
-    } else {
-      return true;
-    };
+  if($('comment-text').value.blank()) {
+  $('comment-missing').style.display = 'block';
+  $('comment-text').focus();
+  return false;
+  } else {
+  return true;
+  };
   };
   function editCommentText(id) {
-    $$('#comment_'+id+' .comment-content')[0].hide();
-    $$('#comment_'+id+' .edit-comment-content')[0].show();
+  $$('#comment_'+id+' .comment-content')[0].hide();
+  $$('#comment_'+id+' .edit-comment-content')[0].show();
   };
   function validateCommentUpdate(id) {
-    if($('comment-'+id+'-text').value.blank()) {
-      $('comment-'+id+'-missing').style.display = 'block';
-      $('comment-'+id+'-text').focus();
-      return false;
-    } else {
-      return true;
-    };
+  if($('comment-'+id+'-text').value.blank()) {
+  $('comment-'+id+'-missing').style.display = 'block';
+  $('comment-'+id+'-text').focus();
+  return false;
+  } else {
+  return true;
   };
-    
-    
+  };
+
+
   function editIdeaText() {
-    $('idea-1').hide();
-    $('edit-idea-1').show();
+  $('idea-1').hide();
+  $('edit-idea-1').show();
   }
   function cancelEdit() {
-    $('idea-1').show();
-    $('edit-idea-1').hide();
+  $('idea-1').show();
+  $('edit-idea-1').hide();
   }
-  
+
 </script>
+
+<!--
+<div class="form-group inline" id="post-comment" style="margin:23px 0 0 0;">
+              <label for ="comment-text" style="color: #425D78;"> Din Kommentar  <span class="charsRemaining" style="color:black;font-size: 12px;"></span></label>
+
+<%#= f.text_area :text, :id => "comment-text", :class => "input-textarea", :maxlength => "550"%>
+
+              <br/>
+              <div style="margin-left:136px;margin-top:9px;" id="file_fields_div">
+<%#= file_field_tag "comment_documents[document#{1}]", :size=>57, :style => "margin-top:15px; display:none;",
+:id => "comment_documents_document1",
+:onchange => "$('div_file1').innerHTML = ($(this).value); $('file_upload1').style.display = 'none'; $('cross1').style.display = 'block';" %>
+                <div style="clear:both;"></div>
+                <div id="div_file1"></div>
+<%#= image_tag("cross.png", :size => "15x15", :id => 'cross1', :style => "display:none;",
+:onclick => "$('comment_documents_document1').value = '';$('div_file1').innerHTML = ''; $(this).style.display = 'none'; ") %>
+<%#= image_tag("file.jpeg", :size => "25x25", :style => "cursor: pointer;",
+:onclick => "$('comment_documents_document1').click();", :id => "file_upload1") %>
+              </div>
+
+              <div style="clear:both;"></div>
+              <span onclick="add_a_file_field();" style="cursor: pointer;">Add more documents</span>
+              <div class="clear" style="clear:both;"></div>
+            </div>
+-->

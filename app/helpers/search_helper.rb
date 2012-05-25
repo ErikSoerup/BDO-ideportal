@@ -22,7 +22,7 @@ module SearchHelper
   def search_ideas_sql(params)
     query_opts = {
       :page => params[:page] || 1,
-      :per_page => params[:page_size] || 8,
+      :per_page => params[:page_size] || 5,
       :include => [{:inventor => :postal_code}, :tags],
       :conditions => ['users.state = ? and ideas.hidden = ?', 'active', false] }
     @query_title = "Ideas"
@@ -73,6 +73,7 @@ module SearchHelper
         current_id = search_params.shift
         query_opts[:conditions][0] += ' and ideas.current_id = ?'
         query_opts[:conditions] << current_id
+        query_opts[:order] = 'ideas.created_at DESC'
         @query_title = "Currents " + @query_title
         @body_class ||= 'currents'
       else
@@ -152,7 +153,7 @@ public
   # Searches for an arbitrary model using a full-text tsearch query. Shared by public & admin UI.
   def search(current_model, params, sort = nil, order = true, &filter)
     page = (params[:page] || 1).to_i
-    page_size = (params[:per_page] || 8).to_i
+    page_size = (params[:per_page] || 5).to_i
 
     @search = current_model.find_by_tsearch(params[:search_text] || params[:search])
 

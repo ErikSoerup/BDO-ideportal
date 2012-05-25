@@ -1,0 +1,12 @@
+<html>
+  <head></head>
+  <body>
+
+    <p>Kære <%= @receiver.name %></p><br/><br/>
+
+    <p><%= @user.name %> har kommenteret din ide: <%= link_to @idea.title, @idea_url %>. Klik på linket for at se kommentaren. </p><br/>
+    <p>Ønsker du ikke længere at få besked, når der
+      kommenteres på ideen, skal du blot klikke på "stop følg"-linket på ideen.
+    </p>
+  </body>
+</html>

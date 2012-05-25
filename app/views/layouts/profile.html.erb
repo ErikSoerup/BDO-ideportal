@@ -2,10 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
     <meta name = 'keywords' content = "#{COMPANY_NAME}, #{SHORT_SITE_NAME}, #{LONG_SITE_NAME}, Idea Exchange, share, vote, rate" />
     <meta name = 'description' content = "#{LONG_SITE_NAME} is a forum for #{COMPANY_NAME} customers to share, rate, and discuss ideas about #{COMPANY_NAME}."/>
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
-    <title><%= " #{LONG_SITE_NAME} | #{h(page_title || "Exchange your ideas, vote, and discuss. Let's make it better.")}" %> </title>
+    <title>
+      <%if controller_name == "ideas" && params[:search] && params[:search].include?("hot")%>
+        <%= "#{SITE_TITLE} | #{h("Hotte ideer!")}" %>
+      <%elsif controller_name == "ideas" && params[:search] && params[:search].include?("recent")%>
+        <%= "#{SITE_TITLE} | #{h("Seneste ideer!")}" %>
+      <%elsif controller_name == "currents"%>
+        <%= "#{SITE_TITLE} | #{h("Hovedveje!")}" %>
+      <%elsif controller_name == "comments"%>
+        <%= "#{SITE_TITLE} | #{h("Kommentarer!")}" %>
+      <%elsif controller_name == "tags"%>
+        <%= "#{SITE_TITLE} | #{h("Emneord!")}" %>
+      <%elsif controller_name == "home" && action_name == "advance"%>
+        <%= "#{SITE_TITLE} | #{h("Avanceret!")}" %>
+      <%elsif controller_name == "home" && action_name == "show" && params[:page] && params[:page] == "about"%>
+        <%= "#{SITE_TITLE} | #{h("Om ideportalen!")}" %>
+      <%elsif controller_name == "profiles" && action_name == "show"%>
+        <%if params[:id] == current_user.id%>
+          <%= "#{SITE_TITLE} | #{h("Min profil!")}" %>
+        <%else%>
+          <%= "#{SITE_TITLE} | #{h("#{@user.name.capitalize}!")}" %>
+        <%end%>
+      <%elsif controller_name == "users" && action_name == "edit"%>
+        <%= "#{SITE_TITLE} | #{h("Indstillinger!")}" %>
+      <%else%>
+        <%= "#{SITE_TITLE} | #{h(page_title || "Del dine ideer, stem og diskuter muligheder. Vi kan gøre det endnu bedre!")}" %>
+      <%end%>
+    </title>
     <%= stylesheet_link_tag "profile" %>
     <%= stylesheet_link_tag "idea_form" %>
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js", "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js", "jquery.tagify" %>
@@ -15,60 +42,60 @@
     <%= javascript_include_tag 'example_text'%>
     <%= javascript_include_tag 'placeholder' %>
     <%= javascript_include_tag 'ga', 'global'%>
-    <script>
+    <script type="text/javascript">
       jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
 
       jQuery(function() {
-        jQuery('input, textarea').placeholder();
+      jQuery('input, textarea').placeholder();
       });
 
       jQuery(document).ready(function() {
 
-        //When page loads...
-        jQuery(".tab_content").hide(); //Hide all content
-        jQuery("ul.tabs li:first").addClass("active").show(); //Activate first tab
-        jQuery(".tab_content:first").show(); //Show first tab content
+      //When page loads...
+      jQuery(".tab_content").hide(); //Hide all content
+      jQuery("ul.tabs li:first").addClass("active").show(); //Activate first tab
+      jQuery(".tab_content:first").show(); //Show first tab content
 
-        //On Click Event
-        jQuery("ul.tabs li").click(function() {
+      //On Click Event
+      jQuery("ul.tabs li").click(function() {
 
-          jQuery("ul.tabs li").removeClass("active"); //Remove any "active" class
-          jQuery(this).addClass("active"); //Add "active" class to selected tab
-          jQuery(".tab_content").hide(); //Hide all tab content
+      jQuery("ul.tabs li").removeClass("active"); //Remove any "active" class
+      jQuery(this).addClass("active"); //Add "active" class to selected tab
+      jQuery(".tab_content").hide(); //Hide all tab content
 
-          var activeTab = jQuery(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
-          jQuery(activeTab).fadeIn(); //Fade in the active ID content
-          return false;
-        });
+      var activeTab = jQuery(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+      jQuery(activeTab).fadeIn(); //Fade in the active ID content
+      return false;
+      });
 
       });
     </script>
 
-
-
     <!--Tab -->
   </head>
-
+ <!-- <body onload="<%if controller_name == 'profiles' and action_name == 'show'%> checkTabs() <%end%>">-->
   <body>
     <div class="outer_wrap">
-      <% if current_page?("/") %>
-        <%= render :partial => "/home/home_box" %>
+      <% if current_page?("/") || current_page?("/ideas") %>
+        <%= render :partial => "home/home_box" %>
       <% end %>
       <div class="main_wrap">
         <!--Header Starts -->
         <div class="header_wrap">
           <div class="h_top">
             <!--Logo Starts -->
-            <div class="logo"><%= link_to image_tag("/images/logo.jpg"), "/"%> </div>
+            <div class="logo"><%= link_to image_tag("/images/logo.jpg"), "/"%></div>
             <!--Logo Ends -->
             <!--Top Nav Starts -->
             <% if logged_in? %>
-              <div class="top_nav">
+              <div class="top_nav" style="<%= current_user.admin? ? 'width:420px' : ''%>">
 
-                <ul>
+                <ul style="padding: 0 5px 0 5px;">
                   <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>
                   <li><%= link_to t('menu.settings'), edit_user_path %></li>
-                  <li><%= link_to t("menu.about"), home_path('about')%></li>
+  <%#*<li>%>
+  <%#= link_to t("menu.about"), home_path('about')%>
+  <%#*</li>%>
                   <% if current_user.admin? %>
                     <li><%= link_to 'Admin', admin_root_path%></li>
                   <% end %>
@@ -80,12 +107,13 @@
 
                     <% end %>
                   </li>
+                  <li> &nbsp; &nbsp;<%= link_to t('menu.sign_out'), logout_path%></li>
                 </ul>
 
               </div>
             <% end %>
             <!--Top Nav Ends -->
-            <div class="logud"><%= link_to t('menu.sign_out'), logout_path%></div>
+
           </div>
           <!--Header Bottom Section Starts -->
           <% if logged_in? %>
@@ -119,6 +147,9 @@
               <!--Logud Stuff Starts -->
 
               <!--Logud Stuff Ends -->
+              <div class="logud">
+                <%= link_to image_tag("header.jpg", :size => "80x80", :style => "border:0;"), home_path('about') %>
+              </div>
             </div>
           <% end %>
           <!--Header Bottom Section Ends -->
@@ -132,7 +163,7 @@
         <% end %>
         <% unless current_page?("/") %>
           <div class="flash_message">
-            <%= render :partial => "shared/flash_messages"%>
+  <%#= render :partial => "shared/flash_messages"%>
           </div>
         <% end %>
         <%= yield %>
@@ -142,17 +173,17 @@
           <%= fb_connect_async_js%>
           <script type="text/javascript">
             facebook_auth = function(success_callback) {
-              FB.login(
-              function(response) {
-                if(response.session && success_callback)
-                  success_callback()
-              },
-              { perms: 'email,publish_stream' })
+            FB.login(
+            function(response) {
+            if(response.session && success_callback)
+            success_callback()
+            },
+            { perms: 'email,publish_stream' })
             }
             facebook_login = function(callback_url) {
-              facebook_auth(function() {
-                window.location = callback_url || '#{create_facebook_session_url}'
-              })
+            facebook_auth(function() {
+            window.location = callback_url || '#{create_facebook_session_url}'
+            })
             }
           </script>
         <% end %>
@@ -164,8 +195,8 @@
           </script>
           <script type="text/javascript">
             try {
-              var pageTracker = _gat._getTracker("#{GOOGLE_ANALYTICS_TRACKING_CODE}");
-              pageTracker._trackPageview();
+            var pageTracker = _gat._getTracker("#{GOOGLE_ANALYTICS_TRACKING_CODE}");
+            pageTracker._trackPageview();
             } catch(err) {}
 
           </script>
@@ -175,24 +206,17 @@
           //<![CDATA[
           jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
           jQuery('#idea_document').change(function(){
-            var i=this
-            jQuery('input#fakeupload').val(i.value);
+          var i=this
+          jQuery('input#fakeupload').val(i.value);
           })
         </script>
-
         <!--Footer Starts -->
         <div class="footer">© BDO Kommunernes Revision, Godkendt revisionsaktieselskab</div>
         <!--Footer Ends -->
       </div>
 
       <script type="text/javascript" >
-        var tags =<%= Tag.all.map(&:name).to_json %>
-        var tag_auto = jQuery('input#idea_tag_names').tagify();
-        tag_auto.tagify('inputField').autocomplete({
-          source:tags,
-          position: { of: tag_auto.tagify('tagify-container') },
-          close: function(event, ui) { tag_auto.tagify('add'); },
-        });
+
       </script>
     </div>
   </body>

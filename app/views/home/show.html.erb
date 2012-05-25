@@ -2,73 +2,35 @@
 <%= javascript_include_tag "jquery.tagify" %>
 <div class="body_wrap">
   <div class="full_wrap">
-    <!--Top Part Starts -->
-    <div class="plainwrap">
-      <div class="home_top">
-        <div class="plainwrap">
-          <!--Form Stuff Starts -->
-          <div class="form_wrap">
-            <%= render :partial => "new_idea" %>
-          </div>
-          <!--Form Stuff Ends -->
-          <!--Top Bidragydere Panel Starts -->
-
-
-          <div class="top_bidragydere" style="max-height: 365px;">
-            <div class="plainwrap"><h3 style="margin-left:15px;float:left;width:auto;font-size: 13px;">Top Bidragydere</h3>
-              <a class="flere" href="/user/index">Flere</a>
-            </div>
-            <div class="top_bid_inner" style="max-height:292px;">
-              <%= render :partial => 'shared/home_contributor',
-                :collection => User.find_top_contributors(true, :limit => 10),
-                :locals => { :points_method => :recent_contribution_points }%>
-              <!--Single Row1 Starts -->
-
-
-
-              <!--Single Row5 Ends -->
-            </div>
-            <div class="plainwrap"></div>
-          </div>
-
-          <!--Top Bidragydere Panel Starts -->
-        </div>
-      </div>
-    </div>
-
-    
     <!--Header Portion Ends -->
 
 
     <!--Bottom Panel Starts -->
     <div class="plainwrap">
       <!--Header Portion Starts -->
-      <div class="tab_headline" style="margin-bottom:6px;">
-        <div class="fl"><strong>HER ER ET PAR IDEER. Hvad synes du om dem?</strong></div>
-      </div>
       <!--Ideers Panel Starts -->
       <div class="plainwrap">
         <!--Hotte ideer Starts -->
         <div class="btmideer_block">
-          <div class="plainwrap"><h3>Hotte Ideer</h3></div>
+          <div class="plainwrap"><h2>Hotte Ideer</h2></div>
           <div class="ideer_outer">
-            <%= render :partial => 'idea', :collection => search_ideas(:search => 'hot', :page_size => 5) %>
+            <%= render :partial => 'home/idea', :collection => search_ideas(:search => 'hot', :page_size => 5) %>
             <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => "hot"), :class => 'flere'%></div>
           </div>
         </div>
 
         <div class="btmideer_block">
-          <div class="plainwrap"><h3>Seneste Ideer</h3></div>
+          <div class="plainwrap"><h2>Seneste Ideer</h2></div>
           <div class="ideer_outer">
-            <%= render :partial => 'idea', :collection => search_ideas(:search => 'recent', :page_size => 5) %>
+            <%= render :partial => 'home/idea', :collection => search_ideas(:search => 'recent', :page_size => 5) %>
             <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => "recent"), :class => 'flere'%></div>
           </div>
         </div>
 
         <div class="btmideer_block_last">
-          <div class="plainwrap"><h3>Afdelings Ideer</h3></div>
+          <div class="plainwrap"><h2>Afdelings Ideer</h2></div>
           <div class="ideer_outer">
-            <%= render :partial => 'idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>5)%>
+            <%= render :partial => 'home/idea', :collection => search_ideas(:search=>["department",  current_user.department_id], :page_size=>5)%>
 
             <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'flere'%></div>
           </div>
@@ -76,42 +38,88 @@
 
       </div>
     </div>
+    <div style="clear:both; margin:5px;">&nbsp;</div>
+    <!--Top Part Starts -->
+    <div class="tab_headline" style="margin-bottom:6px;">
+      <div class="fl" style="text-align: center; width: 100%;">
+        <h2 style="text-align: center;">&nbsp;&nbsp;Har du en ide? Fortæl os om den her!</h2>
+        <%= image_tag("arro1.jpeg", :size => "40x40", :style => "border:0;") %>
+      </div>
+
+    </div>
+    <div class="plainwrap">
+      <div class="home_top">
+        <div class="plainwrap">
+          <div style="width: 60%; float: left;">
+            <!--Form Stuff Starts -->
+            <div class="form_wrap">
+              <%= render :partial => "home/new_idea" %>
+            </div>
+            <!--Form Stuff Ends -->
+          </div>
+
+          <div style="width: 40%;  float: left;">
+            <!--Top Bidragydere Panel Starts -->
+            <div class="top_bidragydere" style="max-height: 365px;">
+              <div class="plainwrap"><h3 style="margin-left:15px;float:left;width:auto;font-size: 13px;">Top Bidragydere</h3>
+                <a class="flere" href="/user/index">Flere</a>
+              </div>
+              <div class="top_bid_inner" style="max-height:325px;">
+                <%= render :partial => 'shared/home_contributor',
+                  :collection => User.find_top_contributors(true, :limit => 5),
+                  :locals => { :points_method => :recent_contribution_points }%>
+                <!--Single Row1 Starts -->
+
+                <!--Single Row5 Ends -->
+              </div>
+              <div class="plainwrap"></div>
+            </div>
+            <!--Top Bidragydere Panel ends -->
+            <div style="clear:both"></div>
+            <div style="margin-left: 52px;">
+              <br/>
+              <%= image_tag("de_original_230.png", :style => "border:0;cursor: pointer;", :size => "200x35", :onclick => "$('idea_form_submit').click();") %><br/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 
 <script type="text/javascript">
-  
+
   var tags= <%= Tag.all.map(&:name).to_json  %>;
-  var myTextArea = jQuery('#auto-text').tagify();
+  var myTextArea = jQuery('#auto-text').tagify({delimiters: [13]});
 
   myTextArea.tagify('inputField').autocomplete({
-    source: tags,
-    position: { of: myTextArea.tagify('containerDiv') },
-    close: function(event, ui) { myTextArea.tagify('add'); }
+  source: tags,
+  position: { of: myTextArea.tagify('containerDiv') }
   });
 
   jQuery("#idea_form").submit(function(e){
-    var new_values = jQuery(".tagify-container input:first").val();
-    jQuery.each(new_values.split(","),function(i,data){
-      myTextArea.tagify("add",data);
-    });
-    myTextArea.tagify("serialize");
+  var new_values = jQuery(".tagify-container input:first").val();
+  jQuery.each(new_values.split(","),function(i,data){
+  myTextArea.tagify("add",data);
   });
-  
+  myTextArea.tagify("serialize");
+  });
+
 </script>
 
 
 <script type='text/javascript'>
   jQuery(document).ready(function(){
 
-    jQuery(".outer_block li").hover(
-    function() {
-      jQuery(this).fadeTo("slow", 1.0);
-    },
-    function() {
-      jQuery(this).fadeTo("slow", 0.6);
-    });
+  jQuery(".outer_block li").hover(
+  function() {
+  jQuery(this).fadeTo("slow", 1.0);
+  },
+  function() {
+  jQuery(this).fadeTo("slow", 0.6);
+  });
 
   });
 </script>

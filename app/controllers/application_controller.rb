@@ -32,7 +32,16 @@ class ApplicationController < ActionController::Base
   # from the application log (in this case, all fields with names like "password").
   filter_parameter_logging :password, :password_confirmation
 
-protected
+  #def check_ip
+  #    @ip_addr = request.ip
+  #    if @ip_addr == "83.151.150.86"
+  #      return true
+  #    else
+  #      redirect_to error_page_path
+  #    end
+  #  end
+
+  protected
 
   # Only allow publicly editable fields, so that for example user cannot hack idea rating
   def self.param_accessible(accessible_params)
@@ -63,14 +72,14 @@ protected
   # Used for creating titles and error messages.
   def request_as_words
     verb = case params[:action]
-      when /new|create/
-        'create new'
-      when /edit|update|delete/
-        'edit'
-      when /show|index/
-        'view'
-      else
-        'use'
+    when /new|create/
+      'create new'
+    when /edit|update|delete/
+      'edit'
+    when /show|index/
+      'view'
+    else
+      'use'
     end
     "#{verb} #{controller_name.gsub('_',' ')}"
   end

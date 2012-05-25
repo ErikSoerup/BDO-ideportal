@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  
+
   include SearchHelper
   include ActionView::Helpers::JavaScriptHelper
 
@@ -10,34 +10,57 @@ module ApplicationHelper
   end
   def url_field(val)
     "/home/advance?val="+val
-  end 
+  end
 
 
-  def next_idea(idea,val=nil)
-    if val == "hot"
+  def next_idea(idea,val=nil,arr=nil)
+    if val == "hot" && arr.nil?
       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.rating DESC, ideas.created_at DESC'))
       ideas[ideas.index(idea) + 1]
-    elsif val == "recent"
+    elsif val == "recent" && arr.nil?
       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.created_at DESC'))
+      ideas[ideas.index(idea) + 1]
+    elsif arr && val.nil?
+
+      ideas= arr
       ideas[ideas.index(idea) + 1]
     else
       Idea.active.find(:last, :conditions => ["ideas.id > ?", idea.id], :order => "ideas.id DESC")
     end
   end
 
-  def prev_idea(idea,val)
+  def prev_idea(idea,val=nil,arr=nil)
     if val == "hot"
-       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.rating DESC, ideas.created_at DESC'))
+      ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.rating DESC, ideas.created_at DESC'))
       ideas[ideas.index(idea) - 1]
     elsif val == "recent"
       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.created_at DESC'))
       ideas[ideas.index(idea) - 1]
+    elsif arr && val.nil?
+
+      ideas= arr
+      ideas[ideas.index(idea) - 1]
     else
       Idea.active.find(:first, :conditions => ["ideas.id < ?", idea.id], :order => "ideas.id DESC")
     end
-    
+
   end
- 
+
+  def idea_text(idea)
+    if idea.status == "new"
+      "Nye"
+    elsif idea.status == "under review"
+      "Behandlet"
+    elsif idea.status == "coming soon"
+      "Kommer snart"
+    elsif idea.status == "launched"
+      "Implementeret"
+    else
+      idea.status.to_s
+    end
+
+  end
+
   def user_formatted_text(text)
     # Handles free-form text for ideas and comments.
     # We could drop in some more elaborate formatting rules here if we want to,
@@ -112,6 +135,10 @@ module ApplicationHelper
       'page-size' => p.per_page,
       'count' => p.size,
       'total-count' => p.total_entries }
+  end
+
+  def current_user_has_relationship_with user
+    current_user.relationships.include?(Relationship.find_by_follower_id_and_followed_id(current_user.id, user.id))
   end
 
   private

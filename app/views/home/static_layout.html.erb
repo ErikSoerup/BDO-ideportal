@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title><%= "#{SITE_TITLE} | #{h(page_title || "Del dine ideer, stem og diskuter muligheder. Vi kan gøre det endnu bedre!")}" %></title>
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="author" content="RapidxHTML" />
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+    <!--[if lte IE 7]><link href="css/iehacks.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="js/ie6pngfix.js"></script>
+    <script type="text/javascript">
+      DD_belatedPNG.fix('img, ul, ol, li, div, p, a, h1, h2, h3, h4, h5, h6');
+    </script>
+    <![endif]-->
+    <%= stylesheet_link_tag "idea_form_new" %>
+<%#= stylesheet_link_tag "profile" %>
+  </head>
+
+  <body>
+
+    <!-- wrapper -->
+    <div class="rapidxwpr floatholder">
+
+      <!-- header -->
+      <div id="header">
+
+        <!-- logo -->
+
+        <a href="/">
+          <p style="float: left;">
+            <%= image_tag("bdo_logo.png", :size => "230x35") %></p>
+<%#*<p style="color: white; font-size: 24px; font-weight: bold; float: left; !important">BDO KR Ideportal</p>%>
+        </a>
+        <!-- / logo -->
+
+        <!-- topmenu -->
+        <div id="topmenu">
+          <ul>
+            <li><a href=""><span><%=t("menu.hot")%></span></a></li>
+            <li><a href=""><span><%=t("menu.recent")%></span></a></li>
+            <li><a href=""><span><%=t("menu.currents")%></span></a></li>
+            <li><a href=""><span><%=t("menu.comments")%></span></a></li>
+            <li><a href=""><span><%=t("menu.tags")%></span></a></li>
+            <li><a href=""><span><%=t("menu.advance_search")%></span></a></li>
+          </ul>
+        </div>
+        <!-- / topmenu -->
+
+      </div>
+      <!-- / header -->
+
+      <!-- main body -->
+      <div id="middle">
+
+        <div id="main" class="clearingfix">
+          <div id="mainmiddle" class="floatbox">
+
+            <!-- right column -->
+<%#*<div id="right" class="clearingfix">%>
+
+<%#*<!-- benefits box -->%>
+<%#*<div class="benefits">%>
+<%#*<div class="benefits-bg clearingfix">%>
+<%#*<h3>BENEFITS OF GOING GREEN</h3>%>
+<%#*<ul>%>
+<%#*<li><a href="">Stats Tracker</a></li>%>
+<%#*<li><a href="">10GB to 120GB Storage</a></li>%>
+<%#*<li><a href="">1TB to 3TB Bandwidth</a></li>%>
+<%#*<li><a href="">PHP5, MySQL</a></li>%>
+<%#*<li><a href="">Satisfaction Guaranteed</a></li>%>
+<%#*<li><a href="">2GB Dedicated RAM</a></li>%>
+<%#*</ul>%>
+<%#*<a href="" class="signup">sign up</a>%>
+<%#*</div>%>
+<%#*</div>%>
+<%#*<!-- / benefits box -->%>
+
+<%#*</div>%>
+            <!-- / right column -->
+
+            <!-- content column -->
+            <div id="content" class="clearingfix">
+              <div id="right" >
+                <!-- benefits box -->
+                <div class="benefits">
+                  <div class="benefits-bg clearingfix">
+                    <h3 style="color: #076B61;">Hotte Ideer</h3>
+                    <ul>
+                      <li><a href="">Stats Tracker</a></li>
+                      <li><a href="">10GB to 120GB Storage</a></li>
+                      <li><a href="">1TB to 3TB Bandwidth</a></li>
+                      <li><a href="">PHP5, MySQL</a></li>
+                      <li><a href="">Satisfaction Guaranteed</a></li>
+                      <li><a href="">2GB Dedicated RAM</a></li>
+                    </ul>
+                    <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'flere'%></div>
+                  </div>
+                </div>
+                <!-- / benefits box -->
+              </div>
+
+              <div id="right">
+                <!-- benefits box -->
+                <div class="benefits">
+                  <div class="benefits-bg clearingfix">
+                    <h3 style="color: #076B61;">Seneste Ideer</h3>
+                    <ul>
+                      <li><a href="">Stats Tracker</a></li>
+                      <li><a href="">10GB to 120GB Storage</a></li>
+                      <li><a href="">1TB to 3TB Bandwidth</a></li>
+                      <li><a href="">PHP5, MySQL</a></li>
+                      <li><a href="">Satisfaction Guaranteed</a></li>
+                      <li><a href="">2GB Dedicated RAM</a></li>
+                    </ul>
+                    <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'flere'%></div>
+                  </div>
+                </div>
+                <!-- / benefits box -->
+              </div>
+
+              <div id="right">
+                <!-- benefits box -->
+                <div class="benefits">
+                  <div class="benefits-bg clearingfix">
+                    <h3 style="color: #076B61;">Afdelings Ideer</h3>
+                    <ul>
+                      <li><a href="">Stats Tracker</a></li>
+                      <li><a href="">10GB to 120GB Storage</a></li>
+                      <li><a href="">1TB to 3TB Bandwidth</a></li>
+                      <li><a href="">PHP5, MySQL</a></li>
+                      <li><a href="">Satisfaction Guaranteed</a></li>
+                      <li><a href="">2GB Dedicated RAM</a></li>
+                    </ul>
+                    <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'flere'%></div>
+                  </div>
+                </div>
+                <!-- / benefits box -->
+              </div>
+            </div>
+            <!-- / content column -->
+
+          </div>
+        </div>
+
+        <div style="clear:both; margin:5px;">&nbsp;</div>
+
+
+        <!-- main image -->
+        <div id="main" class="clearingfix">
+          <div class="main-image">
+            <%= render :partial => "new_idea" %>
+
+            <div id="right" style="width:33%; float: left;">
+              <!-- benefits box -->
+              <div class="benefits">
+                <div class="benefits-bg clearingfix">
+                  <h3 style="color: #076B61;">Top Bidragydere</h3>
+                  <ul>
+                    <li><a href="">Stats Tracker</a></li>
+                    <li><a href="">10GB to 120GB Storage</a></li>
+                    <li><a href="">1TB to 3TB Bandwidth</a></li>
+                    <li><a href="">PHP5, MySQL</a></li>
+                    <li><a href="">Satisfaction Guaranteed</a></li>
+                    <li><a href="">2GB Dedicated RAM</a></li>
+                  </ul>
+                  <div class="plainwrap"><%= link_to t("menu.user_more"), idea_search_path(:search => ["department", current_user.department_id]), :class => 'flere'%></div>
+                </div>
+              </div>
+              <!-- / benefits box -->
+            </div>
+          </div>
+        </div>
+        <!-- / main image -->
+      </div>
+      <!-- / main body -->
+
+    </div>
+    <!-- / wrapper -->
+
+    <!-- footer -->
+<%#*<div class="rapidxwpr floatholder">%>
+<%#*<div id="footer" class="clearingfix">%>
+
+<%#*<!-- footermenu -->%>
+<%#*<ul class="footermenu">%>
+<%#*<li><a href="">Home</a></li>%>
+<%#*<li><a href="">Services</a></li>%>
+<%#*<li><a href="">About us</a></li>%>
+<%#*<li><a href="">Contact</a></li>%>
+<%#*</ul>%>
+<%#*<!-- / footermenu -->%>
+
+<%#*<!-- credits -->%>
+<%#*<div class="credits">%>
+<%#*<a href="http://studio7designs.com/branding">Designed by STUDIO7DESIGNS</a>%>
+<%#*</div>%>
+<%#*<!-- / credits -->%>
+
+<%#*</div>%>
+<%#*</div>%>
+    <!-- / footer -->
+
+  </body>
+</html>

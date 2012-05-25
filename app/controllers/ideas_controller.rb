@@ -16,7 +16,7 @@ class IdeasController < ApplicationController
   before_filter :add_search_feed, :only => :index
   before_filter :add_comments_feed, :only => [:show, :update]
   layout 'profile'
-  
+
   def compute_layout
     if action_name == "index" && !params[:search].nil? || action_name == "show" || action_name == "new"
       'profile'
@@ -30,24 +30,32 @@ class IdeasController < ApplicationController
   make_resourceful do
     actions :new, :create, :show, :update, :destroy
 
+
     before :create do
       @idea.inventor = current_user
       @idea.ip = request.remote_ip
       @idea.user_agent = request.user_agent
+      @idea.current_id = "-1" if params[:idea][:current_id] == ""
       if params[:tags]
         # User can enter tags as free-form text, or using client-side JS. We need to merge tags from the two sources.
-        @idea.tags += params[:tags].values.map{ |tag| Tag.from_string(tag) }.flatten 
+        @idea.tags += params[:tags].values.map{ |tag| Tag.from_string(tag) }.flatten
       end
     end
 
-   
-
     after :create do
-
+      @body_class = params[:page].nil? ? 'home' : params[:page]
       if @idea.valid? && @idea.inventor
+        if @idea.inventor.followers
+          @current = Current.find(params[:idea][:current_id]) if !params[:idea][:current_id].blank?
+          @idea.inventor.followers.each do |follower|
+            if follower != current_user
+              Delayed::Job.enqueue IdeaCreationNotificationJob.new(current_user, follower, @idea, @current)
+            end
+          end
+        end
         # Users automatically vote for their own ideas:
         @idea.add_vote!(@idea.inventor)
-        if @idea.current && !@idea.current.current_followers.empty? 
+        if @idea.current && !@idea.current.current_followers.empty?
           @idea.current.current_followers.each do |follow|
             Delayed::Job.enqueue IdeaNotificationJob.new(User.find(follow.user_id), @idea) unless User.find(follow.user_id) == current_user
           end
@@ -91,6 +99,7 @@ class IdeasController < ApplicationController
     end
 
     response_for :create do |format|
+
       format.html do
         if @idea.inventor
           redirect_to idea_path(@idea)
@@ -112,12 +121,10 @@ class IdeasController < ApplicationController
     end
 
     response_for :create_fails do |format|
-      format.html { render :template => 'ideas/new' }
+      format.html { render :template => 'home/show' }
       format.js   { render :partial => 'new' }
       format.xml  { render :template => 'validation_errors' }
     end
-
-    
 
     response_for :update do |format|
       format.html do
@@ -147,42 +154,38 @@ class IdeasController < ApplicationController
     redirect_to idea_path(@idea)
   end
 
-
   def destroy_idea
-    @idea=Idea.find(params[:id])
+    @idea = Idea.find(params[:id])
     @idea.destroy
     render :layout => false
   end
-
- 
-
 
   def follow
     begin
       @idea= Idea.find(params[:idea_id])
       IdeaFollower.create!(:user_id => current_user.id, :idea_id => @idea.id)
       flash[:notice] = "You have successfully followed the idea"
-      redirect_to idea_path(@idea)
-      Delayed::Job.enqueue NotificationCommentJob.new(current_user, @idea)
+      Delayed::Job.enqueue IdeaFollowerNotificationJob.new(current_user, @idea)
+      redirect_to :back
       #      UserMailr.deliver_notification_comments()
-    rescue
+    rescue Exception => e
       flash[:notice] = "You have successfully followed the idea"
-      redirect_to idea_path(@idea)
+      #      redirect_to idea_path(@idea)
+      redirect_to :back
     end
   end
-  
-  
+
   def followers
     @body_class='advance'
     page = 1 || params[:page]
     @idea=Idea.find(params[:id])
     @users=@idea.idea_followers.collect(&:user).uniq
-    
+
     if params[:val]
       @users=@users.find_all {|user|  user.name.first == params[:val].to_s}
-      
+
     elsif params[:name] == "navn" &&  params[:arrow] =="up"
-      
+
       @users=@users.sort{|x,y| x.name <=> y.name}
     elsif params[:name] == "navn" &&  params[:arrow] == "down"
       @users=@users.sort{|x,y| y.name <=> x.name}
@@ -209,22 +212,23 @@ class IdeasController < ApplicationController
     else
       @users = @users
     end
+    begin
+      @users.delete(User.find(1)) if @users.include?(User.find(1))
+    rescue Exception => e
+    end
     @users=@users.paginate :page => page unless @users.nil?
-    
+
   end
+
   def unfollow
-    @idea_follow=IdeaFollower.find_by_user_id_and_idea_id(current_user.id,params[:id])
+    @idea_follow = IdeaFollower.find_by_user_id_and_idea_id(current_user.id,params[:id])
     @idea_follow.destroy unless @idea_follow.nil?
     flash[:notice] = "Your fellowship of this idea has been removed"
-    redirect_to ideas_path
+    redirect_to :back
   end
-  
-  
+
   def index
     unless params[:status].nil?
-      
-        
-      
       current_objects(params[:status])
     else
       if params[:page_size]
@@ -236,7 +240,7 @@ class IdeasController < ApplicationController
       # Call current_objects to populate @body_class. (If the results are cached, we don't need to do this.
       # We never cache the idea list for a user who is logged in, because we want their votes to show up immediately.)
       unless !logged_in? && fragment_exist?(['idea_search', CGI.escape(params.inspect)])
-        current_objects()
+        current_objects
       end
     end
     respond_to do |format|
@@ -288,7 +292,8 @@ class IdeasController < ApplicationController
     if status.nil?
       @currents ||= Idea.populate_comment_counts(search_ideas(params))
     else
-      @currents ||= Idea.paginate(:per_page => 8,:page => params[:page], :conditions =>["status = ?",status])
+      @status = status
+      @currents ||= Idea.paginate(:per_page => 5,:page => params[:page], :conditions =>["status = ?",status])
     end
   end
 

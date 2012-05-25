@@ -13,7 +13,7 @@
       <h3 class="subhead">Oprettet for <strong><%= time_ago_in_words(@current.created_at) %> <%= t("ago") %></strong>  <%=link_to h(@current.inventor.name), profile_path(@current.inventor),:class => "bold_link" unless @current.inventor.nil? %></h3>
       <h3 class="subhead">Status: <strong>
 
-          <% if @current.closed?%>          
+          <% if @current.closed?%>
             closed
           <% else%>
             open
@@ -23,8 +23,8 @@
         <strong> <%= @current.submission_deadline%></strong></p>
       <p><%=  user_formatted_text @current.description %></p>
     </div>
-    
-    
+
+
 
     <div class="plainwrap">
       <div class="tab_headline">
@@ -38,7 +38,7 @@
       </div>
 
       <div class="plainwrap"><h2 class="title"><span>
-            <%= render :partial => 'idea_count', :locals => { :current_ideas => @current_ideas }%> 
+            <%= render :partial => 'idea_count', :locals => { :current_ideas => @current_ideas }%>
             <% if @current_ideas.empty? %>
               <%= link_to 'Submit an idea!', params[:action] == "show" ? "#header" : current_path(current, :anchor=>"header"), :class=> "bold_link"%>
               <a name="header" class="bold_link"></a>
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-   
+
   </div>
   <!--Left Panel Ends -->
   <!--Right Panel Starts -->
@@ -83,22 +83,26 @@
   <!--Right Panel Ends -->
 </div>
 <script type="text/javascript">
-  
+
   var tags= <%= Tag.all.map(&:name).to_json  %>;
   var myTextArea = jQuery('#auto-text').tagify();
 
+<%#*myTextArea.tagify('inputField').autocomplete({%>
+<%#*source: tags,%>
+<%#*position: { of: myTextArea.tagify('containerDiv') },%>
+<%#*close: function(event, ui) { myTextArea.tagify('add'); }%>
+<%#*});%>
   myTextArea.tagify('inputField').autocomplete({
-    source: tags,
-    position: { of: myTextArea.tagify('containerDiv') },
-    close: function(event, ui) { myTextArea.tagify('add'); }
+  source: tags,
+  position: { of: myTextArea.tagify('containerDiv') }
   });
 
   jQuery("#idea_form").submit(function(e){
-    var new_values = jQuery(".tagify-container input:first").val();
-    jQuery.each(new_values.split(","),function(i,data){
-      myTextArea.tagify("add",data);
-    });
-    myTextArea.tagify("serialize");
+  var new_values = jQuery(".tagify-container input:first").val();
+  jQuery.each(new_values.split(","),function(i,data){
+  myTextArea.tagify("add",data);
   });
-  
+  myTextArea.tagify("serialize");
+  });
+
 </script>

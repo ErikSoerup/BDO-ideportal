@@ -1,13 +1,14 @@
-<%= javascript_include_tag "edit.js"%>
-<% if controller.class != "HomeController" && controller.action_name != "show" %>
+<%#= javascript_include_tag "edit.js"%>
+
+<% unless current_page?("/")  || current_page?("/ideas") %>
   <script type='text/javascript'>
     //<![CDATA[
     jQuery.noConflict(); // prevent jQuery from overriding $ operator, so that it doesn't fight with Prototype
-  
-  
+
+
     jQuery('#idea_document').change(function(){
-      var i=this
-      jQuery('input#fakeupload').val(i.value);
+    var i=this
+    jQuery('input#fakeupload').val(i.value);
     })
   </script>
 
@@ -15,8 +16,8 @@
   <%= javascript_include_tag "jquery.tagify" %>
 
 
-  <div id ="share" class="section">
-    <div class="body">
+  <div id ="share" class="section" style="text-align: center;">
+    <div class="body" style="text-align: left;">
       <div id="submit-idea">
 
         <% form_for :idea, :url => ideas_path,  :html => { :multipart=>true, :class => 'main' } do |f|%>
@@ -24,32 +25,34 @@
             <label for = "idea-title">
               <strong><%=t("idea")%></strong>
               <small><%=t("idea_in_short")%></small></label>
-            <%= f.text_field :title, :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
+            <%= f.text_field :title, :value => @idea ? t("my_idea_is") : "", :placeholder =>t("my_idea_is"), :maxlength => 120, :size => 51, :id => "idea-title", :class => "input-text"%>
           </div>
           <div id="idea-description-group" class="form-group inline">
             <label for = "idea-description">
               <strong> <%=t("description")%></strong>
               <small><%=t('breif_explaination')%></small>
-            </label>    
-            <%= f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30", :maxlength => "550"%>
+            </label>
+            <%= f.text_area :description, :value => @idea ? t("great_if") : "", :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea", :rows => "5", :cols => "30", :maxlength => "600"%>
             <p class="charsRemaining" style="padding-left: 144px;color:black;"></p>
-            <div clas s="input_file">
+            <div class="input_file">
               <%= text_field_tag("dddd","", :size=>50 , :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")%>
               <%=f.file_field :document , :size=>80%>
             </div>
-          </div> 
+          </div>
           <div id="idea-tags-group" class="form-group inline" style="width: 738px;">
             <label for = "idea-tags">
               <strong><%=t('menu.tags')%></strong>
               <small> <%=t("seperate_with_coma")%></small>
             </label>
             <%= render :partial => 'ideas/tag_editor', :locals => { :f => f }%>
-            <%= f.collection_select :current_id, Current.all_except_default, :id, :title , {:include_blank=>'Hovedveje ...'}, :style => "width:196px;"%>
+            <%@idea.current_id = nil if @idea%>
+            <%= f.collection_select :current_id, Current.all_except_default, :id, :title ,
+              {:include_blank=>"Hovedveje ..."}, :style => "width:196px;"%>
           </div>
 
           <div class="form-group inline">
             <%= submit_tag 'Share My Idea', :class => "input-submit"%>
-          </div>     
+          </div>
 
         <% end %>
       </div>
@@ -58,67 +61,74 @@
 
 
     <% unless current_page?("/")  || current_page?("/ideas")%>
-      <a href="#" class="tab" onclick="jQuery('.body').toggle();changeContain();jQuery('.ui-autocomplete-input').addClass('input-text');"><span class="dn">Del dine Ideer</span> </a>
+      <a href="#" class="tab" onclick="jQuery('.body').toggle();changeContain();jQuery('.ui-autocomplete-input').addClass('input-text');">
+        <span class="dn">Fortæl os din ide <br/>
+          <%= image_tag("up_arro2.png", :size => "40x40", :style => "border:0;") %> <br/>
+          <h3>Fik du lige en god ide?</h3></span> </a>
     <% end %>
   </div>
 
   <script type="text/javascript">
     function changeContain(){
-      if(jQuery('.body').is(":visible")){
-        jQuery('.dn').html("Luk ideformular");
-      
-      }
-      else{
-        jQuery('.dn').html("Del dine Ideer");
-        jQuery('.ui-autocomplete-input').addClass('input-text');
-      }
+    if(jQuery('.body').is(":visible")){
+    jQuery('.dn').html("Luk ideformular");
+
+    }
+    else{
+    jQuery('.dn').html("Fortæl os din ide <br/><img src='/images/up_arro2.png' width='40px' height='40px'> <br/><h3>Fik du lige en god ide?</h3>");
+    jQuery('.ui-autocomplete-input').addClass('input-text');
+    }
     }
   </script>
 
   <script type="text/javascript">
     var tags= <%= Tag.all.map(&:name).to_json  %>;
-    var myTextArea = jQuery('#auto-text').tagify();
+    var myTextArea = jQuery('#auto-text').tagify({delimiters: [13]});
 
+  <%#*myTextArea.tagify('inputField').autocomplete({%>
+  <%#*source: tags,%>
+  <%#*position: { of: myTextArea.tagify('containerDiv') },%>
+  <%#*close: function(event, ui) { myTextArea.tagify('add'); }%>
+  <%#*});%>
     myTextArea.tagify('inputField').autocomplete({
-      source: tags,
-      position: { of: myTextArea.tagify('containerDiv') },
-      close: function(event, ui) { myTextArea.tagify('add'); }
+    source: tags,
+    position: { of: myTextArea.tagify('containerDiv') }
     });
 
     jQuery("#idea_form").submit(function(e){
-      var new_values = jQuery(".tagify-container input:first").val();
-      jQuery.each(new_values.split(","),function(i,data){
-        myTextArea.tagify("add",data);
-      });
-      myTextArea.tagify("serialize");
+    var new_values = jQuery(".tagify-container input:first").val();
+    jQuery.each(new_values.split(","),function(i,data){
+    myTextArea.tagify("add",data);
     });
-  
+    myTextArea.tagify("serialize");
+    });
+
   </script>
 
 
-<script type="text/javascript">
-  jQuery.fn.limitMaxlength = function(options){
+  <script type="text/javascript">
+    jQuery.fn.limitMaxlength = function(options){
 
     var settings = jQuery.extend({
-      attribute: "maxlength",
-      onLimit: function(){},
-      onEdit: function(){}
+    attribute: "maxlength",
+    onLimit: function(){},
+    onEdit: function(){}
     }, options);
 
     // Event handler to limit the textarea
     var onEdit = function(){
-      var textarea = jQuery(this);
-      var maxlength = parseInt(textarea.attr(settings.attribute));
+    var textarea = jQuery(this);
+    var maxlength = parseInt(textarea.attr(settings.attribute));
 
-      if(textarea.val().length > maxlength){
-        textarea.val(textarea.val().substr(0, maxlength));
+    if(textarea.val().length > maxlength){
+    textarea.val(textarea.val().substr(0, maxlength));
 
-        // Call the onlimit handler within the scope of the textarea
-        jQuery.proxy(settings.onLimit, this)();
-      }
+    // Call the onlimit handler within the scope of the textarea
+    jQuery.proxy(settings.onLimit, this)();
+    }
 
-      // Call the onEdit handler within the scope of the textarea
-      jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
+    // Call the onEdit handler within the scope of the textarea
+    jQuery.proxy(settings.onEdit, this)(maxlength - textarea.val().length);
     }
 
     this.each(onEdit);
@@ -126,27 +136,31 @@
     return this.keyup(onEdit)
     .keydown(onEdit)
     .focus(onEdit);
-  }
+    }
 
-  jQuery(document).ready(function(){
+    jQuery(document).ready(function(){
 
     var onEditCallback = function(remaining){
-      jQuery(this).siblings('.charsRemaining').text("Charders remaining 550: " + remaining + " tegn");
+    jQuery(this).siblings('.charsRemaining').text("Skriv kort. Du har kun: " + remaining + " tegn");
 
-      if(remaining > 0){
-        jQuery(this).css('background-color', 'white');
-      }
+    if(remaining > 0){
+    jQuery(this).css('background-color', 'white');
+    }
     }
 
     var onLimitCallback = function(){
-      alert("you exceed the limit of  character");
-      jQuery(this).css('background-color', 'white');
+
+    jQuery(this).css('background-color', 'red');
     }
 
     jQuery('textarea[maxlength]').limitMaxlength({
-      onEdit: onEditCallback,
-      onLimit: onLimitCallback
+    onEdit: onEditCallback,
+    onLimit: onLimitCallback
     });
-  });
-</script>
+    });
+
+    jQuery(window).load(function(){
+    jQuery('.charsRemaining').text("Skriv kort. Du har kun :-" + 600 + " tegn");
+    });
+  </script>
 <% end %>

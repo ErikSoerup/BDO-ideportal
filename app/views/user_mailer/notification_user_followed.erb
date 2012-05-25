@@ -1,0 +1,10 @@
+<html>
+  <head></head>
+  <body>
+
+    <p>Kære <%= @followed.name %></p><br/><br/>
+
+    <p><%= link_to @follower.name, @follower_url %>  følger nu dine ideer og kommentarer på ideportalen</p><br/>
+    <p>Klik på linket og derefter på følg <%= @follower.name %>, hvis du ønsker at følge <%= @follower.name%></p>
+  </body>
+</html>

@@ -32,15 +32,15 @@ module TsearchMixin
               @tsearch_config[:vectors][:fields] = 
                 {"a" => {:columns => [options[:fields]], :weight => 1.0}}
               fields << options[:fields]
-            #:fields => [:one, :two]
+              #:fields => [:one, :two]
             elsif options[:fields].is_a?(Array)
               @tsearch_config = {:vectors => default_config.clone}
               @tsearch_config[:vectors][:fields] = 
                 {"a" => {:columns => options[:fields], :weight => 1.0}}
               fields = options[:fields]
-            # :fields => {"a" => {:columns => [:one, :two], :weight => 1},
-            #              "b" => {:colums => [:three, :four], :weight => 0.5}
-            #              }
+              # :fields => {"a" => {:columns => [:one, :two], :weight => 1},
+              #              "b" => {:colums => [:three, :four], :weight => 0.5}
+              #              }
             elsif options[:fields].is_a?(Hash)
               @tsearch_config = {:vectors => default_config.clone}
               @tsearch_config[:vectors][:fields] = options[:fields]
@@ -114,7 +114,7 @@ module TsearchMixin
           tsearch_options[:vector] = "vectors" unless tsearch_options.keys.include?(:vector)
           raise "Vector [#{tsearch_options[:vector].intern}] not found 
                   in acts_as_tsearch config: #{@tsearch_config.to_yaml}
-                  " if !@tsearch_config.keys.include?(tsearch_options[:vector].intern)
+          " if !@tsearch_config.keys.include?(tsearch_options[:vector].intern)
           tsearch_options[:fix_query] = true if tsearch_options[:fix_query].nil?
 
           locale = @tsearch_config[tsearch_options[:vector].intern][:locale]
@@ -124,6 +124,7 @@ module TsearchMixin
           
           #add tsearch_rank to fields returned
           if is_postgresql_83?
+            #            tsearch_rank_function = "ts_rank_cd(to_tsvector(#{table_name}.#{tsearch_options[:vector]}),tsearch_query#{','+tsearch_options[:normalization].to_s if tsearch_options[:normalization]})"
             tsearch_rank_function = "ts_rank_cd(#{table_name}.#{tsearch_options[:vector]},tsearch_query#{','+tsearch_options[:normalization].to_s if tsearch_options[:normalization]})"
           else
             tsearch_rank_function = "rank_cd(#{table_name}.#{tsearch_options[:vector]},tsearch_query#{','+tsearch_options[:normalization].to_s if tsearch_options[:normalization]})"
@@ -136,7 +137,7 @@ module TsearchMixin
           else
             options[:select] = "#{table_name}.*, #{select_part}"
           end
-#options[:select] << " o w w e"          
+          #options[:select] << " o w w e"
           #add headlines
           if tsearch_options[:headlines]
             tsearch_options[:headlines].each do |h|
@@ -222,9 +223,9 @@ module TsearchMixin
         end
         
         def count_by_tsearch(search_string, options = {}, tsearch_options = {})
-            options[:select] = "count(*)"
-            options[:order] = "1 desc"
-            find_by_tsearch(search_string, options, tsearch_options)[0][:count].to_i
+          options[:select] = "count(*)"
+          options[:order] = "1 desc"
+          find_by_tsearch(search_string, options, tsearch_options)[0][:count].to_i
         end        
 
         # Create a tsearch_query from a Google like query (and or " +)

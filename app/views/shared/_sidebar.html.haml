@@ -13,8 +13,8 @@
     .section
       %div{:id => "followers"}
       %h2.header=t("top_contributors")
-      
-      
+
+
       -#%p Earn points for sharing, voting, and discussing ideas.
       %ul#top-recent-contributors.list-block
         /*------- STYLE NEEDED ------*/
@@ -31,10 +31,8 @@
         |
         %b= t("all_time")
         /*------- /STYLE NEEDED ------*/
-        = render :partial => 'shared/all_contributor',
-          :collection => User.find_top_contributors(true, :limit => 10),
-          :locals => { :points_method => :contribution_points }
-                 
+        = render :partial => 'shared/all_contributor'
+
 
       :javascript
         document.show_contributors = function(all_time) {

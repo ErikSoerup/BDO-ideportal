@@ -1,18 +1,18 @@
 class CurrentsController < ApplicationController
 
-  
+
   require "#{RAILS_ROOT}/app/jobs/NotificationCurrentJob.rb"
-  
+
   layout :compute_layout
-  
+
   def compute_layout
-    if action_name == "index" || action_name == "show"
+    if action_name == "index" || action_name == "show" || action_name == "followers"
       'profile'
     else
       'application'
     end
   end
-  
+
   make_resourceful do
     actions :show, :index
 
@@ -28,9 +28,9 @@ class CurrentsController < ApplicationController
   end
 
   def current_objects
-    @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
+    @currrents ||= Current.all_except_default
+    #    @currrents ||= Current.find(:all, :conditions=>"id != #{Current::DEFAULT_CURRENT_ID}")
   end
-
 
   def page_title
     if @current
@@ -60,37 +60,72 @@ class CurrentsController < ApplicationController
   end
 
   def follow
-    
+
     begin
       @current= Current.find(params[:current_id])
       CurrentFollower.create!(:user_id => current_user.id, :current_id => @current.id)
       flash[:notice] = "You have successfully followed the idea"
-      redirect_to current_path(@current)
+      redirect_to params[:index] ? :back : current_path(@current)
       Delayed::Job.enqueue NotificationCurrentJob.new(current_user, @current)
-   
     rescue
       flash[:notice] = "You have successfully followed the idea"
-      redirect_to current_path(@current)
-    end  
+      redirect_to params[:index] ? :back : current_path(@current)
+    end
   end
-  
-  
+
   def followers
-    @current=Current.find(params[:id])
+    @current = Current.find(params[:id])
     @followers=@current.current_followers
     @users=[]
     @followers.each do |f|
-      @users << f.user
+      @users << f.user if !@users.include?(f.user)
     end
+    page = 1 || params[:page]
+    if params[:val]
+      @users=@users.find_all {|user|  user.name.first == params[:val].to_s}
+
+    elsif params[:name] == "navn" &&  params[:arrow] =="up"
+
+      @users=@users.sort{|x,y| x.name <=> y.name}
+    elsif params[:name] == "navn" &&  params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.name <=> x.name}
+    elsif params[:name] == "afeld" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.department.name <=> y.department.name}
+    elsif params[:name] == "afeld" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.department.name <=> x.department.name}
+    elsif params[:name] == "score" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.contribution_points <=> y.contribution_points}
+    elsif params[:name] == "score" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.contribution_points <=> x.contribution_points}
+    elsif params[:name] == "idea" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.ideas.size <=> y.ideas.size}
+    elsif params[:name] == "idea" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.ideas.size <=> x.ideas.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.comments.size <=> y.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.comments.size <=> x.comments.size}
+    elsif params[:name] == "comment" && params[:arrow] == "up"
+      @users=@users.sort{|x,y| x.votes.size <=> y.votes.size}
+    elsif params[:name] == "comment" && params[:arrow] == "down"
+      @users=@users.sort{|x,y| y.votes.size <=> x.votes.size}
+    else
+      @users = @users
+    end
+    begin
+      @users.delete(User.find(1)) if @users.include?(User.find(1))
+    rescue Exception => e
+    end
+    @users=@users.paginate :page => page unless @users.nil?
   end
+
   def unfollow
     @current_follow=CurrentFollower.find_by_user_id_and_current_id(current_user.id,params[:id])
-    @current_follow.destroy unless @current_follow.nil? 
+    @current_follow.destroy unless @current_follow.nil?
     flash[:notice] = "Your fellowship of this idea has been removed"
     redirect_to currents_path
   end
-  
-  
+
   def subscribe
     change_subscription(true)
   end

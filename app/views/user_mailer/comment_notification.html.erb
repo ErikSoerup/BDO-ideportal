@@ -4,7 +4,7 @@
     <p>Kære <%= @user.name %></p><br/><br/> 
     <p>
 
-      <%= link_to  @comment.author.name, profile_url(@comment.author) %> har kommenteret din ide: <%= link_to @comment.idea.title, @url %>. Klik på linket for at se kommentaren. </p><br/><br/>
+      <%= link_to  @comment.author.name, @author_url %> har kommenteret din ide: <%= link_to @comment.idea.title, @url %>. Klik på linket for at se kommentaren. </p><br/><br/>
 
     <p>Ønsker du ikke at få
       besked, når andre kommenterer på din ide, skal du blot klikke på "stop følg"-linket
