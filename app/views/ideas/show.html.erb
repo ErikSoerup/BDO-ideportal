@@ -48,52 +48,53 @@
       </div>
       <!--Profile Top Stuff Starts -->
       <div class="plainwrap">
-        <div class="fl" style="width:75%; margin-bottom: 5px; padding-bottom: 5px;">
-          <p class="subhead1">
-            <%= h @idea.title%>&nbsp;<%if @idea.editable_by?(current_user)%><%= link_to image_tag("edit_item.png", :alt => "For the next #{time_ago_in_words(@idea.created_at + 10.minutes)}", :title => "For the next #{time_ago_in_words(@idea.created_at + 10.minutes)}"), '#', :onclick => 'editIdeaText(); return false' %><%end%></p>
+        <div class="plainwrap" style="height: auto; margin-bottom:10px;" >
+          <div class="fl" style="width:75%; margin-bottom: 5px; padding-bottom: 5px;">
+            <p class="subhead1">
+              <%= h @idea.title%>&nbsp;<%if @idea.editable_by?(current_user)%><%= link_to image_tag("edit_item.png", :alt => "For the next #{time_ago_in_words(@idea.created_at + 10.minutes)}", :title => "For the next #{time_ago_in_words(@idea.created_at + 10.minutes)}"), '#', :onclick => 'editIdeaText(); return false' %><%end%></p>
 
-          <h3 class="subhead2" style="float:left;width:auto;">Sendt <strong style="color:#219188;"><%= time_ago_in_words(@idea.created_at) %> <%= t("ago") %> </strong> af
-            <%unless @idea.is_anonymous?%>
-              <%=link_to @idea.inventor.name, profile_path(@idea.inventor), :class => "bold_link"%>
-            <%else%>
-              <%=link_to "Anonymous", "#", :class=> "bold_link" %>
-            <% end %>
-          </h3>
-          <div style="clear: both;">
-            <h3 class="subhead2 fl">Ideen har status <strong style="color:#219188;"><%= idea_text(@idea) %></strong></h3>
-            <% if current_user.roles.collect(&:name).include?("admin") %>
-              <%= link_to "Edit Status", edit_admin_idea_path(@idea), :class => "bold_link", :style => "padding-left:7px;font-size:15px;" %>
-            <% end %>
+            <h3 class="subhead2" style="float:left;width:auto;">Sendt <strong style="color:#219188;"><%= time_ago_in_words(@idea.created_at) %> <%= t("ago") %> </strong> af
+              <%unless @idea.is_anonymous?%>
+                <%=link_to @idea.inventor.name, profile_path(@idea.inventor), :class => "bold_link"%>
+              <%else%>
+                <%=link_to "Anonymous", "#", :class=> "bold_link" %>
+              <% end %>
+            </h3>
+            <div style="clear: both;">
+              <h3 class="subhead2 fl">Ideen har status <strong style="color:#219188;"><%= idea_text(@idea) %></strong></h3>
+              <% if current_user.roles.collect(&:name).include?("admin") %>
+                <%= link_to "Edit Status", edit_admin_idea_path(@idea), :class => "bold_link", :style => "padding-left:7px;font-size:15px;" %>
+              <% end %>
+            </div>
+
           </div>
 
-        </div>
+          <div class="fr" style="width:25%;">
+            <div style="float: right; overflow: auto;">
+              <div class="fl">
+                <%= link_to "#{@idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+                <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
+              </div>
+              <div class="fl">
 
-        <div class="fr" style="width:25%;">
-          <div style="float: right; overflow: auto;">
-            <div class="fl">
-              <%= link_to "#{@idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(@idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
-              <%= link_to "Stop følg", unfollow_idea_path(@idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).nil?%>
-            </div>
-            <div class="fl">
-
-              <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).blank? %>
-                <% form_tag idea_follow_path do%>
-                  <%= hidden_field_tag :idea_id, @idea.id%>
-                  <%= submit_tag "Følg denne", :class => "idea_submit"%>
+                <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,@idea.id).blank? %>
+                  <% form_tag idea_follow_path do%>
+                    <%= hidden_field_tag :idea_id, @idea.id%>
+                    <%= submit_tag "Følg denne", :class => "idea_submit"%>
+                  <% end %>
                 <% end %>
+              </div>
+            </div>
+            <div class="stem" id="vote-<%= @idea.id %>" style="float:right;margin-top: 5px; height:65px;">
+
+              <%= h "#{@idea.vote_count}"%>
+              <% unless has_voted?(@idea)%>
+                <%= link_to_remote "#{t('vote')}!", :update => "vote-#{@idea.id}", :url => idea_vote_path(@idea.id), :complete => visual_effect(:highlight, "vote-#{@idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
               <% end %>
             </div>
           </div>
-          <div class="stem" id="vote-<%= @idea.id %>" style="float:right;margin-top: 5px; height:65px;">
-
-            <%= h "#{@idea.vote_count}"%>
-            <% unless has_voted?(@idea)%>
-              <%= link_to_remote "#{t('vote')}!", :update => "vote-#{@idea.id}", :url => idea_vote_path(@idea.id), :complete => visual_effect(:highlight, "vote-#{@idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
-            <% end %>
-          </div>
         </div>
-
-        <div style="clear: both;">&nbsp;</div>
+        <div style="clear: both;"></div>
 
         <div class="plainwrap idea_description_wrap_grey" >
           <%= user_formatted_text @idea.description %>
