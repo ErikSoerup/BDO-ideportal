@@ -66,7 +66,8 @@
             <tr>
               <td width="135" align="left" valign="middle">&nbsp;</td>
               <td align="left" valign="middle">
-                <div class="fr"><%= link_to "Following : #{@user.following.length }", following_path(@user.id), :class => "f_link" %> <%=link_to "Followers : #{@user.followers.length }", followers_path(@user.id), :class => "f_link"%></div>
+                <div class="fr"><%= link_to "følger : #{@user.following.length }", following_path(@user.id), :class => "f_link" %>
+                  <%=link_to "følges af : #{@user.followers.length }", followers_path(@user.id), :class => "f_link"%></div>
               </td>
             </tr>
           </table>
@@ -124,7 +125,6 @@
 
                         <% if has_voted?(idea)%>
 
-
                         <% else%>
                           <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button",}%>
                         <% end %>
@@ -136,7 +136,7 @@
                       <div class="p_content">
                         <!--Content Head Starts -->
                         <div class="p_content_head">
-                          <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%> <strong>dage siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
+                          <div class="fl">Sendt <strong><%= time_ago_in_words(idea.created_at)%> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
                           <div class="fr" style="width:169px;">
                             <div class="fl">
                               <% unless idea.idea_followers.empty? %>
@@ -353,7 +353,7 @@
                             <div class="p_content">
                               <!--Content Head Starts -->
                               <div class="p_content_head">
-                                <div class="fl">Sendt <%= time_ago_in_words(idea.created_at)%><strong> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link" unless idea.inventor.nil?%></div>
+                                <div class="fl">Sendt <strong><%= time_ago_in_words(idea.created_at)%> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link" unless idea.inventor.nil?%></div>
                                 <div class="fr" style="width:169px;">
                                   <div class="fl">
                                     <% unless idea.idea_followers.empty? %>

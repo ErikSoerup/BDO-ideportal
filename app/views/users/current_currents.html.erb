@@ -2,7 +2,7 @@
   <div class="d_panel">
     <!--Content Head Starts -->
     <div class="p_content_head">
-      Sendt <%= time_ago_in_words(current.created_at) unless current.nil?%> <%= t("ago")%><strong> siden</strong> af  <%= link_to h(current.inventor.name), profile_path(current.inventor), :class => "bold_link" unless current.nil? || current.inventor.nil?%>
+      Sendt <strong><%= time_ago_in_words(current.created_at) unless current.nil?%> <%= t("ago")%> siden</strong> af  <%= link_to h(current.inventor.name), profile_path(current.inventor), :class => "bold_link" unless current.nil? || current.inventor.nil?%>
     </div>
     <!--Content Head Ends -->
     <!--Posted Content Starts -->
