@@ -103,7 +103,7 @@
         <div style="clear: both;"></div>
 
         <%=image_tag('black_attachment.png', :size => '22x22')%><%= "Vedhæftninger" %>
-        (<%=@idea.document.size%>)
+        (<%= @idea.document.exists? ? @idea.document.size : 0%>)
         <span style="<%= @idea.document.exists? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
               onclick="<%if @idea.document.exists?%>
                 if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';$('attachments').style.display = 'block';}else{$(this).innerHTML = 'Vis';$('attachments').style.display = 'none';}<%end%> "><%if @idea.document.exists?%>Vis<%end%></span>
