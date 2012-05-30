@@ -32,6 +32,7 @@ class UserMailer < ActionMailer::Base
     set_up_email(idea.inventor)
 
     @subject = " \"#{strip_funkies(user.name)}\" følger nu din idé: \"#{strip_funkies(idea.title)}\""
+    @body[:inventor] = idea.inventor
     @body[:user] = user
     @body[:idea] = idea
     @body[:idea_url] = idea_url(idea)
