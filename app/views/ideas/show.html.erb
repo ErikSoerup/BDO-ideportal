@@ -48,7 +48,7 @@
       </div>
       <!--Profile Top Stuff Starts -->
       <div class="plainwrap">
-        <div class="plainwrap" style="height: auto; margin-bottom:10px;" >
+        <div class="plainwrap" style="height: auto; min-height: 140px;" >
           <div class="fl" style="width:75%; margin-bottom: 5px; padding-bottom: 5px;">
             <p class="subhead1">
               <%= h @idea.title%>&nbsp;<%if @idea.editable_by?(current_user)%><%= link_to image_tag("edit_item.png", :alt => "For the next #{time_ago_in_words(@idea.created_at + 10.minutes)}", :title => "For the next #{time_ago_in_words(@idea.created_at + 10.minutes)}"), '#', :onclick => 'editIdeaText(); return false' %><%end%></p>
