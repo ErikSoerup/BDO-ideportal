@@ -5,10 +5,10 @@ class User < ActiveRecord::Base
   acts_as_authorizable
 
   has_attached_file :avatar,
-  	  :styles => { :small => "64x64>", :large => "128x128>" },
-      :storage => :s3,
-      :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-      :path => ":attachment/user/:id/:style.:extension"
+    :styles => { :small => "64x64>", :large => "128x128>" },
+    :storage => :s3,
+    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+    :path => ":attachment/user/:id/:style.:extension"
 
   # Virtual attribute for the unencrypted password
   attr_accessor :password
@@ -61,12 +61,12 @@ class User < ActiveRecord::Base
   has_many :client_applications
   has_many :tokens, :class_name => 'OauthToken', :order => 'authorized_at desc', :include => [:client_application]
   has_many :relationships, :foreign_key => "follower_id",
-                           :dependent => :destroy
+    :dependent => :destroy
   has_many :following, :through => :relationships, :source => :followed
 
   has_many :reverse_relationships, :foreign_key => "followed_id",
-                                   :class_name => "Relationship",
-                                   :dependent => :destroy
+    :class_name => "Relationship",
+    :dependent => :destroy
   has_many :followers, :through => :reverse_relationships, :source => :follower
 
   validates_presence_of     :name
@@ -135,10 +135,17 @@ class User < ActiveRecord::Base
   end
 
   def self.find_top_contributors(all_time = false, opts = {})
-    find :all, opts.reverse_merge(
-      :conditions => [
-        'state = ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active'],
-      :order => all_time ? 'contribution_points desc' : 'recent_contribution_points desc')
+    if all_time
+      find :all, opts.reverse_merge(
+        :conditions => [
+          'state = ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active'],
+        :order => 'contribution_points desc' )
+    else
+      find :all, opts.reverse_merge(
+        :conditions => [
+          'state = ? and created_at > ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active', Time.now - 6.months],
+        :order => 'contribution_points desc' )
+    end
   end
 
   # Encrypts some data with the salt.
@@ -216,8 +223,8 @@ class User < ActiveRecord::Base
   def recalculate_contribution_points
     self.contribution_points = (
       CONTRIBUTION_SCORES[:idea]    * ideas.recent_visible(:limit => nil).count +
-      CONTRIBUTION_SCORES[:comment] * comments.recent_visible(:limit => nil).count +
-      CONTRIBUTION_SCORES[:vote]    * votes.count)
+        CONTRIBUTION_SCORES[:comment] * comments.recent_visible(:limit => nil).count +
+        CONTRIBUTION_SCORES[:vote]    * votes.count)
   end
 
   def linked_to_twitter?
@@ -262,42 +269,42 @@ class User < ActiveRecord::Base
     relationships.create!(:followed_id => followed.id)
   end
   protected
-    # before filter
-    def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{email}--") if new_record?
-      self.crypted_password = encrypt(password)
-    end
+  # before filter
+  def encrypt_password
+    return if password.blank?
+    self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{email}--") if new_record?
+    self.crypted_password = encrypt(password)
+  end
 
-    def password_required?
-      return true unless password_confirmation.blank?
-      return false if linked_to_twitter? || linked_to_facebook?
-      crypted_password.blank? || !password.blank? || !password_confirmation.blank?
-    end
+  def password_required?
+    return true unless password_confirmation.blank?
+    return false if linked_to_twitter? || linked_to_facebook?
+    crypted_password.blank? || !password.blank? || !password_confirmation.blank?
+  end
 
-    def password_confirmation_required?
-      !password.blank?
-    end
+  def password_confirmation_required?
+    !password.blank?
+  end
 
-    def registered
-      self.deleted_at = nil
-      reset_activation_code unless linked_to_twitter? || linked_to_facebook?
-      save!
-    end
+  def registered
+    self.deleted_at = nil
+    reset_activation_code unless linked_to_twitter? || linked_to_facebook?
+    save!
+  end
 
-    def do_delete
-      self.deleted_at = Time.now.utc
-    end
+  def do_delete
+    self.deleted_at = Time.now.utc
+  end
 
-    def do_activate
-      @activated = true
-      self.activated_at = Time.now.utc
-      self.deleted_at = self.activation_code = nil
-    end
+  def do_activate
+    @activated = true
+    self.activated_at = Time.now.utc
+    self.deleted_at = self.activation_code = nil
+  end
 
-    def assign_postal_code
-      self.postal_code = PostalCode.find_by_text(zip_code)
-    end
+  def assign_postal_code
+    self.postal_code = PostalCode.find_by_text(zip_code)
+  end
 
 
 end

@@ -79,9 +79,18 @@ module Admin
       @user= User.find_by_name(params[:search])
     end
     
+    def settings
+
+    end
+
+    def change_time_span
+      @message = "Saved!!"
+      render :partial => "message"
+    end
+    
     include ResourceAdmin
 
-  protected
+    protected
     def index_query_options
       { :select =>
           "users.*,
@@ -98,8 +107,6 @@ module Admin
     def set_body_class
       @body_class = 'users'
     end
-
-    
     
     def editable_classes
       EDITABLE_CLASSES
