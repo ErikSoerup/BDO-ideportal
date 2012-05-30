@@ -141,10 +141,19 @@ class User < ActiveRecord::Base
           'state = ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active'],
         :order => 'contribution_points desc' )
     else
-      find :all, opts.reverse_merge(
-        :conditions => [
-          'state = ? and created_at > ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active', Time.now - 6.months],
-        :order => 'contribution_points desc' )
+      s = Setting.find_by_name("time_span_to_display_users")
+      if s
+        find :all, opts.reverse_merge(
+          :conditions => [
+            'state = ? and created_at > ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active', 
+            s.value.split("-")[1] == "months" ? Time.now - s.value.split("-")[0].to_i.months : s.value.split("-")[1] == "weeks" ? Time.now - s.value.split("-")[0].to_i.weeks : Time.now - s.value.split("-")[0].to_i.days],
+          :order => 'contribution_points desc' )
+      else
+        find :all, opts.reverse_merge(
+          :conditions => [
+            'state = ? and created_at > ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active', Time.now - 6.months],
+          :order => 'contribution_points desc' )
+      end
     end
   end
 

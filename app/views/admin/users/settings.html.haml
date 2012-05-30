@@ -4,7 +4,9 @@
       - form_remote_tag :update => "message", :url => { :action => :change_time_span}, :html => {:id => 'change_time_span', :method => :post} do
         Time span to display the recent users in the list
         = text_field_tag "span"
-        /%select
-        /  %option
+        %select{:name => "count_by"}
+          %option= "months"
+          %option= "weeks"
+          %option= "days"
         = submit_tag "Save"
       #message{:style => "height: 20px; overflow:auto; color: #2CAFA4;"}
