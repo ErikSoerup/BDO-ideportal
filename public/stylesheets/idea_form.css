@@ -1,3 +1,4 @@
+.clear{clear: both;}
 input, textarea {
     color: #888;
     font-family: Helvetica, Arial, sans-serif;
@@ -813,7 +814,7 @@ body.life-cycles .nav li a.life-cycles {
 }
 #idea-description-group input[type="text"] {
     position: absolute;
-    
+
     background: none;
     border: none;
     padding: 4px 0 0 5px;
@@ -1784,9 +1785,10 @@ body.search .group.slate .form-submit.inline {
 .form-group:after, .header:after, .entry-meta:after {
     content: ".";
     display: block;
-    height: 0;
+    /*    height: 0;*/
     clear: both;
-    visibility: hidden; }
+    visibility: hidden;
+    overflow: visible;}
 
 #map {
     width: 614px;

@@ -12,9 +12,16 @@
     = f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40", :maxlength => "600"
     %p.charsRemaining
       Skriv kort. Du har kun :- 600 tagn
-    .input_file
-      = text_field_tag("dddd","", :size=>66, :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
-      = f.file_field :document, :size=>66
+    /.input_file
+    /  = text_field_tag("dddd","", :size=>66, :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
+    /  = f.file_field :document, :size=>66
+  .clear
+  #file_fields_div{:style => "padding-left:30px"}
+  .clear
+  %p{:style => "padding-left:15px"}
+    = image_tag("black_attachment.png", :size => "25x25", :style => "cursor: pointer; background:none; border:0;", |
+    :onclick => "add_a_file_field_on_idea();", :id => "file_upload1", :alt => "Upload file", :title => "Upload file")
+  .clear
   .form-group.inline
     -unless defined?(current) && current.id
       = f.collection_select :current_id, Current.active, :id, :title , {:include_blank=>'Hovedvej...'}, :style => "margin-left: 9px;border:medium none;border-radius:8px 8px 8px 8px;color:#888888;float:left;font:12px Helvetica;height:30px;padding:5px;width:225px;"

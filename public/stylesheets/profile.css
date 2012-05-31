@@ -5,6 +5,7 @@ body {
     font-family: Helvetica,Arial,sans-serif;
     font-size: 12px;
 }
+.clear{clear: both;}
 p { margin:0; padding:0;}
 :focus { outline:0;}
 a { color:#0F645D; text-decoration:none;}
@@ -562,6 +563,7 @@ h3.subhead2{
     -webkit-border-radius:5px 5px 5px 5px;
     padding:7px 10px;
     height:auto;
+    overflow: auto;
 }
 .comments_wrap_green {
     width:493px;

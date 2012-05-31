@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111114125529) do
+ActiveRecord::Schema.define(:version => 20120531084918) do
 
   create_table "admin_comments", :force => true do |t|
     t.integer  "idea_id"
@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(:version => 20111114125529) do
   end
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
+
+  create_table "comment_documents", :force => true do |t|
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.integer  "comment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "idea_id"
@@ -84,13 +94,12 @@ ActiveRecord::Schema.define(:version => 20111114125529) do
     t.integer  "inventor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "vectors"
     t.boolean  "closed",              :default => false
     t.boolean  "invitation_only",     :default => false
     t.date     "submission_deadline"
+    t.text     "vectors"
+    t.boolean  "active",              :default => true
   end
-
-  add_index "currents", ["vectors"], :name => "currents_fts_vectors_index"
 
   create_table "currents_subscribers", :id => false, :force => true do |t|
     t.integer "current_id"
@@ -112,6 +121,16 @@ ActiveRecord::Schema.define(:version => 20111114125529) do
 
   create_table "departments", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "idea_documents", :force => true do |t|
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.integer  "comment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -145,12 +164,12 @@ ActiveRecord::Schema.define(:version => 20111114125529) do
     t.string   "user_agent"
     t.boolean  "spam_checked",                                                       :default => false, :null => false
     t.boolean  "notifications_sent",                                                 :default => false, :null => false
-    t.text     "vectors"
     t.string   "document_file_name"
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.boolean  "is_anonymous",                                                       :default => false
+    t.text     "vectors"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
@@ -256,6 +275,13 @@ ActiveRecord::Schema.define(:version => 20111114125529) do
     t.integer  "id"
   end
 
+  create_table "settings", :force => true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tags", :force => true do |t|
     t.string "name"
   end
@@ -291,18 +317,17 @@ ActiveRecord::Schema.define(:version => 20111114125529) do
     t.boolean  "facebook_post_ideas"
     t.string   "facebook_name"
     t.float    "recent_contribution_points"
-    t.text     "vectors"
     t.integer  "department_id"
     t.string   "phone"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.text     "vectors"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["state"], :name => "index_users_on_state"
-  add_index "users", ["vectors"], :name => "users_fts_vectors_index"
 
   create_table "votes", :force => true do |t|
     t.integer  "idea_id"

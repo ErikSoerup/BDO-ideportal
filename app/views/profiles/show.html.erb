@@ -163,9 +163,25 @@
                         </div>
                         <!--Content Head Ends -->
                         <!--Posted Content Starts -->
-                        <div class="plainwrap">
+                        <div class="plainwrap" style="min-height:80px; margin-bottom:10px;">
                           <h3><%=link_to h(idea.title), idea_path(idea) unless idea.title.nil?%></h3>
                           <p><%= h idea.description_excerpt %> </p>
+                        </div>
+                        <%= "Vedhæftninger" %>(<%=idea.idea_documents.size%>)
+                        <span style="<%= !idea.idea_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
+                              onclick="<%if !idea.idea_documents.empty?%>
+                                if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+                                if($('attachments_<%=idea.id%>').style.display == 'none'){
+                                $('attachments_<%=idea.id%>').style.display = 'block';}
+                                else{
+                                $('attachments_<%=idea.id%>').style.display = 'none';}<%end%> "><%if !idea.idea_documents.empty?%>Vis<%end%></span>
+                        <div id="<%= 'attachments_'+idea.id.to_s %>" style="display: none; padding:5px;">
+                          <%if !idea.idea_documents.empty?%>
+                            <% idea.idea_documents.each do |id|%>
+                              <li style="width: 30%; float:left; list-style-type: none;">
+                                <%= link_to id.document_file_name, id.document.url if id.document.url != "/documents/original/missing.png"%></li>
+                            <%end%>
+                          <%end%>
                         </div>
 
 
