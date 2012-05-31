@@ -17,23 +17,20 @@
         <!--Pagination Ends -->
       </div>
       <!--Breaker Starts -->
-      <%
-      a=[]
-      for i in 0..100 do
-        if i % 3 == 0
-          a << i
-
-        end
-      end
-      c=1
-      b=[]
-
-      while c<100
-        b << c
-        c=c+3
-      end
-
-    %>
+<%#
+a=[]
+for i in 0..100 do
+if i % 3 == 0
+a << i
+end
+end
+c=1
+b=[]
+while c<100
+b << c
+c=c+3
+end
+%>
       <!--Breaker Ends -->
     </div>
     <!--Profile Top Stuff Ends -->
@@ -43,104 +40,82 @@
         <!--Kommentarer container Starts -->
         <div id="tab2" class="tab_content">
           <% current_objects.each_with_index do |comment,i| %>
-
-
-
-
             <div class="plainwrap">
               <div id="comment-<%= comment.id %>">
                 <!--Commentator Starts -->
                 <div class="commentator_panel">
-                  <% if a.include?(i) %>
-                    <div class="commentator_wrap_green"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
-                  <% elsif b.include?(i) %>
-                    <div class="commentator_wrap_yellow"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
-                  <% else %>
-                    <div class="commentator_wrap_blue"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
-                  <% end %>
+                  <div class="commentator_wrap_green"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
                   <div class="plainwrap">
                     <div class="fl">
 
                       <%= image_tag profile_picture(comment.author, :small)%>
                     </div>
-  <%#*<div class="dowmnload_link">%>
-  <%# if comment.document.url != "/documents/original/missing.png" %>
-  <%#=link_to t("download"), comment.document.url, :class => "bold_link"%>
-  <%# end %>
-  <%#*</div>%>
                   </div>
                 </div>
                 <!--Commentator Ends -->
-                <!--Posted Comments Starts -->
-                <% if a.include?(i) %>
-                  <div class="comments_wrap_green">
-                  <% elsif b.include?(i) %>
-                    <div class="comments_wrap_yellow">
-                    <% else %>
-                      <div class="comments_wrap_blue">
-                      <% end %>
+                <!--Posted Comments Starts-->
+                <div class="comments_wrap_green">
+                  <!--Content Head Starts -->
+                  <div class="p_content_head">
 
-                      <!--Content Head Starts -->
-                      <div class="p_content_head">
+                    <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)} #{t("ago")}"%></strong> som svar på <%= link_to h(comment.idea.title), idea_path(comment.idea), :class => "bold_link"%></div>
 
-                        <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)} #{t("ago")}"%></strong> som svar på <%= link_to h(comment.idea.title), idea_path(comment.idea), :class => "bold_link"%></div>
-
-                        <% if current_user.roles.collect(&:name).include?("admin") %>
-                          <div class="fr"> <%= link_to_remote "Delete Kommentar", :update => "comment-#{comment.id}", :url => destroy_comment_comment_path(comment), :method => :delete %></div>
-                        <% end %>
-                      </div>
-                      <!--Content Head Ends -->
-                      <!--Posted Content Starts -->
-                      <div class="plainwrap" style="min-height:50px; margin-bottom:10px;">
-                        <p><%= user_formatted_text truncate(comment.text,500)%> </p>
-                      </div>
-                      <!--Posted Content Ends -->
-                      <%= "Vedhæftninger" %>(<%= comment.comment_documents.size%>)<span style="<%= !comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
-                                                                  onclick="<%if !comment.comment_documents.empty?%>
-                                                                    if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
-                                                                    if($('attachments_<%=comment.id%>').style.display == 'none'){
-                                                                    $('attachments_<%=comment.id%>').style.display = 'block';}
-                                                                    else{
-                                                                    $('attachments_<%=comment.id%>').style.display = 'none';}<%end%> "><%if !comment.comment_documents.empty?%>Vis<%end%></span>
-                      <div id="<%= 'attachments_'+comment.id.to_s %>" style="display: none; padding:5px;">
-                        <%if !comment.comment_documents.empty?%>
-                          <% comment.comment_documents.each do |cd|%>
-                            <li style="width: 30%; float:left; list-style-type: none;">
-                              <%= link_to cd.document_file_name, cd.document.url if cd.document.url != "/documents/original/missing.png"%></li>
-                          <%end%>
-                        <%end%>
-                      </div>
-                    </div>
-                    <!--Posted Comments Ends -->
+                    <% if current_user.roles.collect(&:name).include?("admin") %>
+                      <div class="fr"> <%= link_to_remote "Delete Kommentar", :update => "comment-#{comment.id}", :url => destroy_comment_comment_path(comment), :method => :delete %></div>
+                    <% end %>
                   </div>
-                  <div class="b_divider" id="divider-<%= comment.id %>"></div>
+                  <!--Content Head Ends -->
+                  <!--Posted Content Starts -->
+                  <div class="plainwrap" style="min-height:50px; margin-bottom:10px;">
+                    <p><%= user_formatted_text truncate(comment.text,500)%> </p>
+                  </div>
+                  <!--Posted Content Ends -->
+                  <%= "Vedhæftninger" %>(<%= comment.comment_documents.size%>)<span style="<%= !comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
+                                                              onclick="<%if !comment.comment_documents.empty?%>
+                                                                if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+                                                                if($('attachments_<%=comment.id%>').style.display == 'none'){
+                                                                $('attachments_<%=comment.id%>').style.display = 'block';}
+                                                                else{
+                                                                $('attachments_<%=comment.id%>').style.display = 'none';}<%end%> "><%if !comment.comment_documents.empty?%>Vis<%end%></span>
+                  <div id="<%= 'attachments_'+comment.id.to_s %>" style="display: none; padding:5px;">
+                    <%if !comment.comment_documents.empty?%>
+                      <% comment.comment_documents.each do |cd|%>
+                        <li style="width: 30%; float:left; list-style-type: none;">
+                          <%= link_to cd.document_file_name, cd.document.url if cd.document.url != "/documents/original/missing.png"%></li>
+                      <%end%>
+                    <%end%>
+                  </div>
                 </div>
-              <% end %>
-              <!--Breaker Starts -->
-
+                <!--Posted Comments Ends -->
+              </div>
+              <div class="b_divider" id="divider-<%= comment.id %>"></div>
             </div>
-          </div>
+          <% end %>
+          <!--Breaker Starts -->
+
+        </div>
+      </div>
 <%#= render :collection => current_objects, :partial => 'comment', :locals => { :idea_link => true, :show_avatar => true } %>
-        </div>
-
-
-        <div class="fr">
-          <ul class="pagination" style="margin-top:8px;">
-            <!--<li><a href="#">«</a></li> -->
-            <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige"%>
-          </ul>
-        </div>
-        <!--Tab Panel Ends -->
-      </div>
-      <!--Left Panel Ends -->
-      <!--Right Panel Starts -->
-      <div class="right_panel">
-        <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
-        <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;"><%=t("all_users")%></a></div>
-        <!--Display Section Starts -->
-        <div id="ajax-tab">
-
-        </div>
-      </div>
-      <!--Right Panel Ends -->
     </div>
+
+
+    <div class="fr">
+      <ul class="pagination" style="margin-top:8px;">
+        <!--<li><a href="#">«</a></li> -->
+        <%= will_paginate current_objects, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige"%>
+      </ul>
+    </div>
+    <!--Tab Panel Ends -->
+  </div>
+  <!--Left Panel Ends -->
+  <!--Right Panel Starts -->
+  <div class="right_panel">
+    <div class="plainwrap"><div id="sidebar" class="aside"><%= render :partial => "shared/sidebar" %></div></div>
+    <div class="plainwrap"><a href="/user/index" class="bold_link" style=" padding-left: 10px;"><%=t("all_users")%></a></div>
+    <!--Display Section Starts -->
+    <div id="ajax-tab">
+
+    </div>
+  </div>
+  <!--Right Panel Ends -->
+</div>

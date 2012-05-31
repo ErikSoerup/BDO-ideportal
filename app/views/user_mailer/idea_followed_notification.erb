@@ -1,9 +1,9 @@
 <html>
   <head></head>
   <body>
-    <p>Kære <%= @user.name %></p><br/><br/>
+    <p>Kære <%= @inventor %></p><br/><br/>
 
-    <p>følger nu din ide: <%= link_to @idea.title, @idea_url %></p><br/>
+    <p><%= @user.name %> følger nu din ide: <%= link_to @idea.title, @idea_url %></p><br/>
     <p>Ønsker du ikke at få besked, når andre kommenterer på din ide, skal du blot klikke på "stop følg"-linket på ideen.</p><br/>
   </body>
 </html>

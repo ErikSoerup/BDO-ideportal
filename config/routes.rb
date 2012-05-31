@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+
+  map.connect "/users/settings", :controller => "admin/users", :action => "settings"
+  map.connect "/users/change_time_span", :controller => "admin/users", :action => "change_time_span"
   map.resources :ideas, :member => { :destroy_idea => :delete,:assign => :post, :subscribe => :post, :followers => :get, :unsubscribe => [:post, :get], :unfollow => :delete } do |idea|  # unsubscribe supports GET for direct link from e-mail
     idea.resources :comments # for new/create, idea-specific index
     idea.resource :vote

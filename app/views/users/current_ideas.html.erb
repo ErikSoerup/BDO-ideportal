@@ -18,7 +18,7 @@
       <!--Stem Ends -->
       <!--Content Head Starts -->
       <div class="p_content_head">
-        Sendt <%= time_ago_in_words(idea.created_at)%> <strong>dage siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%>
+        Sendt <strong><%= time_ago_in_words(idea.created_at)%> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%>
       </div>
       <!--Content Head Ends -->
       <!--Posted Content Starts -->

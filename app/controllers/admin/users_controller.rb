@@ -79,9 +79,33 @@ module Admin
       @user= User.find_by_name(params[:search])
     end
     
+    def settings
+
+    end
+
+    def change_time_span
+      params[:span] = "6" if params[:span].empty?
+      @setting = Setting.find_by_name("time_span_to_display_users")
+      if @setting 
+        if @setting.update_attributes({:value => params[:span]+"-"+params[:count_by]})
+          @message = "Settings have been saved!!"
+        else
+          @message = "Error saving the settings!"
+        end
+      else
+        @setting = Setting.new({:name => "time_span_to_display_users", :value => params[:span]+"-"+params[:count_by]})
+        if @setting.save
+          @message = "Settings have been saved!!"
+        else
+          @message = "Error saving the settings!"
+        end
+      end
+      render :partial => "message"
+    end
+    
     include ResourceAdmin
 
-  protected
+    protected
     def index_query_options
       { :select =>
           "users.*,
@@ -98,8 +122,6 @@ module Admin
     def set_body_class
       @body_class = 'users'
     end
-
-    
     
     def editable_classes
       EDITABLE_CLASSES

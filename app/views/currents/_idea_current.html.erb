@@ -1,71 +1,72 @@
-<% if  idea_current.status == "new"   %>
-  <div class="green_wrap" style="height:auto;">
-  <% elsif idea_current.status == "under review" || idea_current.status == "reviewed"%>
-    <div class="yellow_wrap" style="height:auto;">
-    <% else %>
-      <div class="blue_wrap" style="height:auto;">
-      <% end %> 
-      <!--stem Stuff Starts -->
-      <div class="stem" id="vote-<%= idea_current.id %>">
+<%# if  idea_current.status == "new"   %>
+<%#*<div class="green_wrap" style="height:auto;">%>
+<%# elsif idea_current.status == "under review" || idea_current.status == "reviewed"%>
+<%#*<div class="yellow_wrap" style="height:auto;">%>
+<%# else %>
+<%#*<div class="blue_wrap" style="height:auto;">%>
+<%# end %>
+<div class="<%= idea_current.status == "new" ? "green_wrap" : idea_current.status == "under review" ? "yellow_wrap" : "blue_wrap" %>" style="height:auto;" >
+  <!--stem Stuff Starts -->
+  <div class="stem" id="vote-<%= idea_current.id %>">
 
-        <%= h "#{idea_current.vote_count}"%>
-        <% unless has_voted?(idea_current)%>
-          <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea_current.id}", :url => idea_vote_path(idea_current.id), :complete => visual_effect(:highlight, "vote-#{idea_current.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
-        <% end %>
+    <%= h "#{idea_current.vote_count}"%>
+    <% unless has_voted?(idea_current)%>
+      <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea_current.id}", :url => idea_vote_path(idea_current.id), :complete => visual_effect(:highlight, "vote-#{idea_current.id}", :duration => 0.8), :html =>{:class => "bigstem_button"}%>
+    <% end %>
+  </div>
+  <!--stem Stuff Ends -->
+  <!--Right Content Starts -->
+  <div class="p_content">
+    <!--Content Head Starts -->
+    <div class="p_content_head">
+      <div class="fl">Sendt <strong><%= time_ago_in_words(idea_current.created_at)%> <%= t("ago") %></strong> af <%=link_to idea_current.inventor.name, profile_path(idea_current.inventor), :class => "bold_link"%></div>
+      <div class="fr">
+        <div class="fl">
+          <% unless idea_current.idea_followers.empty? %>
+            <%= link_to "#{idea_current.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea_current.id), :style => "color:#0f645d; margin-right:8px;"  %>
+
+          <% end %>
+        </div>
+        <div class="fr">
+          <%= link_to "Stop følg", unfollow_idea_path(idea_current.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea_current.id).nil?%>
+          <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea_current.id).blank? %>
+            <% form_tag idea_follow_path do%>
+              <%= hidden_field_tag :idea_id, idea_current.id%>
+              <%= submit_tag "Følg denne", :class => "idea_submit"%>
+            <% end %>
+          <% end %>
+        </div>
+
       </div>
-      <!--stem Stuff Ends -->
-      <!--Right Content Starts -->
-      <div class="p_content">
-        <!--Content Head Starts -->
-        <div class="p_content_head">
-          <div class="fl">Sendt <strong><%= time_ago_in_words(idea_current.created_at)%> <%= t("ago") %></strong> af <%=link_to idea_current.inventor.name, profile_path(idea_current.inventor), :class => "bold_link"%></div>
-          <div class="fr">
-            <div class="fl">
-              <% unless idea_current.idea_followers.empty? %>
-                <%= link_to "#{idea_current.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea_current.id), :style => "color:#0f645d; margin-right:8px;"  %>
-
-              <% end %>
-            </div>
-            <div class="fr">
-              <%= link_to "Stop følg", unfollow_idea_path(idea_current.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea_current.id).nil?%>
-              <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea_current.id).blank? %>
-                <% form_tag idea_follow_path do%>
-                  <%= hidden_field_tag :idea_id, idea_current.id%>
-                  <%= submit_tag "Følg denne", :class => "idea_submit"%>
-                <% end %>
-              <% end %>
-            </div>
-
-          </div>
-        </div>
-        <!--Content Head Ends -->
-        <!--Posted Content Starts -->
-        <div class="plainwrap">
-          <h3><%= link_to h(idea_current.title), idea_path(idea_current) unless idea_current.title.nil?%></h3>
-          <p><%= h idea_current.description_excerpt%>  </p>
-        </div>
-        <!--Posted Content Ends -->
-        <!--Bottom Panel Starts -->
-        <div class="d_panel_commentator_big" style="height:auto;">
-          <div class="fl"><img src="/images/comment-icon.gif" alt="" /><%= link_to "#{t('menu.comments')} #{"(#{idea_current.comment_count})"}", idea_path(idea_current, :anchor => 'comments', :title_in_url => false)%></div>
-          <div class="tag_container">
-            <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div> 
-            <div class="tag_container_inner">
-              <% unless idea_current.tags.empty?%>
-                <% idea_current.tags.each_with_index do |tag, ctr|%>
-                  <%unless ctr == idea_current.tags.length - 1%>
-                    <%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %>
-                  <%  else %>
-                    <%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %>
-                  <% end %>
-                <% end %>
-              <% end %>
-
-            </div>
-          </div>
-        </div>
-        <!--Bottom Panel Ends -->
-      </div>
-      <!--Right Content Ends -->
     </div>
-    <div class="b_divider"></div>
+    <!--Content Head Ends -->
+    <!--Posted Content Starts -->
+    <div class="plainwrap">
+      <h3><%= link_to h(idea_current.title), idea_path(idea_current) unless idea_current.title.nil?%></h3>
+      <p><%= h idea_current.description_excerpt%>  </p>
+    </div>
+    <!--Posted Content Ends -->
+    <!--Bottom Panel Starts -->
+    <div class="d_panel_commentator_big" style="height:auto;">
+      <div class="fl"><img src="/images/comment-icon.gif" alt="" /><%= link_to "#{t('menu.comments')} #{"(#{idea_current.comment_count})"}", idea_path(idea_current, :anchor => 'comments', :title_in_url => false)%></div>
+      <div class="tag_container">
+        <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div>
+        <div class="tag_container_inner">
+          <% unless idea_current.tags.empty?%>
+            <% idea_current.tags.each_with_index do |tag, ctr|%>
+              <%unless ctr == idea_current.tags.length - 1%>
+                <%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %>
+              <%  else %>
+                <%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+    <!--Bottom Panel Ends -->
+  </div>
+  <!--Right Content Ends -->
+</div>
+<div class="b_divider"></div>
