@@ -18,21 +18,7 @@ class UserMailer < ActionMailer::Base
     @body[:url] = password_reset_url(:activation_code => user.activation_code)
   end
 
-<<<<<<< HEAD
 
-  def notification_followers_comments(user, idea)
-    set_up_email(user)
-    @subject = "Du f_lger nu ideen: \"#{strip_funkies(idea.title)}\""
-    @body[:user] = user
-    @body[:idea] = idea
-
-  end
-
-  def password_change_notification(user)
-    set_up_email(user)
-    @subject += 'Dit password til Ideportalen er _ndret.'
-=======
-  
   def idea_followers_notification(user, idea)
     set_up_email(user)
 
@@ -46,6 +32,7 @@ class UserMailer < ActionMailer::Base
     set_up_email(idea.inventor)
 
     @subject = " \"#{strip_funkies(user.name)}\" følger nu din idé: \"#{strip_funkies(idea.title)}\""
+    @body[:inventor] = idea.inventor
     @body[:user] = user
     @body[:idea] = idea
     @body[:idea_url] = idea_url(idea)
@@ -74,7 +61,7 @@ class UserMailer < ActionMailer::Base
 
     @subject = current ? "\"#{strip_funkies(current_user.name)}\" har tilføjet en ny ide til: \"#{strip_funkies(current.title)}\"" :
       "\"#{strip_funkies(current_user.name)}\" har tilføjet en ny ide: \"#{strip_funkies(idea.title)}\""
-      
+
     @body[:follower] = follower
     @body[:user] = current_user
     @body[:idea] = idea
@@ -108,11 +95,10 @@ class UserMailer < ActionMailer::Base
     @body[:idea] = idea
     @body[:idea_url] = idea_url(idea)
   end
-  
+
   def password_change_notification(user)
     set_up_email(user)
     @subject += 'Dit password til Ideportalen er ændret.'
->>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
     @body[:user] = user
     @body[:url] = home_url('contact')
   end
@@ -120,41 +106,13 @@ class UserMailer < ActionMailer::Base
   def email_change_notification(user, old_email)
     set_up_email(user)
     @recipients  = old_email
-<<<<<<< HEAD
-    @subject += 'Din e-mail adresse er blevet _ndret'
-=======
     @subject += 'Din e-mail adresse er blevet ændret'
->>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
     @body[:user] = user
     @body[:url] = home_url('contact')
   end
 
   def notification_followers_ideas(user, current)
     set_up_email(user)
-<<<<<<< HEAD
-#    @body[:ideas] = ideas
-    @subject ="Du falger nu hovedvejen: #{current.title}"
-#    title=[]
-#    description=[]
-#    unless ideas.empty?
-#      ideas.each do |i|
-#        title << i.title
-#      end
-#
-#      ideas.each do |ii|
-#        description << ii.description
-#      end
-#    end
-#
-#    unless ideas.empty?
-     @body[:current] = current
-
-#      @body[:title] = title
-#      @body[:desc] = description
-#    end
-  end
-
-=======
     #    @body[:ideas] = ideas
     @subject ="Du følger nu hovedvejen: #{current.title}"
     #    title=[]
@@ -172,13 +130,12 @@ class UserMailer < ActionMailer::Base
     #    unless ideas.empty?
     @body[:current] = current
     @body[:current_url] = current_url(current)
-     
+
     #      @body[:title] = title
     #      @body[:desc] = description
     #    end
   end
-  
->>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
+
   def comment_notification(user, comment)
     set_up_email(user)
     @body[:comment] = comment
@@ -186,12 +143,8 @@ class UserMailer < ActionMailer::Base
     @body[:url] = idea_url(comment.idea)
     @body[:unsubscribe_url] = unsubscribe_idea_url(comment.idea)
     @owner = (user == comment.idea.inventor)
-<<<<<<< HEAD
-    @subject = "#{@owner.name} har kommenteret din id_ \"#{strip_funkies(comment.idea.title)}\""
-=======
     @subject = "#{owner.name} har kommenteret din idé \"#{strip_funkies(comment.idea.title)}\""
     body[:author_url] = profile_url(comment.author)
->>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
   end
 
   def idea_in_current_notification(user, idea)
@@ -200,13 +153,9 @@ class UserMailer < ActionMailer::Base
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
     @body[:unsubscribe_url] = unsubscribe_current_url(idea.current)
-<<<<<<< HEAD
-    @subject += "#{idea.inventor.name} har tilf_jet en ny ide til \"#{strip_funkies(idea.current.title)}\""
-=======
     @subject += "#{idea.inventor.name} har tilføjet en ny ide til \"#{strip_funkies(idea.current.title)}\""
     @body[:idea_url] = idea_url(idea)
     @body[:current_url] = current_url(idea.current)
->>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
   end
 
   def idea_posted_to_followers(user,idea)
@@ -216,7 +165,6 @@ class UserMailer < ActionMailer::Base
       user.followers.each do |u|
         emails << u.email.to_s + ","
       end
-<<<<<<< HEAD
       @recipients=emails << user.email
     else
       emails = user.email
@@ -224,15 +172,6 @@ class UserMailer < ActionMailer::Base
     end
 
 
-=======
-      @recipients=emails << user.email 
-    else
-      emails = user.email
-      @recipients = emails.to_s 
-    end
-   
-    
->>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
     @subject += "New idea by #{idea.inventor.name}"
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
@@ -248,10 +187,7 @@ class UserMailer < ActionMailer::Base
 
   protected
   def set_up_email(user)
-<<<<<<< HEAD
-=======
 #    @recipients  = "prajkta.p@gmail.com"
->>>>>>> 700984efbc1a57881f6ccdddaf3ff76d4c3a703d
     @recipients  = "#{user.email}"
     @from        = EMAIL_FROM_ADDRESS
     @subject     = "[#{SHORT_SITE_NAME.upcase}] "
