@@ -19,8 +19,8 @@ class SessionsController < ApplicationController
     flash.clear
     @body_class = 'login'
     #    @ip_addr = request.ip
-    #    14.97.183.187-- 59.161.24.221-- 59.161.24.221-- 14.97.236.231-- 14.97.2.122-- 14.97.255.152
-    @ip_addr = request.ip == "127.0.0.1" || request.ip == "59.161.20.22" ? "83.151.150.86" : request.ip
+    #    14.97.183.187-- 59.161.24.221-- 59.161.24.221-- 14.97.236.231-- 14.97.2.122-- 14.97.255.152 59.161.20.22
+    @ip_addr = request.ip == "127.0.0.1" || request.ip == "14.97.242.62" ? "83.151.150.86" : request.ip
     if @ip_addr != "83.151.150.86"
       @message = "Du kan kun logge ind via det interne netværk. Log først på VPN og derefter på ideportalen."
       @authorized_access = false
