@@ -7,8 +7,7 @@ class Idea < ActiveRecord::Base
   has_attached_file :document,
     :storage => :s3,
     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-    :path => ":attachment/:id/:style.:extension"
-
+    :path => ":attachment/idea/:id/:style.:extension"
   belongs_to :inventor, :class_name => 'User'
   belongs_to :current
   has_many :comments, :order => 'comments.created_at', :dependent => :destroy do
