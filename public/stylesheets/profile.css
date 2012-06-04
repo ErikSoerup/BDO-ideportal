@@ -323,7 +323,7 @@ ul.tabs li.active a {
 }
 .tab_container {
     border-top: none;
-    overflow: hidden;
+/*    overflow: hidden;*/
     clear: both;
     float:  left; 
     width: 99%;
@@ -331,8 +331,9 @@ ul.tabs li.active a {
 }
 .tab_content {
     margin:5px 0;
-    overflow:hidden;
+/*    overflow:hidden;*/
     width:100%;
+    display:block !important;
 }
 .tab_headline {
     width:100%;

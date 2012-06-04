@@ -12,9 +12,6 @@
     = f.text_area :description, :placeholder => t("great_if"), :id => "idea-description", :class => "input-textarea big", :rows => "7", :cols => "40", :maxlength => "600"
     %p.charsRemaining
       Skriv kort. Du har kun :- 600 tagn
-    /.input_file
-    /  = text_field_tag("dddd","", :size=>66, :id=>"fakeupload", :onchange=>"this.form.fakeupload.value = this.value;")
-    /  = f.file_field :document, :size=>66
   .clear
   #file_fields_div{:style => "padding-left:30px"}
   .clear

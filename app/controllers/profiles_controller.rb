@@ -10,23 +10,30 @@ class ProfilesController < ApplicationController
   end
   
   def show
-    @ideas= @user.ideas.paginate(:page => params[:page], :per_page => 3, :order => "created_at DESC")
-    @comments= @user.comments.paginate(:page => params[:page], :per_page => 3, :order => "created_at DESC")
-    @votes=@user.votes.paginate(:page => params[:page], :per_page => 10)
+    @ideas= @user.ideas.paginate(:page => params[:tab] && params[:tab] == "tab1" && session["#{'pagination_'+params[:tab]}"] ? session["#{'pagination_'+params[:tab]}"] : params[:page], :per_page => 3, :order => "created_at DESC")
+    @comments= @user.comments.paginate(:page => params[:tab] && params[:tab] == "tab2" && session["#{'pagination_'+params[:tab]}"] ? session["#{'pagination_'+params[:tab]}"] : params[:page], :per_page => 3, :order => "created_at DESC")
+    @votes=@user.votes.paginate(:page => params[:tab] && params[:tab] == "tab3" && session["#{'pagination_'+params[:tab]}"] ? session["#{'pagination_'+params[:tab]}"] : params[:page], :per_page => 10)
     @my_currents = @user.current_followers.collect(&:current)
     @my_ideas = @user.idea_followers.collect(&:idea)
     @my_followers = @user.followers
-    respond_to do |format|
-      format.html
-      format.xml
-      #      format.js { render :text => render_recent(params) }
+    if request.xhr?
+      session[:tab] = params[:tab]
+      render :partial => params[:tab]
+    else
+      if session[:tab]
+        session["#{'pagination_'+session[:tab]}"] = params[:page] if params[:page]
+      end
+      respond_to do |format|
+        format.html
+        format.xml
+        #      format.js { render :text => render_recent(params) }
+      end
     end
   end
   
   def my_followers
-   
     @my_followers = @user.following
-     render :update do |page|
+    render :update do |page|
       page["headline"].replace_html render :partial => "follow_link"
       page["ajax-load"].replace_html render :partial => "my_followers" 
     end
@@ -39,7 +46,6 @@ class ProfilesController < ApplicationController
       page["headline"].replace_html render :partial => "idea_link"
       page["ajax-load"].replace_html render :partial => "current_ideas" 
     end
-
   end
   
   

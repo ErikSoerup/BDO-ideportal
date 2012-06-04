@@ -1,12 +1,4 @@
-tab = "";
-var t = "";
 var file_fields_count = 1;
-
-function checkTabs(){
-tab = $('active_tabs').innerHTML;
-t = $('active_tabs').innerHTML;
-tb = $('active_tabs').innerHTML;
-}
 
 function add_a_file_field(){
     var my_div = document.createElement('div');

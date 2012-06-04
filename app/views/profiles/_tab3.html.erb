@@ -1,0 +1,27 @@
+
+<!--Header Portion Starts -->
+<div class="tab_headline">
+  <div class="fl"><strong>Her er <%= @user.name %>’s stemmer</strong></div>
+  <!--Pagination Starts -->
+  <div class="fr">
+    <%= will_paginate @votes, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+  </div>
+  <!--Pagination Ends -->
+</div>
+<!--Heade Portion Ends -->
+<!--Vote Panel1 Starts -->
+<% @votes.each do |vote| %>
+
+  <div class="plainwrap">
+    <div class="vote_check"></div>
+    <div class="vote_panel">
+      <div class="fl"><%=  link_to h(truncate(vote.idea.title, :length => 50, :separator => ' ')), idea_path(vote.idea), :class => "bold_link"%></div>
+      <div class="fr">Posted <%=time_ago_in_words(vote.idea.created_at)%>  <%=t("ago")%></div>
+    </div>
+  </div>
+  <!--Breaker Starts -->
+  <div class="b_divider"></div>
+<% end %>
+<div class="fr">
+  <%= will_paginate @votes, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+</div>

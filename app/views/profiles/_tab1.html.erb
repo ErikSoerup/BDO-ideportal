@@ -1,0 +1,128 @@
+
+<!--Header Portion Starts -->
+<div class="tab_headline">
+  <div class="fl"><strong>Her er <%= @user.name %>'s egne ideer</strong></div>
+  <!--Pagination Starts -->
+  <div class="fr">
+    <%= will_paginate @ideas, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige"%>
+  </div>
+  <!--Pagination Ends -->
+</div>
+<!--Header Portion Ends -->
+<!--Green Panel Starts -->
+<% @ideas.each_with_index do |idea,i| %>
+  <% unless idea.nil? %>
+    <div id="idea-<%=idea.id%>">
+      <div class="<%= idea.status == 'new' ? 'green_wrap' :
+             idea.status == "under review" || idea.status == "review" ? 'yellow_wrap' : 'blue_wrap'%>" style="height: auto;">
+        <!--Stemt Stuff Starts -->
+
+        <div id="stem-<%= idea.id %>" class="stem">
+
+          <p id="vote-<%= idea.id %>"><%= h "#{idea.vote_count}"%></p>
+
+          <% if has_voted?(idea)%>
+
+          <% else%>
+            <%= link_to_remote "#{t('vote')}!", :update => "vote-#{idea.id}", :url => idea_vote_path(idea.id), :complete => visual_effect(:highlight, "vote-#{idea.id}", :duration => 0.8), :html =>{:class => "bigstem_button",}%>
+          <% end %>
+        </div>
+
+
+        <!--Stemt Stuff Ends -->
+        <!--Right Content Starts -->
+        <div class="p_content">
+          <!--Content Head Starts -->
+          <div class="p_content_head">
+            <div class="fl">Sendt <strong><%= time_ago_in_words(idea.created_at)%> siden</strong> af <%=link_to idea.inventor.name, profile_path(idea.inventor), :class => "bold_link"%></div>
+            <div class="fr" style="width:169px;">
+              <div class="fl">
+                <% unless idea.idea_followers.empty? %>
+                  <%= link_to "#{idea.idea_followers.collect(&:user).uniq.size} følger ideen", followers_idea_path(idea.id), :style => "color:#0f645d; margin-right:8px;"  %>
+
+                <% end %>
+
+                <% if  current_user.roles.collect(&:name).include?("admin") %>
+
+                  <%= link_to_remote "Delete Idea", :update => "idea-#{idea.id}", :url => destroy_idea_idea_path(idea), :method => :delete %>
+                <% end %>
+              </div>
+              <div class="fr">
+                <%= link_to "Stop følg", unfollow_idea_path(idea.id), :method => :delete,  :style => "color:#0f645d; margin-right:8px;" unless IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).nil?%>
+                <% if IdeaFollower.find_by_user_id_and_idea_id(current_user.id,idea.id).blank? %>
+                  <% form_tag idea_follow_path do%>
+                    <%= hidden_field_tag :idea_id, idea.id%>
+                    <%= submit_tag "Følg denne", :class => "idea_submit"%>
+                  <% end %>
+                <% end %>
+              </div>
+
+            </div>
+          </div>
+          <!--Content Head Ends -->
+          <!--Posted Content Starts -->
+          <div class="plainwrap" style="min-height:80px; margin-bottom:10px;">
+            <h3><%=link_to h(idea.title), idea_path(idea) unless idea.title.nil?%></h3>
+            <p><%= h idea.description_excerpt %> </p>
+          </div>
+          <%= "Vedhæftninger" %>(<%=idea.idea_documents.size%>)
+          <span style="<%= !idea.idea_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
+                onclick="<%if !idea.idea_documents.empty?%>
+                  if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+                  if($('attachments_<%=idea.id%>').style.display == 'none'){
+                  $('attachments_<%=idea.id%>').style.display = 'block';}
+                  else{
+                  $('attachments_<%=idea.id%>').style.display = 'none';}<%end%> "><%if !idea.idea_documents.empty?%>Vis<%end%></span>
+          <div id="<%= 'attachments_'+idea.id.to_s %>" style="display: none; padding:5px;">
+            <%if !idea.idea_documents.empty?%>
+              <% idea.idea_documents.each do |id|%>
+                <li style="width: 30%; float:left; list-style-type: none;">
+                  <%= link_to id.document_file_name, id.document.url if id.document.url != "/documents/original/missing.png"%></li>
+              <%end%>
+            <%end%>
+          </div>
+
+
+
+          <!--Posted Content Ends -->
+          <div class="plainwrap">
+            <div class="d_panel_commentator_big" style="height:auto;">
+              <div class="fl"><%= link_to "#{t('menu.comments')} #{"(#{idea.comment_count})"}", idea_path(idea, :anchor => 'comments', :title_in_url => false)%></div>
+              <div class="tag_container">
+                <div class="fl" style="margin-top:5px;"><img src="/images/tag-icon.png" alt="" /></div>
+                <div class="tag_container_inner">
+                  <% unless idea.tags.empty?%>
+                    <% idea.tags.each_with_index do |tag, ctr|%>
+                      <%unless ctr == idea.tags.length - 1%>
+                        <%= link_to h(tag.name)+"," , idea_search_path(:search => ['tag', tag.name]) %>
+                      <%  else %>
+                        <%= link_to h(tag.name)+",", idea_search_path(:search => ['tag', tag.name]) %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!--Right Content Ends -->
+      </div>
+      <!--Green Panel Ends -->
+      <!--Breaker Starts -->
+      <div class="b_divider"></div>
+    </div>
+    <!--Breaker Ends -->
+    <!--Yellow Panel Starts -->
+  <% end %>
+<% end %>
+
+<!--Yellow Panel Ends -->
+<!--Breaker Starts -->
+<div class="fr">
+  <%= will_paginate @ideas, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+</div>
+
+<!--Breaker Ends -->

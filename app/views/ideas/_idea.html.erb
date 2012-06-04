@@ -60,13 +60,6 @@
 
           </h3>
           <p><%= h idea.description_excerpt%> </p>
-<%# if idea.document.url != "/documents/original/missing.png" %>
-<%#*<div>%>
-<%#*<p>%>
-<%#=link_to t("download"), idea.document.url, :class => "bold_link", :target => "_blank"%>
-<%#*</p>%>
-<%#*</div>%>
-<%# end %>
           <div style="clear: both;"></div>
           <%=image_tag('black_attachment.png', :size => '22x22')%><%= "Vedhæftninger" %>(<%= idea.idea_documents.size%>)
           <span style="<%= !idea.idea_documents.empty? ?
