@@ -266,7 +266,7 @@
                       <%if !comment.comment_documents.empty?%>
                         <% comment.comment_documents.each do |cd|%>
                           <li style="width: 30%; float:left; list-style-type: none;">
-                            <%= link_to cd.document_file_name, cd.document.url if cd.document.url != "/documents/original/missing.png"%></li>
+                            <%= link_to cd.document_file_name, cd.document.url, :class => "bold_link", :target => "_blank" if cd.document.url != "/documents/original/missing.png"%></li>
                         <%end%>
                       <%end%>
                     </div>

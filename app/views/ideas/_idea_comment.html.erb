@@ -11,11 +11,7 @@
             </div>
           <% end %>
         </div>
-<%#*<div class="download">%>
 
-<%#=link_to image_tag("/images/download.png", :border => "0"), idea_comment.document.url
-if idea_comment.document.url != "/documents/original/missing.png" %>
-<%#*</div>%>
       </div>
     </div>
     <!--Commentator Ends -->
@@ -45,7 +41,7 @@ if idea_comment.document.url != "/documents/original/missing.png" %>
         <%if !idea_comment.comment_documents.empty?%>
           <% idea_comment.comment_documents.each do |cd|%>
             <li style="width: 30%; float:left; list-style-type: none;">
-                            <%= link_to cd.document_file_name, cd.document.url if cd.document.url != "/documents/original/missing.png"%></li>
+              <%= link_to cd.document_file_name, cd.document.url, :class => "bold_link", :target => "_blank" if cd.document.url != "/documents/original/missing.png"%></li>
           <%end%>
         <%end%>
       </div>
