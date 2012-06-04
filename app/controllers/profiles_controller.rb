@@ -10,6 +10,10 @@ class ProfilesController < ApplicationController
   end
   
   def show
+    if !params[:tab] && !params[:page]
+      session["#{'pagination_'+session[:tab]}"] = nil if session[:tab]
+      session[:tab] = nil
+    end
     @ideas= @user.ideas.paginate(:page => params[:tab] && params[:tab] == "tab1" && session["#{'pagination_'+params[:tab]}"] ? session["#{'pagination_'+params[:tab]}"] : params[:page], :per_page => 3, :order => "created_at DESC")
     @comments= @user.comments.paginate(:page => params[:tab] && params[:tab] == "tab2" && session["#{'pagination_'+params[:tab]}"] ? session["#{'pagination_'+params[:tab]}"] : params[:page], :per_page => 3, :order => "created_at DESC")
     @votes=@user.votes.paginate(:page => params[:tab] && params[:tab] == "tab3" && session["#{'pagination_'+params[:tab]}"] ? session["#{'pagination_'+params[:tab]}"] : params[:page], :per_page => 10)

@@ -77,7 +77,7 @@
             <%if !idea.idea_documents.empty?%>
               <% idea.idea_documents.each do |id|%>
                 <li style="width: 30%; float:left; list-style-type: none;">
-                  <%= link_to id.document_file_name, id.document.url if id.document.url != "/documents/original/missing.png"%></li>
+                  <%= link_to id.document_file_name, id.document.url, :target => "_blank" if id.document.url != "/documents/original/missing.png"%></li>
               <%end%>
             <%end%>
           </div>
