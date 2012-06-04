@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-<%#*<link href='/images/favicon.ico' rel='icon' type='image/x-icon'/>%>
-    <link rel="icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+<%#*<link rel="icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />%>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name = 'keywords' content = "#{COMPANY_NAME}, #{SHORT_SITE_NAME}, #{LONG_SITE_NAME}, Idea Exchange, share, vote, rate" />
     <meta name = 'description' content = "#{LONG_SITE_NAME} is a forum for #{COMPANY_NAME} customers to share, rate, and discuss ideas about #{COMPANY_NAME}."/>
@@ -53,8 +53,10 @@
       jQuery(document).ready(function() {
 
       //When page loads...
-      jQuery(".tab_content").hide(); //Hide all content
-      jQuery("ul.tabs li:first").addClass("active").show(); //Activate first tab
+      <%if session[:tab].nil?%>
+        jQuery(".tab_content").hide(); //Hide all content
+        jQuery("ul.tabs li:first").addClass("active").show(); //Activate first tab
+      <%end%>
       jQuery(".tab_content:first").show(); //Show first tab content
 
       //On Click Event
@@ -92,7 +94,7 @@
             <!--Logo Ends -->
             <!--Top Nav Starts -->
             <% if logged_in? %>
-              <div class="top_nav" style="<%= current_user.admin? ? 'width:420px' : ''%>">
+              <div class="top_nav" style="<%= current_user.admin? ? 'min-width:460px; width:auto;' : ''%>">
 
                 <ul style="padding: 0 5px 0 5px;">
                   <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>

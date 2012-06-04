@@ -6,15 +6,15 @@ class SessionsController < ApplicationController
   include AuthenticatedSystem
   include TwitterHelper
 
-  
+
   layout :compute_layout
-  
+
   def compute_layout
     if action_name == "create"
       'profile'
     end
   end
-  
+
   def new
     flash.clear
     @body_class = 'login'

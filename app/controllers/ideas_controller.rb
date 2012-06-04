@@ -30,8 +30,9 @@ class IdeasController < ApplicationController
   make_resourceful do
     actions :new, :create, :show, :update, :destroy
 
-    
+
     before :create do
+      @idea_documents = []
       @idea.inventor = current_user
       @idea.ip = request.remote_ip
       @idea.user_agent = request.user_agent
@@ -39,6 +40,17 @@ class IdeasController < ApplicationController
       if params[:tags]
         # User can enter tags as free-form text, or using client-side JS. We need to merge tags from the two sources.
         @idea.tags += params[:tags].values.map{ |tag| Tag.from_string(tag) }.flatten
+      end
+      if params[:idea_documents]
+        params[:idea_documents].each do |cd|
+          params[:idea_document] = {}
+          params[:idea_document][:document] = []
+          params[:idea_document][:document] = cd[1]
+          idea_doc = IdeaDocument.new(params[:idea_document])
+          idea_doc.save
+          @idea_documents << idea_doc
+        end
+        @idea.idea_documents = @idea_documents
       end
     end
 

@@ -18,7 +18,7 @@ class UserMailer < ActionMailer::Base
     @body[:url] = password_reset_url(:activation_code => user.activation_code)
   end
 
-  
+
   def idea_followers_notification(user, idea)
     set_up_email(user)
 
@@ -61,7 +61,7 @@ class UserMailer < ActionMailer::Base
 
     @subject = current ? "\"#{strip_funkies(current_user.name)}\" har tilføjet en ny ide til: \"#{strip_funkies(current.title)}\"" :
       "\"#{strip_funkies(current_user.name)}\" har tilføjet en ny ide: \"#{strip_funkies(idea.title)}\""
-      
+
     @body[:follower] = follower
     @body[:user] = current_user
     @body[:idea] = idea
@@ -95,7 +95,7 @@ class UserMailer < ActionMailer::Base
     @body[:idea] = idea
     @body[:idea_url] = idea_url(idea)
   end
-  
+
   def password_change_notification(user)
     set_up_email(user)
     @subject += 'Dit password til Ideportalen er ændret.'
@@ -130,12 +130,12 @@ class UserMailer < ActionMailer::Base
     #    unless ideas.empty?
     @body[:current] = current
     @body[:current_url] = current_url(current)
-     
+
     #      @body[:title] = title
     #      @body[:desc] = description
     #    end
   end
-  
+
   def comment_notification(user, comment)
     set_up_email(user)
     @body[:comment] = comment
@@ -165,13 +165,13 @@ class UserMailer < ActionMailer::Base
       user.followers.each do |u|
         emails << u.email.to_s + ","
       end
-      @recipients=emails << user.email 
+      @recipients=emails << user.email
     else
       emails = user.email
-      @recipients = emails.to_s 
+      @recipients = emails.to_s
     end
-   
-    
+
+
     @subject += "New idea by #{idea.inventor.name}"
     @body[:idea] = idea
     @body[:url] = idea_url(idea)
@@ -187,8 +187,8 @@ class UserMailer < ActionMailer::Base
 
   protected
   def set_up_email(user)
-#    @recipients  = "prajkta.p@gmail.com"
-    @recipients  = "#{user.email}"
+    #    @recipients  = "prajkta.p@gmail.com"
+    @recipients  = ENV['RAILS_ENV'] == "development" ? "prajkta.p@gmail.com" : "#{user.email}"
     @from        = EMAIL_FROM_ADDRESS
     @subject     = "[#{SHORT_SITE_NAME.upcase}] "
     @sent_on     = Time.now

@@ -1,10 +1,10 @@
 class CurrentsController < ApplicationController
 
-  
+
   require "#{RAILS_ROOT}/app/jobs/NotificationCurrentJob.rb"
-  
+
   layout :compute_layout
-  
+
   def compute_layout
     if action_name == "index" || action_name == "show" || action_name == "followers"
       'profile'
@@ -12,7 +12,7 @@ class CurrentsController < ApplicationController
       'application'
     end
   end
-  
+
   make_resourceful do
     actions :show, :index
 
@@ -60,7 +60,7 @@ class CurrentsController < ApplicationController
   end
 
   def follow
-    
+
     begin
       @current= Current.find(params[:current_id])
       CurrentFollower.create!(:user_id => current_user.id, :current_id => @current.id)
@@ -70,9 +70,9 @@ class CurrentsController < ApplicationController
     rescue
       flash[:notice] = "You have successfully followed the idea"
       redirect_to params[:index] ? :back : current_path(@current)
-    end  
+    end
   end
-  
+
   def followers
     @current = Current.find(params[:id])
     @followers=@current.current_followers
@@ -121,11 +121,11 @@ class CurrentsController < ApplicationController
 
   def unfollow
     @current_follow=CurrentFollower.find_by_user_id_and_current_id(current_user.id,params[:id])
-    @current_follow.destroy unless @current_follow.nil? 
+    @current_follow.destroy unless @current_follow.nil?
     flash[:notice] = "Your fellowship of this idea has been removed"
     redirect_to currents_path
   end
-  
+
   def subscribe
     change_subscription(true)
   end

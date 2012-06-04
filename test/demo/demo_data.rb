@@ -9,7 +9,7 @@ puts "Reading postal codes..."
 raise 'No postal codes found. Run "rake db:seed" to load seed data.' if @codes.empty?
 
 # puts "Wiping existing data..."
-# 
+#
 # Vote.destroy_all
 # Tag.destroy_all
 # Comment.destroy_all

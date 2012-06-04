@@ -11,7 +11,10 @@
             </div>
           <% end %>
         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1313c931e87ae0070ebb5e79925a794e30465046
       </div>
     </div>
     <!--Commentator Ends -->
@@ -30,13 +33,14 @@
         <p><%= user_formatted_text idea_comment.text%> </p>
       </div>
       <!--Posted Content Ends -->
-      <%= "Vedhæftninger" %>(<%= idea_comment.comment_documents.size%>)<span style="<%= !idea_comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
-                                                       onclick="<%if !idea_comment.comment_documents.empty?%>
-                                                         if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
-                                                         if($('attachments_<%=idea_comment.id%>').style.display == 'none'){
-                                                         $('attachments_<%=idea_comment.id%>').style.display = 'block';}
-                                                         else{
-                                                         $('attachments_<%=idea_comment.id%>').style.display = 'none';}<%end%> "><%if !idea_comment.comment_documents.empty?%>Vis<%end%></span>
+      <%= "Vedhæftninger" %>(<%= idea_comment.comment_documents.size%>)
+      <span style="<%= !idea_comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
+            onclick="<%if !idea_comment.comment_documents.empty?%>
+              if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+              if($('attachments_<%=idea_comment.id%>').style.display == 'none'){
+              $('attachments_<%=idea_comment.id%>').style.display = 'block';}
+              else{
+              $('attachments_<%=idea_comment.id%>').style.display = 'none';}<%end%> "><%if !idea_comment.comment_documents.empty?%>Vis<%end%></span>
       <div id="<%= 'attachments_'+idea_comment.id.to_s %>" style="display: none; padding:5px;">
         <%if !idea_comment.comment_documents.empty?%>
           <% idea_comment.comment_documents.each do |cd|%>

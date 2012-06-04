@@ -4,10 +4,7 @@ class Idea < ActiveRecord::Base
 
   acts_as_authorizable
 
-  has_attached_file :document,
-    :storage => :s3,
-    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-    :path => ":attachment/idea/:id/:style.:extension"
+  has_many :idea_documents
   belongs_to :inventor, :class_name => 'User'
   belongs_to :current
   has_many :comments, :order => 'comments.created_at', :dependent => :destroy do
@@ -17,7 +14,7 @@ class Idea < ActiveRecord::Base
   end
 
   named_scope :active, :conditions => {:hidden => false, 'users.state' => 'active' }, :include => :inventor, :order => "ideas.created_at DESC"
-  
+
   has_many :admin_comments, :order => 'admin_comments.created_at', :dependent => :destroy
 
   has_many :votes, :include => :user, :dependent => :destroy do
@@ -209,7 +206,7 @@ class Idea < ActiveRecord::Base
         @contribution_recorded = true  # prevents double-recording when callbacks cause a reentrant save
       end
       notify_subscribers!
-      
+
     end
 
     def visible?
@@ -245,7 +242,7 @@ class Idea < ActiveRecord::Base
         self.save!
       end
     end
-    
-    
+
+
 
   end

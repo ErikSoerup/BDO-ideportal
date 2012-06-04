@@ -5,6 +5,7 @@ body {
     font-family: Helvetica,Arial,sans-serif;
     font-size: 12px;
 }
+.clear{clear: both;}
 p { margin:0; padding:0;}
 :focus { outline:0;}
 a { color:#0F645D; text-decoration:none;}
@@ -322,7 +323,7 @@ ul.tabs li.active a {
 }
 .tab_container {
     border-top: none;
-    overflow: hidden;
+/*    overflow: hidden;*/
     clear: both;
     float:  left; 
     width: 99%;
@@ -330,8 +331,9 @@ ul.tabs li.active a {
 }
 .tab_content {
     margin:5px 0;
-    overflow:hidden;
+/*    overflow:hidden;*/
     width:100%;
+    display:block !important;
 }
 .tab_headline {
     width:100%;
@@ -562,6 +564,7 @@ h3.subhead2{
     -webkit-border-radius:5px 5px 5px 5px;
     padding:7px 10px;
     height:auto;
+    overflow: auto;
 }
 .comments_wrap_green {
     width:493px;

@@ -1,0 +1,24 @@
+--- 
+quentin: 
+  contribution_points: "200"
+  salt: ac66dc9c3ae9e75996987d087033a7cfcdafad0b
+  name: Quentin X. Test
+  activated_at: 2009-10-23 22:52:36.823554
+  created_at: 2009-10-23 22:52:36.810586
+  zip_code: "55101"
+  remember_token_expires_at: 
+  crypted_password: e57538484a18b64910ab82d8ee1e008852f98854
+  tweet_ideas: 
+  deleted_at: 
+  updated_at: 2009-10-23 22:52:37.583369
+  activation_code: 
+  postal_code_id: "1"
+  moderator: 
+  decayed_at: 
+  id: "1"
+  twitter_token: 
+  twitter_handle: 
+  remember_token: 
+  twitter_secret: 
+  state: active
+  email: quentin@example.com

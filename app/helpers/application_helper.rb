@@ -21,7 +21,7 @@ module ApplicationHelper
       ideas = Idea.populate_comment_counts(Idea.find(:all, :include => [{:inventor => :postal_code}, :tags], :conditions => ['users.state = ? and ideas.hidden = ? and ideas.duplicate_of_id is null', 'active', false], :order => 'ideas.created_at DESC'))
       ideas[ideas.index(idea) + 1]
     elsif arr && val.nil?
-      
+
       ideas= arr
       ideas[ideas.index(idea) + 1]
     else
@@ -140,7 +140,7 @@ module ApplicationHelper
   def current_user_has_relationship_with user
     current_user.relationships.include?(Relationship.find_by_follower_id_and_followed_id(current_user.id, user.id))
   end
-  
+
   private
 
   def flagged_as_inappropriate_session_key(model)

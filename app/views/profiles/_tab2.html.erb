@@ -1,0 +1,59 @@
+
+<!--Header Portion Starts -->
+<div class="tab_headline">
+  <div class="fl"><strong>Her er <%= @user.name %>'s kommentarer </strong></div>
+  <!--Pagination Starts -->
+  <div class="fr">
+    <ul class="pagination">
+      <!--<li><a href="#">«</a></li> -->
+      <%= will_paginate @comments, :next_label =>"Næste &raquo;", :previous_label => "&laquo; Forrige" %>
+    </ul>
+  </div>
+  <!--Pagination Ends -->
+</div>
+<!--Heade Portion Ends -->
+<!--Comments1 Starts -->
+<% @comments.each do |comment| %>
+  <div class="plainwrap">
+    <!--Commentator Starts -->
+    <div class="commentator_panel">
+      <div class="commentator_wrap_green"><%= link_to h(comment.author.name), profile_path(comment.author)%></div>
+      <div class="plainwrap">
+        <div class="fl"><%= image_tag profile_picture(comment.author, :small)%></div>
+      </div>
+    </div>
+    <!--Commentator Ends -->
+    <!--Posted Comments Starts -->
+    <div class="comments_wrap_green" id="<%= 'details_'+comment.id.to_s %>">
+      <!--Content Head Starts -->
+      <div class="p_content_head">
+        <div class="fl">Sendt <strong><%="#{time_ago_in_words(comment.created_at)}"%> <%= t("ago")%> </strong> som svar på <%= link_to h(comment.idea.title), idea_path(comment.idea)%></div>
+      </div>
+      <!--Content Head Ends -->
+      <!--Posted Content Starts -->
+      <div class="plainwrap" style="min-height:50px; margin-bottom:10px;">
+        <p><%= user_formatted_text comment.text%></p>
+      </div>
+      <!--Posted Content Ends -->
+      <%= "Vedhæftninger" %>(<%=comment.comment_documents.size%>)<span style="<%= !comment.comment_documents.empty? ? 'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
+                                                 onclick="<%if !comment.comment_documents.empty?%>
+                                                   if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';}else{$(this).innerHTML = 'Vis';}
+                                                   if($('attachments_<%=comment.id%>').style.display == 'none'){
+                                                   $('attachments_<%=comment.id%>').style.display = 'block';}
+                                                   else{
+                                                   $('attachments_<%=comment.id%>').style.display = 'none';}<%end%> "><%if !comment.comment_documents.empty?%>Vis<%end%></span>
+      <div id="<%= 'attachments_'+comment.id.to_s %>" style="display: none; padding:5px;">
+        <%if !comment.comment_documents.empty?%>
+          <% comment.comment_documents.each do |cd|%>
+            <li style="width: 30%; float:left; list-style-type: none;">
+              <%= link_to cd.document_file_name, cd.document.url, :target => "_blank" if cd.document.url != "/documents/original/missing.png"%></li>
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+    <!--Posted Comments Ends -->
+  </div>
+  <!--Breaker Starts -->
+  <div class="b_divider"></div>
+<% end %>
+
