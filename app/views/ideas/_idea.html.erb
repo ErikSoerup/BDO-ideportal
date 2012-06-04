@@ -65,11 +65,11 @@
           <span style="<%= !idea.idea_documents.empty? ?
             'color: #0F645D;font-weight: bold; padding:4px; cursor: pointer;' : 'color: #0F645D;padding:4px;font-weight: bold;'%>"
                 onclick="<%if !idea.idea_documents.empty?%>
-                  if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';$('attachments').style.display = 'block';}
-                  else{$(this).innerHTML = 'Vis';$('attachments').style.display = 'none';}
+                  if($(this).innerHTML == 'Vis'){$(this).innerHTML = 'Skjul';$('attachments_<%=idea.id%>').style.display = 'block';}
+                  else{$(this).innerHTML = 'Vis';$('attachments_<%=idea.id%>').style.display = 'none';}
                 <%end%>"><%if !idea.idea_documents.empty?%>Vis<%end%></span>
 
-          <div id="attachments" class="hide idea_attachments_wrap_green">
+          <div id="<%= 'attachments_'+idea.id.to_s %>" class="hide idea_attachments_wrap_green">
             <%if !idea.idea_documents.empty?%>
               <%idea.idea_documents.each do |id|%>
                 <li style="width: 30%; float:left; list-style-type: none;"><%= link_to id.document_file_name, id.document.url, :class => "bold_link", :target => "_blank" unless id.document.url == "/documents/original/missing.png"%></li>
