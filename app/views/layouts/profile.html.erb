@@ -94,7 +94,7 @@
             <!--Logo Ends -->
             <!--Top Nav Starts -->
             <% if logged_in? %>
-              <div class="top_nav" style="<%= current_user.admin? ? 'width:420px' : ''%>">
+              <div class="top_nav" style="<%= current_user.admin? ? 'width:435px' : ''%>">
 
                 <ul style="padding: 0 5px 0 5px;">
                   <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>
