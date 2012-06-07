@@ -38,3 +38,12 @@ To verify your installation:
     rake test
 
 moved repo to BBYOpen. Testing pull into forks. Testing pull again.
+
+Had issues with test heroku account "bdodev".
+As a collaborator, using command 'heroku logs' did not show the actual errors. 
+So communicated with heroku support people and they sent the stack trace that they found using the command:
+"heroku ps:dynos 1"
+This helped me understand the issue with the application. There were multiple conflicted files committed to heroku, due to which the application server was not getting started and was giving following error
+"Error H14 (No web processes running)"
+
+
