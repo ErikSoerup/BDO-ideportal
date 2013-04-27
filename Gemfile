@@ -14,9 +14,6 @@ gem 'fastercsv'
 gem 'highline'
 gem 'rdoc'
 
-# delayed job for heroku
-gem 'delayed_job_active_record'
-
 gem 'facebooker2'
 gem 'mogli'
 gem "paperclip", "2.4"
