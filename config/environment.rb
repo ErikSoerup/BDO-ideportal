@@ -12,10 +12,10 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 # Settings for rails-authorization-plugin
 # http://github.com/DocSavage/rails-authorization-plugin/tree/master
-AUTHORIZATION_MIXIN = "object roles"
+AUTHORIZATION_MIXIN           = "object roles"
 LOGIN_REQUIRED_REDIRECTION    = { :controller => '/sessions', :action => 'new' }
 PERMISSION_DENIED_REDIRECTION = { :controller => '/sessions', :action => 'new' }
-STORE_LOCATION_METHOD = :store_location
+STORE_LOCATION_METHOD         = :store_location
 
 require File.dirname(__FILE__) + '/environment_custom.rb'
 
@@ -63,18 +63,18 @@ Rails::Initializer.run do |config|
 
 
 
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors  = true
+  config.action_mailer.delivery_method        = :smtp
+  config.action_mailer.perform_deliveries     = true
 
-  config.action_mailer.default_charset = "utf-8"
-  config.action_mailer.smtp_settings = {
-    :address => "smtp.sendgrid.net",
-    :port => 587,
-    :domain => "heroku.com",
-    :authentication => :plain,
-    :user_name => "app2126677@heroku.com",
-    :password => "rteoqrwg",
+  config.action_mailer.default_charset        = "utf-8"
+  config.action_mailer.smtp_settings          = {
+    :address              => "smtp.sendgrid.net",
+    :port                 => 587,
+    :domain               => "heroku.com",
+    :authentication       => :plain,
+    :user_name            => "app2126677@heroku.com",
+    :password             => "rteoqrwg",
     :enable_starttls_auto => true
   }
 
