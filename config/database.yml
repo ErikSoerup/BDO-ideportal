@@ -11,10 +11,10 @@ production:
 
 
 development:
+  host: localhost
   adapter: postgresql
   database: bdo_development
-  username: postgres
-  password: pgsql
+  password: developer
   encoding: unicode
   pool: 5
   #template: template1  # fixes database encoding errors in newer versions of PostgreSQL

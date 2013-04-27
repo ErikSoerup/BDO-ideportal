@@ -74,12 +74,10 @@ ActiveRecord::Schema.define(:version => 20120531084918) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
-    t.text     "vectors"
   end
 
   add_index "comments", ["author_id"], :name => "index_comments_on_author_id"
   add_index "comments", ["idea_id"], :name => "index_comments_on_idea_id"
-  add_index "comments", ["vectors"], :name => "comments_fts_vectors_index"
 
   create_table "current_followers", :force => true do |t|
     t.integer  "current_id"
@@ -97,7 +95,6 @@ ActiveRecord::Schema.define(:version => 20120531084918) do
     t.boolean  "closed",              :default => false
     t.boolean  "invitation_only",     :default => false
     t.date     "submission_deadline"
-    t.text     "vectors"
     t.boolean  "active",              :default => true
   end
 
@@ -169,11 +166,9 @@ ActiveRecord::Schema.define(:version => 20120531084918) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.boolean  "is_anonymous",                                                       :default => false
-    t.text     "vectors"
   end
 
   add_index "ideas", ["inventor_id"], :name => "index_ideas_on_inventor_id"
-  add_index "ideas", ["vectors"], :name => "ideas_fts_vectors_index"
 
   create_table "ideas_admin_tags", :id => false, :force => true do |t|
     t.integer "idea_id"
@@ -323,7 +318,6 @@ ActiveRecord::Schema.define(:version => 20120531084918) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.text     "vectors"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

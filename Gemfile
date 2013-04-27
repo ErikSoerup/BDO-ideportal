@@ -1,16 +1,17 @@
-source :gemcutter
+source 'https://rubygems.org'
 
-gem "rails", "~>2.3.10"
+gem "rails", "2.3.18"
 gem "json"
 gem "haml", '3.0.22'
 gem 'will_paginate', '~> 2.3.11'
 gem "color", '1.4.1'
-gem 'twitter', '0.9.12'
+gem 'twitter'
 gem 'mash'
 gem 'httparty'
 gem 'ruby-hmac'
 gem 'fastercsv'
 gem 'highline'
+gem 'rdoc'
 
 gem 'facebooker2'
 gem 'mogli'
