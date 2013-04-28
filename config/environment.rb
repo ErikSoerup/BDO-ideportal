@@ -73,8 +73,8 @@ Rails::Initializer.run do |config|
     :port                 => 587,
     :domain               => "heroku.com",
     :authentication       => :plain,
-    :user_name            => "app2126677@heroku.com",
-    :password             => "rteoqrwg",
+    :user_name            => "app15311767@heroku.com",
+    :password             => "g2epfkq9",
     :enable_starttls_auto => true
   }
 
