@@ -2,10 +2,12 @@ development:
   access_key_id: AKIAJWRAZDX35IHC45XQ
   secret_access_key: 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
   bucket: BDO_Ideportal
+
 test:
   access_key_id: abc
   secret_access_key: abc/efg
+
 production:
-  access_key_id: AKIAJWRAZDX35IHC45XQ
-  secret_access_key: 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
-  bucket: BDO_Ideportal
+  access_key_id: AKIAJE3STUPDWXCNKKGQ
+  secret_access_key: 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
+  bucket: prod.bdo-ideportal
