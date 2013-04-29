@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: tags
+#
+#  id   :integer          not null, primary key
+#  name :string(255)
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TagTest < ActiveSupport::TestCase

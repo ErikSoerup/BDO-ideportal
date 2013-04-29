@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: life_cycle_steps
+#
+#  id            :integer          not null, primary key
+#  life_cycle_id :integer
+#  position      :integer
+#  name          :string(255)
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class LifeCycleStepTest < ActiveSupport::TestCase

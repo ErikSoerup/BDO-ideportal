@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: currents
+#
+#  id                  :integer          not null, primary key
+#  title               :string(255)
+#  description         :text
+#  inventor_id         :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  closed              :boolean          default(FALSE)
+#  invitation_only     :boolean          default(FALSE)
+#  submission_deadline :date
+#  active              :boolean          default(TRUE)
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CurrentTest < ActiveSupport::TestCase

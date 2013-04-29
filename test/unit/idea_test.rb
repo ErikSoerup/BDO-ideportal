@@ -1,3 +1,37 @@
+# == Schema Information
+#
+# Table name: ideas
+#
+#  id                    :integer          not null, primary key
+#  title                 :text
+#  description           :text
+#  rating                :decimal(10, 2)   default(0.0)
+#  inventor_id           :integer
+#  created_at            :datetime
+#  updated_at            :datetime
+#  flagged               :boolean
+#  viewed                :boolean          default(FALSE)
+#  inappropriate_flags   :integer          default(0)
+#  hidden                :boolean          default(FALSE)
+#  decayed_at            :datetime
+#  life_cycle_step_id    :integer
+#  status                :string(20)       default("new"), not null
+#  duplicate_of_id       :integer
+#  marked_spam           :boolean          default(FALSE)
+#  current_id            :integer          default(-1)
+#  vote_count            :integer
+#  ip                    :string(64)
+#  user_agent            :string(255)
+#  spam_checked          :boolean          default(FALSE), not null
+#  notifications_sent    :boolean          default(FALSE), not null
+#  document_file_name    :string(255)
+#  document_content_type :string(255)
+#  document_file_size    :integer
+#  document_updated_at   :datetime
+#  is_anonymous          :boolean          default(FALSE)
+#  vectors               :text
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class IdeaTest < ActiveSupport::TestCase

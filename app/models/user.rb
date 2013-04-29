@@ -1,3 +1,45 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                         :integer          not null, primary key
+#  name                       :string(255)
+#  email                      :string(255)
+#  crypted_password           :string(40)
+#  salt                       :string(40)
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  remember_token             :string(255)
+#  remember_token_expires_at  :datetime
+#  activation_code            :string(40)
+#  activated_at               :datetime
+#  state                      :string(255)      default("passive")
+#  deleted_at                 :datetime
+#  zip_code                   :string(255)
+#  contribution_points        :float            default(0.0)
+#  decayed_at                 :datetime
+#  moderator                  :boolean
+#  postal_code_id             :integer
+#  twitter_handle             :string(255)
+#  tweet_ideas                :boolean
+#  twitter_token              :string(255)
+#  twitter_secret             :string(255)
+#  facebook_uid               :string(255)
+#  notify_on_comments         :boolean          default(TRUE), not null
+#  notify_on_state            :boolean          default(FALSE), not null
+#  facebook_access_token      :string(255)
+#  facebook_post_ideas        :boolean
+#  facebook_name              :string(255)
+#  recent_contribution_points :float
+#  department_id              :integer
+#  phone                      :string(255)
+#  avatar_file_name           :string(255)
+#  avatar_content_type        :string(255)
+#  avatar_file_size           :integer
+#  avatar_updated_at          :datetime
+#  vectors                    :text
+#
+
 require 'digest/sha1'
 class User < ActiveRecord::Base
 
@@ -5,10 +47,10 @@ class User < ActiveRecord::Base
   acts_as_authorizable
 
   has_attached_file :avatar,
-    :styles => { :small => "64x64>", :large => "128x128>" },
-    :storage => :s3,
+    :styles         => { :small => "64x64>", :large => "128x128>" },
+    :storage        => :s3,
     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-    :path => ":attachment/user/:id/:style.:extension"
+    :path           => ":attachment/user/:id/:style.:extension"
 
   # Virtual attribute for the unencrypted password
   attr_accessor :password
@@ -18,9 +60,9 @@ class User < ActiveRecord::Base
       Idea.populate_comment_counts(
         find :all, opts.reverse_merge(
           :conditions => { :hidden => false, 'users.state' => 'active' },
-          :include => [:tags, :inventor],
-          :order => 'ideas.created_at desc',
-          :limit => 10))
+          :include    => [:tags, :inventor],
+          :order      => 'ideas.created_at desc',
+          :limit      => 10))
     end
   end
 
@@ -43,11 +85,11 @@ class User < ActiveRecord::Base
         :limit => 10)
     end
   end
-  belongs_to :department
+  belongs_to  :department
   has_and_belongs_to_many :life_cycle_steps, :join_table => 'life_cycle_steps_admins', :order => 'life_cycle_id, position'
-  belongs_to :postal_code
-  has_many :roles_users, :dependent => :delete_all
-  has_many :roles, :through => :roles_users do
+  belongs_to  :postal_code
+  has_many    :roles_users, :dependent => :delete_all
+  has_many    :roles, :through => :roles_users do
     def for_name(name)
       find :all, :conditions => { :name => name }
     end
@@ -60,17 +102,16 @@ class User < ActiveRecord::Base
   has_many :client_applications
   has_many :tokens, :class_name => 'OauthToken', :order => 'authorized_at desc', :include => [:client_application]
   has_many :relationships, :foreign_key => "follower_id",
-    :dependent => :destroy
+           :dependent => :destroy
   has_many :following, :through => :relationships, :source => :followed
 
   has_many :reverse_relationships, :foreign_key => "followed_id",
     :class_name => "Relationship",
-    :dependent => :destroy
+    :dependent  => :destroy
   has_many :followers, :through => :reverse_relationships, :source => :follower
 
   validates_presence_of     :name
   validates_presence_of     :email
-  #validates_presence_of     :zip_code
   validates_presence_of     :department_id
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_confirmation_required?
@@ -78,7 +119,6 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :name,     :within => 4..100
   validates_length_of       :email,    :within => 3..100
-  #validates_format_of       :email,    :with => /^[A-Z0-9._%+-]+@bdo\.dk$/i
   validates_format_of       :email,    :with => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   validates_uniqueness_of   :email, :case_sensitive => false
   validates_acceptance_of   :terms_of_service, :allow_nil => false, :if => 'new_record?'
@@ -144,7 +184,7 @@ class User < ActiveRecord::Base
       if s
         find :all, opts.reverse_merge(
           :conditions => [
-            'state = ? and created_at > ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active', 
+            'state = ? and created_at > ? and (select count(*) from roles_users where roles_users.user_id = users.id) = 0', 'active',
             s.value.split("-")[1] == "months" ? Time.now - s.value.split("-")[0].to_i.months : s.value.split("-")[1] == "weeks" ? Time.now - s.value.split("-")[0].to_i.weeks : Time.now - s.value.split("-")[0].to_i.days],
           :order => 'contribution_points desc' )
       else
@@ -230,7 +270,7 @@ class User < ActiveRecord::Base
 
   def recalculate_contribution_points
     self.contribution_points = (
-      CONTRIBUTION_SCORES[:idea]    * ideas.recent_visible(:limit => nil).count +
+      CONTRIBUTION_SCORES[:idea]      * ideas.recent_visible(:limit => nil).count +
         CONTRIBUTION_SCORES[:comment] * comments.recent_visible(:limit => nil).count +
         CONTRIBUTION_SCORES[:vote]    * votes.count)
   end
@@ -244,8 +284,8 @@ class User < ActiveRecord::Base
   end
 
   def unlink_twitter
-    self.twitter_token = self.twitter_secret = self.twitter_handle = nil
-    self.tweet_ideas = false
+    self.twitter_token  = self.twitter_secret = self.twitter_handle = nil
+    self.tweet_ideas    = false
   end
 
   def linked_to_facebook?
@@ -257,8 +297,8 @@ class User < ActiveRecord::Base
   end
 
   def unlink_facebook
-    self.facebook_uid = self.facebook_access_token = self.facebook_name = nil
-    self.facebook_post_ideas = false
+    self.facebook_uid         = self.facebook_access_token = self.facebook_name = nil
+    self.facebook_post_ideas  = false
   end
 
   def count_votes

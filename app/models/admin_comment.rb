@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: admin_comments
+#
+#  id         :integer          not null, primary key
+#  idea_id    :integer
+#  author_id  :integer
+#  text       :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class AdminComment < ActiveRecord::Base
   
   belongs_to :idea

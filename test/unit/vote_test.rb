@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: votes
+#
+#  id         :integer          not null, primary key
+#  idea_id    :integer
+#  user_id    :integer
+#  counted    :boolean          default(FALSE)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class VoteTest < ActiveSupport::TestCase

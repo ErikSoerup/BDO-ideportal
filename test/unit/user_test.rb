@@ -1,3 +1,45 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                         :integer          not null, primary key
+#  name                       :string(255)
+#  email                      :string(255)
+#  crypted_password           :string(40)
+#  salt                       :string(40)
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  remember_token             :string(255)
+#  remember_token_expires_at  :datetime
+#  activation_code            :string(40)
+#  activated_at               :datetime
+#  state                      :string(255)      default("passive")
+#  deleted_at                 :datetime
+#  zip_code                   :string(255)
+#  contribution_points        :float            default(0.0)
+#  decayed_at                 :datetime
+#  moderator                  :boolean
+#  postal_code_id             :integer
+#  twitter_handle             :string(255)
+#  tweet_ideas                :boolean
+#  twitter_token              :string(255)
+#  twitter_secret             :string(255)
+#  facebook_uid               :string(255)
+#  notify_on_comments         :boolean          default(TRUE), not null
+#  notify_on_state            :boolean          default(FALSE), not null
+#  facebook_access_token      :string(255)
+#  facebook_post_ideas        :boolean
+#  facebook_name              :string(255)
+#  recent_contribution_points :float
+#  department_id              :integer
+#  phone                      :string(255)
+#  avatar_file_name           :string(255)
+#  avatar_content_type        :string(255)
+#  avatar_file_size           :integer
+#  avatar_updated_at          :datetime
+#  vectors                    :text
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveSupport::TestCase

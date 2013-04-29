@@ -1,13 +1,47 @@
+# == Schema Information
+#
+# Table name: ideas
+#
+#  id                    :integer          not null, primary key
+#  title                 :text
+#  description           :text
+#  rating                :decimal(10, 2)   default(0.0)
+#  inventor_id           :integer
+#  created_at            :datetime
+#  updated_at            :datetime
+#  flagged               :boolean
+#  viewed                :boolean          default(FALSE)
+#  inappropriate_flags   :integer          default(0)
+#  hidden                :boolean          default(FALSE)
+#  decayed_at            :datetime
+#  life_cycle_step_id    :integer
+#  status                :string(20)       default("new"), not null
+#  duplicate_of_id       :integer
+#  marked_spam           :boolean          default(FALSE)
+#  current_id            :integer          default(-1)
+#  vote_count            :integer
+#  ip                    :string(64)
+#  user_agent            :string(255)
+#  spam_checked          :boolean          default(FALSE), not null
+#  notifications_sent    :boolean          default(FALSE), not null
+#  document_file_name    :string(255)
+#  document_content_type :string(255)
+#  document_file_size    :integer
+#  document_updated_at   :datetime
+#  is_anonymous          :boolean          default(FALSE)
+#  vectors               :text
+#
+
 class Idea < ActiveRecord::Base
   STATES = [ 'new', 'under review', 'reviewed', 'coming soon', 'launched' ]
   STATES.freeze
 
   acts_as_authorizable
 
-  has_many :idea_documents
-  belongs_to :inventor, :class_name => 'User'
-  belongs_to :current
-  has_many :comments, :order => 'comments.created_at', :dependent => :destroy do
+  has_many    :idea_documents
+  belongs_to  :inventor, :class_name => 'User'
+  belongs_to  :current
+  has_many    :comments, :order => 'comments.created_at', :dependent => :destroy do
     def visible
       r = find :all, :include => :author, :conditions => { :hidden => false, 'users.state' => 'active' }
     end
@@ -16,7 +50,6 @@ class Idea < ActiveRecord::Base
   named_scope :active, :conditions => {:hidden => false, 'users.state' => 'active' }, :include => :inventor, :order => "ideas.created_at DESC"
 
   has_many :admin_comments, :order => 'admin_comments.created_at', :dependent => :destroy
-
   has_many :votes, :include => :user, :dependent => :destroy do
     def for(user)
         find :first, :conditions => {:user_id => user.id}
