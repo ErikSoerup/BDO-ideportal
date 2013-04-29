@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include PrettyUrlHelper
   include Facebooker2::Rails::Controller if FACEBOOK_ENABLED
-
-
+  # include SslRequirement
+  #  ssl_required
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '6d2e62cd0d223411d020b5a2c2fdfe2d'
@@ -31,15 +31,6 @@ class ApplicationController < ActionController::Base
   # This filters the contents of submitted sensitive data parameters
   # from the application log (in this case, all fields with names like "password").
   filter_parameter_logging :password, :password_confirmation
-
-  #def check_ip
-  #    @ip_addr = request.ip
-  #    if @ip_addr == "83.151.150.86"
-  #      return true
-  #    else
-  #      redirect_to error_page_path
-  #    end
-  #  end
 
   protected
 

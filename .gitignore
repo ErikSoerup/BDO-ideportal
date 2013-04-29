@@ -14,3 +14,4 @@ database.yml
 .sass-cache/
 .rbenv-gemsets
 .ruby-version
+latest.dump

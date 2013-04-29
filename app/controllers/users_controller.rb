@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   include AuthenticatedSystem
 
-  before_filter :login_required, :only => [:index, :edit, :update, :authorize_twitter, :following, :follow]
-  before_filter :populate_user, :except => [:show, :new]
-  before_filter :get_user, :only => [:following, :followers]
+  before_filter :login_required,  :only   => [:index, :edit, :update, :authorize_twitter, :following, :follow]
+  before_filter :populate_user,   :except => [:show, :new]
+  before_filter :get_user,        :only   => [:following, :followers]
 
   layout 'profile'
 
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
   end
 
   def search_user
-    @users= User.find(:all, :conditions => ['LOWER(name) like ? and state = ?', "#{params[:search].downcase}%", "active"])
+    @users = User.find(:all, :conditions => ['LOWER(name) like ? and state = ?', "#{params[:search].downcase}%", "active"])
     @users = @users.paginate :page => params[:page] unless @users.nil?
   end
 

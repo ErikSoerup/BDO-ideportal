@@ -104,6 +104,7 @@ describe Delayed::Worker do
           # reset defaults
           Delayed::Worker.destroy_failed_jobs = true
           Delayed::Worker.max_attempts = 25
+          Delayed::Job.delete_all
 
           @job = Delayed::Job.enqueue ErrorJob.new
         end
@@ -120,13 +121,33 @@ describe Delayed::Worker do
         end
     
         it "should re-schedule jobs after failing" do
-          @worker.run(@job)
+          @worker.work_off
           @job.reload
           @job.last_error.should =~ /did not work/
           @job.last_error.should =~ /sample_jobs.rb:8:in `perform'/
           @job.attempts.should == 1
           @job.run_at.should > Delayed::Job.db_time_now - 10.minutes
           @job.run_at.should < Delayed::Job.db_time_now + 10.minutes
+          @job.locked_at.should be_nil
+          @job.locked_by.should be_nil
+        end
+        
+        context "when the job's payload implements #reschedule_at" do
+          before(:each) do
+            @reschedule_at = Time.current + 7.hours
+            @job.payload_object.stub!(:reschedule_at).and_return(@reschedule_at)
+          end
+
+          it 'should invoke the strategy to re-schedule' do
+            @job.payload_object.should_receive(:reschedule_at) do |time, attempts|
+              (Delayed::Job.db_time_now - time).should < 2
+              attempts.should == 1
+
+              Delayed::Job.db_time_now + 5
+            end
+
+            @worker.run(@job)
+          end
         end
       end
   
@@ -144,7 +165,7 @@ describe Delayed::Worker do
 
             it "should run that hook" do
               @job.payload_object.should_receive :on_permanent_failure
-              Delayed::Worker.max_attempts.times { @worker.reschedule(@job) }
+              @worker.reschedule(@job)
             end
           end
 

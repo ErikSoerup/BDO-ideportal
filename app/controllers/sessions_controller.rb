@@ -2,10 +2,12 @@ require 'ostruct'
 
 # This controller handles login/logout functionality.
 class SessionsController < ApplicationController
-
+  #  ssl_required :new if ENV['RAILS_ENV'] == 'production'
   include AuthenticatedSystem
   include TwitterHelper
 
+  # ssl_required :new, :create
+  # ssl_allowed :show
 
   layout :compute_layout
 
@@ -19,7 +21,8 @@ class SessionsController < ApplicationController
     flash.clear
     @body_class = 'login'
     #    @ip_addr = request.ip
-    @ip_addr = request.ip == "127.0.0.1" || request.ip == "14.97.240.132" ? "83.151.150.86" : request.ip
+    #    @ip_addr = request.ip == "127.0.0.1" || request.ip == "59.161.58.113" ? "83.151.150.86" : request.ip
+    @ip_addr = request.ip == "127.0.0.1" || request.ip == "128.39.17.208" ? "83.151.150.86" : request.ip
     if @ip_addr != "83.151.150.86"
       @message = "Du kan kun logge ind via det interne netværk. Log først på VPN og derefter på ideportalen."
       @authorized_access = false

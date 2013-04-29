@@ -14,6 +14,7 @@ module Delayed
       }
       
       @worker_count = 1
+      @monitor = false
       
       opts = OptionParser.new do |opts|
         opts.banner = "Usage: #{File.basename($0)} [options] start|stop|restart|run"
@@ -39,6 +40,15 @@ module Delayed
         end
         opts.on('-i', '--identifier=n', 'A numeric identifier for the worker.') do |n|
           @options[:identifier] = n
+        end
+        opts.on('-m', '--monitor', 'Start monitor process.') do
+          @monitor = true
+        end
+        opts.on('--sleep-delay N', "Amount of time to sleep when no jobs are found") do |n|
+          @options[:sleep_delay] = n
+        end
+        opts.on('-p', '--prefix NAME', "String to be prefixed to worker process names") do |prefix|
+          @options[:prefix] = prefix
         end
       end
       @args = opts.parse!(args)
@@ -68,7 +78,8 @@ module Delayed
     end
     
     def run_process(process_name, dir)
-      Daemons.run_proc(process_name, :dir => dir, :dir_mode => :normal, :ARGV => @args) do |*args|
+      Daemons.run_proc(process_name, :dir => dir, :dir_mode => :normal, :monitor => @monitor, :ARGV => @args) do |*args|
+        $0 = File.join @options[:prefix], process_name if @options[:prefix]
         run process_name
       end
     end
@@ -79,7 +90,7 @@ module Delayed
       # Re-open file handles
       @files_to_reopen.each do |file|
         begin
-          file.reopen file.path
+          file.reopen file.path, "a+"
           file.sync = true
         rescue ::Exception
         end

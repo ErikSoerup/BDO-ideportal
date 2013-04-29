@@ -1,6 +1,6 @@
 h1. Delayed::Job
 
-Delated_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background. 
+Delated_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 
 It is a direct extraction from Shopify where the job table is responsible for a multitude of core tasks. Amongst those tasks are:
 
@@ -9,21 +9,24 @@ It is a direct extraction from Shopify where the job table is responsible for a 
 * http downloads
 * updating smart collections
 * updating solr, our search server, after product changes
-* batch imports 
-* spam checks 
+* batch imports
+* spam checks
 
 h2. Installation
+
+This version is for Rails 2.x only.  For rails 3 support, install delayed_job 2.1.
 
 To install as a gem, add the following to @config/environment.rb@:
 
 <pre>
-config.gem 'delayed_job'
+config.gem 'delayed_job', :version => '~>2.0.4'
 </pre>
 
 Rake tasks are not automatically loaded from gems, so you'll need to add the following to your Rakefile:
 
 <pre>
 begin
+  gem 'delayed_job', '~>2.0.4'
   require 'delayed/tasks'
 rescue LoadError
   STDERR.puts "Run `rake gems:install` to install delayed_job"
@@ -33,10 +36,14 @@ end
 To install as a plugin:
 
 <pre>
-script/plugin install git://github.com/collectiveidea/delayed_job.git
+script/plugin install git://github.com/collectiveidea/delayed_job.git -r v2.0
 </pre>
 
 After delayed_job is installed, you will need to setup the backend.
+
+h3. Dependencies
+
+delayed_job depends upon version 1.0.10 of the daemons gem. delayed_job is incompatible with the newest (1.1.0) daemons gem.
 
 h2. Backends
 
@@ -53,8 +60,12 @@ $ rake db:migrate
 
 h3. MongoMapper
 
+You must use @MongoMapper.setup@ in the initializer:
+
 <pre>
-# config/initializers/delayed_job.rb
+config = YAML::load(File.read(Rails.root.join('config/mongo.yml')))
+MongoMapper.setup(config, Rails.env)
+
 Delayed::Worker.backend = :mongo_mapper
 </pre>
 
@@ -68,14 +79,14 @@ Delayed::Worker.backend.auto_upgrade!
 
 h2. Queuing Jobs
 
-Call @#send_later(method, params)@ on any object and it will be processed in the background.
+Call @.delay.method(params)@ on any object and it will be processed in the background.
 
 <pre>
 # without delayed_job
 Notifier.deliver_signup(@user)
 
 # with delayed_job
-Notifier.send_later :deliver_signup, @user
+Notifier.delay.deliver_signup @user
 </pre>
 
 If a method should always be run in the background, you can call @#handle_asynchronously@ after the method declaration:
@@ -90,6 +101,39 @@ end
 
 device = Device.new
 device.deliver
+</pre>
+
+handle_asynchronously can take as options anything you can pass to delay. In addition the values can be Proc objects allowing call time evaluation of the value. For some examples:
+
+<pre>
+class LongTasks
+  def send_mailer
+    # Some other code
+  end
+  handle_asynchronously :send_mailer, :priority => 20
+
+  def in_the_future
+    # Some other code
+  end
+  # 5.minutes.from_now will be evaluated when in_the_future is called
+  handle_asynchronously :in_the_future, :run_at => Proc.new { 5.minutes.from_now }
+
+  def self.when_to_run
+    2.hours.from_now
+  end
+
+  def call_a_class_method
+    # Some other code
+  end
+  handle_asynchronously :call_a_class_method, :run_at => Proc.new { when_to_run }
+
+  attr_reader :how_important
+
+  def call_an_instance_method
+    # Some other code
+  end
+  handle_asynchronously :call_an_instance_method, :priority => Proc.new {|i| i.how_important }
+end
 </pre>
 
 h2. Running Jobs
@@ -107,19 +151,19 @@ $ RAILS_ENV=production script/delayed_job stop
 
 Workers can be running on any computer, as long as they have access to the database and their clock is in sync. Keep in mind that each worker will check the database at least every 5 seconds.
 
-You can also invoke @rake jobs:work@ which will start working off jobs. You can cancel the rake task with @CTRL-C@. 
+You can also invoke @rake jobs:work@ which will start working off jobs. You can cancel the rake task with @CTRL-C@.
 
 h2. Custom Jobs
 
-Jobs are simple ruby objects with a method called perform. Any object which responds to perform can be stuffed into the jobs table. Job objects are serialized to yaml so that they can later be resurrected by the job runner. 
+Jobs are simple ruby objects with a method called perform. Any object which responds to perform can be stuffed into the jobs table. Job objects are serialized to yaml so that they can later be resurrected by the job runner.
 
 <pre>
 class NewsletterJob < Struct.new(:text, :emails)
   def perform
     emails.each { |e| NewsletterMailer.deliver_text_to_email(text, e) }
-  end    
-end  
-  
+  end
+end
+
 Delayed::Job.enqueue NewsletterJob.new('lorem ipsum...', Customers.find(:all).collect(&:email))
 </pre>
 
@@ -129,17 +173,17 @@ You can also add an optional on_permanent_failure method which will run if the j
 class ParanoidNewsletterJob < NewsletterJob
   def perform
     emails.each { |e| NewsletterMailer.deliver_text_to_email(text, e) }
-  end    
+  end
 
   def on_permanent_failure
     page_sysadmin_in_the_middle_of_the_night
   end
-end  
+end
 </pre>
 
 h2. Gory Details
 
-The library evolves around a delayed_jobs table which looks as follows: 
+The library evolves around a delayed_jobs table which looks as follows:
 
 <pre>
 create_table :delayed_jobs, :force => true do |table|
@@ -200,14 +244,7 @@ If you want to contribute an enhancement or a fix:
 # Commit the changes without making changes to the Rakefile, VERSION, or any other files that aren't related to your enhancement or fix
 # Send a pull request.
 
-h3. Changes
+h3. Changelog
 
-* 1.7.0: Added failed_at column which can optionally be set after a certain amount of failed job attempts. By default failed job attempts are destroyed after about a month. 
+See http://wiki.github.com/collectiveidea/delayed_job/changelog for a list of changes.
 
-* 1.6.0: Renamed locked_until to locked_at. We now store when we start a given job instead of how long it will be locked by the worker. This allows us to get a reading on how long a job took to execute.                    
-
-* 1.5.0: Job runners can now be run in parallel. Two new database columns are needed: locked_until and locked_by. This allows us to use   pessimistic locking instead of relying on row level locks. This enables us to run as many worker processes as we need to speed up queue processing.
-
-* 1.2.0: Added #send_later to Object for simpler job creation
-
-* 1.0.0: Initial release

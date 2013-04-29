@@ -4,6 +4,8 @@ require 'rubygems'
 require 'spec'
 require 'logger'
 
+gem 'rails', '~>2.3.5'
+
 require 'delayed_job'
 require 'sample_jobs'
 
@@ -18,7 +20,7 @@ Dir.glob("#{File.dirname(__FILE__)}/setup/*.rb") do |backend|
     require "setup/#{backend}"
     require "backend/#{backend}_job_spec"
     BACKENDS << backend.to_sym
-  rescue LoadError
+  rescue LoadError, Exception
     puts "Unable to load #{backend} backend! #{$!}"
   end
 end

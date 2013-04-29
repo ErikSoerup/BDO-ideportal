@@ -1,8 +1,9 @@
 module Admin
   class IdeasController < AdminController
+    require 'fastercsv'
     before_filter :set_body_class
     after_filter :expire_cloud_cache, :only => [:update, :create, :destroy]
-    param_accessible :idea => [:title, :description, :tag_names, :current_id, :document ]
+    param_accessible :idea => [:title, :description, :tag_names, :current_id, :document, :status ]
     make_resourceful do
       actions :index, :edit, :update
 
@@ -80,6 +81,19 @@ module Admin
         update_bucket :add => parent, :remove => child
         redirect_to edit_admin_idea_path(parent)
       end
+    end
+
+    def export
+      path = "#{RAILS_ROOT}/tmp/ideas.csv"
+#      lib = Rails.env == "production" ? CSV : FasterCSV
+      FasterCSV.open(path, "w", {:col_sep => ";"}) do |csv|
+        csv << ["Title", "Description", "# of votes", "# of comments", "Person who added the idea"]
+        Idea.all.each do |idea|
+          csv << [idea.title, idea.description, idea.votes.size, idea.comments.size, idea.inventor.name]
+        end
+      end
+      send_file path, :type => 'text/csv; charset=iso-8859-1; header=present'
+      #      redirect_to :back
     end
 
     include ResourceAdmin

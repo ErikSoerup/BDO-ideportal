@@ -82,11 +82,11 @@
       <!--Tab Starts -->
       <ul class="tabs">
         <%= p (!session[:tab].nil? && session[:tab] == 'tab1') || session[:tab].nil? %>
-        <li class="<%= (!session[:tab].nil? && session[:tab] == 'tab1') || session[:tab].nil? ? 'active' : '' %>"><%= link_to_remote "Ideer", :update => "tab1", :url => profile_url(current_user, :tab => "tab1") %></li>
-        <li class="<%= !session[:tab].nil? && session[:tab] == 'tab2' ? 'active' : '' %>"><%= link_to_remote "Kommentarer", :update => "tab1", :url => profile_url(current_user, :tab => "tab2") %></li>
-        <li class="<%= !session[:tab].nil? && session[:tab] == 'tab3' ? 'active' : '' %>"><%= link_to_remote "Stemmer", :update => "tab1", :url => profile_url(current_user, :tab => "tab3") %></li>
-        <li class="<%= !session[:tab].nil? && session[:tab] == 'tab4' ? 'active' : '' %>"><%= link_to_remote "Favoritter", :update => "tab1", :url => profile_url(current_user, :tab => "tab4") %></li>
-        <li class="<%= !session[:tab].nil? && session[:tab] == 'tab5' ? 'active' : '' %>"><%= link_to_remote "Følger mig", :update => "tab1", :url => profile_url(current_user, :tab => "tab5") %></li>
+        <li class="<%= (!session[:tab].nil? && session[:tab] == 'tab1') || session[:tab].nil? ? 'active' : '' %>"><%= link_to_remote "Ideer", :update => "tab1", :url => profile_url(@user, :tab => "tab1") %></li>
+        <li class="<%= !session[:tab].nil? && session[:tab] == 'tab2' ? 'active' : '' %>"><%= link_to_remote "Kommentarer", :update => "tab1", :url => profile_url(@user, :tab => "tab2") %></li>
+        <li class="<%= !session[:tab].nil? && session[:tab] == 'tab3' ? 'active' : '' %>"><%= link_to_remote "Stemmer", :update => "tab1", :url => profile_url(@user, :tab => "tab3") %></li>
+        <li class="<%= !session[:tab].nil? && session[:tab] == 'tab4' ? 'active' : '' %>"><%= link_to_remote "Favoritter", :update => "tab1", :url => profile_url(@user, :tab => "tab4") %></li>
+        <li class="<%= !session[:tab].nil? && session[:tab] == 'tab5' ? 'active' : '' %>"><%= link_to_remote "Følger mig", :update => "tab1", :url => profile_url(@user, :tab => "tab5") %></li>
       </ul>
 
       <div class="tab_container">

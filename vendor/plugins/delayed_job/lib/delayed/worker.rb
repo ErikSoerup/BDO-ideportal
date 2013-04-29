@@ -3,10 +3,11 @@ require 'active_support/core_ext/numeric/time'
 
 module Delayed
   class Worker
-    cattr_accessor :min_priority, :max_priority, :max_attempts, :max_run_time, :sleep_delay, :logger
+    cattr_accessor :min_priority, :max_priority, :max_attempts, :max_run_time, :default_priority, :sleep_delay, :logger
     self.sleep_delay = 5
     self.max_attempts = 25
     self.max_run_time = 4.hours
+    self.default_priority = 0
     
     # By default failed jobs are destroyed after too many attempts. If you want to keep them around
     # (perhaps to inspect the reason for the failure), set this to false.
@@ -48,6 +49,7 @@ module Delayed
       @quiet = options[:quiet]
       self.class.min_priority = options[:min_priority] if options.has_key?(:min_priority)
       self.class.max_priority = options[:max_priority] if options.has_key?(:max_priority)
+      self.class.sleep_delay = options[:sleep_delay] if options.has_key?(:sleep_delay)
     end
 
     # Every worker has a unique name which by default is the pid of the process. There are some
@@ -66,7 +68,7 @@ module Delayed
     end
 
     def start
-      say "*** Starting job worker #{name}"
+      say "Starting job worker"
 
       trap('TERM') { say 'Exiting...'; $exit = true }
       trap('INT')  { say 'Exiting...'; $exit = true }
@@ -83,7 +85,7 @@ module Delayed
         break if $exit
 
         if count.zero?
-          sleep(@@sleep_delay)
+          sleep(self.class.sleep_delay)
         else
           say "#{count} jobs processed at %.4f j/s, %d failed ..." % [count / realtime, result.last]
         end
@@ -120,63 +122,64 @@ module Delayed
         Timeout.timeout(self.class.max_run_time.to_i) { job.invoke_job }
         job.destroy
       end
-      # TODO: warn if runtime > max_run_time ?
-      say "* [JOB] #{name} completed after %.4f" % runtime
+      say "#{job.name} completed after %.4f" % runtime
       return true  # did work
-    rescue Exception => e
-      handle_failed_job(job, e)
+    rescue DeserializationError => error
+      job.last_error = "{#{error.message}\n#{error.backtrace.join('\n')}"
+      failed(job)
+    rescue Exception => error
+      handle_failed_job(job, error)
       return false  # work failed
     end
     
     # Reschedule the job in the future (when a job fails).
     # Uses an exponential scale depending on the number of failed attempts.
     def reschedule(job, time = nil)
-      if (job.attempts += 1) < self.class.max_attempts
-        time ||= Job.db_time_now + (job.attempts ** 4) + 5
-        job.run_at = time
+      if (job.attempts += 1) < max_attempts(job)
+        job.run_at = time || job.reschedule_at
         job.unlock
         job.save!
       else
-        say "* [JOB] PERMANENTLY removing #{job.name} because of #{job.attempts} consecutive failures.", Logger::INFO
-
-        if job.payload_object.respond_to? :on_permanent_failure
-          say "* [JOB] Running on_permanent_failure hook"
-          job.payload_object.on_permanent_failure
-        end
-
-        self.class.destroy_failed_jobs ? job.destroy : job.update_attributes(:failed_at => Delayed::Job.db_time_now)
+        say "PERMANENTLY removing #{job.name} because of #{job.attempts} consecutive failures.", Logger::INFO
+        failed(job)
       end
     end
 
+    def failed(job)
+      begin
+        if job.payload_object.respond_to? :on_permanent_failure
+            say "Running on_permanent_failure hook"
+            job.payload_object.on_permanent_failure
+        end
+      rescue DeserializationError
+        # do nothing
+      end
+      
+      self.class.destroy_failed_jobs ? job.destroy : job.update_attributes(:failed_at => Delayed::Job.db_time_now)
+    end
+
     def say(text, level = Logger::INFO)
+      text = "[Worker(#{name})] #{text}"
       puts text unless @quiet
       logger.add level, "#{Time.now.strftime('%FT%T%z')}: #{text}" if logger
     end
 
+    def max_attempts(job)
+      job.max_attempts || self.class.max_attempts
+    end
+    
   protected
     
     def handle_failed_job(job, error)
       job.last_error = error.message + "\n" + error.backtrace.join("\n")
-      say "* [JOB] #{name} failed with #{error.class.name}: #{error.message} - #{job.attempts} failed attempts", Logger::ERROR
+      say "#{job.name} failed with #{error.class.name}: #{error.message} - #{job.attempts} failed attempts", Logger::ERROR
       reschedule(job)
     end
     
     # Run the next job we can get an exclusive lock on.
     # If no jobs are left we return nil
     def reserve_and_run_one_job
-
-      # We get up to 5 jobs from the db. In case we cannot get exclusive access to a job we try the next.
-      # this leads to a more even distribution of jobs across the worker processes
-      job = Delayed::Job.find_available(name, 5, self.class.max_run_time).detect do |job|
-        if job.lock_exclusively!(self.class.max_run_time, name)
-          say "* [Worker(#{name})] acquired lock on #{job.name}"
-          true
-        else
-          say "* [Worker(#{name})] failed to acquire exclusive lock for #{job.name}", Logger::WARN
-          false
-        end
-      end
-
+      job = Delayed::Job.reserve(self)
       run(job) if job
     end
   end

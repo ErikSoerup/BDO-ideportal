@@ -143,7 +143,7 @@ class UserMailer < ActionMailer::Base
     @body[:url] = idea_url(comment.idea)
     @body[:unsubscribe_url] = unsubscribe_idea_url(comment.idea)
     @owner = (user == comment.idea.inventor)
-    @subject = "#{owner.name} har kommenteret din idé \"#{strip_funkies(comment.idea.title)}\""
+    @subject = "#{comment.user.name} har kommenteret din idé \"#{strip_funkies(comment.idea.title)}\""
     body[:author_url] = profile_url(comment.author)
   end
 
@@ -187,7 +187,6 @@ class UserMailer < ActionMailer::Base
 
   protected
   def set_up_email(user)
-    #    @recipients  = "prajkta.p@gmail.com"
     @recipients  = ENV['RAILS_ENV'] == "development" ? "prajkta.p@gmail.com" : "#{user.email}"
     @from        = EMAIL_FROM_ADDRESS
     @subject     = "[#{SHORT_SITE_NAME.upcase}] "

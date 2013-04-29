@@ -99,9 +99,6 @@
                 <ul style="padding: 0 5px 0 5px;">
                   <li><%= link_to t('menu.my_profile'), profile_url(current_user)%></li>
                   <li><%= link_to t('menu.settings'), edit_user_path %></li>
-  <%#*<li>%>
-  <%#= link_to t("menu.about"), home_path('about')%>
-  <%#*</li>%>
                   <% if current_user.admin? %>
                     <li><%= link_to 'Admin', admin_root_path%></li>
                   <% end %>
