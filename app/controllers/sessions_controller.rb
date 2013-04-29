@@ -29,6 +29,7 @@ class SessionsController < ApplicationController
     # else
     #   @authorized_access = true
     # end
+    @authorized_access = true
     render :new , :layout=>false
   end
 
