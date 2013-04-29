@@ -20,12 +20,12 @@ puts "Creating users..."
 
 @users = (1..20).map do |i|
   user = User.create!(
-    :name => @names.rand.strip,
-    :email => "#{(rand*1000000).to_i}@demo.user",
-    :password => "pass#{i}",
-    :password_confirmation => "pass#{i}",
-    :zip_code => @codes.rand.code,
-    :terms_of_service => '1')
+    :name                   => @names.rand.strip,
+    :email                  => "#{(rand*1000000).to_i}@demo.user",
+    :password               => "pass#{i}",
+    :password_confirmation  => "pass#{i}",
+    :zip_code               => @codes.rand.code,
+    :terms_of_service       => '1')
   user.activate!
   user
 end
@@ -36,13 +36,13 @@ def create_idea(factor, title, desc)
   tags = Tag.from_string(
     title.gsub(/[^a-zA-Z]/, ' ').gsub(/(\s|^)(a|an|the|to|from|for|when|it|of|are)(\s|$)/i, ' ').gsub(/\s+/,','))
   Idea.create!(
-    :inventor => @users.rand,
-    :title => title,
-    :description => desc,
-    :rating => (factor / (rand ** 2.5 * 100 + 1)).round + 1,
-    :ip => 'localhost',
-    :user_agent => 'demo data loader',
-    :tags => tags)
+    :inventor     => @users.rand,
+    :title        => title,
+    :description  => desc,
+    :rating       => (factor / (rand ** 2.5 * 100 + 1)).round + 1,
+    :ip           => 'localhost',
+    :user_agent   => 'demo data loader',
+    :tags         => tags)
 end
 
 1.times do |i|

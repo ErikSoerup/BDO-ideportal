@@ -32,7 +32,7 @@ class Current < ActiveRecord::Base
     c = currs.pop
     currs = currs.reverse
     currs << c
-    return currs
+    return currs.compact
   end
 
   def closed_or_expired?

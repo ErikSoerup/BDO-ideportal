@@ -19,7 +19,7 @@ namespace :db do
     a = User.new(:name=>'Admin User', :admin=>1, :password=>'standard', :password_confirmation=>'standard', :terms_of_service=>1, :email=>'admin@example.com', :zip_code=>55407)
     a.register!
     a.activate!
-    ActiveRecord::Base.silence do 
+    ActiveRecord::Base.silence do
       ActiveRecord::Base.transaction do
           s = Time.now
         5000.times do |n|
@@ -57,7 +57,7 @@ namespace :db do
         end
         p "tagging..."
         ideas = Idea.find(:all)
-        ideas.each {|x| 
+        ideas.each {|x|
           begin
           rand(10).times {x.admin_tags.create(:name=>words[rand(words.size)])}
           rand(10).times {x.tags.create(:name=>words[rand(words.size)])}
