@@ -15,3 +15,4 @@ database.yml
 .rbenv-gemsets
 .ruby-version
 latest.dump
+mydb.dump

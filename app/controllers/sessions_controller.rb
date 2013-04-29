@@ -22,13 +22,13 @@ class SessionsController < ApplicationController
     @body_class = 'login'
     #    @ip_addr = request.ip
     #    @ip_addr = request.ip == "127.0.0.1" || request.ip == "59.161.58.113" ? "83.151.150.86" : request.ip
-    @ip_addr = request.ip == "127.0.0.1" || request.ip == "128.39.17.208" ? "83.151.150.86" : request.ip
-    if @ip_addr != "83.151.150.86"
-      @message = "Du kan kun logge ind via det interne netværk. Log først på VPN og derefter på ideportalen."
-      @authorized_access = false
-    else
-      @authorized_access = true
-    end
+    # @ip_addr = request.ip == "127.0.0.1" || request.ip == "128.39.17.208" ? "83.151.150.86" : request.ip
+    # if @ip_addr != "83.151.150.86"
+    #   @message = "Du kan kun logge ind via det interne netværk. Log først på VPN og derefter på ideportalen."
+    #   @authorized_access = false
+    # else
+    #   @authorized_access = true
+    # end
     render :new , :layout=>false
   end
 
