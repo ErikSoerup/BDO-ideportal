@@ -16,7 +16,10 @@ gem 'rdoc'
 
 gem 'facebooker2'
 gem 'mogli'
-gem "paperclip", "2.4"
+# gem "paperclip", "2.4"
+# gem "aws-sd3"
+gem 'aws-sdk'
+gem "paperclip", "~> 2.7"
 gem 'oauth', '0.4.3'
 gem 'oauth-plugin', '0.3.14'
 gem "calendar_date_select", '1.16.1'
